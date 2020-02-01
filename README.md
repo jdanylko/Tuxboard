@@ -1,6 +1,6 @@
 # Tuxboard
 
-[[images/TuxboardExample.png]]
+![Tuxboard Example](images/TuxboardExample.png)
 
 Tuxboard is a dashboard framework specifically for the ASP.NET Core platform. It was meant to be
 a Lego-style way to build dashboards.
