@@ -13,6 +13,13 @@ a Lego-style way to build dashboards.
   - FontAwesome 5
   - Web Essentials (for Markdown, Task Runner/Gulp integration, bundler, etc.)
   
+#### Features
+
+ * Easily attach a dashboard to your project
+ * Customize dashboards for general audiences (static dashboard), user-based dashboards, or even role-based dashboards (both dynamic dashboards).
+ * Build dynamic or static widgets quickly.
+ * Small, compact code for performance in C# and JavaScript (native JavaScript)
+
 #### Why build a Dashboard framework
 In my career, I've built a number of dashboards from scratch. 
 As with all projects, each dashboard had pluses and minuses as each project completed.
