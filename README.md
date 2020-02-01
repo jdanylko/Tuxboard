@@ -28,5 +28,5 @@ their own custom widgets and robust layouts.
 
 ## Getting Started
 
-Please check the wiki for installation.
+Please check the [Wiki](https://github.com/jdanylko/TuxBoard/wiki) for installation.
 
