@@ -1,0 +1,60 @@
+﻿<Project Sdk="Microsoft.NET.Sdk.Web">
+
+  <PropertyGroup>
+    <TargetFramework>netcoreapp3.1</TargetFramework>
+    <GeneratePackageOnBuild>false</GeneratePackageOnBuild>
+    <Authors>Jonathan "JD" Danylko</Authors>
+    <Product>Tuxboard</Product>
+    <Description>Front-end code for Tuxboard, an open source dashboard framework</Description>
+    <Copyright>2019-2020</Copyright>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <Content Remove="bundleconfig.json" />
+    <Content Remove="compilerconfig.json" />
+  </ItemGroup>
+
+
+  <ItemGroup>
+    <Folder Include="wwwroot\docs\extending\" />
+    <Folder Include="wwwroot\docs\layouts\" />
+    <Folder Include="wwwroot\docs\exercises\" />
+    <Folder Include="wwwroot\docs\tuxbar\" />
+    <Folder Include="wwwroot\js\" />
+    <Folder Include="wwwroot\lib\" />
+  </ItemGroup>
+
+
+  <ItemGroup>
+    <None Include=".nuget\Tuxboard.UI.nuspec" />
+    <None Include="bundleconfig.json" />
+    <None Include="compilerconfig.json" />
+    <None Include="wwwroot\docs\heading2\overview.md" />
+    <None Include="wwwroot\docs\heading2\subheading.md" />
+    <None Include="wwwroot\docs\heading2\subheading2\subheading2-nested\subheading2-nested.md" />
+    <None Include="wwwroot\docs\heading2\subheading\nested-heading1.md" />
+    <None Include="wwwroot\docs\heading2\subheading\nested-heading2.md" />
+    <None Include="wwwroot\docs\heading2\subheading\nested-heading3.md" />
+    <None Include="wwwroot\docs\architecture\overview.md" />
+    <None Include="wwwroot\scripts\common.js" />
+    <None Include="wwwroot\scripts\tuxboard.js" />
+  </ItemGroup>
+
+
+  <ItemGroup>
+    <PackageReference Include="BuildBundlerMinifier" Version="3.2.435" />
+    <PackageReference Include="BuildWebCompiler" Version="1.12.405" />
+    <PackageReference Include="Lamar" Version="4.1.0" />
+    <PackageReference Include="Lamar.Microsoft.DependencyInjection" Version="4.1.0" />
+    <PackageReference Include="Microsoft.TypeScript.MSBuild" Version="3.7.4">
+      <PrivateAssets>all</PrivateAssets>
+      <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+    </PackageReference>
+  </ItemGroup>
+
+
+  <ItemGroup>
+    <ProjectReference Include="..\Tuxboard.Core\Tuxboard.Core.csproj" />
+  </ItemGroup>
+
+</Project>

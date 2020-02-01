@@ -1,0 +1,15 @@
+{
+  "name": "tuxboard",
+  "version": "1.0.0",
+  "devDependencies": {
+    "del": "^5.1.0",
+    "docsify-cli": "^4.3.0",
+    "gulp": "^3.9.1",
+    "gulp-concat": "^2.6.1",
+    "gulp-cssmin": "^0.2.0",
+    "gulp-htmlmin": "^5.0.1",
+    "gulp-typescript": "^6.0.0-alpha.1",
+    "gulp-uglify": "^3.0.2",
+    "merge-stream": "^2.0.0"
+  }
+}
