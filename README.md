@@ -16,9 +16,10 @@ a Lego-style way to build dashboards.
 #### Features
 
  * Easily attach a dashboard to your project
- * Customize dashboards for general audiences (static dashboard), user-based dashboards, or even role-based dashboards (both dynamic dashboards).
- * Build dynamic or static widgets quickly.
+ * Customize dashboards for general audiences (a static dashboard), user-based dashboards, or even role-based dashboards (both dynamic dashboards).
+ * Extend your dashboard by building dynamic or static widgets.
  * Small, compact code for performance in C# and JavaScript (native JavaScript)
+ * While the Tuxboard uses Bootstrap, easily conform Tuxboard to any CSS Framework.
 
 #### Why build a Dashboard framework
 In my career, I've built a number of dashboards from scratch. 
