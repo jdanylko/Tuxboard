@@ -16,10 +16,6 @@
 
 
   <ItemGroup>
-    <Folder Include="wwwroot\docs\extending\" />
-    <Folder Include="wwwroot\docs\layouts\" />
-    <Folder Include="wwwroot\docs\exercises\" />
-    <Folder Include="wwwroot\docs\tuxbar\" />
     <Folder Include="wwwroot\js\" />
     <Folder Include="wwwroot\lib\" />
   </ItemGroup>
@@ -29,13 +25,6 @@
     <None Include=".nuget\Tuxboard.UI.nuspec" />
     <None Include="bundleconfig.json" />
     <None Include="compilerconfig.json" />
-    <None Include="wwwroot\docs\heading2\overview.md" />
-    <None Include="wwwroot\docs\heading2\subheading.md" />
-    <None Include="wwwroot\docs\heading2\subheading2\subheading2-nested\subheading2-nested.md" />
-    <None Include="wwwroot\docs\heading2\subheading\nested-heading1.md" />
-    <None Include="wwwroot\docs\heading2\subheading\nested-heading2.md" />
-    <None Include="wwwroot\docs\heading2\subheading\nested-heading3.md" />
-    <None Include="wwwroot\docs\architecture\overview.md" />
     <None Include="wwwroot\scripts\common.js" />
     <None Include="wwwroot\scripts\tuxboard.js" />
   </ItemGroup>
