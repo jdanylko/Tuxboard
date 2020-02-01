@@ -1,4 +1,4 @@
-# Tuxboard
+# Tu><board
 
 ![Tuxboard Example](images/TuxboardExample.png)
 
@@ -13,6 +13,14 @@ a Lego-style way to build dashboards.
   - FontAwesome 5
   - Web Essentials (for Markdown, Task Runner/Gulp integration, bundler, etc.)
   
+#### Features
+
+ * Easily attach a dashboard to your project
+ * Customize dashboards for general audiences (a static dashboard), user-based dashboards, or even role-based dashboards (both dynamic dashboards).
+ * Extend your dashboard by building dynamic or static widgets.
+ * Small, compact code for performance in C# and JavaScript (native JavaScript)
+ * While the Tuxboard uses Bootstrap, easily conform Tuxboard to any CSS Framework.
+
 #### Why build a Dashboard framework
 In my career, I've built a number of dashboards from scratch. 
 As with all projects, each dashboard had pluses and minuses as each project completed.
@@ -28,5 +36,5 @@ their own custom widgets and robust layouts.
 
 ## Getting Started
 
-Please check the wiki for installation.
+Please check the [Wiki](https://github.com/jdanylko/TuxBoard/wiki) for installation.
 
