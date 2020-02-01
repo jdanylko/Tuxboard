@@ -1,4 +1,4 @@
-# Tuxboard
+# Tu><board
 
 ![Tuxboard Example](images/TuxboardExample.png)
 
