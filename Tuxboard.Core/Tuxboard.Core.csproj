@@ -9,6 +9,10 @@
     <Product>Tuxboard</Product>
     <Copyright>2019-2020</Copyright>
     <RunPostBuildEvent>OnOutputUpdated</RunPostBuildEvent>
+    <PackageProjectUrl>https://github.com/jdanylko/Tuxboard</PackageProjectUrl>
+    <RepositoryUrl>https://github.com/jdanylko/Tuxboard</RepositoryUrl>
+    <RepositoryType>C#</RepositoryType>
+    <PackageTags>CSharp C#</PackageTags>
   </PropertyGroup>
 
   <ItemGroup>
