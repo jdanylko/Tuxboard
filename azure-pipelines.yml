@@ -34,7 +34,6 @@ steps:
     configuration: '$(buildConfiguration)'
 - task: NuGetCommand@2
   inputs:
-    command: 'push'
-    packagesToPush: '$(Build.ArtifactStagingDirectory)/**/*.nupkg;!$(Build.ArtifactStagingDirectory)/**/*.symbols.nupkg'
-    nuGetFeedType: 'internal'
-    publishVstsFeed: 'fea341eb-3a22-44fe-9537-e62d93452278'
+    command: 'pack'
+    packagesToPack: 'Tuxboard.Core.csproj'
+    versioningScheme: 'byBuildNumber'
