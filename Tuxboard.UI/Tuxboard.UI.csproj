@@ -22,7 +22,6 @@
 
 
   <ItemGroup>
-    <None Include=".nuget\Tuxboard.UI.nuspec" />
     <None Include="bundleconfig.json" />
     <None Include="compilerconfig.json" />
     <None Include="wwwroot\scripts\common.js" />
