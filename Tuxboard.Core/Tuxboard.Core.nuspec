@@ -20,6 +20,6 @@
     </dependencies>
   </metadata>
   <files>
-    <file src="lib\Release\netcoreapp3.1\Tuxboard.Core.dll" target="lib\netcoreapp3.1\Tuxboard.Core.dll" />
+    <file src="bin\Release\netcoreapp3.1\Tuxboard.Core.dll" target="lib\netcoreapp3.1\Tuxboard.Core.dll" />
   </files>
 </package>
