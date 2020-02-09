@@ -10,12 +10,12 @@
     <description>UI components for Tuxboard, an open source dashboard framework for ASP.NET Core 3.1</description>
     <summary>Front-end structure and components for building your own dynamic and static dashboards</summary>
     <copyright>2019-2020</copyright>
+    <dependencies>
+      <group targetFramework=".NETCoreApp3.1">
+        <dependency id="Tuxboard.Core" version="1.0.0" exclude="Build,Analyzers" />
+      </group>
+    </dependencies>
   </metadata>
-  <dependencies>
-    <group targetFramework=".NETCoreApp3.1">
-      <dependency id="Tuxboard.Core" version="1.0.0" exclude="Build,Analyzers" />
-    </group>
-  </dependencies>
   <files>
     <file src="TuxboardControllers\LayoutDialogController.cs" target="content\TuxboardControllers\LayoutDialogController.cs" />
     <file src="TuxboardControllers\TuxboardController.cs" target="content\TuxboardControllers\TuxboardController.cs" />
