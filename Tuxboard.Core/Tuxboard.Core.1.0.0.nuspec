@@ -18,12 +18,8 @@
         <dependency id="Microsoft.EntityFrameworkCore.SqlServer" version="3.1.1" exclude="Build,Analyzers" />
       </group>
     </dependencies>
-    <contentFiles>
-      <files include="any/netcoreapp3.1/nuget.config" buildAction="Content" />
-    </contentFiles>
   </metadata>
   <files>
-    <file src="contentFiles\any\netcoreapp3.1\nuget.config" target="contentFiles\any\netcoreapp3.1\nuget.config" />
     <file src="lib\netcoreapp3.1\Tuxboard.Core.dll" target="lib\netcoreapp3.1\Tuxboard.Core.dll" />
   </files>
 </package>
