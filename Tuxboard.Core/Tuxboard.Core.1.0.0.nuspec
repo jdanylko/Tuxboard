@@ -23,7 +23,6 @@
     </contentFiles>
   </metadata>
   <files>
-    <file src="content\nuget.config" target="content\nuget.config" />
     <file src="contentFiles\any\netcoreapp3.1\nuget.config" target="contentFiles\any\netcoreapp3.1\nuget.config" />
     <file src="lib\netcoreapp3.1\Tuxboard.Core.dll" target="lib\netcoreapp3.1\Tuxboard.Core.dll" />
   </files>
