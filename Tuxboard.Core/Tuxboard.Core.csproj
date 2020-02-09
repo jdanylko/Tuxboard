@@ -2,7 +2,7 @@
 
   <PropertyGroup>
     <TargetFramework>netcoreapp3.1</TargetFramework>
-    <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
+    <GeneratePackageOnBuild>false</GeneratePackageOnBuild>
     <Description>ASP.NET Core 3.1 library for Tuxboard, an open-source dashboard library.</Description>
     <PackageId>Tuxboard.Core</PackageId>
     <Authors>Jonathan "JD" Danylko</Authors>
