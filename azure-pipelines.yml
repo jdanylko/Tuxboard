@@ -37,7 +37,7 @@ steps:
     command: 'pack'
     packagesToPack: '**/*.nuspec'
     versioningScheme: 'byEnvVar'
-    versionEnvVar: '$(tuxboard-version)'
+    versionEnvVar: 'tuxboard-version'
     
 - task: PublishBuildArtifacts@1
   inputs:
