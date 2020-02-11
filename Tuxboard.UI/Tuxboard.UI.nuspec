@@ -13,9 +13,6 @@
     <dependencies>
       <dependency id="Tuxboard.Core" version="1.0.0" exclude="Build,Analyzers" />
     </dependencies>
-    <references>
-      <reference file="Tuxboard.Core" />
-    </references>
     <contentFiles>
       <files include="contentFiles/any/any/TuxboardControllers/**/*.cs" buildAction="content" flatten="true" copyToOutput="false" />
       <files include="contentFiles/any/any/Views/LayoutDialog/LayoutColumn.cshtml"  buildAction="content" flatten="true" copyToOutput="false"/>
