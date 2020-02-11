@@ -16,14 +16,14 @@
     </dependencies>
   </metadata>
   <files>
-    <file src="content\TuxboardControllers\**" target="content\TuxboardControllers" />
-    <file src="content\Views\LayoutDialog\**" target="content\Views\LayoutDialog" />
-    <file src="content\Views\Shared\Components\**" target="content\Views\Shared\Components" />
-    <file src="content\Views\Shared\ChangeLayoutFrame.cshtml" target="content\Views\Shared\ChangeLayoutFrame.cshtml" />
-    <file src="content\Views\Shared\WidgetDialogFrame.cshtml" target="content\Views\Shared\WidgetDialogFrame.cshtml" />
-    <file src="content\Views\WidgetDialog\**" target="content\Views\WidgetDialog" />
-    <file src="content\Widgets\**" target="content\Widgets" />
-    <file src="content\wwwroot\scripts\tuxboard.js" target="content\wwwroot\scripts\tuxboard.js" />
-    <file src="content\wwwroot\scss\**" target="content\wwwroot\scss" />
+    <file src="TuxboardControllers\**" target="content\TuxboardControllers" />
+    <file src="Views\LayoutDialog\**" target="content\Views\LayoutDialog" />
+    <file src="Views\Shared\Components\**" target="content\Views\Shared\Components" />
+    <file src="Views\Shared\ChangeLayoutFrame.cshtml" target="content\Views\Shared\ChangeLayoutFrame.cshtml" />
+    <file src="Views\Shared\WidgetDialogFrame.cshtml" target="content\Views\Shared\WidgetDialogFrame.cshtml" />
+    <file src="Views\WidgetDialog\**" target="content\Views\WidgetDialog" />
+    <file src="Widgets\**" target="content\Widgets" />
+    <file src="wwwroot\scripts\tuxboard.js" target="content\wwwroot\scripts\tuxboard.js" />
+    <file src="wwwroot\scss\**" target="content\wwwroot\scss" />
   </files>
 </package>

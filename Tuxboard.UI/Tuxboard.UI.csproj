@@ -45,9 +45,4 @@
     <ProjectReference Include="..\Tuxboard.Core\Tuxboard.Core.csproj" />
   </ItemGroup>
 
-
-  <Target Name="PostBuild" AfterTargets="PostBuildEvent">
-    <Exec Command="del .\content\*.* /s /q&#xD;&#xA;xcopy TuxboardControllers\*.* .\content\TuxboardControllers /E /Y /I&#xD;&#xA;xcopy Views\LayoutDialog\*.* .\content\Views\LayoutDialog /E /Y /I&#xD;&#xA;xcopy Views\WidgetDialog\*.* .\content\Views\WidgetDialog /E /Y /I&#xD;&#xA;xcopy Views\Shared\Components\*.* .\content\Views\Shared\Components /E /Y /I&#xD;&#xA;xcopy Views\Shared\ChangeLayoutFrame.cshtml .\content\Views\Shared\&#xD;&#xA;xcopy Views\Shared\WidgetDialogFrame.cshtml .\content\Views\Shared\&#xD;&#xA;xcopy Widgets .\content\Widgets /E /Y /I&#xD;&#xA;xcopy wwwroot\scripts .\content\wwwroot\scripts /E /Y /I&#xD;&#xA;xcopy wwwroot\scss .\content\wwwroot\scss /E /Y /I&#xD;&#xA;" />
-  </Target>
-
 </Project>
