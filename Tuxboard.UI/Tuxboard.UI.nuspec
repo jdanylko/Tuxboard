@@ -17,17 +17,17 @@
       <reference file="Tuxboard.Core" />
     </references>
     <contentFiles>
-      <file include="contentFiles/any/any/TuxboardControllers/**/*.cs" buildAction="content" flatten="true" copyToOutput="false" />
-      <file include="contentFiles/any/any/Views/LayoutDialog/LayoutColumn.cshtml"  buildAction="content" flatten="true" copyToOutput="false"/>
-      <file include="contentFiles/any/any/Views/LayoutDialog/LayoutDialog.cshtml"  buildAction="content" flatten="true" copyToOutput="false"/>
-      <file include="contentFiles/any/any/Views/LayoutDialog/LayoutRow.cshtml"  buildAction="content" flatten="true" copyToOutput="false"/>
-      <file include="contentFiles/any/any/Views/Shared/ChangeLayoutFrame.cshtml"  buildAction="content" flatten="true" copyToOutput="false"/>
-      <file include="contentFiles/any/any/Views/Shared/WidgetDialogFrame.cshtml" buildAction="content" flatten="true" copyToOutput="false" />
-      <file include="contentFiles/any/any/Views/Shared/Components/**/*.cshtml" buildAction="content" flatten="true" copyToOutput="false" />
-      <file include="contentFiles/any/any/Views/WidgetDialog/WidgetDialog.cshtml"  buildAction="content" flatten="true" copyToOutput="false" />
-      <file include="contentFiles/any/any/Widgets/**/*.*"  buildAction="content" flatten="true" copyToOutput="false"/>
-      <file include="contentFiles/any/any/wwwroot/scripts/tuxboard.js"  buildAction="content" flatten="true" copyToOutput="false"/>
-      <file include="contentFiles/any/any/wwwroot/scss/**/*.scss"  buildAction="content" flatten="true" copyToOutput="false"/>
+      <files include="contentFiles/any/any/TuxboardControllers/**/*.cs" buildAction="content" flatten="true" copyToOutput="false" />
+      <files include="contentFiles/any/any/Views/LayoutDialog/LayoutColumn.cshtml"  buildAction="content" flatten="true" copyToOutput="false"/>
+      <files include="contentFiles/any/any/Views/LayoutDialog/LayoutDialog.cshtml"  buildAction="content" flatten="true" copyToOutput="false"/>
+      <files include="contentFiles/any/any/Views/LayoutDialog/LayoutRow.cshtml"  buildAction="content" flatten="true" copyToOutput="false"/>
+      <files include="contentFiles/any/any/Views/Shared/ChangeLayoutFrame.cshtml"  buildAction="content" flatten="true" copyToOutput="false"/>
+      <files include="contentFiles/any/any/Views/Shared/WidgetDialogFrame.cshtml" buildAction="content" flatten="true" copyToOutput="false" />
+      <files include="contentFiles/any/any/Views/Shared/Components/**/*.cshtml" buildAction="content" flatten="true" copyToOutput="false" />
+      <files include="contentFiles/any/any/Views/WidgetDialog/WidgetDialog.cshtml"  buildAction="content" flatten="true" copyToOutput="false" />
+      <files include="contentFiles/any/any/Widgets/**/*.*"  buildAction="content" flatten="true" copyToOutput="false"/>
+      <files include="contentFiles/any/any/wwwroot/scripts/tuxboard.js"  buildAction="content" flatten="true" copyToOutput="false"/>
+      <files include="contentFiles/any/any/wwwroot/scss/**/*.scss"  buildAction="content" flatten="true" copyToOutput="false"/>
     </contentFiles>
   </metadata>
   <files>
