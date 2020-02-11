@@ -36,10 +36,7 @@ steps:
   inputs:
     command: 'pack'
     packagesToPack: '**/*.nuspec'
-    versioningScheme: 'byPrereleaseNumber'
-    majorVersion: '1'
-    minorVersion: '0'
-    patchVersion: '0'
+    versioningScheme: 'off'
     
 - task: PublishBuildArtifacts@1
   inputs:
