@@ -27,20 +27,20 @@
       <files include="contentFiles/any/any/Views/WidgetDialog/WidgetDialog.cshtml"  buildAction="content" flatten="true" copyToOutput="false" />
       <files include="contentFiles/any/any/Widgets/**/*.*"  buildAction="content" flatten="true" copyToOutput="false"/>
       <files include="contentFiles/any/any/wwwroot/scripts/tuxboard.js"  buildAction="content" flatten="true" copyToOutput="false"/>
-      <files include="contentFiles/any/any/wwwroot/scss/**/*.scss"  buildAction="content" flatten="true" copyToOutput="false"/>
+      <files include="contentFiles/wwwroot/scss/**/*.*"  buildAction="content" flatten="true" copyToOutput="false"/>
     </contentFiles>
   </metadata>
   <files>
-    <file src="contentFiles/any/any/TuxboardControllers/**/*.cs" target="contentFiles/any/any/TuxboardControllers" />
-    <file src="contentFiles/any/any/Views/LayoutDialog/LayoutColumn.cshtml" target="contentFiles/any/any/Views/LayoutDialog/LayoutColumn.cshtml" />
-    <file src="contentFiles/any/any/Views/LayoutDialog/LayoutDialog.cshtml" target="contentFiles/any/any/Views/LayoutDialog/LayoutDialog.cshtml" />
-    <file src="contentFiles/any/any/Views/LayoutDialog/LayoutRow.cshtml" target="contentFiles/any/any/Views/LayoutDialog/LayoutRow.cshtml" />
-    <file src="contentFiles/any/any/Views/Shared/ChangeLayoutFrame.cshtml" target="contentFiles/any/any/Views/Shared/ChangeLayoutFrame.cshtml" />
-    <file src="contentFiles/any/any/Views/Shared/WidgetDialogFrame.cshtml" target="contentFiles/any/any/Views/Shared/WidgetDialogFrame.cshtml" />
-    <file src="contentFiles/any/any/Views/Shared/Components/**/*.cshtml" target="contentFiles/any/any/Views/Shared/Components/" />
-    <file src="contentFiles/any/any/Views/WidgetDialog/WidgetDialog.cshtml" target="contentFiles/any/any/Views/WidgetDialog/WidgetDialog.cshtml" />
-    <file src="contentFiles/any/any/Widgets/**/*.*" target="contentFiles/any/any/Widgets/" />
-    <file src="contentFiles/any/any/wwwroot/scripts/tuxboard.js" target="contentFiles/any/any/wwwroot/scripts/tuxboard.js" />
-    <file src="contentFiles/any/any/wwwroot/scss/**/*.scss" target="contentFiles/any/any/wwwroot/scss/" />
+    <file src="TuxboardControllers/**/*.cs" target="/" />
+    <file src="Views/LayoutDialog/LayoutColumn.cshtml" target="Views/LayoutDialog/LayoutColumn.cshtml" />
+    <file src="Views/LayoutDialog/LayoutDialog.cshtml" target="Views/LayoutDialog/LayoutDialog.cshtml" />
+    <file src="Views/LayoutDialog/LayoutRow.cshtml" target="Views/LayoutDialog/LayoutRow.cshtml" />
+    <file src="Views/Shared/ChangeLayoutFrame.cshtml" target="Views/Shared/ChangeLayoutFrame.cshtml" />
+    <file src="Views/Shared/WidgetDialogFrame.cshtml" target="Views/Shared/WidgetDialogFrame.cshtml" />
+    <file src="Views/Shared/Components/**/*.cshtml" target="/" />
+    <file src="Views/WidgetDialog/WidgetDialog.cshtml" target="Views/WidgetDialog/WidgetDialog.cshtml" />
+    <file src="Widgets/**/*.*" target="/" />
+    <file src="wwwroot/scripts/tuxboard.js" target="wwwroot/scripts/tuxboard.js" />
+    <file src="wwwroot/scss/**/*.*" target="/" />
   </files>
 </package>
