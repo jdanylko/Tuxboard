@@ -34,6 +34,10 @@
     <PackageReference Include="BuildWebCompiler" Version="1.12.405" />
     <PackageReference Include="Lamar" Version="4.1.0" />
     <PackageReference Include="Lamar.Microsoft.DependencyInjection" Version="4.1.0" />
+    <PackageReference Include="Microsoft.EntityFrameworkCore.Design" Version="3.1.1">
+      <PrivateAssets>all</PrivateAssets>
+      <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+    </PackageReference>
     <PackageReference Include="Microsoft.TypeScript.MSBuild" Version="3.7.4">
       <PrivateAssets>all</PrivateAssets>
       <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
