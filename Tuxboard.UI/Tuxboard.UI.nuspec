@@ -15,7 +15,7 @@
       <dependency id="Tuxboard.Core" version="1.0.0" />
     </dependencies>
     <contentFiles>
-      <files include="TuxboardControllers\**\*.cs" buildAction="Content" copyToOutput="true" flatten="true" />
+      <files include="cs\netcoreapp3.1\TuxboardControllers\**\*.cs" buildAction="Content" copyToOutput="true" flatten="true" />
       <!--<files include="cs\netcoreapp3.1\Widgets\**\*.*" buildAction="Content" copyToOutput="true" flatten="true" />
       <files include="cs\netcoreapp3.1\Views\**\*.*" buildAction="Content" copyToOutput="true" flatten="true" />
       <files include="cs\netcoreapp3.1\wwwroot\**\*.*" buildAction="Content" copyToOutput="true" flatten="true" />-->
