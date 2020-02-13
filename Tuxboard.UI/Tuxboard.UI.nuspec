@@ -14,52 +14,85 @@
     <dependencies>
       <dependency id="Tuxboard.Core" version="1.0.0" />
     </dependencies>
-    <contentFiles>
-      <files include="cs\netcoreapp3.1\TuxboardControllers\**\*.cs" buildAction="Content" copyToOutput="true" flatten="true" />
-      <!--<files include="cs\netcoreapp3.1\Widgets\**\*.*" buildAction="Content" copyToOutput="true" flatten="true" />
-      <files include="cs\netcoreapp3.1\Views\**\*.*" buildAction="Content" copyToOutput="true" flatten="true" />
-      <files include="cs\netcoreapp3.1\wwwroot\**\*.*" buildAction="Content" copyToOutput="true" flatten="true" />-->
-    </contentFiles>
   </metadata>
   <files>
-    <file src="TuxboardControllers\LayoutDialogController.cs" target="contentFiles\TuxboardControllers\LayoutDialogController.cs" />
-    <file src="TuxboardControllers\TuxboardController.cs" target="contentFiles\TuxboardControllers\TuxboardController.cs" />
-    <file src="TuxboardControllers\WidgetContentController.cs" target="contentFiles\TuxboardControllers\WidgetContentController.cs" />
-    <file src="TuxboardControllers\WidgetDialogController.cs" target="contentFiles\TuxboardControllers\WidgetDialogController.cs" />
-    <file src="TuxboardControllers\WidgetSettingsController.cs" target="contentFiles\TuxboardControllers\WidgetSettingsController.cs" />
-    <file src="Views\LayoutDialog\LayoutColumn.cshtml" target="contentFiles\Views\LayoutDialog\LayoutColumn.cshtml" />
-    <file src="Views\LayoutDialog\LayoutDialog.cshtml" target="contentFiles\Views\LayoutDialog\LayoutDialog.cshtml" />
-    <file src="Views\LayoutDialog\LayoutRow.cshtml" target="contentFiles\Views\LayoutDialog\LayoutRow.cshtml" />
-    <file src="Views\Shared\Components\LayoutTemplate\Default.cshtml" target="contentFiles\Views\Shared\Components\LayoutTemplate\Default.cshtml" />
-    <file src="Views\Shared\Components\LayoutTemplate\LayoutTemplateViewComponent.cs" target="contentFiles\Views\Shared\Components\LayoutTemplate\LayoutTemplateViewComponent.cs" />
-    <file src="Views\Shared\Components\Tuxbar\Default.cshtml" target="contentFiles\Views\Shared\Components\Tuxbar\Default.cshtml" />
-    <file src="Views\Shared\Components\Tuxbar\TuxbarViewComponent.cs" target="contentFiles\Views\Shared\Components\Tuxbar\TuxbarViewComponent.cs" />
-    <file src="Views\Shared\Components\Tuxboard\Default.cshtml" target="contentFiles\Views\Shared\Components\Tuxboard\Default.cshtml" />
-    <file src="Views\Shared\Components\Tuxboard\TuxboardViewComponent.cs" target="contentFiles\Views\Shared\Components\Tuxboard\TuxboardViewComponent.cs" />
-    <file src="Views\Shared\Components\WidgetSettings\Default.cshtml" target="contentFiles\Views\Shared\Components\WidgetSettings\Default.cshtml" />
-    <file src="Views\Shared\Components\WidgetSettings\WidgetSettingsViewComponent.cs" target="contentFiles\Views\Shared\Components\WidgetSettings\WidgetSettingsViewComponent.cs" />
-    <file src="Views\Shared\Components\WidgetTemplate\Default.cshtml" target="contentFiles\Views\Shared\Components\WidgetTemplate\Default.cshtml" />
-    <file src="Views\Shared\Components\WidgetTemplate\WidgetTemplateViewComponent.cs" target="contentFiles\Views\Shared\Components\WidgetTemplate\WidgetTemplateViewComponent.cs" />
-    <file src="Views\Shared\ChangeLayoutFrame.cshtml" target="contentFiles\Views\Shared\ChangeLayoutFrame.cshtml" />
-    <file src="Views\Shared\WidgetDialogFrame.cshtml" target="contentFiles\Views\Shared\WidgetDialogFrame.cshtml" />
-    <file src="Views\WidgetDialog\WidgetDialog.cshtml" target="contentFiles\Views\WidgetDialog\WidgetDialog.cshtml" />
-    <file src="Widgets\GeneralInfo\Default.cshtml" target="contentFiles\Widgets\GeneralInfo\Default.cshtml" />
-    <file src="Widgets\GeneralInfo\GeneralInfoModel.cs" target="contentFiles\Widgets\GeneralInfo\GeneralInfoModel.cs" />
-    <file src="Widgets\GeneralInfo\GeneralInfoViewComponent.cs" target="contentFiles\Widgets\GeneralInfo\GeneralInfoViewComponent.cs" />
-    <file src="Widgets\HelloWorld\Default.cshtml" target="contentFiles\Widgets\HelloWorld\Default.cshtml" />
-    <file src="Widgets\HelloWorld\HelloWorldViewComponent.cs" target="contentFiles\Widgets\HelloWorld\HelloWorldViewComponent.cs" />
-    <file src="Widgets\Table\Default.cshtml" target="contentFiles\Widgets\Table\Default.cshtml" />
-    <file src="Widgets\Table\Product.cs" target="contentFiles\Widgets\Table\Product.cs" />
-    <file src="Widgets\Table\TableModel.cs" target="contentFiles\Widgets\Table\TableModel.cs" />
-    <file src="Widgets\Table\TableViewComponent.cs" target="contentFiles\Widgets\Table\TableViewComponent.cs" />
-    <file src="wwwroot\scripts\tuxboard.js" target="contentFiles\wwwroot\scripts\tuxboard.js" />
-    <file src="wwwroot\scss\layout\column.scss" target="contentFiles\wwwroot\scss\layout\column.scss" />
-    <file src="wwwroot\scss\layout\layout-dialog.scss" target="contentFiles\wwwroot\scss\layout\layout-dialog.scss" />
-    <file src="wwwroot\scss\layout\widget-dialog.scss" target="contentFiles\wwwroot\scss\layout\widget-dialog.scss" />
-    <file src="wwwroot\scss\layout\widget-settings.scss" target="contentFiles\wwwroot\scss\layout\widget-settings.scss" />
-    <file src="wwwroot\scss\layout\widget.scss" target="contentFiles\wwwroot\scss\layout\widget.scss" />
-    <file src="wwwroot\scss\misc\common.scss" target="contentFiles\wwwroot\scss\misc\common.scss" />
-    <file src="wwwroot\scss\theme\default.scss" target="contentFiles\wwwroot\scss\theme\default.scss" />
-    <file src="wwwroot\scss\tuxboard.scss" target="contentFiles\wwwroot\scss\tuxboard.scss" />
+    <file src="content\TuxboardControllers\LayoutDialogController.cs" target="content\TuxboardControllers\LayoutDialogController.cs" />
+    <file src="content\TuxboardControllers\TuxboardController.cs" target="content\TuxboardControllers\TuxboardController.cs" />
+    <file src="content\TuxboardControllers\WidgetContentController.cs" target="content\TuxboardControllers\WidgetContentController.cs" />
+    <file src="content\TuxboardControllers\WidgetDialogController.cs" target="content\TuxboardControllers\WidgetDialogController.cs" />
+    <file src="content\TuxboardControllers\WidgetSettingsController.cs" target="content\TuxboardControllers\WidgetSettingsController.cs" />
+    <file src="content\Views\LayoutDialog\LayoutColumn.cshtml" target="content\Views\LayoutDialog\LayoutColumn.cshtml" />
+    <file src="content\Views\LayoutDialog\LayoutDialog.cshtml" target="content\Views\LayoutDialog\LayoutDialog.cshtml" />
+    <file src="content\Views\LayoutDialog\LayoutRow.cshtml" target="content\Views\LayoutDialog\LayoutRow.cshtml" />
+    <file src="content\Views\Shared\Components\LayoutTemplate\Default.cshtml" target="content\Views\Shared\Components\LayoutTemplate\Default.cshtml" />
+    <file src="content\Views\Shared\Components\LayoutTemplate\LayoutTemplateViewComponent.cs" target="content\Views\Shared\Components\LayoutTemplate\LayoutTemplateViewComponent.cs" />
+    <file src="content\Views\Shared\Components\Tuxbar\Default.cshtml" target="content\Views\Shared\Components\Tuxbar\Default.cshtml" />
+    <file src="content\Views\Shared\Components\Tuxbar\TuxbarViewComponent.cs" target="content\Views\Shared\Components\Tuxbar\TuxbarViewComponent.cs" />
+    <file src="content\Views\Shared\Components\Tuxboard\Default.cshtml" target="content\Views\Shared\Components\Tuxboard\Default.cshtml" />
+    <file src="content\Views\Shared\Components\Tuxboard\TuxboardViewComponent.cs" target="content\Views\Shared\Components\Tuxboard\TuxboardViewComponent.cs" />
+    <file src="content\Views\Shared\Components\WidgetSettings\Default.cshtml" target="content\Views\Shared\Components\WidgetSettings\Default.cshtml" />
+    <file src="content\Views\Shared\Components\WidgetSettings\WidgetSettingsViewComponent.cs" target="content\Views\Shared\Components\WidgetSettings\WidgetSettingsViewComponent.cs" />
+    <file src="content\Views\Shared\Components\WidgetTemplate\Default.cshtml" target="content\Views\Shared\Components\WidgetTemplate\Default.cshtml" />
+    <file src="content\Views\Shared\Components\WidgetTemplate\WidgetTemplateViewComponent.cs" target="content\Views\Shared\Components\WidgetTemplate\WidgetTemplateViewComponent.cs" />
+    <file src="content\Views\Shared\ChangeLayoutFrame.cshtml" target="content\Views\Shared\ChangeLayoutFrame.cshtml" />
+    <file src="content\Views\Shared\WidgetDialogFrame.cshtml" target="content\Views\Shared\WidgetDialogFrame.cshtml" />
+    <file src="content\Views\WidgetDialog\WidgetDialog.cshtml" target="content\Views\WidgetDialog\WidgetDialog.cshtml" />
+    <file src="content\Widgets\GeneralInfo\Default.cshtml" target="content\Widgets\GeneralInfo\Default.cshtml" />
+    <file src="content\Widgets\GeneralInfo\GeneralInfoModel.cs" target="content\Widgets\GeneralInfo\GeneralInfoModel.cs" />
+    <file src="content\Widgets\GeneralInfo\GeneralInfoViewComponent.cs" target="content\Widgets\GeneralInfo\GeneralInfoViewComponent.cs" />
+    <file src="content\Widgets\HelloWorld\Default.cshtml" target="content\Widgets\HelloWorld\Default.cshtml" />
+    <file src="content\Widgets\HelloWorld\HelloWorldViewComponent.cs" target="content\Widgets\HelloWorld\HelloWorldViewComponent.cs" />
+    <file src="content\Widgets\Table\Default.cshtml" target="content\Widgets\Table\Default.cshtml" />
+    <file src="content\Widgets\Table\Product.cs" target="content\Widgets\Table\Product.cs" />
+    <file src="content\Widgets\Table\TableModel.cs" target="content\Widgets\Table\TableModel.cs" />
+    <file src="content\Widgets\Table\TableViewComponent.cs" target="content\Widgets\Table\TableViewComponent.cs" />
+    <file src="content\wwwroot\scripts\tuxboard.js" target="content\wwwroot\scripts\tuxboard.js" />
+    <file src="content\wwwroot\scss\layout\column.scss" target="content\wwwroot\scss\layout\column.scss" />
+    <file src="content\wwwroot\scss\layout\layout-dialog.scss" target="content\wwwroot\scss\layout\layout-dialog.scss" />
+    <file src="content\wwwroot\scss\layout\widget-dialog.scss" target="content\wwwroot\scss\layout\widget-dialog.scss" />
+    <file src="content\wwwroot\scss\layout\widget-settings.scss" target="content\wwwroot\scss\layout\widget-settings.scss" />
+    <file src="content\wwwroot\scss\layout\widget.scss" target="content\wwwroot\scss\layout\widget.scss" />
+    <file src="content\wwwroot\scss\misc\common.scss" target="content\wwwroot\scss\misc\common.scss" />
+    <file src="content\wwwroot\scss\theme\default.scss" target="content\wwwroot\scss\theme\default.scss" />
+    <file src="content\wwwroot\scss\tuxboard.scss" target="content\wwwroot\scss\tuxboard.scss" />
+    <file src="contentFiles\TuxboardControllers\LayoutDialogController.cs" target="contentFiles\TuxboardControllers\LayoutDialogController.cs" />
+    <file src="contentFiles\TuxboardControllers\TuxboardController.cs" target="contentFiles\TuxboardControllers\TuxboardController.cs" />
+    <file src="contentFiles\TuxboardControllers\WidgetContentController.cs" target="contentFiles\TuxboardControllers\WidgetContentController.cs" />
+    <file src="contentFiles\TuxboardControllers\WidgetDialogController.cs" target="contentFiles\TuxboardControllers\WidgetDialogController.cs" />
+    <file src="contentFiles\TuxboardControllers\WidgetSettingsController.cs" target="contentFiles\TuxboardControllers\WidgetSettingsController.cs" />
+    <file src="contentFiles\Views\LayoutDialog\LayoutColumn.cshtml" target="contentFiles\Views\LayoutDialog\LayoutColumn.cshtml" />
+    <file src="contentFiles\Views\LayoutDialog\LayoutDialog.cshtml" target="contentFiles\Views\LayoutDialog\LayoutDialog.cshtml" />
+    <file src="contentFiles\Views\LayoutDialog\LayoutRow.cshtml" target="contentFiles\Views\LayoutDialog\LayoutRow.cshtml" />
+    <file src="contentFiles\Views\Shared\Components\LayoutTemplate\Default.cshtml" target="contentFiles\Views\Shared\Components\LayoutTemplate\Default.cshtml" />
+    <file src="contentFiles\Views\Shared\Components\LayoutTemplate\LayoutTemplateViewComponent.cs" target="contentFiles\Views\Shared\Components\LayoutTemplate\LayoutTemplateViewComponent.cs" />
+    <file src="contentFiles\Views\Shared\Components\Tuxbar\Default.cshtml" target="contentFiles\Views\Shared\Components\Tuxbar\Default.cshtml" />
+    <file src="contentFiles\Views\Shared\Components\Tuxbar\TuxbarViewComponent.cs" target="contentFiles\Views\Shared\Components\Tuxbar\TuxbarViewComponent.cs" />
+    <file src="contentFiles\Views\Shared\Components\Tuxboard\Default.cshtml" target="contentFiles\Views\Shared\Components\Tuxboard\Default.cshtml" />
+    <file src="contentFiles\Views\Shared\Components\Tuxboard\TuxboardViewComponent.cs" target="contentFiles\Views\Shared\Components\Tuxboard\TuxboardViewComponent.cs" />
+    <file src="contentFiles\Views\Shared\Components\WidgetSettings\Default.cshtml" target="contentFiles\Views\Shared\Components\WidgetSettings\Default.cshtml" />
+    <file src="contentFiles\Views\Shared\Components\WidgetSettings\WidgetSettingsViewComponent.cs" target="contentFiles\Views\Shared\Components\WidgetSettings\WidgetSettingsViewComponent.cs" />
+    <file src="contentFiles\Views\Shared\Components\WidgetTemplate\Default.cshtml" target="contentFiles\Views\Shared\Components\WidgetTemplate\Default.cshtml" />
+    <file src="contentFiles\Views\Shared\Components\WidgetTemplate\WidgetTemplateViewComponent.cs" target="contentFiles\Views\Shared\Components\WidgetTemplate\WidgetTemplateViewComponent.cs" />
+    <file src="contentFiles\Views\Shared\ChangeLayoutFrame.cshtml" target="contentFiles\Views\Shared\ChangeLayoutFrame.cshtml" />
+    <file src="contentFiles\Views\Shared\WidgetDialogFrame.cshtml" target="contentFiles\Views\Shared\WidgetDialogFrame.cshtml" />
+    <file src="contentFiles\Views\WidgetDialog\WidgetDialog.cshtml" target="contentFiles\Views\WidgetDialog\WidgetDialog.cshtml" />
+    <file src="contentFiles\Widgets\GeneralInfo\Default.cshtml" target="contentFiles\Widgets\GeneralInfo\Default.cshtml" />
+    <file src="contentFiles\Widgets\GeneralInfo\GeneralInfoModel.cs" target="contentFiles\Widgets\GeneralInfo\GeneralInfoModel.cs" />
+    <file src="contentFiles\Widgets\GeneralInfo\GeneralInfoViewComponent.cs" target="contentFiles\Widgets\GeneralInfo\GeneralInfoViewComponent.cs" />
+    <file src="contentFiles\Widgets\HelloWorld\Default.cshtml" target="contentFiles\Widgets\HelloWorld\Default.cshtml" />
+    <file src="contentFiles\Widgets\HelloWorld\HelloWorldViewComponent.cs" target="contentFiles\Widgets\HelloWorld\HelloWorldViewComponent.cs" />
+    <file src="contentFiles\Widgets\Table\Default.cshtml" target="contentFiles\Widgets\Table\Default.cshtml" />
+    <file src="contentFiles\Widgets\Table\Product.cs" target="contentFiles\Widgets\Table\Product.cs" />
+    <file src="contentFiles\Widgets\Table\TableModel.cs" target="contentFiles\Widgets\Table\TableModel.cs" />
+    <file src="contentFiles\Widgets\Table\TableViewComponent.cs" target="contentFiles\Widgets\Table\TableViewComponent.cs" />
+    <file src="contentFiles\wwwroot\scripts\tuxboard.js" target="contentFiles\wwwroot\scripts\tuxboard.js" />
+    <file src="contentFiles\wwwroot\scss\layout\column.scss" target="contentFiles\wwwroot\scss\layout\column.scss" />
+    <file src="contentFiles\wwwroot\scss\layout\layout-dialog.scss" target="contentFiles\wwwroot\scss\layout\layout-dialog.scss" />
+    <file src="contentFiles\wwwroot\scss\layout\widget-dialog.scss" target="contentFiles\wwwroot\scss\layout\widget-dialog.scss" />
+    <file src="contentFiles\wwwroot\scss\layout\widget-settings.scss" target="contentFiles\wwwroot\scss\layout\widget-settings.scss" />
+    <file src="contentFiles\wwwroot\scss\layout\widget.scss" target="contentFiles\wwwroot\scss\layout\widget.scss" />
+    <file src="contentFiles\wwwroot\scss\misc\common.scss" target="contentFiles\wwwroot\scss\misc\common.scss" />
+    <file src="contentFiles\wwwroot\scss\theme\default.scss" target="contentFiles\wwwroot\scss\theme\default.scss" />
+    <file src="contentFiles\wwwroot\scss\tuxboard.scss" target="contentFiles\wwwroot\scss\tuxboard.scss" />
   </files>
 </package>
