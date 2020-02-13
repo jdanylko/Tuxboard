@@ -50,14 +50,4 @@
     <ProjectReference Include="..\Tuxboard.Core\Tuxboard.Core.csproj" />
   </ItemGroup>
 
-
-  <Target Name="PostBuild" AfterTargets="PostBuildEvent">
-    <Exec Command="xcopy &quot;$(ProjectDir)TuxboardControllers\*.*&quot; &quot;$(ProjectDir)contentFiles\cs\netcoreapp3.1\TuxboardControllers&quot; /E /Y /I&#xD;&#xA;xcopy &quot;$(ProjectDir)Widgets\*.*&quot; &quot;$(ProjectDir)contentFiles\cs\netcoreapp3.1\Widgets&quot; /E /Y /I&#xD;&#xA;xcopy &quot;$(ProjectDir)wwwroot\scripts\*.*&quot; &quot;$(ProjectDir)contentFiles\cs\netcoreapp3.1\wwwroot\scripts&quot; /E /Y /I&#xD;&#xA;xcopy &quot;$(ProjectDir)wwwroot\scss\*.*&quot; &quot;$(ProjectDir)contentFiles\cs\netcoreapp3.1\wwwroot\scss&quot; /E /Y /I&#xD;&#xA;xcopy &quot;$(ProjectDir)Views\LayoutDialog\*.*&quot; &quot;$(ProjectDir)contentFiles\cs\netcoreapp3.1\Views\LayoutDialog&quot; /E /Y /I&#xD;&#xA;xcopy &quot;$(ProjectDir)Views\WidgetDialog\*.*&quot; &quot;$(ProjectDir)contentFiles\cs\netcoreapp3.1\Views\WidgetDialog&quot; /E /Y /I&#xD;&#xA;xcopy &quot;$(ProjectDir)Views\Shared\ChangeLayoutFrame.cshtml&quot; &quot;$(ProjectDir)contentFiles\cs\netcoreapp3.1\Views\Shared\ChangeLayoutFrame.cshtml&quot; /E /Y /I&#xD;&#xA;xcopy &quot;$(ProjectDir)Views\Shared\WidgetDialogFrame.cshtml&quot; &quot;$(ProjectDir)contentFiles\cs\netcoreapp3.1\Views\Shared\WidgetDialogFrame.cshtml&quot; /E /Y /I&#xD;&#xA;xcopy &quot;$(ProjectDir)Views\Shared\Components\*.*&quot; &quot;$(ProjectDir)contentFiles\cs\netcoreapp3.1\Views\Shared\Components&quot; /E /Y /I&#xD;&#xA;&#xD;&#xA;" />
-  </Target>
-
-
-  <Target Name="PreBuild" BeforeTargets="PreBuildEvent">
-    <Exec Command="del &quot;$(ProjectDir)contentfiles\cs\netcoreapp3.1\*.*&quot; /S /Q" />
-  </Target>
-
 </Project>
