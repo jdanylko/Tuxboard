@@ -14,16 +14,13 @@
     <dependencies>
       <dependency id="Tuxboard.Core" version="1.0.0" />
     </dependencies>
-    <contentFiles>
-      <files include="cs/netcoreapp3.1/TuxboardControllers/*" buildAction="None" copyToOutput="true" />
-    </contentFiles>
   </metadata>
   <files>
-    <file src="TuxboardControllers\LayoutDialogController.cs" target="contentFiles\TuxboardControllers\LayoutDialogController.cs" />
-    <file src="TuxboardControllers\TuxboardController.cs" target="contentFiles\TuxboardControllers\TuxboardController.cs" />
-    <file src="TuxboardControllers\WidgetContentController.cs" target="contentFiles\TuxboardControllers\WidgetContentController.cs" />
-    <file src="TuxboardControllers\WidgetDialogController.cs" target="contentFiles\TuxboardControllers\WidgetDialogController.cs" />
-    <file src="TuxboardControllers\WidgetSettingsController.cs" target="contentFiles\TuxboardControllers\WidgetSettingsController.cs" />
+    <file src="TuxboardControllers\LayoutDialogController.cs" target="content\TuxboardControllers\LayoutDialogController.cs" />
+    <file src="TuxboardControllers\TuxboardController.cs" target="content\TuxboardControllers\TuxboardController.cs" />
+    <file src="TuxboardControllers\WidgetContentController.cs" target="content\TuxboardControllers\WidgetContentController.cs" />
+    <file src="TuxboardControllers\WidgetDialogController.cs" target="content\TuxboardControllers\WidgetDialogController.cs" />
+    <file src="TuxboardControllers\WidgetSettingsController.cs" target="content\TuxboardControllers\WidgetSettingsController.cs" />
     <file src="Views\LayoutDialog\LayoutColumn.cshtml" target="content\Views\LayoutDialog\LayoutColumn.cshtml" />
     <file src="Views\LayoutDialog\LayoutDialog.cshtml" target="content\Views\LayoutDialog\LayoutDialog.cshtml" />
     <file src="Views\LayoutDialog\LayoutRow.cshtml" target="content\Views\LayoutDialog\LayoutRow.cshtml" />
