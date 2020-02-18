@@ -12,32 +12,34 @@
     <summary>Front-end structure and components for building your own dynamic and static dashboards</summary>
     <copyright>2019-2020</copyright>
     <dependencies>
-      <dependency id="Tuxboard.Core" version="1.0.0" />
+      <group>
+        <dependency id="Tuxboard.Core" version="1.0.0" />
+      </group>
     </dependencies>
     <contentFiles>
-      <files include="contentFiles/any/any/TuxboardControllers/**/*.cs" buildAction="content" copyToOutput="true" flatten="true" />
-      <files include="contentFiles/any/any/Views/LayoutDialog/LayoutColumn.cshtml" buildAction="content" copyToOutput="true" flatten="true" />
-      <files include="contentFiles/any/any/Views/LayoutDialog/LayoutDialog.cshtml" buildAction="content" copyToOutput="true" flatten="true" />
-      <files include="contentFiles/any/any/Views/LayoutDialog/LayoutRow.cshtml" buildAction="content" copyToOutput="true" flatten="true" />
-      <files include="contentFiles/any/any/Views/Shared/ChangeLayoutFrame.cshtml" buildAction="content" copyToOutput="true" flatten="true" />
-      <files include="contentFiles/any/any/Views/Shared/WidgetDialogFrame.cshtml" buildAction="content" copyToOutput="true" flatten="true" />
-      <files include="contentFiles/any/any/Views/Shared/Components/**/*.cshtml" buildAction="content" copyToOutput="true" flatten="true" />
-      <files include="contentFiles/any/any/Views/WidgetDialog/WidgetDialog.cshtml" buildAction="content" copyToOutput="true" flatten="true" />
-      <files include="contentFiles/any/any/Widgets/**/*.*" buildAction="content" copyToOutput="true" flatten="true" />
-      <files include="contentFiles/any/any/wwwroot/scripts/tuxboard.js" buildAction="content" copyToOutput="true" flatten="true" />
-      <files include="contentFiles/wwwroot/scss/**/*.*" buildAction="content" copyToOutput="true" flatten="true" />
+      <files include="cs/dotnetapp3.1/TuxboardControllers/**/*.cs" buildAction="None" copyToOutput="true" flatten="true" />
+      <files include="any/any/Views/LayoutDialog/LayoutColumn.cshtml" buildAction="None" copyToOutput="true" flatten="true" />
+      <files include="any/any/Views/LayoutDialog/LayoutDialog.cshtml" buildAction="None" copyToOutput="true" flatten="true" />
+      <files include="any/any/Views/LayoutDialog/LayoutRow.cshtml" buildAction="None" copyToOutput="true" flatten="true" />
+      <files include="any/any/Views/Shared/ChangeLayoutFrame.cshtml" buildAction="None" copyToOutput="true" flatten="true" />
+      <files include="any/any/Views/Shared/WidgetDialogFrame.cshtml" buildAction="None" copyToOutput="true" flatten="true" />
+      <files include="any/any/Views/Shared/Components/**/*.cshtml" buildAction="None" copyToOutput="true" flatten="true" />
+      <files include="any/any/Views/WidgetDialog/WidgetDialog.cshtml" buildAction="None" copyToOutput="true" flatten="true" />
+      <files include="any/any/Widgets/**/*.*" buildAction="None" copyToOutput="true" flatten="true" />
+      <files include="any/any/wwwroot/scripts/tuxboard.js" buildAction="None" copyToOutput="true" flatten="true" />
+      <files include="wwwroot/scss/**/*.*" buildAction="None" copyToOutput="true" flatten="true" />
     </contentFiles>
   </metadata>
   <files>
-    <file src="TuxboardControllers/**" target="contentFiles/TuxboardControllers" />
-    <file src="Views/LayoutDialog/**" target="contentFiles/Views/LayoutDialog" />
-    <file src="Views/Shared/Components/**" target="contentFiles/Views/Shared/Components" />
-    <file src="Views/Shared/ChangeLayoutFrame.cshtml" target="contentFiles/Views/Shared/ChangeLayoutFrame.cshtml" />
-    <file src="Views/Shared/WidgetDialogFrame.cshtml" target="contentFiles/Views/Shared/WidgetDialogFrame.cshtml" />
-    <file src="Views/WidgetDialog/**" target="contentFiles/Views/WidgetDialog" />
-    <file src="Widgets/**" target="contentFiles/Widgets" />
-    <file src="wwwroot/scripts/tuxboard.js" target="contentFiles/wwwroot/scripts/tuxboard.js" />
-    <file src="wwwroot/scss/**" target="contentFiles/wwwroot/scss" />
+    <file src="TuxboardControllers\**\*.cs" target="content\TuxboardControllers" />
+    <file src="Views\LayoutDialog\**\*.*" target="content\Views\LayoutDialog" />
+    <file src="Views\Shared\Components\**\*.*" target="content\Views\Shared\Components" />
+    <file src="Views\Shared\ChangeLayoutFrame.cshtml" target="content\Views\Shared\ChangeLayoutFrame.cshtml" />
+    <file src="Views\Shared\WidgetDialogFrame.cshtml" target="content\Views\Shared\WidgetDialogFrame.cshtml" />
+    <file src="Views\WidgetDialog\**\*.*" target="content\Views\WidgetDialog" />
+    <file src="Widgets\**\*.*" target="content\Widgets" />
+    <file src="wwwroot\scripts\tuxboard.js" target="content\wwwroot\scripts\tuxboard.js" />
+    <file src="wwwroot\scss\**\*.*" target="content\wwwroot\scss" />
 
     <!--
     <file src="TuxboardControllers\LayoutDialogController.cs" target="content\TuxboardControllers\LayoutDialogController.cs" />
