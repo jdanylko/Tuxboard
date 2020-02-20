@@ -9,8 +9,6 @@
     <RemoveDir Directories="$(PackageSource)"/>
     <MSBuild Projects="$(MSBuildProjectFullPath)" Targets="Rebuild" Properties="TargetFrameworkVersion=netcoreapp3.1; OutputPath=bin\$(Configuration)\netcoreapp3.1;Configuration=$(Configuration)" BuildInParallel="$(BuildInParallel)"/>
 
-    <!--<Copy SourceFiles="$(NuSpecPath)" DestinationFolder="$(PackageSource)"/>-->
-
     <Copy SourceFiles="$(ProjectDir)TuxboardControllers\LayoutDialogController.cs" DestinationFiles="$(PackageSource)\TuxboardControllers\LayoutDialogController.cs.pp" />
     <Copy SourceFiles="$(ProjectDir)TuxboardControllers\WidgetContentController.cs" DestinationFiles="$(PackageSource)\TuxboardControllers\WidgetContentController.cs.pp" />
     <Copy SourceFiles="$(ProjectDir)TuxboardControllers\WidgetDialogController.cs" DestinationFiles="$(PackageSource)\TuxboardControllers\WidgetDialogController.cs.pp" />

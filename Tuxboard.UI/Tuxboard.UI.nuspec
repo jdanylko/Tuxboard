@@ -43,7 +43,7 @@
     <file src="wwwroot\scss\**\*.*" target="contentFiles\any\any\wwwroot\scss" />-->
 
     
-    <file src="Content\TuxboardControllers\LayoutDialogController.cs" target="contentFiles\any\any\TuxboardControllers\LayoutDialogController.cs.pp" />
+    <file src="TuxboardControllers\LayoutDialogController.cs" target="contentFiles\any\any\TuxboardControllers\LayoutDialogController.cs.pp" />
     <file src="TuxboardControllers\WidgetContentController.cs" target="contentFiles\any\any\TuxboardControllers\WidgetContentController.cs.pp" />
     <file src="TuxboardControllers\WidgetDialogController.cs" target="contentFiles\any\any\TuxboardControllers\WidgetDialogController.cs.pp" />
     <file src="TuxboardControllers\WidgetSettingsController.cs" target="contentFiles\any\any\TuxboardControllers\WidgetSettingsController.cs.pp" />

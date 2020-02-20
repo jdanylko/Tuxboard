@@ -58,10 +58,10 @@
     <ProjectReference Include="..\Tuxboard.Core\Tuxboard.Core.csproj" />
   </ItemGroup>
 
-  <Target Name="AfterBuild" >
+  <!--<Target Name="AfterBuild" >
     <Message Text="Tuxboard - First occurrence" />
-  </Target>
+  </Target>-->
 
-  <Import Project="$(ProjectDir)NuGetPackage.targets" Condition="Exists('$(ProjectDir)NuGetPackage.targets')" />
+  <!--<Import Project="$(ProjectDir)NuGetPackage.targets" Condition="Exists('$(ProjectDir)NuGetPackage.targets')" />-->
 
 </Project>
