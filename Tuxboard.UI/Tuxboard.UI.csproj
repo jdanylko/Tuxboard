@@ -1,7 +1,5 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk.Web">
 
-  <!--<Import Project="$(ProjectDir)Package\NuGetPackage.targets" Condition="Exists('$(ProjectDir)Package\NuGetPackage.targets')" />-->
-
   <PropertyGroup>
     <TargetFramework>netcoreapp3.1</TargetFramework>
     <GeneratePackageOnBuild>false</GeneratePackageOnBuild>
@@ -45,7 +43,7 @@
     <PackageReference Include="BuildWebCompiler" Version="1.12.405" />
     <PackageReference Include="Lamar" Version="4.1.0" />
     <PackageReference Include="Lamar.Microsoft.DependencyInjection" Version="4.1.0" />
-    <PackageReference Include="Microsoft.EntityFrameworkCore.Design" Version="3.1.1">
+    <PackageReference Include="Microsoft.EntityFrameworkCore.Design" Version="3.1.2">
       <PrivateAssets>all</PrivateAssets>
       <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
     </PackageReference>
@@ -59,5 +57,11 @@
   <ItemGroup>
     <ProjectReference Include="..\Tuxboard.Core\Tuxboard.Core.csproj" />
   </ItemGroup>
+
+  <Target Name="AfterBuild" >
+    <Message Text="Tuxboard - First occurrence" />
+  </Target>
+
+  <Import Project="$(ProjectDir)NuGetPackage.targets" Condition="Exists('$(ProjectDir)NuGetPackage.targets')" />
 
 </Project>

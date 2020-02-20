@@ -1,0 +1,54 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="14.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Target Name="CreatePackage">
+    <PropertyGroup>
+      <Configuration>Release</Configuration>
+      <PackageSource>$(ProjectDir)Package\Content</PackageSource>
+      <NuSpecPath>Tuxboard.UI.nuspec</NuSpecPath>
+    </PropertyGroup>
+    <RemoveDir Directories="$(PackageSource)"/>
+    <MSBuild Projects="$(MSBuildProjectFullPath)" Targets="Rebuild" Properties="TargetFrameworkVersion=netcoreapp3.1; OutputPath=bin\$(Configuration)\netcoreapp3.1;Configuration=$(Configuration)" BuildInParallel="$(BuildInParallel)"/>
+
+    <!--<Copy SourceFiles="$(NuSpecPath)" DestinationFolder="$(PackageSource)"/>-->
+
+    <Copy SourceFiles="$(ProjectDir)TuxboardControllers\LayoutDialogController.cs" DestinationFiles="$(PackageSource)\TuxboardControllers\LayoutDialogController.cs.pp" />
+    <Copy SourceFiles="$(ProjectDir)TuxboardControllers\WidgetContentController.cs" DestinationFiles="$(PackageSource)\TuxboardControllers\WidgetContentController.cs.pp" />
+    <Copy SourceFiles="$(ProjectDir)TuxboardControllers\WidgetDialogController.cs" DestinationFiles="$(PackageSource)\TuxboardControllers\WidgetDialogController.cs.pp" />
+    <Copy SourceFiles="$(ProjectDir)TuxboardControllers\WidgetSettingsController.cs" DestinationFiles="$(PackageSource)\TuxboardControllers\WidgetSettingsController.cs.pp" />
+    <Copy SourceFiles="$(ProjectDir)TuxboardControllers\TuxboardController.cs" DestinationFiles="$(PackageSource)\TuxboardControllers\TuxboardController.cs.pp" />
+    <Copy SourceFiles="$(ProjectDir)Views\LayoutDialog\LayoutColumn.cshtml" DestinationFiles="$(PackageSource)\Views\LayoutDialog\LayoutColumn.cshtml" />
+    <Copy SourceFiles="$(ProjectDir)Views\LayoutDialog\LayoutDialog.cshtml" DestinationFiles="$(PackageSource)\Views\LayoutDialog\LayoutDialog.cshtml" />
+    <Copy SourceFiles="$(ProjectDir)Views\LayoutDialog\LayoutRow.cshtml" DestinationFiles="$(PackageSource)\Views\LayoutDialog\LayoutRow.cshtml" />
+    <Copy SourceFiles="$(ProjectDir)Views\Shared\Components\LayoutTemplate\Default.cshtml" DestinationFiles="$(PackageSource)\Views\Shared\Components\LayoutTemplate\Default.cshtml" />
+    <Copy SourceFiles="$(ProjectDir)Views\Shared\Components\LayoutTemplate\LayoutTemplateViewComponent.cs" DestinationFiles="$(PackageSource)\Views\Shared\Components\LayoutTemplate\LayoutTemplateViewComponent.cs.pp" />
+    <Copy SourceFiles="$(ProjectDir)Views\Shared\Components\Tuxbar\Default.cshtml" DestinationFiles="$(PackageSource)\Views\Shared\Components\Tuxbar\Default.cshtml" />
+    <Copy SourceFiles="$(ProjectDir)Views\Shared\Components\Tuxbar\TuxbarViewComponent.cs" DestinationFiles="$(PackageSource)\Views\Shared\Components\Tuxbar\TuxbarViewComponent.cs.pp" />
+    <Copy SourceFiles="$(ProjectDir)Views\Shared\Components\Tuxboard\Default.cshtml" DestinationFiles="$(PackageSource)\Views\Shared\Components\Tuxboard\Default.cshtml" />
+    <Copy SourceFiles="$(ProjectDir)Views\Shared\Components\Tuxboard\TuxboardViewComponent.cs" DestinationFiles="$(PackageSource)\Views\Shared\Components\Tuxboard\TuxboardViewComponent.cs.pp" />
+    <Copy SourceFiles="$(ProjectDir)Views\Shared\Components\WidgetSettings\Default.cshtml" DestinationFiles="$(PackageSource)\Views\Shared\Components\WidgetSettings\Default.cshtml" />
+    <Copy SourceFiles="$(ProjectDir)Views\Shared\Components\WidgetSettings\WidgetSettingsViewComponent.cs" DestinationFiles="$(PackageSource)\Views\Shared\Components\WidgetSettings\WidgetSettingsViewComponent.cs.pp" />
+    <Copy SourceFiles="$(ProjectDir)Views\Shared\Components\WidgetTemplate\Default.cshtml" DestinationFiles="$(PackageSource)\Views\Shared\Components\WidgetTemplate\Default.cshtml" />
+    <Copy SourceFiles="$(ProjectDir)Views\Shared\Components\WidgetTemplate\WidgetTemplateViewComponent.cs" DestinationFiles="$(PackageSource)\Views\Shared\Components\WidgetTemplate\WidgetTemplateViewComponent.cs.pp" />
+    <Copy SourceFiles="$(ProjectDir)Views\Shared\ChangeLayoutFrame.cshtml" DestinationFiles="$(PackageSource)\Views\Shared\ChangeLayoutFrame.cshtml" />
+    <Copy SourceFiles="$(ProjectDir)Views\Shared\WidgetDialogFrame.cshtml" DestinationFiles="$(PackageSource)\Views\Shared\WidgetDialogFrame.cshtml" />
+    <Copy SourceFiles="$(ProjectDir)Views\WidgetDialog\WidgetDialog.cshtml" DestinationFiles="$(PackageSource)\Views\WidgetDialog\WidgetDialog.cshtml" />
+    <Copy SourceFiles="$(ProjectDir)Widgets\GeneralInfo\Default.cshtml" DestinationFiles="$(PackageSource)\Widgets\GeneralInfo\Default.cshtml" />
+    <Copy SourceFiles="$(ProjectDir)Widgets\GeneralInfo\GeneralInfoModel.cs" DestinationFiles="$(PackageSource)\Widgets\GeneralInfo\GeneralInfoModel.cs.pp" />
+    <Copy SourceFiles="$(ProjectDir)Widgets\GeneralInfo\GeneralInfoViewComponent.cs" DestinationFiles="$(PackageSource)\Widgets\GeneralInfo\GeneralInfoViewComponent.cs.pp" />
+    <Copy SourceFiles="$(ProjectDir)Widgets\HelloWorld\Default.cshtml" DestinationFiles="$(PackageSource)\Widgets\HelloWorld\Default.cshtml" />
+    <Copy SourceFiles="$(ProjectDir)Widgets\HelloWorld\HelloWorldViewComponent.cs" DestinationFiles="$(PackageSource)\Widgets\HelloWorld\HelloWorldViewComponent.cs.pp" />
+    <Copy SourceFiles="$(ProjectDir)Widgets\Table\Default.cshtml" DestinationFiles="$(PackageSource)\Widgets\Table\Default.cshtml" />
+    <Copy SourceFiles="$(ProjectDir)Widgets\Table\Product.cs" DestinationFiles="$(PackageSource)\Widgets\Table\Product.cs.pp" />
+    <Copy SourceFiles="$(ProjectDir)Widgets\Table\TableModel.cs" DestinationFiles="$(PackageSource)\Widgets\Table\TableModel.cs.pp" />
+    <Copy SourceFiles="$(ProjectDir)Widgets\Table\TableViewComponent.cs" DestinationFiles="$(PackageSource)\Widgets\Table\TableViewComponent.cs.pp" />
+    <Copy SourceFiles="$(ProjectDir)wwwroot\scripts\tuxboard.js" DestinationFiles="$(PackageSource)\wwwroot\scripts\tuxboard.js" />
+    <Copy SourceFiles="$(ProjectDir)wwwroot\scss\layout\column.scss" DestinationFiles="$(PackageSource)\wwwroot\scss\layout\column.scss" />
+    <Copy SourceFiles="$(ProjectDir)wwwroot\scss\layout\layout-dialog.scss" DestinationFiles="$(PackageSource)\wwwroot\scss\layout\layout-dialog.scss" />
+    <Copy SourceFiles="$(ProjectDir)wwwroot\scss\layout\widget-dialog.scss" DestinationFiles="$(PackageSource)\wwwroot\scss\layout\widget-dialog.scss" />
+    <Copy SourceFiles="$(ProjectDir)wwwroot\scss\layout\widget-settings.scss" DestinationFiles="$(PackageSource)\wwwroot\scss\layout\widget-settings.scss" />
+    <Copy SourceFiles="$(ProjectDir)wwwroot\scss\layout\widget.scss" DestinationFiles="$(PackageSource)\wwwroot\scss\layout\widget.scss" />
+    <Copy SourceFiles="$(ProjectDir)wwwroot\scss\misc\common.scss" DestinationFiles="$(PackageSource)\wwwroot\scss\misc\common.scss" />
+    <Copy SourceFiles="$(ProjectDir)wwwroot\scss\theme\default.scss" DestinationFiles="$(PackageSource)\wwwroot\scss\theme\default.scss" />
+    <Copy SourceFiles="$(ProjectDir)wwwroot\scss\tuxboard.scss" DestinationFiles="$(PackageSource)\wwwroot\scss\tuxboard.scss" />
+  </Target>
+</Project>
