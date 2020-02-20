@@ -1,3 +1,7 @@
+[![Build Status](https://jdanylko.visualstudio.com/Tuxboard/_apis/build/status/jdanylko.Tuxboard?branchName=master)](https://jdanylko.visualstudio.com/Tuxboard/_build/latest?definitionId=3&branchName=master) 
+[![MIT license](http://img.shields.io/badge/license-MIT-brightgreen.svg)](http://opensource.org/licenses/MIT)
+
+
 # Tu><board
 
 ![Tuxboard Example](images/TuxboardExample.png)
