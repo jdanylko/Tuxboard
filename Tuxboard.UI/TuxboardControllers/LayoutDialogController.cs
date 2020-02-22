@@ -14,11 +14,11 @@ namespace Tuxboard.UI.TuxboardControllers
 {
     public class LayoutDialogController : Controller
     {
-        private readonly ILogger<HomeController> _logger;
+        private readonly ILogger<LayoutDialogController> _logger;
         private readonly IDashboardService _service;
         private readonly TuxboardConfig _config = new TuxboardConfig();
 
-        public LayoutDialogController(ILogger<HomeController> logger, 
+        public LayoutDialogController(ILogger<LayoutDialogController> logger, 
             IDashboardService service, 
             IConfiguration config)
         {

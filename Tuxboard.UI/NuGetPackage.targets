@@ -44,7 +44,9 @@
     <Copy SourceFiles="$(ProjectDir)wwwroot\scss\theme\default.scss" DestinationFiles="$(PackageSource)\wwwroot\scss\theme\default.scss" ContinueOnError="true" />
     <Copy SourceFiles="$(ProjectDir)wwwroot\scss\tuxboard.scss" DestinationFiles="$(PackageSource)\wwwroot\scss\tuxboard.scss" ContinueOnError="true" />
 
-
+    <!-- 
+    Technique used from https://gist.github.com/fearthecowboy/9e06ad9d92c5d939582147a35c049693
+    -->
     <PropertyGroup>
       <myscript>
         $(PowerShell)
