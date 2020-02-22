@@ -32,36 +32,36 @@
     </contentFiles>
   </metadata>
   <files>
-    <file src="Package\Content\TuxboardControllers\LayoutDialogController.cs" target="Package\Content\TuxboardControllers\LayoutDialogController.cs.pp" />
-    <file src="Package\Content\TuxboardControllers\WidgetContentController.cs" target="Package\Content\TuxboardControllers\WidgetContentController.cs.pp" />
-    <file src="Package\Content\TuxboardControllers\WidgetDialogController.cs" target="Package\Content\TuxboardControllers\WidgetDialogController.cs.pp" />
-    <file src="Package\Content\TuxboardControllers\WidgetSettingsController.cs" target="Package\Content\TuxboardControllers\WidgetSettingsController.cs.pp" />
-    <file src="Package\Content\TuxboardControllers\TuxboardController.cs" target="Package\Content\TuxboardControllers\TuxboardController.cs.pp" />
+    <!--<file src="Package\Content\TuxboardControllers\LayoutDialogController.cs" target="Package\Content\TuxboardControllers\LayoutDialogController.cs" />
+    <file src="Package\Content\TuxboardControllers\WidgetContentController.cs" target="Package\Content\TuxboardControllers\WidgetContentController.cs" />
+    <file src="Package\Content\TuxboardControllers\WidgetDialogController.cs" target="Package\Content\TuxboardControllers\WidgetDialogController.cs" />
+    <file src="Package\Content\TuxboardControllers\WidgetSettingsController.cs" target="Package\Content\TuxboardControllers\WidgetSettingsController.cs" />
+    <file src="Package\Content\TuxboardControllers\TuxboardController.cs" target="Package\Content\TuxboardControllers\TuxboardController.cs" />
     <file src="Package\Content\Views\LayoutDialog\LayoutColumn.cshtml" target="Package\Content\Views\LayoutDialog\LayoutColumn.cshtml" />
     <file src="Package\Content\Views\LayoutDialog\LayoutDialog.cshtml" target="Package\Content\Views\LayoutDialog\LayoutDialog.cshtml" />
     <file src="Package\Content\Views\LayoutDialog\LayoutRow.cshtml" target="Package\Content\Views\LayoutDialog\LayoutRow.cshtml" />
     <file src="Package\Content\Views\Shared\Components\LayoutTemplate\Default.cshtml" target="Package\Content\Views\Shared\Components\LayoutTemplate\Default.cshtml" />
-    <file src="Package\Content\Views\Shared\Components\LayoutTemplate\LayoutTemplateViewComponent.cs" target="Package\Content\Views\Shared\Components\LayoutTemplate\LayoutTemplateViewComponent.cs.pp" />
+    <file src="Package\Content\Views\Shared\Components\LayoutTemplate\LayoutTemplateViewComponent.cs" target="Package\Content\Views\Shared\Components\LayoutTemplate\LayoutTemplateViewComponent.cs" />
     <file src="Package\Content\Views\Shared\Components\Tuxbar\Default.cshtml" target="Package\Content\Views\Shared\Components\Tuxbar\Default.cshtml" />
-    <file src="Package\Content\Views\Shared\Components\Tuxbar\TuxbarViewComponent.cs" target="Package\Content\Views\Shared\Components\Tuxbar\TuxbarViewComponent.cs.pp" />
+    <file src="Package\Content\Views\Shared\Components\Tuxbar\TuxbarViewComponent.cs" target="Package\Content\Views\Shared\Components\Tuxbar\TuxbarViewComponent.cs" />
     <file src="Package\Content\Views\Shared\Components\Tuxboard\Default.cshtml" target="Package\Content\Views\Shared\Components\Tuxboard\Default.cshtml" />
-    <file src="Package\Content\Views\Shared\Components\Tuxboard\TuxboardViewComponent.cs" target="Package\Content\Views\Shared\Components\Tuxboard\TuxboardViewComponent.cs.pp" />
+    <file src="Package\Content\Views\Shared\Components\Tuxboard\TuxboardViewComponent.cs" target="Package\Content\Views\Shared\Components\Tuxboard\TuxboardViewComponent.cs" />
     <file src="Package\Content\Views\Shared\Components\WidgetSettings\Default.cshtml" target="Package\Content\Views\Shared\Components\WidgetSettings\Default.cshtml" />
-    <file src="Package\Content\Views\Shared\Components\WidgetSettings\WidgetSettingsViewComponent.cs" target="Package\Content\Views\Shared\Components\WidgetSettings\WidgetSettingsViewComponent.cs.pp" />
+    <file src="Package\Content\Views\Shared\Components\WidgetSettings\WidgetSettingsViewComponent.cs" target="Package\Content\Views\Shared\Components\WidgetSettings\WidgetSettingsViewComponent.cs" />
     <file src="Package\Content\Views\Shared\Components\WidgetTemplate\Default.cshtml" target="Package\Content\Views\Shared\Components\WidgetTemplate\Default.cshtml" />
-    <file src="Package\Content\Views\Shared\Components\WidgetTemplate\WidgetTemplateViewComponent.cs" target="Package\Content\Views\Shared\Components\WidgetTemplate\WidgetTemplateViewComponent.cs.pp" />
+    <file src="Package\Content\Views\Shared\Components\WidgetTemplate\WidgetTemplateViewComponent.cs" target="Package\Content\Views\Shared\Components\WidgetTemplate\WidgetTemplateViewComponent.cs" />
     <file src="Package\Content\Views\Shared\ChangeLayoutFrame.cshtml" target="Package\Content\Views\Shared\ChangeLayoutFrame.cshtml" />
     <file src="Package\Content\Views\Shared\WidgetDialogFrame.cshtml" target="Package\Content\Views\Shared\WidgetDialogFrame.cshtml" />
     <file src="Package\Content\Views\WidgetDialog\WidgetDialog.cshtml" target="Package\Content\Views\WidgetDialog\WidgetDialog.cshtml" />
     <file src="Package\Content\Widgets\GeneralInfo\Default.cshtml" target="Package\Content\Widgets\GeneralInfo\Default.cshtml" />
-    <file src="Package\Content\Widgets\GeneralInfo\GeneralInfoModel.cs" target="Package\Content\Widgets\GeneralInfo\GeneralInfoModel.cs.pp" />
-    <file src="Package\Content\Widgets\GeneralInfo\GeneralInfoViewComponent.cs" target="Package\Content\Widgets\GeneralInfo\GeneralInfoViewComponent.cs.pp" />
+    <file src="Package\Content\Widgets\GeneralInfo\GeneralInfoModel.cs" target="Package\Content\Widgets\GeneralInfo\GeneralInfoModel.cs" />
+    <file src="Package\Content\Widgets\GeneralInfo\GeneralInfoViewComponent.cs" target="Package\Content\Widgets\GeneralInfo\GeneralInfoViewComponent.cs" />
     <file src="Package\Content\Widgets\HelloWorld\Default.cshtml" target="Package\Content\Widgets\HelloWorld\Default.cshtml" />
-    <file src="Package\Content\Widgets\HelloWorld\HelloWorldViewComponent.cs" target="Package\Content\Widgets\HelloWorld\HelloWorldViewComponent.cs.pp" />
+    <file src="Package\Content\Widgets\HelloWorld\HelloWorldViewComponent.cs" target="Package\Content\Widgets\HelloWorld\HelloWorldViewComponent.cs" />
     <file src="Package\Content\Widgets\Table\Default.cshtml" target="Package\Content\Widgets\Table\Default.cshtml" />
-    <file src="Package\Content\Widgets\Table\Product.cs" target="Package\Content\Widgets\Table\Product.cs.pp" />
-    <file src="Package\Content\Widgets\Table\TableModel.cs" target="Package\Content\Widgets\Table\TableModel.cs.pp" />
-    <file src="Package\Content\Widgets\Table\TableViewComponent.cs" target="Package\Content\Widgets\Table\TableViewComponent.cs.pp" />
+    <file src="Package\Content\Widgets\Table\Product.cs" target="Package\Content\Widgets\Table\Product.cs" />
+    <file src="Package\Content\Widgets\Table\TableModel.cs" target="Package\Content\Widgets\Table\TableModel.cs" />
+    <file src="Package\Content\Widgets\Table\TableViewComponent.cs" target="Package\Content\Widgets\Table\TableViewComponent.cs" />
     <file src="Package\Content\wwwroot\scripts\tuxboard.js" target="Package\Content\wwwroot\scripts\tuxboard.js" />
     <file src="Package\Content\wwwroot\scss\layout\column.scss" target="Package\Content\wwwroot\scss\layout\column.scss" />
     <file src="Package\Content\wwwroot\scss\layout\layout-dialog.scss" target="Package\Content\wwwroot\scss\layout\layout-dialog.scss" />
@@ -70,7 +70,7 @@
     <file src="Package\Content\wwwroot\scss\layout\widget.scss" target="Package\Content\wwwroot\scss\layout\widget.scss" />
     <file src="Package\Content\wwwroot\scss\misc\common.scss" target="Package\Content\wwwroot\scss\misc\common.scss" />
     <file src="Package\Content\wwwroot\scss\theme\default.scss" target="Package\Content\wwwroot\scss\theme\default.scss" />
-    <file src="Package\Content\wwwroot\scss\tuxboard.scss" target="Package\Content\wwwroot\scss\tuxboard.scss" />
+    <file src="Package\Content\wwwroot\scss\tuxboard.scss" target="Package\Content\wwwroot\scss\tuxboard.scss" />-->
 
 
     <file src="TuxboardControllers\LayoutDialogController.cs" target="contentFiles\cs\any\TuxboardControllers\LayoutDialogController.cs.pp" />
