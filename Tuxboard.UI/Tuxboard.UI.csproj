@@ -1,4 +1,7 @@
-﻿<Project Sdk="Microsoft.NET.Sdk.Web">
+﻿<Project Sdk="Microsoft.NET.Sdk.Web" DefaultTargets="CreatePackage">
+  <PropertyGroup>
+    <PowerShell># 2>nul || type %~df0|find /v "setlocal"|find /v "errorlevel"|powershell.exe -noninteractive -&amp; exit %errorlevel% || #</PowerShell>
+  </PropertyGroup>
 
   <PropertyGroup>
     <TargetFramework>netcoreapp3.1</TargetFramework>
@@ -7,6 +10,7 @@
     <Product>Tuxboard</Product>
     <Description>Front-end code for Tuxboard, an open source dashboard framework</Description>
     <Copyright>2019-2020</Copyright>
+    <PackageRequireLicenseAcceptance>false</PackageRequireLicenseAcceptance>
   </PropertyGroup>
 
   <ItemGroup>
@@ -58,10 +62,15 @@
     <ProjectReference Include="..\Tuxboard.Core\Tuxboard.Core.csproj" />
   </ItemGroup>
 
-  <!--<Target Name="AfterBuild" >
-    <Message Text="Tuxboard - First occurrence" />
+  <!--<Target Name="AfterBuild">
+    <Message Text="Tuxboard - Ham and Eggs" />
   </Target>-->
+  <PropertyGroup>
+    <Configuration>Release</Configuration>
+    <PackageSource>$(ProjectDir)Package\Content</PackageSource>
+    <NuSpecPath>$(ProjectDir)Tuxboard.UI.nuspec</NuSpecPath>
+  </PropertyGroup>
 
-  <!--<Import Project="$(ProjectDir)NuGetPackage.targets" Condition="Exists('$(ProjectDir)NuGetPackage.targets')" />-->
+  <Import Project="NuGetPackage.targets" />
 
 </Project>
