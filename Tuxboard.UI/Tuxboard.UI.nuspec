@@ -30,9 +30,6 @@
       <files include="any/any/wwwroot/scripts/tuxboard.js" buildAction="content" copyToOutput="true" flatten="true" />
       <files include="any/any/wwwroot/scss/**/*.*" buildAction="content" copyToOutput="true" flatten="true" />
     </contentFiles>
-    <content>
-      
-    </content>
   </metadata>
   <files>
     
