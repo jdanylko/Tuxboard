@@ -32,7 +32,7 @@
     </contentFiles>
   </metadata>
   <files>
-    <!--<file src="Package\Content\TuxboardControllers\LayoutDialogController.cs" target="Package\Content\TuxboardControllers\LayoutDialogController.cs" />
+    <file src="Package\Content\TuxboardControllers\LayoutDialogController.cs" target="Package\Content\TuxboardControllers\LayoutDialogController.cs" />
     <file src="Package\Content\TuxboardControllers\WidgetContentController.cs" target="Package\Content\TuxboardControllers\WidgetContentController.cs" />
     <file src="Package\Content\TuxboardControllers\WidgetDialogController.cs" target="Package\Content\TuxboardControllers\WidgetDialogController.cs" />
     <file src="Package\Content\TuxboardControllers\WidgetSettingsController.cs" target="Package\Content\TuxboardControllers\WidgetSettingsController.cs" />
@@ -70,7 +70,7 @@
     <file src="Package\Content\wwwroot\scss\layout\widget.scss" target="Package\Content\wwwroot\scss\layout\widget.scss" />
     <file src="Package\Content\wwwroot\scss\misc\common.scss" target="Package\Content\wwwroot\scss\misc\common.scss" />
     <file src="Package\Content\wwwroot\scss\theme\default.scss" target="Package\Content\wwwroot\scss\theme\default.scss" />
-    <file src="Package\Content\wwwroot\scss\tuxboard.scss" target="Package\Content\wwwroot\scss\tuxboard.scss" />-->
+    <file src="Package\Content\wwwroot\scss\tuxboard.scss" target="Package\Content\wwwroot\scss\tuxboard.scss" />
 
 
     <file src="TuxboardControllers\LayoutDialogController.cs" target="contentFiles\cs\any\TuxboardControllers\LayoutDialogController.cs.pp" />
