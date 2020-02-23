@@ -53,12 +53,12 @@
     <file src="Package\Content\Views\Shared\ChangeLayoutFrame.cshtml" target="Package\Content\Views\Shared\ChangeLayoutFrame.cshtml" />
     <file src="Package\Content\Views\Shared\WidgetDialogFrame.cshtml" target="Package\Content\Views\Shared\WidgetDialogFrame.cshtml" />
     <file src="Package\Content\Views\WidgetDialog\WidgetDialog.cshtml" target="Package\Content\Views\WidgetDialog\WidgetDialog.cshtml" />
-    <file src="Package\Content\Widgets\GeneralInfo\Default.cshtml" target="Package\Content\Widgets\GeneralInfo\Default.cshtml" />
+    <file src="Package\Content\Widgets\GeneralInfo\Default.cshtml.pp" target="Package\Content\Widgets\GeneralInfo\Default.cshtml" />
     <file src="Package\Content\Widgets\GeneralInfo\GeneralInfoModel.cs.pp" target="Package\Content\Widgets\GeneralInfo\GeneralInfoModel.cs" />
     <file src="Package\Content\Widgets\GeneralInfo\GeneralInfoViewComponent.cs.pp" target="Package\Content\Widgets\GeneralInfo\GeneralInfoViewComponent.cs" />
-    <file src="Package\Content\Widgets\HelloWorld\Default.cshtml" target="Package\Content\Widgets\HelloWorld\Default.cshtml" />
+    <file src="Package\Content\Widgets\HelloWorld\Default.cshtml.pp" target="Package\Content\Widgets\HelloWorld\Default.cshtml" />
     <file src="Package\Content\Widgets\HelloWorld\HelloWorldViewComponent.cs.pp" target="Package\Content\Widgets\HelloWorld\HelloWorldViewComponent.cs" />
-    <file src="Package\Content\Widgets\Table\Default.cshtml" target="Package\Content\Widgets\Table\Default.cshtml" />
+    <file src="Package\Content\Widgets\Table\Default.cshtml.pp" target="Package\Content\Widgets\Table\Default.cshtml" />
     <file src="Package\Content\Widgets\Table\Product.cs.pp" target="Package\Content\Widgets\Table\Product.cs" />
     <file src="Package\Content\Widgets\Table\TableModel.cs.pp" target="Package\Content\Widgets\Table\TableModel.cs" />
     <file src="Package\Content\Widgets\Table\TableViewComponent.cs.pp" target="Package\Content\Widgets\Table\TableViewComponent.cs" />
