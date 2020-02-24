@@ -42,15 +42,15 @@
     <file src="Package\Content\Views\LayoutDialog\LayoutDialog.cshtml" target="Package\Content\Views\LayoutDialog\LayoutDialog.cshtml" />
     <file src="Package\Content\Views\LayoutDialog\LayoutRow.cshtml" target="Package\Content\Views\LayoutDialog\LayoutRow.cshtml" />
     <file src="Package\Content\Views\Shared\Components\LayoutTemplate\Default.cshtml" target="Package\Content\Views\Shared\Components\LayoutTemplate\Default.cshtml" />
-    <file src="Package\Content\Views\Shared\Components\LayoutTemplate\LayoutTemplateViewComponent.cs.pp" target="Package\Content\Views\Shared\Components\LayoutTemplate\LayoutTemplateViewComponent.cs" />
+    <file src="Package\Content\Views\Shared\Components\LayoutTemplate\LayoutTemplateViewComponent.cs" target="Package\Content\Views\Shared\Components\LayoutTemplate\LayoutTemplateViewComponent.cs" />
     <file src="Package\Content\Views\Shared\Components\Tuxbar\Default.cshtml" target="Package\Content\Views\Shared\Components\Tuxbar\Default.cshtml" />
     <file src="Package\Content\Views\Shared\Components\Tuxbar\TuxbarViewComponent.cs" target="Package\Content\Views\Shared\Components\Tuxbar\TuxbarViewComponent.cs" />
     <file src="Package\Content\Views\Shared\Components\Tuxboard\Default.cshtml" target="Package\Content\Views\Shared\Components\Tuxboard\Default.cshtml" />
     <file src="Package\Content\Views\Shared\Components\Tuxboard\TuxboardViewComponent.cs" target="Package\Content\Views\Shared\Components\Tuxboard\TuxboardViewComponent.cs" />
     <file src="Package\Content\Views\Shared\Components\WidgetSettings\Default.cshtml" target="Package\Content\Views\Shared\Components\WidgetSettings\Default.cshtml" />
-    <file src="Package\Content\Views\Shared\Components\WidgetSettings\WidgetSettingsViewComponent.cs.pp" target="Package\Content\Views\Shared\Components\WidgetSettings\WidgetSettingsViewComponent.cs" />
+    <file src="Package\Content\Views\Shared\Components\WidgetSettings\WidgetSettingsViewComponent.cs" target="Package\Content\Views\Shared\Components\WidgetSettings\WidgetSettingsViewComponent.cs" />
     <file src="Package\Content\Views\Shared\Components\WidgetTemplate\Default.cshtml" target="Package\Content\Views\Shared\Components\WidgetTemplate\Default.cshtml" />
-    <file src="Package\Content\Views\Shared\Components\WidgetTemplate\WidgetTemplateViewComponent.cs.pp" target="Package\Content\Views\Shared\Components\WidgetTemplate\WidgetTemplateViewComponent.cs" />
+    <file src="Package\Content\Views\Shared\Components\WidgetTemplate\WidgetTemplateViewComponent.cs" target="Package\Content\Views\Shared\Components\WidgetTemplate\WidgetTemplateViewComponent.cs" />
     <file src="Package\Content\Views\Shared\ChangeLayoutFrame.cshtml" target="Package\Content\Views\Shared\ChangeLayoutFrame.cshtml" />
     <file src="Package\Content\Views\Shared\WidgetDialogFrame.cshtml" target="Package\Content\Views\Shared\WidgetDialogFrame.cshtml" />
     <file src="Package\Content\Views\WidgetDialog\WidgetDialog.cshtml" target="Package\Content\Views\WidgetDialog\WidgetDialog.cshtml" />
