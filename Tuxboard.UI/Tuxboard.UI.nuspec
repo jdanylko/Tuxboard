@@ -18,7 +18,7 @@
       </group>
     </dependencies>
     <contentFiles>
-      <files include="cs\any\TuxboardControllers\**\*.*" buildAction="Content" copyToOutput="true" flatten="true" />
+      <files include="cs\any\TuxboardControllers\*.cs.pp" buildAction="Content" copyToOutput="true" flatten="true" />
       <files include="any\any\Views\LayoutDialog\LayoutColumn.cshtml" buildAction="Content" copyToOutput="true" flatten="true" />
       <files include="any\any\Views\LayoutDialog\LayoutDialog.cshtml" buildAction="Content" copyToOutput="true" flatten="true" />
       <files include="any\any\Views\LayoutDialog\LayoutRow.cshtml" buildAction="Content" copyToOutput="true" flatten="true" />
