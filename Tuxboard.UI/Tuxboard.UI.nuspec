@@ -18,17 +18,20 @@
       </group>
     </dependencies>
     <contentFiles>
-      <files include="TuxboardControllers/**/*.*" buildAction="content" />
-      <files include="Views/LayoutDialog/LayoutColumn.cshtml" buildAction="content" />
-      <files include="Views/LayoutDialog/LayoutDialog.cshtml" buildAction="content" />
-      <files include="Views/LayoutDialog/LayoutRow.cshtml" buildAction="content" />
-      <files include="Views/Shared/ChangeLayoutFrame.cshtml" buildAction="content" />
-      <files include="Views/Shared/WidgetDialogFrame.cshtml" buildAction="content" />
-      <files include="Views/Shared/Components/**/*.cshtml" buildAction="content" />
-      <files include="Views/WidgetDialog/WidgetDialog.cshtml" buildAction="content" />
-      <files include="Widgets/**/*.*" buildAction="content" />
-      <files include="wwwroot/scripts/tuxboard.js" buildAction="content" />
-      <files include="wwwroot/scss/**/*.*" buildAction="content" />
+      <files include="contentFiles/cs/any/TuxboardControllers/**/*.cs.pp" buildAction="content" />
+      <files include="contentFiles/any/any/Views/LayoutDialog/LayoutColumn.cshtml" buildAction="content" />
+      <files include="contentFiles/any/any/Views/LayoutDialog/LayoutDialog.cshtml" buildAction="content" />
+      <files include="contentFiles/any/any/Views/LayoutDialog/LayoutRow.cshtml" buildAction="content" />
+      <files include="contentFiles/any/any/Views/WidgetDialog/WidgetDialog.cshtml" buildAction="content" />
+      <files include="contentFiles/any/any/Views/Shared/ChangeLayoutFrame.cshtml" buildAction="content" />
+      <files include="contentFiles/any/any/Views/Shared/WidgetDialogFrame.cshtml" buildAction="content" />
+
+      <files include="contentFiles/any/any/Views/Shared/Components/**/*.cshtml" buildAction="content" />
+      <files include="contentFiles/cs/any/Views/Shared/Components/**/*.*" buildAction="content" />
+      <files include="contentFiles/cs/any/Widgets/**/*.*" buildAction="content" />
+      <files include="contentFiles/any/any/Widgets/**/*.*" buildAction="content" />
+      <files include="contentFiles/any/any/wwwroot/scripts/tuxboard.js" buildAction="content" />
+      <files include="contentFiles/any/any/wwwroot/scss/**/*.*" buildAction="content" />
     </contentFiles>
   </metadata>
   <files>
