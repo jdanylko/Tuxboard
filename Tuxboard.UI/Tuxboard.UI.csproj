@@ -62,9 +62,11 @@
     <ProjectReference Include="..\Tuxboard.Core\Tuxboard.Core.csproj" />
   </ItemGroup>
 
-  <!--<Target Name="AfterBuild">
+  <!--
+  <Target Name="AfterBuild">
     <Message Text="Tuxboard - Ham and Eggs" />
-  </Target>-->
+  </Target>
+  -->
   <PropertyGroup>
     <Configuration>Release</Configuration>
     <PackageSource>$(ProjectDir)Package\Content</PackageSource>
