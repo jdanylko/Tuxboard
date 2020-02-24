@@ -18,62 +18,62 @@
       </group>
     </dependencies>
     <contentFiles>
-      <files include="cs/any/TuxboardControllers/**/*.*" buildAction="Compile" copyToOutput="true" flatten="true" />
-      <files include="any/any/Views/LayoutDialog/LayoutColumn.cshtml" buildAction="Compile" copyToOutput="true" flatten="true" />
-      <files include="any/any/Views/LayoutDialog/LayoutDialog.cshtml" buildAction="Compile" copyToOutput="true" flatten="true" />
-      <files include="any/any/Views/LayoutDialog/LayoutRow.cshtml" buildAction="Compile" copyToOutput="true" flatten="true" />
-      <files include="any/any/Views/Shared/ChangeLayoutFrame.cshtml" buildAction="Compile" copyToOutput="true" flatten="true" />
-      <files include="any/any/Views/Shared/WidgetDialogFrame.cshtml" buildAction="Compile" copyToOutput="true" flatten="true" />
-      <files include="any/any/Views/Shared/Components/**/*.*" buildAction="Compile" copyToOutput="true" flatten="true" />
-      <files include="any/any/Views/WidgetDialog/WidgetDialog.cshtml" buildAction="Compile" copyToOutput="true" flatten="true" />
-      <files include="any/any/Widgets/**/*.*" buildAction="Compile" copyToOutput="true" flatten="true" />
-      <files include="any/any/wwwroot/scripts/tuxboard.js" buildAction="Compile" copyToOutput="true" flatten="true" />
-      <files include="any/any/wwwroot/scss/**/*.*" buildAction="Compile" copyToOutput="true" flatten="true" />
+      <files include="cs/netcoreapp3.1/TuxboardControllers/**/*.*" buildAction="Compile" copyToOutput="true" flatten="true" />
+      <files include="any/netcoreapp3.1/Views/LayoutDialog/LayoutColumn.cshtml" buildAction="Compile" copyToOutput="true" flatten="true" />
+      <files include="any/netcoreapp3.1/Views/LayoutDialog/LayoutDialog.cshtml" buildAction="Compile" copyToOutput="true" flatten="true" />
+      <files include="any/netcoreapp3.1/Views/LayoutDialog/LayoutRow.cshtml" buildAction="Compile" copyToOutput="true" flatten="true" />
+      <files include="any/netcoreapp3.1/Views/Shared/ChangeLayoutFrame.cshtml" buildAction="Compile" copyToOutput="true" flatten="true" />
+      <files include="any/netcoreapp3.1/Views/Shared/WidgetDialogFrame.cshtml" buildAction="Compile" copyToOutput="true" flatten="true" />
+      <files include="any/netcoreapp3.1/Views/Shared/Components/**/*.*" buildAction="Compile" copyToOutput="true" flatten="true" />
+      <files include="any/netcoreapp3.1/Views/WidgetDialog/WidgetDialog.cshtml" buildAction="Compile" copyToOutput="true" flatten="true" />
+      <files include="any/netcoreapp3.1/Widgets/**/*.*" buildAction="Compile" copyToOutput="true" flatten="true" />
+      <files include="any/netcoreapp3.1/wwwroot/scripts/tuxboard.js" buildAction="Compile" copyToOutput="true" flatten="true" />
+      <files include="any/netcoreapp3.1/wwwroot/scss/**/*.*" buildAction="Compile" copyToOutput="true" flatten="true" />
     </contentFiles>
   </metadata>
   <files>
-    <file src="Package\Content\TuxboardControllers\LayoutDialogController.cs.pp" target="contentFiles\cs\any\TuxboardControllers" />
-    <file src="Package\Content\TuxboardControllers\WidgetContentController.cs.pp" target="contentFiles\cs\any\TuxboardControllers" />
-    <file src="Package\Content\TuxboardControllers\WidgetDialogController.cs.pp" target="contentFiles\cs\any\TuxboardControllers" />
-    <file src="Package\Content\TuxboardControllers\WidgetSettingsController.cs.pp" target="contentFiles\any\any\TuxboardControllers" />
-    <file src="Package\Content\TuxboardControllers\TuxboardController.cs.pp" target="contentFiles\cs\any\TuxboardControllers" />
+    <file src="Package\Content\TuxboardControllers\LayoutDialogController.cs.pp" target="contentFiles\cs\netcoreapp3.1\TuxboardControllers" />
+    <file src="Package\Content\TuxboardControllers\WidgetContentController.cs.pp" target="contentFiles\cs\netcoreapp3.1\TuxboardControllers" />
+    <file src="Package\Content\TuxboardControllers\WidgetDialogController.cs.pp" target="contentFiles\cs\netcoreapp3.1\TuxboardControllers" />
+    <file src="Package\Content\TuxboardControllers\WidgetSettingsController.cs.pp" target="contentFiles\netcoreapp3.1\netcoreapp3.1\TuxboardControllers" />
+    <file src="Package\Content\TuxboardControllers\TuxboardController.cs.pp" target="contentFiles\cs\netcoreapp3.1\TuxboardControllers" />
     <!-- -->
-    <file src="Package\Content\Views\LayoutDialog\LayoutColumn.cshtml" target="contentFiles\any\any\Views\LayoutDialog\LayoutColumn.cshtml" />
-    <file src="Package\Content\Views\LayoutDialog\LayoutDialog.cshtml" target="contentFiles\any\any\Views\LayoutDialog\LayoutDialog.cshtml" />
-    <file src="Package\Content\Views\LayoutDialog\LayoutRow.cshtml" target="contentFiles\any\any\Views\LayoutDialog\LayoutRow.cshtml" />
-    <file src="Package\Content\Views\Shared\Components\LayoutTemplate\Default.cshtml" target="contentFiles\any\any\Views\Shared\Components\LayoutTemplate\Default.cshtml" />
-    <file src="Package\Content\Views\Shared\Components\LayoutTemplate\LayoutTemplateViewComponent.cs" target="contentFiles\any\any\Views\Shared\Components\LayoutTemplate\LayoutTemplateViewComponent.cs" />
-    <file src="Package\Content\Views\Shared\Components\Tuxbar\Default.cshtml" target="contentFiles\any\any\Views\Shared\Components\Tuxbar\Default.cshtml" />
-    <file src="Package\Content\Views\Shared\Components\Tuxbar\TuxbarViewComponent.cs" target="contentFiles\any\any\Views\Shared\Components\Tuxbar\TuxbarViewComponent.cs" />
-    <file src="Package\Content\Views\Shared\Components\Tuxboard\Default.cshtml" target="contentFiles\any\any\Views\Shared\Components\Tuxboard\Default.cshtml" />
-    <file src="Package\Content\Views\Shared\Components\Tuxboard\TuxboardViewComponent.cs" target="contentFiles\any\any\Views\Shared\Components\Tuxboard\TuxboardViewComponent.cs" />
-    <file src="Package\Content\Views\Shared\Components\WidgetSettings\Default.cshtml" target="contentFiles\any\any\Views\Shared\Components\WidgetSettings\Default.cshtml" />
-    <file src="Package\Content\Views\Shared\Components\WidgetSettings\WidgetSettingsViewComponent.cs" target="contentFiles\any\any\Views\Shared\Components\WidgetSettings\WidgetSettingsViewComponent.cs" />
-    <file src="Package\Content\Views\Shared\Components\WidgetTemplate\Default.cshtml" target="contentFiles\any\any\Views\Shared\Components\WidgetTemplate\Default.cshtml" />
-    <file src="Package\Content\Views\Shared\Components\WidgetTemplate\WidgetTemplateViewComponent.cs" target="contentFiles\any\any\Views\Shared\Components\WidgetTemplate\WidgetTemplateViewComponent.cs" />
-    <file src="Package\Content\Views\Shared\ChangeLayoutFrame.cshtml" target="contentFiles\any\any\Views\Shared\ChangeLayoutFrame.cshtml" />
-    <file src="Package\Content\Views\Shared\WidgetDialogFrame.cshtml" target="contentFiles\any\any\Views\Shared\WidgetDialogFrame.cshtml" />
-    <file src="Package\Content\Views\WidgetDialog\WidgetDialog.cshtml" target="contentFiles\any\any\Views\WidgetDialog\WidgetDialog.cshtml" />
+    <file src="Package\Content\Views\LayoutDialog\LayoutColumn.cshtml" target="contentFiles\any\netcoreapp3.1\Views\LayoutDialog\LayoutColumn.cshtml" />
+    <file src="Package\Content\Views\LayoutDialog\LayoutDialog.cshtml" target="contentFiles\any\netcoreapp3.1\Views\LayoutDialog\LayoutDialog.cshtml" />
+    <file src="Package\Content\Views\LayoutDialog\LayoutRow.cshtml" target="contentFiles\any\netcoreapp3.1\Views\LayoutDialog\LayoutRow.cshtml" />
+    <file src="Package\Content\Views\Shared\Components\LayoutTemplate\Default.cshtml" target="contentFiles\any\netcoreapp3.1\Views\Shared\Components\LayoutTemplate\Default.cshtml" />
+    <file src="Package\Content\Views\Shared\Components\LayoutTemplate\LayoutTemplateViewComponent.cs" target="contentFiles\any\netcoreapp3.1\Views\Shared\Components\LayoutTemplate\LayoutTemplateViewComponent.cs" />
+    <file src="Package\Content\Views\Shared\Components\Tuxbar\Default.cshtml" target="contentFiles\any\netcoreapp3.1\Views\Shared\Components\Tuxbar\Default.cshtml" />
+    <file src="Package\Content\Views\Shared\Components\Tuxbar\TuxbarViewComponent.cs" target="contentFiles\any\netcoreapp3.1\Views\Shared\Components\Tuxbar\TuxbarViewComponent.cs" />
+    <file src="Package\Content\Views\Shared\Components\Tuxboard\Default.cshtml" target="contentFiles\any\netcoreapp3.1\Views\Shared\Components\Tuxboard\Default.cshtml" />
+    <file src="Package\Content\Views\Shared\Components\Tuxboard\TuxboardViewComponent.cs" target="contentFiles\any\netcoreapp3.1\Views\Shared\Components\Tuxboard\TuxboardViewComponent.cs" />
+    <file src="Package\Content\Views\Shared\Components\WidgetSettings\Default.cshtml" target="contentFiles\any\netcoreapp3.1\Views\Shared\Components\WidgetSettings\Default.cshtml" />
+    <file src="Package\Content\Views\Shared\Components\WidgetSettings\WidgetSettingsViewComponent.cs" target="contentFiles\any\netcoreapp3.1\Views\Shared\Components\WidgetSettings\WidgetSettingsViewComponent.cs" />
+    <file src="Package\Content\Views\Shared\Components\WidgetTemplate\Default.cshtml" target="contentFiles\any\netcoreapp3.1\Views\Shared\Components\WidgetTemplate\Default.cshtml" />
+    <file src="Package\Content\Views\Shared\Components\WidgetTemplate\WidgetTemplateViewComponent.cs" target="contentFiles\any\netcoreapp3.1\Views\Shared\Components\WidgetTemplate\WidgetTemplateViewComponent.cs" />
+    <file src="Package\Content\Views\Shared\ChangeLayoutFrame.cshtml" target="contentFiles\any\netcoreapp3.1\Views\Shared\ChangeLayoutFrame.cshtml" />
+    <file src="Package\Content\Views\Shared\WidgetDialogFrame.cshtml" target="contentFiles\any\netcoreapp3.1\Views\Shared\WidgetDialogFrame.cshtml" />
+    <file src="Package\Content\Views\WidgetDialog\WidgetDialog.cshtml" target="contentFiles\any\netcoreapp3.1\Views\WidgetDialog\WidgetDialog.cshtml" />
     <!-- -->
-    <file src="Package\Content\Widgets\GeneralInfo\Default.cshtml.pp" target="contentFiles\any\any\Widgets\GeneralInfo" />
-    <file src="Package\Content\Widgets\GeneralInfo\GeneralInfoModel.cs.pp" target="contentFiles\any\any\Widgets\GeneralInfo" />
-    <file src="Package\Content\Widgets\GeneralInfo\GeneralInfoViewComponent.cs.pp" target="contentFiles\any\any\Widgets\GeneralInfo" />
-    <file src="Package\Content\Widgets\HelloWorld\Default.cshtml.pp" target="contentFiles\any\any\Widgets\HelloWorld" />
-    <file src="Package\Content\Widgets\HelloWorld\HelloWorldViewComponent.cs.pp" target="contentFiles\any\any\Widgets\HelloWorld" />
-    <file src="Package\Content\Widgets\Table\Default.cshtml.pp" target="contentFiles\any\any\Widgets\Table" />
-    <file src="Package\Content\Widgets\Table\Product.cs.pp" target="contentFiles\any\any\Widgets\Table" />
-    <file src="Package\Content\Widgets\Table\TableModel.cs.pp" target="contentFiles\any\any\Widgets\Table" />
-    <file src="Package\Content\Widgets\Table\TableViewComponent.cs.pp" target="contentFiles\any\any\Widgets\Table" />
+    <file src="Package\Content\Widgets\GeneralInfo\Default.cshtml.pp" target="contentFiles\any\netcoreapp3.1\Widgets\GeneralInfo" />
+    <file src="Package\Content\Widgets\GeneralInfo\GeneralInfoModel.cs.pp" target="contentFiles\any\netcoreapp3.1\Widgets\GeneralInfo" />
+    <file src="Package\Content\Widgets\GeneralInfo\GeneralInfoViewComponent.cs.pp" target="contentFiles\any\netcoreapp3.1\Widgets\GeneralInfo" />
+    <file src="Package\Content\Widgets\HelloWorld\Default.cshtml.pp" target="contentFiles\any\netcoreapp3.1\Widgets\HelloWorld" />
+    <file src="Package\Content\Widgets\HelloWorld\HelloWorldViewComponent.cs.pp" target="contentFiles\any\netcoreapp3.1\Widgets\HelloWorld" />
+    <file src="Package\Content\Widgets\Table\Default.cshtml.pp" target="contentFiles\any\netcoreapp3.1\Widgets\Table" />
+    <file src="Package\Content\Widgets\Table\Product.cs.pp" target="contentFiles\any\netcoreapp3.1\Widgets\Table" />
+    <file src="Package\Content\Widgets\Table\TableModel.cs.pp" target="contentFiles\any\netcoreapp3.1\Widgets\Table" />
+    <file src="Package\Content\Widgets\Table\TableViewComponent.cs.pp" target="contentFiles\any\netcoreapp3.1\Widgets\Table" />
     <!-- -->
-    <file src="Package\Content\wwwroot\scripts\tuxboard.js" target="contentFiles\any\any\wwwroot\scripts\tuxboard.js" />
-    <file src="Package\Content\wwwroot\scss\layout\column.scss" target="contentFiles\any\any\wwwroot\scss\layout\column.scss" />
-    <file src="Package\Content\wwwroot\scss\layout\layout-dialog.scss" target="contentFiles\any\any\wwwroot\scss\layout\layout-dialog.scss" />
-    <file src="Package\Content\wwwroot\scss\layout\widget-dialog.scss" target="contentFiles\any\any\wwwroot\scss\layout\widget-dialog.scss" />
-    <file src="Package\Content\wwwroot\scss\layout\widget-settings.scss" target="contentFiles\any\any\wwwroot\scss\layout\widget-settings.scss" />
-    <file src="Package\Content\wwwroot\scss\layout\widget.scss" target="contentFiles\any\any\wwwroot\scss\layout\widget.scss" />
-    <file src="Package\Content\wwwroot\scss\misc\common.scss" target="contentFiles\any\any\wwwroot\scss\misc\common.scss" />
-    <file src="Package\Content\wwwroot\scss\theme\default.scss" target="contentFiles\any\any\wwwroot\scss\theme\default.scss" />
-    <file src="Package\Content\wwwroot\scss\tuxboard.scss" target="contentFiles\any\any\wwwroot\scss\tuxboard.scss" />
+    <file src="Package\Content\wwwroot\scripts\tuxboard.js" target="contentFiles\any\netcoreapp3.1\wwwroot\scripts\tuxboard.js" />
+    <file src="Package\Content\wwwroot\scss\layout\column.scss" target="contentFiles\any\netcoreapp3.1\wwwroot\scss\layout\column.scss" />
+    <file src="Package\Content\wwwroot\scss\layout\layout-dialog.scss" target="contentFiles\any\netcoreapp3.1\wwwroot\scss\layout\layout-dialog.scss" />
+    <file src="Package\Content\wwwroot\scss\layout\widget-dialog.scss" target="contentFiles\any\netcoreapp3.1\wwwroot\scss\layout\widget-dialog.scss" />
+    <file src="Package\Content\wwwroot\scss\layout\widget-settings.scss" target="contentFiles\any\netcoreapp3.1\wwwroot\scss\layout\widget-settings.scss" />
+    <file src="Package\Content\wwwroot\scss\layout\widget.scss" target="contentFiles\any\netcoreapp3.1\wwwroot\scss\layout\widget.scss" />
+    <file src="Package\Content\wwwroot\scss\misc\common.scss" target="contentFiles\any\netcoreapp3.1\wwwroot\scss\misc\common.scss" />
+    <file src="Package\Content\wwwroot\scss\theme\default.scss" target="contentFiles\any\netcoreapp3.1\wwwroot\scss\theme\default.scss" />
+    <file src="Package\Content\wwwroot\scss\tuxboard.scss" target="contentFiles\any\netcoreapp3.1\wwwroot\scss\tuxboard.scss" />
 
 
     
@@ -82,40 +82,40 @@
     <file src="TuxboardControllers\WidgetDialogController.cs" target="contentFiles\cs\any\TuxboardControllers\WidgetDialogController.cs" />
     <file src="TuxboardControllers\WidgetSettingsController.cs" target="contentFiles\cs\any\TuxboardControllers\WidgetSettingsController.cs" />
     <file src="TuxboardControllers\TuxboardController.cs" target="contentFiles\cs\any\TuxboardControllers\TuxboardController.cs" />
-    <file src="Views\LayoutDialog\LayoutColumn.cshtml" target="contentFiles\any\any\Views\LayoutDialog\LayoutColumn.cshtml" />
-    <file src="Views\LayoutDialog\LayoutDialog.cshtml" target="contentFiles\any\any\Views\LayoutDialog\LayoutDialog.cshtml" />
-    <file src="Views\LayoutDialog\LayoutRow.cshtml" target="contentFiles\any\any\Views\LayoutDialog\LayoutRow.cshtml" />
-    <file src="Views\Shared\Components\LayoutTemplate\Default.cshtml" target="contentFiles\any\any\Views\Shared\Components\LayoutTemplate\Default.cshtml" />
-    <file src="Views\Shared\Components\LayoutTemplate\LayoutTemplateViewComponent.cs" target="contentFiles\any\any\Views\Shared\Components\LayoutTemplate\LayoutTemplateViewComponent.cs" />
-    <file src="Views\Shared\Components\Tuxbar\Default.cshtml" target="contentFiles\any\any\Views\Shared\Components\Tuxbar\Default.cshtml" />
-    <file src="Views\Shared\Components\Tuxbar\TuxbarViewComponent.cs" target="contentFiles\any\any\Views\Shared\Components\Tuxbar\TuxbarViewComponent.cs" />
-    <file src="Views\Shared\Components\Tuxboard\Default.cshtml" target="contentFiles\any\any\Views\Shared\Components\Tuxboard\Default.cshtml" />
-    <file src="Views\Shared\Components\Tuxboard\TuxboardViewComponent.cs" target="contentFiles\any\any\Views\Shared\Components\Tuxboard\TuxboardViewComponent.cs" />
-    <file src="Views\Shared\Components\WidgetSettings\Default.cshtml" target="contentFiles\any\any\Views\Shared\Components\WidgetSettings\Default.cshtml" />
-    <file src="Views\Shared\Components\WidgetSettings\WidgetSettingsViewComponent.cs" target="contentFiles\any\any\Views\Shared\Components\WidgetSettings\WidgetSettingsViewComponent.cs" />
-    <file src="Views\Shared\Components\WidgetTemplate\Default.cshtml" target="contentFiles\any\any\Views\Shared\Components\WidgetTemplate\Default.cshtml" />
-    <file src="Views\Shared\Components\WidgetTemplate\WidgetTemplateViewComponent.cs" target="contentFiles\any\any\Views\Shared\Components\WidgetTemplate\WidgetTemplateViewComponent.cs" />
-    <file src="Views\Shared\ChangeLayoutFrame.cshtml" target="contentFiles\any\any\Views\Shared\ChangeLayoutFrame.cshtml" />
-    <file src="Views\Shared\WidgetDialogFrame.cshtml" target="contentFiles\any\any\Views\Shared\WidgetDialogFrame.cshtml" />
-    <file src="Views\WidgetDialog\WidgetDialog.cshtml" target="contentFiles\any\any\Views\WidgetDialog\WidgetDialog.cshtml" />
-    <file src="Widgets\GeneralInfo\Default.cshtml" target="contentFiles\any\any\Widgets\GeneralInfo\Default.cshtml" />
+    <file src="Views\LayoutDialog\LayoutColumn.cshtml" target="contentFiles\any\netcoreapp3.1\Views\LayoutDialog\LayoutColumn.cshtml" />
+    <file src="Views\LayoutDialog\LayoutDialog.cshtml" target="contentFiles\any\netcoreapp3.1\Views\LayoutDialog\LayoutDialog.cshtml" />
+    <file src="Views\LayoutDialog\LayoutRow.cshtml" target="contentFiles\any\netcoreapp3.1\Views\LayoutDialog\LayoutRow.cshtml" />
+    <file src="Views\Shared\Components\LayoutTemplate\Default.cshtml" target="contentFiles\any\netcoreapp3.1\Views\Shared\Components\LayoutTemplate\Default.cshtml" />
+    <file src="Views\Shared\Components\LayoutTemplate\LayoutTemplateViewComponent.cs" target="contentFiles\any\netcoreapp3.1\Views\Shared\Components\LayoutTemplate\LayoutTemplateViewComponent.cs" />
+    <file src="Views\Shared\Components\Tuxbar\Default.cshtml" target="contentFiles\any\netcoreapp3.1\Views\Shared\Components\Tuxbar\Default.cshtml" />
+    <file src="Views\Shared\Components\Tuxbar\TuxbarViewComponent.cs" target="contentFiles\any\netcoreapp3.1\Views\Shared\Components\Tuxbar\TuxbarViewComponent.cs" />
+    <file src="Views\Shared\Components\Tuxboard\Default.cshtml" target="contentFiles\any\netcoreapp3.1\Views\Shared\Components\Tuxboard\Default.cshtml" />
+    <file src="Views\Shared\Components\Tuxboard\TuxboardViewComponent.cs" target="contentFiles\any\netcoreapp3.1\Views\Shared\Components\Tuxboard\TuxboardViewComponent.cs" />
+    <file src="Views\Shared\Components\WidgetSettings\Default.cshtml" target="contentFiles\any\netcoreapp3.1\Views\Shared\Components\WidgetSettings\Default.cshtml" />
+    <file src="Views\Shared\Components\WidgetSettings\WidgetSettingsViewComponent.cs" target="contentFiles\any\netcoreapp3.1\Views\Shared\Components\WidgetSettings\WidgetSettingsViewComponent.cs" />
+    <file src="Views\Shared\Components\WidgetTemplate\Default.cshtml" target="contentFiles\any\netcoreapp3.1\Views\Shared\Components\WidgetTemplate\Default.cshtml" />
+    <file src="Views\Shared\Components\WidgetTemplate\WidgetTemplateViewComponent.cs" target="contentFiles\any\netcoreapp3.1\Views\Shared\Components\WidgetTemplate\WidgetTemplateViewComponent.cs" />
+    <file src="Views\Shared\ChangeLayoutFrame.cshtml" target="contentFiles\any\netcoreapp3.1\Views\Shared\ChangeLayoutFrame.cshtml" />
+    <file src="Views\Shared\WidgetDialogFrame.cshtml" target="contentFiles\any\netcoreapp3.1\Views\Shared\WidgetDialogFrame.cshtml" />
+    <file src="Views\WidgetDialog\WidgetDialog.cshtml" target="contentFiles\any\netcoreapp3.1\Views\WidgetDialog\WidgetDialog.cshtml" />
+    <file src="Widgets\GeneralInfo\Default.cshtml" target="contentFiles\any\netcoreapp3.1\Widgets\GeneralInfo\Default.cshtml" />
     <file src="Widgets\GeneralInfo\GeneralInfoModel.cs" target="contentFiles\csy\any\Widgets\GeneralInfo\GeneralInfoModel.cs" />
     <file src="Widgets\GeneralInfo\GeneralInfoViewComponent.cs" target="contentFiles\cs\any\Widgets\GeneralInfo\GeneralInfoViewComponent.cs" />
-    <file src="Widgets\HelloWorld\Default.cshtml" target="contentFiles\any\any\Widgets\HelloWorld\Default.cshtml" />
+    <file src="Widgets\HelloWorld\Default.cshtml" target="contentFiles\any\netcoreapp3.1\Widgets\HelloWorld\Default.cshtml" />
     <file src="Widgets\HelloWorld\HelloWorldViewComponent.cs" target="contentFiles\cs\any\Widgets\HelloWorld\HelloWorldViewComponent.cs" />
-    <file src="Widgets\Table\Default.cshtml" target="contentFiles\any\any\Widgets\Table\Default.cshtml" />
+    <file src="Widgets\Table\Default.cshtml" target="contentFiles\any\netcoreapp3.1\Widgets\Table\Default.cshtml" />
     <file src="Widgets\Table\Product.cs" target="contentFiles\cs\any\Widgets\Table\Product.cs" />
     <file src="Widgets\Table\TableModel.cs" target="contentFiles\cs\any\Widgets\Table\TableModel.cs" />
     <file src="Widgets\Table\TableViewComponent.cs" target="contentFiles\cs\any\Widgets\Table\TableViewComponent.cs" />
-    <file src="wwwroot\scripts\tuxboard.js" target="contentFiles\any\any\wwwroot\scripts\tuxboard.js" />
-    <file src="wwwroot\scss\layout\column.scss" target="contentFiles\any\any\wwwroot\scss\layout\column.scss" />
-    <file src="wwwroot\scss\layout\layout-dialog.scss" target="contentFiles\any\any\wwwroot\scss\layout\layout-dialog.scss" />
-    <file src="wwwroot\scss\layout\widget-dialog.scss" target="contentFiles\any\any\wwwroot\scss\layout\widget-dialog.scss" />
-    <file src="wwwroot\scss\layout\widget-settings.scss" target="contentFiles\any\any\wwwroot\scss\layout\widget-settings.scss" />
-    <file src="wwwroot\scss\layout\widget.scss" target="contentFiles\any\any\wwwroot\scss\layout\widget.scss" />
-    <file src="wwwroot\scss\misc\common.scss" target="contentFiles\any\any\wwwroot\scss\misc\common.scss" />
-    <file src="wwwroot\scss\theme\default.scss" target="contentFiles\any\any\wwwroot\scss\theme\default.scss" />
-    <file src="wwwroot\scss\tuxboard.scss" target="contentFiles\any\any\wwwroot\scss\tuxboard.scss" />-->
+    <file src="wwwroot\scripts\tuxboard.js" target="contentFiles\any\netcoreapp3.1\wwwroot\scripts\tuxboard.js" />
+    <file src="wwwroot\scss\layout\column.scss" target="contentFiles\any\netcoreapp3.1\wwwroot\scss\layout\column.scss" />
+    <file src="wwwroot\scss\layout\layout-dialog.scss" target="contentFiles\any\netcoreapp3.1\wwwroot\scss\layout\layout-dialog.scss" />
+    <file src="wwwroot\scss\layout\widget-dialog.scss" target="contentFiles\any\netcoreapp3.1\wwwroot\scss\layout\widget-dialog.scss" />
+    <file src="wwwroot\scss\layout\widget-settings.scss" target="contentFiles\any\netcoreapp3.1\wwwroot\scss\layout\widget-settings.scss" />
+    <file src="wwwroot\scss\layout\widget.scss" target="contentFiles\any\netcoreapp3.1\wwwroot\scss\layout\widget.scss" />
+    <file src="wwwroot\scss\misc\common.scss" target="contentFiles\any\netcoreapp3.1\wwwroot\scss\misc\common.scss" />
+    <file src="wwwroot\scss\theme\default.scss" target="contentFiles\any\netcoreapp3.1\wwwroot\scss\theme\default.scss" />
+    <file src="wwwroot\scss\tuxboard.scss" target="contentFiles\any\netcoreapp3.1\wwwroot\scss\tuxboard.scss" />-->
     
     
   </files>
