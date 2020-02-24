@@ -18,25 +18,25 @@
       </group>
     </dependencies>
     <contentFiles>
-      <files include="cs/any/TuxboardControllers/**/*.cs.pp" buildAction="content" copyToOutput="true" flatten="true" />
-      <files include="any/any/Views/LayoutDialog/LayoutColumn.cshtml" buildAction="content" copyToOutput="true" flatten="true" />
-      <files include="any/any/Views/LayoutDialog/LayoutDialog.cshtml" buildAction="content" copyToOutput="true" flatten="true" />
-      <files include="any/any/Views/LayoutDialog/LayoutRow.cshtml" buildAction="content" copyToOutput="true" flatten="true" />
-      <files include="any/any/Views/Shared/ChangeLayoutFrame.cshtml" buildAction="content" copyToOutput="true" flatten="true" />
-      <files include="any/any/Views/Shared/WidgetDialogFrame.cshtml" buildAction="content" copyToOutput="true" flatten="true" />
-      <files include="any/any/Views/Shared/Components/**/*.cshtml" buildAction="content" copyToOutput="true" flatten="true" />
-      <files include="any/any/Views/WidgetDialog/WidgetDialog.cshtml" buildAction="content" copyToOutput="true" flatten="true" />
-      <files include="any/any/Widgets/**/*.*" buildAction="content" copyToOutput="true" flatten="true" />
-      <files include="any/any/wwwroot/scripts/tuxboard.js" buildAction="content" copyToOutput="true" flatten="true" />
-      <files include="any/any/wwwroot/scss/**/*.*" buildAction="content" copyToOutput="true" flatten="true" />
+      <files include="TuxboardControllers/**/*.cs.pp" buildAction="content" copyToOutput="true" flatten="true" />
+      <files include="Views/LayoutDialog/LayoutColumn.cshtml" buildAction="content" copyToOutput="true" flatten="true" />
+      <files include="Views/LayoutDialog/LayoutDialog.cshtml" buildAction="content" copyToOutput="true" flatten="true" />
+      <files include="Views/LayoutDialog/LayoutRow.cshtml" buildAction="content" copyToOutput="true" flatten="true" />
+      <files include="Views/Shared/ChangeLayoutFrame.cshtml" buildAction="content" copyToOutput="true" flatten="true" />
+      <files include="Views/Shared/WidgetDialogFrame.cshtml" buildAction="content" copyToOutput="true" flatten="true" />
+      <files include="Views/Shared/Components/**/*.cshtml" buildAction="content" copyToOutput="true" flatten="true" />
+      <files include="Views/WidgetDialog/WidgetDialog.cshtml" buildAction="content" copyToOutput="true" flatten="true" />
+      <files include="Widgets/**/*.*" buildAction="content" copyToOutput="true" flatten="true" />
+      <files include="wwwroot/scripts/tuxboard.js" buildAction="content" copyToOutput="true" flatten="true" />
+      <files include="wwwroot/scss/**/*.*" buildAction="content" copyToOutput="true" flatten="true" />
     </contentFiles>
   </metadata>
   <files>
-    <file src="Package\Content\TuxboardControllers\LayoutDialogController.cs.pp" target="cs\any\TuxboardControllers\LayoutDialogController.cs.pp" />
-    <file src="Package\Content\TuxboardControllers\WidgetContentController.cs.pp" target="cs\any\TuxboardControllers\WidgetContentController.cs.pp" />
-    <file src="Package\Content\TuxboardControllers\WidgetDialogController.cs.pp" target="cs\any\TuxboardControllers\WidgetDialogController.cs.pp" />
-    <file src="Package\Content\TuxboardControllers\WidgetSettingsController.cs.pp" target="cs\any\TuxboardControllers\WidgetSettingsController.cs.pp" />
-    <file src="Package\Content\TuxboardControllers\TuxboardController.cs.pp" target="cs\any\TuxboardControllers\TuxboardController.cs.pp" />
+    <file src="Package\Content\TuxboardControllers\LayoutDialogController.cs.pp" target="contentFiles\cs\any\TuxboardControllers\LayoutDialogController.cs.pp" />
+    <file src="Package\Content\TuxboardControllers\WidgetContentController.cs.pp" target="contentFiles\cs\any\TuxboardControllers\WidgetContentController.cs.pp" />
+    <file src="Package\Content\TuxboardControllers\WidgetDialogController.cs.pp" target="contentFiles\cs\any\TuxboardControllers\WidgetDialogController.cs.pp" />
+    <file src="Package\Content\TuxboardControllers\WidgetSettingsController.cs.pp" target="contentFiles\cs\any\TuxboardControllers\WidgetSettingsController.cs.pp" />
+    <file src="Package\Content\TuxboardControllers\TuxboardController.cs.pp" target="contentFiles\cs\any\TuxboardControllers\TuxboardController.cs.pp" />
 
     <file src="Package\Content\Views\LayoutDialog\LayoutColumn.cshtml" target="Package\Content\Views\LayoutDialog\LayoutColumn.cshtml" />
     <file src="Package\Content\Views\LayoutDialog\LayoutDialog.cshtml" target="Package\Content\Views\LayoutDialog\LayoutDialog.cshtml" />
