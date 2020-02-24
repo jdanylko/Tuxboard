@@ -18,17 +18,17 @@
       </group>
     </dependencies>
     <contentFiles>
-      <files include="cs/netcoreapp3.1/TuxboardControllers/**/*.*" buildAction="Compile" copyToOutput="true" flatten="true" />
-      <files include="any/netcoreapp3.1/Views/LayoutDialog/LayoutColumn.cshtml" buildAction="Compile" copyToOutput="true" flatten="true" />
-      <files include="any/netcoreapp3.1/Views/LayoutDialog/LayoutDialog.cshtml" buildAction="Compile" copyToOutput="true" flatten="true" />
-      <files include="any/netcoreapp3.1/Views/LayoutDialog/LayoutRow.cshtml" buildAction="Compile" copyToOutput="true" flatten="true" />
-      <files include="any/netcoreapp3.1/Views/Shared/ChangeLayoutFrame.cshtml" buildAction="Compile" copyToOutput="true" flatten="true" />
-      <files include="any/netcoreapp3.1/Views/Shared/WidgetDialogFrame.cshtml" buildAction="Compile" copyToOutput="true" flatten="true" />
-      <files include="any/netcoreapp3.1/Views/Shared/Components/**/*.*" buildAction="Compile" copyToOutput="true" flatten="true" />
-      <files include="any/netcoreapp3.1/Views/WidgetDialog/WidgetDialog.cshtml" buildAction="Compile" copyToOutput="true" flatten="true" />
-      <files include="any/netcoreapp3.1/Widgets/**/*.*" buildAction="Compile" copyToOutput="true" flatten="true" />
-      <files include="any/netcoreapp3.1/wwwroot/scripts/tuxboard.js" buildAction="Compile" copyToOutput="true" flatten="true" />
-      <files include="any/netcoreapp3.1/wwwroot/scss/**/*.*" buildAction="Compile" copyToOutput="true" flatten="true" />
+      <files include="cs/netcoreapp3.1/TuxboardControllers/**/*.*" buildAction="Content" copyToOutput="true" flatten="true" />
+      <files include="any/netcoreapp3.1/Views/LayoutDialog/LayoutColumn.cshtml" buildAction="Content" copyToOutput="true" flatten="true" />
+      <files include="any/netcoreapp3.1/Views/LayoutDialog/LayoutDialog.cshtml" buildAction="Content" copyToOutput="true" flatten="true" />
+      <files include="any/netcoreapp3.1/Views/LayoutDialog/LayoutRow.cshtml" buildAction="Content" copyToOutput="true" flatten="true" />
+      <files include="any/netcoreapp3.1/Views/Shared/ChangeLayoutFrame.cshtml" buildAction="Content" copyToOutput="true" flatten="true" />
+      <files include="any/netcoreapp3.1/Views/Shared/WidgetDialogFrame.cshtml" buildAction="Content" copyToOutput="true" flatten="true" />
+      <files include="any/netcoreapp3.1/Views/Shared/Components/**/*.*" buildAction="Content" copyToOutput="true" flatten="true" />
+      <files include="any/netcoreapp3.1/Views/WidgetDialog/WidgetDialog.cshtml" buildAction="Content" copyToOutput="true" flatten="true" />
+      <files include="any/netcoreapp3.1/Widgets/**/*.*" buildAction="Content" copyToOutput="true" flatten="true" />
+      <files include="any/netcoreapp3.1/wwwroot/scripts/tuxboard.js" buildAction="Content" copyToOutput="true" flatten="true" />
+      <files include="any/netcoreapp3.1/wwwroot/scss/**/*.*" buildAction="Content" copyToOutput="true" flatten="true" />
     </contentFiles>
   </metadata>
   <files>
