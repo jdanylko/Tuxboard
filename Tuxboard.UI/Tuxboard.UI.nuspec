@@ -32,7 +32,7 @@
     </contentFiles>
   </metadata>
   <files>
-    <file src="Package\Content\TuxboardControllers\LayoutDialogController.cs.pp" target="Package\Content\TuxboardControllers\LayoutDialogController.cs" />
+    <!--<file src="Package\Content\TuxboardControllers\LayoutDialogController.cs.pp" target="Package\Content\TuxboardControllers\LayoutDialogController.cs" />
     <file src="Package\Content\TuxboardControllers\WidgetContentController.cs.pp" target="Package\Content\TuxboardControllers\WidgetContentController.cs" />
     <file src="Package\Content\TuxboardControllers\WidgetDialogController.cs.pp" target="Package\Content\TuxboardControllers\WidgetDialogController.cs" />
     <file src="Package\Content\TuxboardControllers\WidgetSettingsController.cs.pp" target="Package\Content\TuxboardControllers\WidgetSettingsController.cs" />
@@ -70,10 +70,10 @@
     <file src="Package\Content\wwwroot\scss\layout\widget.scss" target="Package\Content\wwwroot\scss\layout\widget.scss" />
     <file src="Package\Content\wwwroot\scss\misc\common.scss" target="Package\Content\wwwroot\scss\misc\common.scss" />
     <file src="Package\Content\wwwroot\scss\theme\default.scss" target="Package\Content\wwwroot\scss\theme\default.scss" />
-    <file src="Package\Content\wwwroot\scss\tuxboard.scss" target="Package\Content\wwwroot\scss\tuxboard.scss" />
+    <file src="Package\Content\wwwroot\scss\tuxboard.scss" target="Package\Content\wwwroot\scss\tuxboard.scss" />-->
 
 
-    <!--
+    
     <file src="TuxboardControllers\LayoutDialogController.cs" target="contentFiles\cs\any\TuxboardControllers\LayoutDialogController.cs.pp" />
     <file src="TuxboardControllers\WidgetContentController.cs" target="contentFiles\cs\any\TuxboardControllers\WidgetContentController.cs.pp" />
     <file src="TuxboardControllers\WidgetDialogController.cs" target="contentFiles\cs\any\TuxboardControllers\WidgetDialogController.cs.pp" />
@@ -113,7 +113,7 @@
     <file src="wwwroot\scss\misc\common.scss" target="contentFiles\any\any\wwwroot\scss\misc\common.scss" />
     <file src="wwwroot\scss\theme\default.scss" target="contentFiles\any\any\wwwroot\scss\theme\default.scss" />
     <file src="wwwroot\scss\tuxboard.scss" target="contentFiles\any\any\wwwroot\scss\tuxboard.scss" />
-    -->
+    
     
   </files>
 </package>
