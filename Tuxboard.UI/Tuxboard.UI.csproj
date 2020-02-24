@@ -14,14 +14,6 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <Compile Remove="contentFiles\**" />
-    <Content Remove="contentFiles\**" />
-    <EmbeddedResource Remove="contentFiles\**" />
-    <None Remove="contentFiles\**" />
-    <TypeScriptCompile Remove="contentFiles\**" />
-  </ItemGroup>
-
-  <ItemGroup>
     <Content Remove="bundleconfig.json" />
     <Content Remove="compilerconfig.json" />
   </ItemGroup>
@@ -68,7 +60,7 @@
   -->
   <PropertyGroup>
     <Configuration>Release</Configuration>
-    <PackageSource>$(ProjectDir)Package\Content</PackageSource>
+    <PackageSource>$(ProjectDir)Package\contentFiles</PackageSource>
     <NuSpecPath>$(ProjectDir)Tuxboard.UI.nuspec</NuSpecPath>
   </PropertyGroup>
 
