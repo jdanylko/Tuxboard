@@ -14,20 +14,13 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <Compile Remove="contentFiles\**" />
-    <Content Remove="contentFiles\**" />
-    <EmbeddedResource Remove="contentFiles\**" />
-    <None Remove="contentFiles\**" />
-    <TypeScriptCompile Remove="contentFiles\**" />
-  </ItemGroup>
-
-  <ItemGroup>
     <Content Remove="bundleconfig.json" />
     <Content Remove="compilerconfig.json" />
   </ItemGroup>
 
 
   <ItemGroup>
+    <Folder Include="contentFiles\" />
     <Folder Include="wwwroot\js\" />
     <Folder Include="wwwroot\lib\" />
   </ItemGroup>
