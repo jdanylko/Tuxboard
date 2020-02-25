@@ -60,7 +60,7 @@
   -->
   <PropertyGroup>
     <Configuration>Release</Configuration>
-    <PackageSource>$(MSBuildProjectDirectory)contentFiles</PackageSource>
+    <PackageSource>$(MSBuildProjectDirectory)\contentFiles</PackageSource>
     <NuSpecPath>$(MSBuildProjectDirectory)Tuxboard.UI.nuspec</NuSpecPath>
   </PropertyGroup>
 
