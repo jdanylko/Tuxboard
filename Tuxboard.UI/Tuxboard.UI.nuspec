@@ -35,7 +35,7 @@
     </contentFiles>-->
   </metadata>
   <files>
-    <file src="contentFiles\**" target="" />
+    <file src="contentFiles\**" target="Stuff" />
 
     <!--
     <file src="TuxboardControllers\LayoutDialogController.cs" target="contentFiles\cs\any\TuxboardControllers\LayoutDialogController.cs.pp" />
