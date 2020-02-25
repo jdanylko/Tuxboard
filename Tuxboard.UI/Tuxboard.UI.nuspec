@@ -38,6 +38,7 @@
     </contentFiles>
   </metadata>
   <files>
+    <file src="contentFiles\**\*.*" target="content"/>
     <file src="contentFiles\**\*.*" target="contentFiles"/>
 
     <!--<file src="contentFiles\cs\any\TuxboardControllers\LayoutDialogController.cs.pp" target="contentFiles\cs\any\TuxboardControllers\LayoutDialogController.cs.pp" />
