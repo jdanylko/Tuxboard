@@ -57,7 +57,7 @@
         ((Get-Content -path $(PackageSource)\cs\any\TuxboardControllers\WidgetSettingsController.cs.pp -Raw) -replace 'Tuxboard.UI','$rootnamespace$') | Set-Content -Path $(PackageSource)\cs\any\TuxboardControllers\WidgetSettingsController.cs.pp
         ((Get-Content -path $(PackageSource)\cs\any\TuxboardControllers\TuxboardController.cs.pp -Raw) -replace 'Tuxboard.UI','$rootnamespace$') | Set-Content -Path $(PackageSource)\cs\any\TuxboardControllers\TuxboardController.cs.pp
 
-        ((Get-Content -path $(PackageSource)\any\any\Widgets\GeneralInfo\Default.cshtml.pp -Raw) -replace 'Tuxboard.UI','$rootnamespace$') | Set-Content -Path $(PackageSource)\any\any\Widgets\GeneralInfo\Default.cshtml.pp
+        ((Get-Content -path $(PackageSource)\cs\any\Widgets\GeneralInfo\Default.cshtml.pp -Raw) -replace 'Tuxboard.UI','$rootnamespace$') | Set-Content -Path $(PackageSource)\cs\any\Widgets\GeneralInfo\Default.cshtml.pp
         ((Get-Content -path $(PackageSource)\cs\any\Widgets\GeneralInfo\GeneralInfoModel.cs.pp -Raw) -replace 'Tuxboard.UI','$rootnamespace$') | Set-Content -Path $(PackageSource)\cs\any\Widgets\GeneralInfo\GeneralInfoModel.cs.pp
         ((Get-Content -path $(PackageSource)\cs\any\Widgets\GeneralInfo\GeneralInfoViewComponent.cs.pp -Raw) -replace 'Tuxboard.UI','$rootnamespace$') | Set-Content -Path $(PackageSource)\cs\any\Widgets\GeneralInfo\GeneralInfoViewComponent.cs.pp
         ((Get-Content -path $(PackageSource)\cs\any\Widgets\HelloWorld\HelloWorldViewComponent.cs.pp -Raw) -replace 'Tuxboard.UI','$rootnamespace$') | Set-Content -Path $(PackageSource)\cs\any\Widgets\HelloWorld\HelloWorldViewComponent.cs.pp
