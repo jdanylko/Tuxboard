@@ -61,7 +61,7 @@
     <file src="contentFiles\cs\any\Widgets\GeneralInfo\Default.cshtml.pp" target="contentFiles\cs\any\Widgets\GeneralInfo\Default.cshtml.pp" />
     <file src="contentFiles\cs\any\Widgets\GeneralInfo\GeneralInfoModel.cs.pp" target="contentFiles\cs\any\Widgets\GeneralInfo\GeneralInfoModel.cs.pp" />
     <file src="contentFiles\cs\any\Widgets\GeneralInfo\GeneralInfoViewComponent.cs.pp" target="contentFiles\cs\any\Widgets\GeneralInfo\GeneralInfoViewComponent.cs.pp" />
-    <file src="contentFiles\any\any\Widgets\HelloWorld\Default.cshtml.pp" target="contentFiles\any\any\Widgets\HelloWorld\Default.cshtml" />
+    <file src="contentFiles\any\any\Widgets\HelloWorld\Default.cshtml" target="contentFiles\any\any\Widgets\HelloWorld\Default.cshtml" />
     <file src="contentFiles\cs\any\Widgets\HelloWorld\HelloWorldViewComponent.cs.pp" target="contentFiles\cs\any\Widgets\HelloWorld\HelloWorldViewComponent.cs.pp" />
     <file src="contentFiles\any\any\Widgets\Table\Default.cshtml.pp" target="contentFiles\any\any\Widgets\Table\Default.cshtml" />
     <file src="contentFiles\cs\any\Widgets\Table\Product.cs.pp" target="contentFiles\cs\any\Widgets\Table\Product.cs.pp" />
