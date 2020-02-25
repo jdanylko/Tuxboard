@@ -60,8 +60,8 @@
   -->
   <PropertyGroup>
     <Configuration>Release</Configuration>
-    <PackageSource>$(ProjectDir)contentFiles</PackageSource>
-    <NuSpecPath>$(ProjectDir)Tuxboard.UI.nuspec</NuSpecPath>
+    <PackageSource>$(MSBuildProjectDirectory)contentFiles</PackageSource>
+    <NuSpecPath>$(MSBuildProjectDirectory)Tuxboard.UI.nuspec</NuSpecPath>
   </PropertyGroup>
 
   <Import Project="NuGetPackage.targets" />

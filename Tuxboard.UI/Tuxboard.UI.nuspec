@@ -18,8 +18,8 @@
       </group>
     </dependencies>
     <contentFiles>
-      <files include="contentFiles/cs/**/*.*" buildAction="Content" />
-      <files include="contentFiles/any/**/*.*" buildAction="Content" />
+      <files include="contentFiles/cs/**/*.*" buildAction="None" copyToOutput="true" />
+      <files include="contentFiles/any/**/*.*" buildAction="None" copyToOutput="true" />
 
       <!--<files include="contentFiles/cs/any/TuxboardControllers/*.*" buildAction="content" copyToOutput="true" flatten="true" />
       <files include="contentFiles/any/any/Views/LayoutDialog/LayoutColumn.cshtml" buildAction="content" copyToOutput="true" flatten="true" />
