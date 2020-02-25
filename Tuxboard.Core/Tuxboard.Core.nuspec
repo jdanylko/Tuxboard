@@ -9,7 +9,7 @@
     <projectUrl>https://github.com/jdanylko/Tuxboard</projectUrl>
     <description>ASP.NET Core 3.1 library for Tuxboard, an open-source dashboard library.</description>
     <copyright>2019-2020</copyright>
-    <tags>CSharp C#</tags>
+    <tags>CSharp C# Dashboard</tags>
     <repository type="C#" url="https://github.com/jdanylko/Tuxboard" />
     <dependencies>
       <group targetFramework=".NETCoreApp3.1">
