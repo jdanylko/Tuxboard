@@ -17,11 +17,12 @@
         <dependency id="Tuxboard.Core" version="1.0.0" />
       </group>
     </dependencies>
+    <!--
     <contentFiles>
       <files include="contentFiles/cs/**/*.*" buildAction="compile" />
       <files include="contentFiles/any/**/*.*" buildAction="content" />
 
-      <!--<files include="contentFiles/cs/any/TuxboardControllers/*.*" buildAction="content" copyToOutput="true" flatten="true" />
+      <files include="contentFiles/cs/any/TuxboardControllers/*.*" buildAction="content" copyToOutput="true" flatten="true" />
       <files include="contentFiles/any/any/Views/LayoutDialog/LayoutColumn.cshtml" buildAction="content" copyToOutput="true" flatten="true" />
       <files include="contentFiles/any/any/Views/LayoutDialog/LayoutDialog.cshtml" buildAction="content" copyToOutput="true" flatten="true" />
       <files include="contentFiles/any/any/Views/LayoutDialog/LayoutRow.cshtml" buildAction="content" copyToOutput="true" flatten="true" />
@@ -34,11 +35,12 @@
       <files include="contentFiles/cs/any/Widgets/**/*.*" buildAction="content" copyToOutput="true" flatten="true" />
       <files include="contentFiles/any/any/Widgets/**/*.*" buildAction="content" copyToOutput="true" flatten="true" />
       <files include="contentFiles/any/any/wwwroot/scripts/tuxboard.js" buildAction="content" copyToOutput="true" flatten="true" />
-      <files include="contentFiles/any/any/wwwroot/scss/**/*.*" buildAction="content" copyToOutput="true" flatten="true" />-->
+      <files include="contentFiles/any/any/wwwroot/scss/**/*.*" buildAction="content" copyToOutput="true" flatten="true" />
     </contentFiles>
+    -->
   </metadata>
   <files>
-    <file src="contentFiles\**\*.*" target="content"/>
+    <file src="contentFiles\**\*.*" target="content" />
     <file src="contentFiles\**\*.*" target="contentFiles"/>
 
     <!--<file src="contentFiles\cs\any\TuxboardControllers\LayoutDialogController.cs.pp" target="contentFiles\cs\any\TuxboardControllers\LayoutDialogController.cs.pp" />
