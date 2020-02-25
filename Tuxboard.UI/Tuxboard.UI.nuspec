@@ -18,7 +18,10 @@
       </group>
     </dependencies>
     <contentFiles>
-      <files include="contentFiles/cs/any/TuxboardControllers/*.*" buildAction="content" copyToOutput="true" flatten="true" />
+      <files include="cs/**/*.*" buildAction="compile" copyToOutput="true" flatten="true" />
+      <files include="any/**/*.*" buildAction="content" copyToOutput="true" flatten="true" />
+
+      <!--<files include="contentFiles/cs/any/TuxboardControllers/*.*" buildAction="content" copyToOutput="true" flatten="true" />
       <files include="contentFiles/any/any/Views/LayoutDialog/LayoutColumn.cshtml" buildAction="content" copyToOutput="true" flatten="true" />
       <files include="contentFiles/any/any/Views/LayoutDialog/LayoutDialog.cshtml" buildAction="content" copyToOutput="true" flatten="true" />
       <files include="contentFiles/any/any/Views/LayoutDialog/LayoutRow.cshtml" buildAction="content" copyToOutput="true" flatten="true" />
@@ -31,11 +34,13 @@
       <files include="contentFiles/cs/any/Widgets/**/*.*" buildAction="content" copyToOutput="true" flatten="true" />
       <files include="contentFiles/any/any/Widgets/**/*.*" buildAction="content" copyToOutput="true" flatten="true" />
       <files include="contentFiles/any/any/wwwroot/scripts/tuxboard.js" buildAction="content" copyToOutput="true" flatten="true" />
-      <files include="contentFiles/any/any/wwwroot/scss/**/*.*" buildAction="content" copyToOutput="true" flatten="true" />
+      <files include="contentFiles/any/any/wwwroot/scss/**/*.*" buildAction="content" copyToOutput="true" flatten="true" />-->
     </contentFiles>
   </metadata>
   <files>
-    <file src="contentFiles\cs\any\TuxboardControllers\LayoutDialogController.cs.pp" target="contentFiles\cs\any\TuxboardControllers\LayoutDialogController.cs.pp" />
+    <file src="contentFiles\**" target="contentFiles"/>
+
+    <!--<file src="contentFiles\cs\any\TuxboardControllers\LayoutDialogController.cs.pp" target="contentFiles\cs\any\TuxboardControllers\LayoutDialogController.cs.pp" />
     <file src="contentFiles\cs\any\TuxboardControllers\WidgetContentController.cs.pp" target="contentFiles\cs\any\TuxboardControllers\WidgetContentController.cs.pp" />
     <file src="contentFiles\cs\any\TuxboardControllers\WidgetDialogController.cs.pp" target="contentFiles\cs\any\TuxboardControllers\WidgetDialogController.cs.pp" />
     <file src="contentFiles\cs\any\TuxboardControllers\WidgetSettingsController.cs.pp" target="contentFiles\cs\any\TuxboardControllers\WidgetSettingsController.cs.pp" />
@@ -76,7 +81,7 @@
     <file src="contentFiles\any\any\wwwroot\scss\layout\widget.scss" target="contentFiles\any\any\wwwroot\scss\layout\widget.scss" />
     <file src="contentFiles\any\any\wwwroot\scss\misc\common.scss" target="contentFiles\any\any\wwwroot\scss\misc\common.scss" />
     <file src="contentFiles\any\any\wwwroot\scss\theme\default.scss" target="contentFiles\any\any\wwwroot\scss\theme\default.scss" />
-    <file src="contentFiles\any\any\wwwroot\scss\tuxboard.scss" target="contentFiles\any\any\wwwroot\scss\tuxboard.scss" />
+    <file src="contentFiles\any\any\wwwroot\scss\tuxboard.scss" target="contentFiles\any\any\wwwroot\scss\tuxboard.scss" />-->
 
 
     <!--
