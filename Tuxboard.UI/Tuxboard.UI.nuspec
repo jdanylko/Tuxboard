@@ -23,8 +23,8 @@
     </contentFiles>
   </metadata>
   <files>
-    <file src="contentFiles\**\*.*" target="content\**\*.*" />
-    <file src="contentFiles\**\*.*" target="contentFiles\**\*.*"/>
+    <file src="contentFiles\**\*.*" target="content" />
+    <file src="contentFiles\**\*.*" target="contentFiles"/>
 
 
   </files>
