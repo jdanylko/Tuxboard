@@ -25,7 +25,7 @@
     <Copy SourceFiles="$(ProjectDir)Views\Shared\ChangeLayoutFrame.cshtml" DestinationFiles="$(PackageSource)\any\any\Views\Shared\ChangeLayoutFrame.cshtml" ContinueOnError="true" />
     <Copy SourceFiles="$(ProjectDir)Views\Shared\WidgetDialogFrame.cshtml" DestinationFiles="$(PackageSource)\any\any\Views\Shared\WidgetDialogFrame.cshtml" ContinueOnError="true" />
     <Copy SourceFiles="$(ProjectDir)Views\WidgetDialog\WidgetDialog.cshtml" DestinationFiles="$(PackageSource)\any\any\Views\WidgetDialog\WidgetDialog.cshtml" ContinueOnError="true" />
-    <Copy SourceFiles="$(ProjectDir)Widgets\GeneralInfo\Default.cshtml" DestinationFiles="$(PackageSource)\any\any\Widgets\GeneralInfo\Default.cshtml.pp" ContinueOnError="true" />
+    <Copy SourceFiles="$(ProjectDir)Widgets\GeneralInfo\Default.cshtml" DestinationFiles="$(PackageSource)\cs\any\Widgets\GeneralInfo\Default.cshtml.pp" ContinueOnError="true" />
     <Copy SourceFiles="$(ProjectDir)Widgets\GeneralInfo\GeneralInfoModel.cs" DestinationFiles="$(PackageSource)\cs\any\Widgets\GeneralInfo\GeneralInfoModel.cs.pp" ContinueOnError="true" />
     <Copy SourceFiles="$(ProjectDir)Widgets\GeneralInfo\GeneralInfoViewComponent.cs" DestinationFiles="$(PackageSource)\cs\any\Widgets\GeneralInfo\GeneralInfoViewComponent.cs.pp" ContinueOnError="true" />
     <Copy SourceFiles="$(ProjectDir)Widgets\HelloWorld\Default.cshtml" DestinationFiles="$(PackageSource)\any\any\Widgets\HelloWorld\Default.cshtml"  ContinueOnError="true"/>

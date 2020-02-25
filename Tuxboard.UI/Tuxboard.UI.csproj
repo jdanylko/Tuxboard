@@ -20,7 +20,6 @@
 
 
   <ItemGroup>
-    <Folder Include="contentFiles\" />
     <Folder Include="wwwroot\js\" />
     <Folder Include="wwwroot\lib\" />
   </ItemGroup>
