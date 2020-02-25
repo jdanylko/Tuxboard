@@ -18,13 +18,14 @@
       </group>
     </dependencies>
     <contentFiles>
-      <files include="contentFiles/cs/**/*.*" buildAction="Compile" />
-      <files include="contentFiles/any/**/*.*" buildAction="Content" />
+      <files include="**/*.*" buildAction="Content" />
+      <!--<files include="contentFiles/cs/**/*.*" buildAction="Compile" />
+      <files include="contentFiles/any/**/*.*" buildAction="Content" />-->
     </contentFiles>
   </metadata>
   <files>
-    <file src="contentFiles\**\*.*" target="content" />
-    <file src="contentFiles\**\*.*" target="contentFiles"/>
+    <!--<file src="contentFiles\**\*.*" target="content" />
+    <file src="contentFiles\**\*.*" target="contentFiles"/>-->
 
 
   </files>
