@@ -1,28 +1,30 @@
-﻿using System.Linq;
+using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.Logging;
-using Microsoft.Extensions.Options;
 using Tuxboard.Core.Configuration;
 using Tuxboard.Core.Domain.Entities;
 using Tuxboard.Core.Infrastructure.Interfaces;
 using Tuxboard.Core.Infrastructure.Models;
 
-namespace Tuxboard.UI.TuxboardControllers
+namespace $rootnamespace$.TuxboardControllers
 {
     public class TuxboardController : Controller
     {
         private readonly ILogger<TuxboardController> _logger;
         private readonly IDashboardService _service;
-        private readonly TuxboardConfig _config;
+        private readonly TuxboardConfig _config = new TuxboardConfig();
 
         public TuxboardController(ILogger<TuxboardController> logger, 
             IDashboardService service, 
-            IOptions<TuxboardConfig> config)
+            IConfiguration config)
         {
             _logger = logger;
             _service = service;
-            _config = config.Value;
+            config
+                .GetSection(nameof(TuxboardConfig))
+                .Bind(_config);
         }
 
         [HttpGet]

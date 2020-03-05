@@ -1,10 +1,10 @@
-﻿using System.Threading.Tasks;
+using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 using Tuxboard.Core.Configuration;
 using Tuxboard.Core.Infrastructure.Interfaces;
 
-namespace Tuxboard.UI.TuxboardControllers
+namespace $rootnamespace$.TuxboardControllers
 {
     public class WidgetSettingsController : Controller
     {
@@ -22,6 +22,8 @@ namespace Tuxboard.UI.TuxboardControllers
         [Route("/WidgetSettings/{id}")]
         public async Task<IActionResult> WidgetSettings(string id)
         {
+            // var userId = await GetCurrentUserAsync();
+
             var placement = await _service.GetWidgetPlacementAsync(id);
 
             return ViewComponent("WidgetSettings", placement);

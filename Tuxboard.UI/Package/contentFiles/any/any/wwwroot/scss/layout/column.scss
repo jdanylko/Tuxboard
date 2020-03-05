@@ -1,0 +1,17 @@
+﻿/* Dashboard */
+.column {
+    background: $column-bg;
+    min-height: 200px;
+    float: left;
+    padding: 10px;
+
+    .placeholder {
+        border: 1px dashed $column-placeholder;
+        margin-bottom: 10px;
+        background: $column-placeholder;
+    }
+}
+
+.column.over {
+    border: 2px dashed $column-placeholder-hover;
+}

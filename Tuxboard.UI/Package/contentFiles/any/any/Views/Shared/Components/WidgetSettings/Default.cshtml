@@ -1,0 +1,34 @@
+﻿@model Tuxboard.Core.Domain.Entities.WidgetPlacement
+
+<div class="row-fluid">
+    <form class="form-horizontal">
+        <fieldset>
+
+            <legend class="text-center">Settings</legend>
+
+            @foreach (var setting in Model.WidgetSettings)
+            {
+                <div class="form-group">
+                    <label class="col-12 control-label input-xs" for="widgetValue">@Model.GetSettingTitleById(setting.WidgetSettingId)</label>
+                    <div class="col-12">
+                        <input id="widgetValue" name="widgetValue" data-id="@setting.WidgetSettingId"
+                               placeholder="Enter the title here" 
+                               class="form-control input-xs setting-value" type="text" 
+                               value="@Model.GetSettingValueById(setting.WidgetSettingId)">
+                    </div>
+                </div>
+            }
+
+
+            <hr />
+
+            <div class="form-group">
+                <div class="col-12 text-right">
+                    <button type="button" class="btn btn-primary btn-sm settings-save">Save Settings</button>
+                    <button type="button" class="btn btn-secondary btn-sm settings-cancel" data-dismiss="modal">Cancel</button>
+                </div>
+            </div>
+
+        </fieldset>
+    </form>
+</div>
