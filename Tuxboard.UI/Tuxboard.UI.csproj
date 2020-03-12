@@ -8,9 +8,11 @@
     <GeneratePackageOnBuild>false</GeneratePackageOnBuild>
     <Authors>Jonathan "JD" Danylko</Authors>
     <Product>Tuxboard</Product>
-    <Description>Front-end code for Tuxboard, an open source dashboard framework</Description>
+    <Description>Front-end scaffolding code for Tuxboard, an open source dashboard framework</Description>
     <Copyright>2019-2020</Copyright>
     <PackageRequireLicenseAcceptance>false</PackageRequireLicenseAcceptance>
+    <!--<GeneratePackageOnBuild>false</GeneratePackageOnBuild>
+    <IsPackable>true</IsPackable>-->
   </PropertyGroup>
 
   <ItemGroup>
@@ -53,14 +55,16 @@
     <ProjectReference Include="..\Tuxboard.Core\Tuxboard.Core.csproj" />
   </ItemGroup>
 
-  <!--
-  <Target Name="AfterBuild">
-    <Message Text="Tuxboard - Ham and Eggs" />
-  </Target>
-  -->
+
+  
+  
   <PropertyGroup>
     <Configuration>Release</Configuration>
-    <PackageSource>$(MSBuildProjectDirectory)\Package\contentFiles</PackageSource>
+    <CodeTemplatesPath>$(MSBuildProjectDirectory)\CodeTemplates</CodeTemplatesPath>
+    <PackageSource>$(MSBuildProjectDirectory)\Package</PackageSource>
+    <PackageSourceContentFiles>$(PackageSource)\contentFiles</PackageSourceContentFiles>
+    <PackageSourceContent>$(PackageSource)\content</PackageSourceContent>
+    <PackageSourceStaticWebAssets>$(PackageSource)\staticwebassets</PackageSourceStaticWebAssets>
     <NuSpecPath>$(MSBuildProjectDirectory)Tuxboard.UI.nuspec</NuSpecPath>
   </PropertyGroup>
 

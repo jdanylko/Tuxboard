@@ -1,14 +1,28 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Project ToolsVersion="14.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <Target Name="CreatePackage">
-    <RemoveDir Directories="$(PackageSource)"/>
+    <RemoveDir Directories="$(PackageSourceContent)"/>
+    <RemoveDir Directories="$(PackageSourceContentFiles)"/>
     <!--<MSBuild Projects="$(MSBuildProjectFullPath)" Targets="Rebuild" Properties="TargetFrameworkVersion=netcoreapp3.1; OutputPath=bin\$(Configuration)\netcoreapp3.1;Configuration=$(Configuration)" BuildInParallel="$(BuildInParallel)"/>-->
 
-    <Copy SourceFiles="$(ProjectDir)TuxboardControllers\LayoutDialogController.cs" DestinationFiles="$(PackageSource)\cs\any\TuxboardControllers\LayoutDialogController.cs.pp" ContinueOnError="true" />
-    <Copy SourceFiles="$(ProjectDir)TuxboardControllers\WidgetContentController.cs" DestinationFiles="$(PackageSource)\cs\any\TuxboardControllers\WidgetContentController.cs.pp" ContinueOnError="true" />
-    <Copy SourceFiles="$(ProjectDir)TuxboardControllers\WidgetDialogController.cs" DestinationFiles="$(PackageSource)\cs\any\TuxboardControllers\WidgetDialogController.cs.pp" ContinueOnError="true" />
-    <Copy SourceFiles="$(ProjectDir)TuxboardControllers\WidgetSettingsController.cs" DestinationFiles="$(PackageSource)\cs\any\TuxboardControllers\WidgetSettingsController.cs.pp" ContinueOnError="true" />
-    <Copy SourceFiles="$(ProjectDir)TuxboardControllers\TuxboardController.cs" DestinationFiles="$(PackageSource)\cs\any\TuxboardControllers\TuxboardController.cs.pp" ContinueOnError="true" />
+    <Copy SourceFiles="$(ProjectDir)TuxboardControllers\LayoutDialogController.cs" DestinationFiles="$(PackageSourceContent)\TuxboardControllers\LayoutDialogController.cs.pp" ContinueOnError="true" />
+    <Copy SourceFiles="$(ProjectDir)TuxboardControllers\WidgetContentController.cs" DestinationFiles="$(PackageSourceContent)\TuxboardControllers\WidgetContentController.cs.pp" ContinueOnError="true" />
+    <Copy SourceFiles="$(ProjectDir)TuxboardControllers\WidgetDialogController.cs" DestinationFiles="$(PackageSourceContent)\TuxboardControllers\WidgetDialogController.cs.pp" ContinueOnError="true" />
+    <Copy SourceFiles="$(ProjectDir)TuxboardControllers\WidgetSettingsController.cs" DestinationFiles="$(PackageSourceContent)\TuxboardControllers\WidgetSettingsController.cs.pp" ContinueOnError="true" />
+    <Copy SourceFiles="$(ProjectDir)TuxboardControllers\TuxboardController.cs" DestinationFiles="$(PackageSourceContent)\TuxboardControllers\TuxboardController.cs.pp" ContinueOnError="true" />
+
+    <Copy SourceFiles="$(ProjectDir)TuxboardControllers\LayoutDialogController.cs" DestinationFiles="$(PackageSourceContentFiles)\cs\any\TuxboardControllers\LayoutDialogController.cs.pp" ContinueOnError="true" />
+    <Copy SourceFiles="$(ProjectDir)TuxboardControllers\WidgetContentController.cs" DestinationFiles="$(PackageSourceContentFiles)\cs\any\TuxboardControllers\WidgetContentController.cs.pp" ContinueOnError="true" />
+    <Copy SourceFiles="$(ProjectDir)TuxboardControllers\WidgetDialogController.cs" DestinationFiles="$(PackageSourceContentFiles)\cs\any\TuxboardControllers\WidgetDialogController.cs.pp" ContinueOnError="true" />
+    <Copy SourceFiles="$(ProjectDir)TuxboardControllers\WidgetSettingsController.cs" DestinationFiles="$(PackageSourceContentFiles)\cs\any\TuxboardControllers\WidgetSettingsController.cs.pp" ContinueOnError="true" />
+    <Copy SourceFiles="$(ProjectDir)TuxboardControllers\TuxboardController.cs" DestinationFiles="$(PackageSourceContentFiles)\cs\any\TuxboardControllers\TuxboardController.cs.pp" ContinueOnError="true" />
+
+    <Copy SourceFiles="$(ProjectDir)TuxboardControllers\LayoutDialogController.cs" DestinationFiles="$(PackageSourceContentFiles)\cs\netcoreapp3.1\TuxboardControllers\LayoutDialogController.cs.pp" ContinueOnError="true" />
+    <Copy SourceFiles="$(ProjectDir)TuxboardControllers\WidgetContentController.cs" DestinationFiles="$(PackageSourceContentFiles)\cs\netcoreapp3.1\TuxboardControllers\WidgetContentController.cs.pp" ContinueOnError="true" />
+    <Copy SourceFiles="$(ProjectDir)TuxboardControllers\WidgetDialogController.cs" DestinationFiles="$(PackageSourceContentFiles)\cs\netcoreapp3.1\TuxboardControllers\WidgetDialogController.cs.pp" ContinueOnError="true" />
+    <Copy SourceFiles="$(ProjectDir)TuxboardControllers\WidgetSettingsController.cs" DestinationFiles="$(PackageSourceContentFiles)\cs\netcoreapp3.1\TuxboardControllers\WidgetSettingsController.cs.pp" ContinueOnError="true" />
+    <Copy SourceFiles="$(ProjectDir)TuxboardControllers\TuxboardController.cs" DestinationFiles="$(PackageSourceContentFiles)\cs\netcoreapp3.1\TuxboardControllers\TuxboardController.cs.pp" ContinueOnError="true" />
+    <!--
     <Copy SourceFiles="$(ProjectDir)Views\LayoutDialog\LayoutColumn.cshtml" DestinationFiles="$(PackageSource)\any\any\Views\LayoutDialog\LayoutColumn.cshtml" ContinueOnError="true" />
     <Copy SourceFiles="$(ProjectDir)Views\LayoutDialog\LayoutDialog.cshtml" DestinationFiles="$(PackageSource)\any\any\Views\LayoutDialog\LayoutDialog.cshtml" ContinueOnError="true" />
     <Copy SourceFiles="$(ProjectDir)Views\LayoutDialog\LayoutRow.cshtml" DestinationFiles="$(PackageSource)\any\any\Views\LayoutDialog\LayoutRow.cshtml" ContinueOnError="true" />
@@ -43,8 +57,9 @@
     <Copy SourceFiles="$(ProjectDir)wwwroot\scss\misc\common.scss" DestinationFiles="$(PackageSource)\any\any\wwwroot\scss\misc\common.scss" ContinueOnError="true" />
     <Copy SourceFiles="$(ProjectDir)wwwroot\scss\theme\default.scss" DestinationFiles="$(PackageSource)\any\any\wwwroot\scss\theme\default.scss" ContinueOnError="true" />
     <Copy SourceFiles="$(ProjectDir)wwwroot\scss\tuxboard.scss" DestinationFiles="$(PackageSource)\any\any\wwwroot\scss\tuxboard.scss" ContinueOnError="true" />
-    
-    
+    -->
+
+
     <!--
     <Copy SourceFiles="$(ProjectDir)TuxboardControllers\LayoutDialogController.cs" DestinationFiles="$(PackageSource)\cs\any\TuxboardControllers\LayoutDialogController.cs.pp" ContinueOnError="true" />
     <Copy SourceFiles="$(ProjectDir)TuxboardControllers\WidgetContentController.cs" DestinationFiles="$(PackageSource)\cs\any\TuxboardControllers\WidgetContentController.cs.pp" ContinueOnError="true" />
@@ -94,26 +109,38 @@
       <myscript>
         $(PowerShell)
         # Text replacement with Powershell
-        ((Get-Content -path $(PackageSource)\cs\any\TuxboardControllers\LayoutDialogController.cs.pp -Raw) -replace 'Tuxboard.UI','$rootnamespace$') | Set-Content -Path $(PackageSource)\cs\any\TuxboardControllers\LayoutDialogController.cs.pp
-        ((Get-Content -path $(PackageSource)\cs\any\TuxboardControllers\WidgetContentController.cs.pp -Raw) -replace 'Tuxboard.UI','$rootnamespace$') | Set-Content -Path $(PackageSource)\cs\any\TuxboardControllers\WidgetContentController.cs.pp
-        ((Get-Content -path $(PackageSource)\cs\any\TuxboardControllers\WidgetDialogController.cs.pp -Raw) -replace 'Tuxboard.UI','$rootnamespace$') | Set-Content -Path $(PackageSource)\cs\any\TuxboardControllers\WidgetDialogController.cs.pp
-        ((Get-Content -path $(PackageSource)\cs\any\TuxboardControllers\WidgetSettingsController.cs.pp -Raw) -replace 'Tuxboard.UI','$rootnamespace$') | Set-Content -Path $(PackageSource)\cs\any\TuxboardControllers\WidgetSettingsController.cs.pp
-        ((Get-Content -path $(PackageSource)\cs\any\TuxboardControllers\TuxboardController.cs.pp -Raw) -replace 'Tuxboard.UI','$rootnamespace$') | Set-Content -Path $(PackageSource)\cs\any\TuxboardControllers\TuxboardController.cs.pp
+        ((Get-Content -path "$(PackageSourceContent)\TuxboardControllers\LayoutDialogController.cs.pp" -Raw) -replace 'Tuxboard.UI','$rootnamespace$') | Set-Content -Path "$(PackageSourceContent)\TuxboardControllers\LayoutDialogController.cs.pp"
+        ((Get-Content -path "$(PackageSourceContent)\TuxboardControllers\WidgetContentController.cs.pp" -Raw) -replace 'Tuxboard.UI','$rootnamespace$') | Set-Content -Path "$(PackageSourceContent)\TuxboardControllers\WidgetContentController.cs.pp"
+        ((Get-Content -path "$(PackageSourceContent)\TuxboardControllers\WidgetDialogController.cs.pp" -Raw) -replace 'Tuxboard.UI','$rootnamespace$') | Set-Content -Path "$(PackageSourceContent)\TuxboardControllers\WidgetDialogController.cs.pp"
+        ((Get-Content -path "$(PackageSourceContent)\TuxboardControllers\WidgetSettingsController.cs.pp" -Raw) -replace 'Tuxboard.UI','$rootnamespace$') | Set-Content -Path "$(PackageSourceContent)\TuxboardControllers\WidgetSettingsController.cs.pp"
+        ((Get-Content -path "$(PackageSourceContent)\TuxboardControllers\TuxboardController.cs.pp" -Raw) -replace 'Tuxboard.UI','$rootnamespace$') | Set-Content -Path "$(PackageSourceContent)\TuxboardControllers\TuxboardController.cs.pp"
 
-        ((Get-Content -path $(PackageSource)\cs\any\Widgets\GeneralInfo\Default.cshtml.pp -Raw) -replace 'Tuxboard.UI','$rootnamespace$') | Set-Content -Path $(PackageSource)\cs\any\Widgets\GeneralInfo\Default.cshtml.pp
-        ((Get-Content -path $(PackageSource)\cs\any\Widgets\GeneralInfo\GeneralInfoModel.cs.pp -Raw) -replace 'Tuxboard.UI','$rootnamespace$') | Set-Content -Path $(PackageSource)\cs\any\Widgets\GeneralInfo\GeneralInfoModel.cs.pp
-        ((Get-Content -path $(PackageSource)\cs\any\Widgets\GeneralInfo\GeneralInfoViewComponent.cs.pp -Raw) -replace 'Tuxboard.UI','$rootnamespace$') | Set-Content -Path $(PackageSource)\cs\any\Widgets\GeneralInfo\GeneralInfoViewComponent.cs.pp
-        ((Get-Content -path $(PackageSource)\cs\any\Widgets\HelloWorld\HelloWorldViewComponent.cs.pp -Raw) -replace 'Tuxboard.UI','$rootnamespace$') | Set-Content -Path $(PackageSource)\cs\any\Widgets\HelloWorld\HelloWorldViewComponent.cs.pp
-        ((Get-Content -path $(PackageSource)\any\any\Widgets\Table\Default.cshtml.pp -Raw) -replace 'Tuxboard.UI','$rootnamespace$') | Set-Content -Path $(PackageSource)\any\any\Widgets\Table\Default.cshtml.pp
-        ((Get-Content -path $(PackageSource)\cs\any\Widgets\Table\Product.cs.pp -Raw) -replace 'Tuxboard.UI','$rootnamespace$') | Set-Content -Path $(PackageSource)\cs\any\Widgets\Table\Product.cs.pp
-        ((Get-Content -path $(PackageSource)\cs\any\Widgets\Table\TableModel.cs.pp -Raw) -replace 'Tuxboard.UI','$rootnamespace$') | Set-Content -Path $(PackageSource)\cs\any\Widgets\Table\TableModel.cs.pp
-        ((Get-Content -path $(PackageSource)\cs\any\Widgets\Table\TableViewComponent.cs.pp -Raw) -replace 'Tuxboard.UI','$rootnamespace$') | Set-Content -Path $(PackageSource)\cs\any\Widgets\Table\TableViewComponent.cs.pp
-        
-        ((Get-Content -path $(PackageSource)\cs\any\Views\Shared\Components\LayoutTemplate\LayoutTemplateViewComponent.cs.pp -Raw) -replace 'Tuxboard.UI','$rootnamespace$') | Set-Content -Path $(PackageSource)\cs\any\Views\Shared\Components\LayoutTemplate\LayoutTemplateViewComponent.cs.pp
-        ((Get-Content -path $(PackageSource)\cs\any\Views\Shared\Components\Tuxbar\TuxbarViewComponent.cs.pp -Raw) -replace 'Tuxboard.UI','$rootnamespace$') | Set-Content -Path $(PackageSource)\cs\any\Views\Shared\Components\Tuxbar\TuxbarViewComponent.cs.pp
-        ((Get-Content -path $(PackageSource)\cs\any\Views\Shared\Components\Tuxboard\TuxboardViewComponent.cs.pp -Raw) -replace 'Tuxboard.UI','$rootnamespace$') | Set-Content -Path $(PackageSource)\cs\any\Views\Shared\Components\Tuxboard\TuxboardViewComponent.cs.pp
-        ((Get-Content -path $(PackageSource)\cs\any\Views\Shared\Components\WidgetSettings\WidgetSettingsViewComponent.cs.pp -Raw) -replace 'Tuxboard.UI','$rootnamespace$') | Set-Content -Path $(PackageSource)\cs\any\Views\Shared\Components\WidgetSettings\WidgetSettingsViewComponent.cs.pp
-        ((Get-Content -path $(PackageSource)\cs\any\Views\Shared\Components\WidgetTemplate\WidgetTemplateViewComponent.cs.pp -Raw) -replace 'Tuxboard.UI','$rootnamespace$') | Set-Content -Path $(PackageSource)\cs\any\Views\Shared\Components\WidgetTemplate\WidgetTemplateViewComponent.cs.pp
+        ((Get-Content -path "$(PackageSourceContentFiles)\cs\any\TuxboardControllers\LayoutDialogController.cs.pp" -Raw) -replace 'Tuxboard.UI','$rootnamespace$') | Set-Content -Path "$(PackageSourceContentFiles)\cs\any\TuxboardControllers\LayoutDialogController.cs.pp"
+        ((Get-Content -path "$(PackageSourceContentFiles)\cs\any\TuxboardControllers\WidgetContentController.cs.pp" -Raw) -replace 'Tuxboard.UI','$rootnamespace$') | Set-Content -Path "$(PackageSourceContentFiles)\cs\any\TuxboardControllers\WidgetContentController.cs.pp"
+        ((Get-Content -path "$(PackageSourceContentFiles)\cs\any\TuxboardControllers\WidgetDialogController.cs.pp" -Raw) -replace 'Tuxboard.UI','$rootnamespace$') | Set-Content -Path "$(PackageSourceContentFiles)\cs\any\TuxboardControllers\WidgetDialogController.cs.pp"
+        ((Get-Content -path "$(PackageSourceContentFiles)\cs\any\TuxboardControllers\WidgetSettingsController.cs.pp" -Raw) -replace 'Tuxboard.UI','$rootnamespace$') | Set-Content -Path "$(PackageSourceContentFiles)\cs\any\TuxboardControllers\WidgetSettingsController.cs.pp"
+        ((Get-Content -path "$(PackageSourceContentFiles)\cs\any\TuxboardControllers\TuxboardController.cs.pp" -Raw) -replace 'Tuxboard.UI','$rootnamespace$') | Set-Content -Path "$(PackageSourceContentFiles)\cs\any\TuxboardControllers\TuxboardController.cs.pp"
+
+        ((Get-Content -path "$(PackageSourceContentFiles)\cs\netcoreapp3.1\TuxboardControllers\LayoutDialogController.cs.pp" -Raw) -replace 'Tuxboard.UI','$rootnamespace$') | Set-Content -Path "$(PackageSourceContentFiles)\cs\netcoreapp3.1\TuxboardControllers\LayoutDialogController.cs.pp"
+        ((Get-Content -path "$(PackageSourceContentFiles)\cs\netcoreapp3.1\TuxboardControllers\WidgetContentController.cs.pp" -Raw) -replace 'Tuxboard.UI','$rootnamespace$') | Set-Content -Path "$(PackageSourceContentFiles)\cs\netcoreapp3.1\TuxboardControllers\WidgetContentController.cs.pp"
+        ((Get-Content -path "$(PackageSourceContentFiles)\cs\netcoreapp3.1\TuxboardControllers\WidgetDialogController.cs.pp" -Raw) -replace 'Tuxboard.UI','$rootnamespace$') | Set-Content -Path "$(PackageSourceContentFiles)\cs\netcoreapp3.1\TuxboardControllers\WidgetDialogController.cs.pp"
+        ((Get-Content -path "$(PackageSourceContentFiles)\cs\netcoreapp3.1\TuxboardControllers\WidgetSettingsController.cs.pp" -Raw) -replace 'Tuxboard.UI','$rootnamespace$') | Set-Content -Path "$(PackageSourceContentFiles)\cs\netcoreapp3.1\TuxboardControllers\WidgetSettingsController.cs.pp"
+        ((Get-Content -path "$(PackageSourceContentFiles)\cs\netcoreapp3.1\TuxboardControllers\TuxboardController.cs.pp" -Raw) -replace 'Tuxboard.UI','$rootnamespace$') | Set-Content -Path "$(PackageSourceContentFiles)\cs\netcoreapp3.1\TuxboardControllers\TuxboardController.cs.pp"
+
+        #((Get-Content -path $(PackageSource)\cs\any\Widgets\GeneralInfo\Default.cshtml.pp -Raw) -replace 'Tuxboard.UI','$rootnamespace$') | Set-Content -Path $(PackageSource)\cs\any\Widgets\GeneralInfo\Default.cshtml.pp
+        #((Get-Content -path $(PackageSource)\cs\any\Widgets\GeneralInfo\GeneralInfoModel.cs.pp -Raw) -replace 'Tuxboard.UI','$rootnamespace$') | Set-Content -Path $(PackageSource)\cs\any\Widgets\GeneralInfo\GeneralInfoModel.cs.pp
+        #((Get-Content -path $(PackageSource)\cs\any\Widgets\GeneralInfo\GeneralInfoViewComponent.cs.pp -Raw) -replace 'Tuxboard.UI','$rootnamespace$') | Set-Content -Path $(PackageSource)\cs\any\Widgets\GeneralInfo\GeneralInfoViewComponent.cs.pp
+        #((Get-Content -path $(PackageSource)\cs\any\Widgets\HelloWorld\HelloWorldViewComponent.cs.pp -Raw) -replace 'Tuxboard.UI','$rootnamespace$') | Set-Content -Path $(PackageSource)\cs\any\Widgets\HelloWorld\HelloWorldViewComponent.cs.pp
+        #((Get-Content -path $(PackageSource)\any\any\Widgets\Table\Default.cshtml.pp -Raw) -replace 'Tuxboard.UI','$rootnamespace$') | Set-Content -Path $(PackageSource)\any\any\Widgets\Table\Default.cshtml.pp
+        #((Get-Content -path $(PackageSource)\cs\any\Widgets\Table\Product.cs.pp -Raw) -replace 'Tuxboard.UI','$rootnamespace$') | Set-Content -Path $(PackageSource)\cs\any\Widgets\Table\Product.cs.pp
+        #((Get-Content -path $(PackageSource)\cs\any\Widgets\Table\TableModel.cs.pp -Raw) -replace 'Tuxboard.UI','$rootnamespace$') | Set-Content -Path $(PackageSource)\cs\any\Widgets\Table\TableModel.cs.pp
+        #((Get-Content -path $(PackageSource)\cs\any\Widgets\Table\TableViewComponent.cs.pp -Raw) -replace 'Tuxboard.UI','$rootnamespace$') | Set-Content -Path $(PackageSource)\cs\any\Widgets\Table\TableViewComponent.cs.pp
+        #
+        #((Get-Content -path $(PackageSource)\cs\any\Views\Shared\Components\LayoutTemplate\LayoutTemplateViewComponent.cs.pp -Raw) -replace 'Tuxboard.UI','$rootnamespace$') | Set-Content -Path $(PackageSource)\cs\any\Views\Shared\Components\LayoutTemplate\LayoutTemplateViewComponent.cs.pp
+        #((Get-Content -path $(PackageSource)\cs\any\Views\Shared\Components\Tuxbar\TuxbarViewComponent.cs.pp -Raw) -replace 'Tuxboard.UI','$rootnamespace$') | Set-Content -Path $(PackageSource)\cs\any\Views\Shared\Components\Tuxbar\TuxbarViewComponent.cs.pp
+        #((Get-Content -path $(PackageSource)\cs\any\Views\Shared\Components\Tuxboard\TuxboardViewComponent.cs.pp -Raw) -replace 'Tuxboard.UI','$rootnamespace$') | Set-Content -Path $(PackageSource)\cs\any\Views\Shared\Components\Tuxboard\TuxboardViewComponent.cs.pp
+        #((Get-Content -path $(PackageSource)\cs\any\Views\Shared\Components\WidgetSettings\WidgetSettingsViewComponent.cs.pp -Raw) -replace 'Tuxboard.UI','$rootnamespace$') | Set-Content -Path $(PackageSource)\cs\any\Views\Shared\Components\WidgetSettings\WidgetSettingsViewComponent.cs.pp
+        #((Get-Content -path $(PackageSource)\cs\any\Views\Shared\Components\WidgetTemplate\WidgetTemplateViewComponent.cs.pp -Raw) -replace 'Tuxboard.UI','$rootnamespace$') | Set-Content -Path $(PackageSource)\cs\any\Views\Shared\Components\WidgetTemplate\WidgetTemplateViewComponent.cs.pp
 
       </myscript>
     </PropertyGroup>
