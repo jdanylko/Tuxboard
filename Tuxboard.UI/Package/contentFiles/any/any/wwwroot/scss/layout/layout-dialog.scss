@@ -1,0 +1,50 @@
+﻿/* Layout dialog */
+
+$spacingBetweenColumns: 2px;
+
+/* Fix spacing between each row */
+/* remove spacing between middle columns */
+.layout-row > .row.no-gutters [class*='col-']:not(:first-child):not(:last-child) {
+    padding-right: $spacingBetweenColumns;
+    padding-left: $spacingBetweenColumns;
+}
+/* remove right padding from first column */
+.layout-row > .row.no-gutters [class*='col-']:first-child {
+    padding-right: $spacingBetweenColumns;
+}
+/* remove left padding from first column */
+.layout-row > .row.no-gutters [class*='col-']:last-child {
+    padding-left: $spacingBetweenColumns;
+}
+
+.handle:hover {
+    cursor: move;
+}
+
+.layout-item {
+    padding: .2em;
+
+    .over {
+        border: 1px dashed $layoutDialog-hover-color;
+    }
+}
+
+.column-layout {
+    padding: 2px;
+
+    div {
+
+        .content-container {
+
+            background-color: $layoutDialog-column-bg;
+
+            span {
+                font-size: 12px;
+                background: $layoutDialog-column-title-bg;
+                color: $layoutDialog-column-title-text;
+                border: 1px solid $layoutDialog-column-title-border;
+                padding: 0 .5em;
+            }
+        }
+    }
+}

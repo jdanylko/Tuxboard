@@ -17,6 +17,9 @@
         <dependency id="Tuxboard.Core" version="1.0.0" />
       </group>
     </dependencies>
+    <contentFiles>
+      <files include="cs/any/TuxboardControllers/*.*" buildAction="Content" flatten="true" copyToOutput="true"/>
+    </contentFiles>
   </metadata>
   <files>
     <!--<file src="Package\contentFiles\cs\any\TuxboardControllers\LayoutDialogController.cs.pp" target="content\TuxboardControllers\LayoutDialogController.cs.pp" />
@@ -25,11 +28,14 @@
     <file src="Package\contentFiles\cs\any\TuxboardControllers\WidgetSettingsController.cs.pp" target="content\TuxboardControllers\WidgetSettingsController.cs.pp" />
     <file src="Package\contentFiles\cs\any\TuxboardControllers\TuxboardController.cs.pp" target="content\TuxboardControllers\TuxboardController.cs.pp" />-->
 
-    <file src="TuxboardControllers\LayoutDialogController.cs" target="contentFiles\cs\any\TuxboardControllers\LayoutDialogController.cs" />
-    <file src="TuxboardControllers\WidgetContentController.cs" target="contentFiles\cs\any\TuxboardControllers\WidgetContentController.cs" />
-    <file src="TuxboardControllers\WidgetDialogController.cs" target="contentFiles\cs\any\TuxboardControllers\WidgetDialogController.cs" />
-    <file src="TuxboardControllers\WidgetSettingsController.cs" target="contentFiles\cs\any\TuxboardControllers\WidgetSettingsController.cs" />
-    <file src="TuxboardControllers\TuxboardController.cs" target="contentFiles\cs\any\TuxboardControllers\TuxboardController.cs" />
+    <file src="TuxboardControllers\**\*.*" target="contentFiles" />
+
+
+    <!--<file src="TuxboardControllers\LayoutDialogController.cs" target="contentFiles\cs\any\TuxboardControllers" />
+    <file src="TuxboardControllers\WidgetContentController.cs" target="contentFiles\cs\any\TuxboardControllers" />
+    <file src="TuxboardControllers\WidgetDialogController.cs" target="contentFiles\cs\any\TuxboardControllers" />
+    <file src="TuxboardControllers\WidgetSettingsController.cs" target="contentFiles\cs\any\TuxboardControllers" />
+    <file src="TuxboardControllers\TuxboardController.cs" target="contentFiles\cs\any\TuxboardControllers" />-->
 
     <!--<file src="Views\LayoutDialog\**\*.*" target="contentFiles\any\any\Views\LayoutDialog" />
     <file src="Views\Shared\Components\**\*.*" target="contentFiles\any\any\Views\Shared\Components" />
