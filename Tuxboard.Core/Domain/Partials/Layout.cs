@@ -23,22 +23,21 @@ namespace Tuxboard.Core.Domain.Entities
                     LayoutIndex = defaultDashboard.Layout.LayoutIndex,
                     TabId = tabId,
                     LayoutRows = new List<LayoutRow>(
-                        Enumerable.Select<LayoutRow, LayoutRow>(defaultDashboard.Layout.LayoutRows, row => new LayoutRow
+                        defaultDashboard.Layout.LayoutRows.Select(row => new LayoutRow
                         {
                             RowIndex = row.RowIndex,
                             LayoutTypeId = row.LayoutTypeId,
                             WidgetPlacements = new List<WidgetPlacement>(
-                                Enumerable.Where<DashboardDefaultWidget>(defaultDashboard.DashboardDefaultWidgets, y=> y.LayoutRowId == row.LayoutRowId)
+                                defaultDashboard.DashboardDefaultWidgets.Where(y=> y.LayoutRowId == row.LayoutRowId)
                                     .Select(ddw => new WidgetPlacement
-                            {
-                                WidgetId = ddw.WidgetId,
-                                ColumnIndex = ddw.ColumnIndex,
-                                UseTemplate = ddw.Widget.UseTemplate,
-                                UseSettings = ddw.Widget.UseSettings,
-                                Collapsed = false
-                            }))
-                        }
-                    ))
+                                    {
+                                        WidgetId = ddw.WidgetId,
+                                        ColumnIndex = ddw.ColumnIndex,
+                                        UseTemplate = ddw.Widget.UseTemplate,
+                                        UseSettings = ddw.Widget.UseSettings,
+                                        Collapsed = false
+                                    }))
+                        }))
                 }
             };
         }
@@ -62,23 +61,33 @@ namespace Tuxboard.Core.Domain.Entities
 
         public bool RowsContainWidgets(LayoutRow row)
         {
-            return Enumerable.Any<WidgetPlacement>(row.WidgetPlacements);
+            return row.WidgetPlacements.Any();
+        }
+
+        public bool RowContainsWidgets(string layoutRowId)
+        {
+            var row = LayoutRows.FirstOrDefault(t => t.LayoutRowId == layoutRowId);
+            if (row != null)
+            {
+                return row.RowContainsWidgets();
+            }
+
+            return false;
         }
 
         public List<WidgetPlacement> GetWidgetPlacements()
         {
-            return Enumerable.SelectMany<LayoutRow, WidgetPlacement>(LayoutRows, y => y.WidgetPlacements)
+            return LayoutRows.SelectMany<LayoutRow, WidgetPlacement>(y => y.WidgetPlacements)
                 .ToList();
         }
 
         public List<Widget> GetWidgetsUsed()
         {
-            var widgets = Enumerable.SelectMany<LayoutRow, WidgetPlacement>(LayoutRows, y => y.WidgetPlacements)
+            var widgets = LayoutRows.SelectMany<LayoutRow, WidgetPlacement>(y => y.WidgetPlacements)
                 .Select<WidgetPlacement, Widget>(e => e.Widget)
                 .ToList();
 
-            var widgetIds = widgets
-                .Select<Widget, string>(y=> y.WidgetId)
+            var widgetIds = widgets.Select(y=> y.WidgetId)
                 .Distinct()
                 .ToList();
 
@@ -89,7 +98,7 @@ namespace Tuxboard.Core.Domain.Entities
 
         public WidgetPlacement GetWidgetPlacement(string placementId)
         {
-            return Enumerable.SelectMany<LayoutRow, WidgetPlacement>(LayoutRows, e => e.WidgetPlacements)
+            return LayoutRows.SelectMany<LayoutRow, WidgetPlacement>(e => e.WidgetPlacements)
                 .FirstOrDefault(e => e.WidgetPlacementId == placementId);
         }
     }

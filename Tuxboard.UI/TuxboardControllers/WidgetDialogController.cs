@@ -1,5 +1,6 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
+using System.Net;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
@@ -37,16 +38,15 @@ namespace Tuxboard.UI.TuxboardControllers
         public async Task<IActionResult> AddWidget([FromBody] AddWidgetParameter model)
         {
             var success = await _service.AddWidgetToTabAsync(model.TabId, model.WidgetId);
-            
-            var result = new TuxResponse
-            {
-                Success = true,
-                Message = new TuxViewMessage(
-                    success ? "Widget added." : "Widget was NOT added.",
-                    success ? TuxMessageType.Success : TuxMessageType.Danger)
-            };
 
-            return Json(result);
+            if (!success)
+            {
+                return StatusCode((int)HttpStatusCode.ExpectationFailed,
+                    string.Format("Widget (id:{0}) NOT saved.", model.WidgetId));
+
+            }
+
+            return Ok();
         }
 
         private async Task<WidgetDialogViewModel> GetWidgetDialogViewModelAsync()

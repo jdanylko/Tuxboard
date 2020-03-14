@@ -1,4 +1,5 @@
 ﻿using System.Linq;
+using System.Net;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
@@ -70,16 +71,16 @@ namespace Tuxboard.UI.TuxboardControllers
         {
             // var user = await GetCurrentUserAsync();
 
-            var result = new TuxResponse { Success = true };
-
             var success = await _service.RemoveWidgetAsync(model.PlacementId);
 
-            result.Message = new TuxViewMessage(
-                success ? "Widget removed." : "Widget was NOT removed.",
-                success ? TuxMessageType.Success : TuxMessageType.Danger,
-                success, id: model.PlacementId);
+            if (!success)
+            {
+                return StatusCode((int) HttpStatusCode.InternalServerError,
+                    string.Format("Widget (id:{0}) was NOT removed.", model.PlacementId));
+            }
 
-            return Json(result);
+            return Ok(
+                new TuxViewMessage("Widget was removed", TuxMessageType.Success, true, model.PlacementId));
         }
 
         [HttpPut]
@@ -90,15 +91,13 @@ namespace Tuxboard.UI.TuxboardControllers
 
             var placement = await _service.SaveWidgetPlacementAsync(model);
 
-            var result = new TuxResponse
+            if (placement == null)
             {
-                Success = placement != null,
-                Message = new TuxViewMessage(
-                    placement != null ? "Widget placement saved." : "Widget placement NOT saved.",
-                    placement != null ? TuxMessageType.Success : TuxMessageType.Danger)
-            };
+                return StatusCode((int)HttpStatusCode.InternalServerError,
+                    string.Format("Widget Placement (id:{0}) was NOT saved.", model.PlacementId));
+            }
 
-            return Ok(result);
+            return Ok("Widget Placement was saved.");
         }
 
 

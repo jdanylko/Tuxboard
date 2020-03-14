@@ -115,14 +115,16 @@ namespace Tuxboard.Core.Infrastructure.Services
         }
 
 
-        public bool SaveLayout(Layout oldLayout, List<LayoutOrder> newList)
+        public bool SaveLayout(string tabId, List<LayoutOrder> newList)
         {
+            var oldLayout = _context.GetLayoutForTab(tabId);
+
             var success = true;
 
             // Delete
-            foreach (var layoutRow in Enumerable.Where<LayoutRow>(oldLayout.LayoutRows, e => newList.All(y => y.LayoutRowId != e.LayoutRowId)))
+            foreach (var layoutRow in oldLayout.LayoutRows.Where(e => newList.All(y => y.LayoutRowId != e.LayoutRowId)))
             {
-                var item = Queryable.FirstOrDefault(_context.LayoutRow, e => e.LayoutRowId == layoutRow.LayoutRowId);
+                var item = _context.LayoutRow.FirstOrDefault(e => e.LayoutRowId == layoutRow.LayoutRowId);
                 if (item != null)
                 {
                     _context.LayoutRow.Remove(item);
@@ -161,7 +163,7 @@ namespace Tuxboard.Core.Infrastructure.Services
             // Update
             foreach (var item in newList)
             {
-                var row = Queryable.FirstOrDefault(_context.LayoutRow, y => y.LayoutRowId == item.LayoutRowId);
+                var row = _context.LayoutRow.FirstOrDefault(y => y.LayoutRowId == item.LayoutRowId);
                 if (row != null)
                 {
                     row.RowIndex = item.Index;
@@ -356,13 +358,15 @@ namespace Tuxboard.Core.Infrastructure.Services
             return await _context.SaveChangesAsync(token) > 0;
         }
 
-        public async Task<bool> SaveLayoutAsync(Layout oldLayout, List<LayoutOrder> newList)
+        public async Task<bool> SaveLayoutAsync(string tabId, List<LayoutOrder> newList)
         {
+            var oldLayout = await _context.GetLayoutForTabAsync(tabId);
+
             // poor man's synchronization
             var success = true;
 
             // Delete
-            foreach (var layoutRow in Enumerable.Where<LayoutRow>(oldLayout.LayoutRows, e => newList.All(y => y.LayoutRowId != e.LayoutRowId)))
+            foreach (var layoutRow in oldLayout.LayoutRows.Where<LayoutRow>(e => newList.All(y => y.LayoutRowId != e.LayoutRowId)))
             {
                 var item = await _context.LayoutRow.FirstOrDefaultAsync(e => e.LayoutRowId == layoutRow.LayoutRowId);
                 if (item != null)

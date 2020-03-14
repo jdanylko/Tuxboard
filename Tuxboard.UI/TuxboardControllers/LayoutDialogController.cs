@@ -1,4 +1,6 @@
-﻿using System.Linq;
+﻿
+using System.Linq;
+using System.Net;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
@@ -6,7 +8,6 @@ using Microsoft.Extensions.Options;
 using Tuxboard.Core.Configuration;
 using Tuxboard.Core.Domain.Entities;
 using Tuxboard.Core.Infrastructure.Interfaces;
-using Tuxboard.Core.Infrastructure.Models;
 using Tuxboard.Core.Infrastructure.ViewModels;
 
 namespace Tuxboard.UI.TuxboardControllers
@@ -27,29 +28,24 @@ namespace Tuxboard.UI.TuxboardControllers
         }
 
         [HttpPost]
+        [Route("/LayoutDialog/SaveLayout/")]
+        public async Task<IActionResult> SaveLayout([FromBody] SaveLayoutViewModel model)
+        {
+            var success = await _service.SaveLayoutAsync(model.TabId, model.LayoutList);
+            if (!success)
+            {
+                return StatusCode((int)HttpStatusCode.InternalServerError,
+                    string.Format("Layout (tabid:{0}) NOT saved.", model.TabId));
+            }
+
+            return Ok();
+        }
+
+        [HttpPost]
         [Route("/LayoutDialog/{id}")]
         public async Task<IActionResult> Index(string id)
         {
             return PartialView("LayoutDialog", await GetLayoutDialogViewModelAsync(id));
-        }
-
-        [HttpPost]
-        [Route("/LayoutDialog/SaveLayout/")]
-        public async Task<IActionResult> SaveLayout([FromBody] SaveLayoutViewModel model)
-        {
-            var layout = await _service.GetLayoutFromTabAsync(model.TabId);
-            var success = await _service.SaveLayoutAsync(layout, model.LayoutList);
-
-            var result = new TuxResponse
-            {
-                Success = true,
-                Message = new TuxViewMessage(
-                    success ? "Layout saved." : "Layout NOT saved.",
-                    success ? TuxMessageType.Success : TuxMessageType.Danger,
-                    success)
-            };
-
-            return Json(result);
         }
 
         [HttpDelete]
@@ -65,17 +61,11 @@ namespace Tuxboard.UI.TuxboardControllers
 
             var canDelete = true;
 
-            var row = layout.LayoutRows.FirstOrDefault(t => t.LayoutRowId == id);
-            if (row != null)
-            {
-                var widgetsExist = row.RowContainsWidgets();
-                if (widgetsExist)
-                {
-                    message = new TuxViewMessage(
-                        "Row contains widgets and cannot be deleted.",
-                        TuxMessageType.Danger, false, row.LayoutRowId);
-                    canDelete = false;
-                }
+            if (layout.RowContainsWidgets(id)) {
+                message = new TuxViewMessage(
+                    "Row contains widgets and cannot be deleted.",
+                    TuxMessageType.Danger, false, id);
+                canDelete = false;
             }
 
             var oneRowExists = layout.ContainsOneRow();

@@ -13,7 +13,6 @@
   {
     "outputFileName": "wwwroot/js/tuxboard.min.js",
     "inputFiles": [
-      "wwwroot/scripts/common.js",
       "wwwroot/scripts/tuxboard.js"
     ],
     "minify": {
