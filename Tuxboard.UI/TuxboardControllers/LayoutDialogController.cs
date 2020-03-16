@@ -27,6 +27,35 @@ namespace Tuxboard.UI.TuxboardControllers
             _config = config.Value;
         }
 
+        #region Partial Views
+
+        [HttpPost]
+        [Route("/LayoutDialog/AddLayoutRow/{layoutTypeId}")]
+        public async Task<IActionResult> AddLayoutRow(string layoutTypeId)
+        {
+            var types = await _service.GetLayoutTypesAsync();
+
+            var layoutRow = new LayoutRow
+            {
+                LayoutRowId = "0",
+                LayoutTypeId = layoutTypeId,
+                LayoutType = types.FirstOrDefault(e => e.LayoutTypeId == layoutTypeId)
+            };
+
+            return PartialView("LayoutRow", layoutRow);
+        }
+
+        [HttpPost]
+        [Route("/LayoutDialog/{id}")]
+        public async Task<IActionResult> Index(string id)
+        {
+            return PartialView("LayoutDialog", await GetLayoutDialogViewModelAsync(id));
+        }
+
+        #endregion
+
+        #region API
+
         [HttpPost]
         [Route("/LayoutDialog/SaveLayout/")]
         public async Task<IActionResult> SaveLayout([FromBody] SaveLayoutViewModel model)
@@ -35,17 +64,10 @@ namespace Tuxboard.UI.TuxboardControllers
             if (!success)
             {
                 return StatusCode((int)HttpStatusCode.InternalServerError,
-                    string.Format("Layout (tabid:{0}) NOT saved.", model.TabId));
+                    $"Layout (tabid:{model.TabId}) NOT saved.");
             }
 
             return Ok();
-        }
-
-        [HttpPost]
-        [Route("/LayoutDialog/{id}")]
-        public async Task<IActionResult> Index(string id)
-        {
-            return PartialView("LayoutDialog", await GetLayoutDialogViewModelAsync(id));
         }
 
         [HttpDelete]
@@ -87,21 +109,7 @@ namespace Tuxboard.UI.TuxboardControllers
             return Ok(message);
         }
 
-        [HttpPost]
-        [Route("/LayoutDialog/AddLayoutRow/{layoutTypeId}")]
-        public async Task<IActionResult> AddLayoutRow(string layoutTypeId)
-        {
-            var types = await _service.GetLayoutTypesAsync();
-
-            var layoutRow = new LayoutRow
-            {
-                LayoutRowId = "0",
-                LayoutTypeId = layoutTypeId,
-                LayoutType = types.FirstOrDefault(e => e.LayoutTypeId == layoutTypeId)
-            };
-
-            return PartialView("LayoutRow", layoutRow);
-        }
+        #endregion
 
         private async Task<LayoutDialogViewModel> GetLayoutDialogViewModelAsync(string tabId)
         {

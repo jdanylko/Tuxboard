@@ -1,4 +1,4 @@
-﻿<Project Sdk="Microsoft.NET.Sdk.Web" DefaultTargets="CreatePackage">
+﻿<Project Sdk="Microsoft.NET.Sdk.Web">
   <PropertyGroup>
     <PowerShell># 2&gt;nul || type %~df0|find /v "setlocal"|find /v "errorlevel"|powershell.exe -noninteractive -&amp; exit %errorlevel% || #</PowerShell>
   </PropertyGroup>
@@ -58,6 +58,8 @@
 
   
   
+  <!--
+  
   <PropertyGroup>
     <Configuration>Release</Configuration>
     <CodeTemplatesPath>$(MSBuildProjectDirectory)\CodeTemplates</CodeTemplatesPath>
@@ -69,5 +71,7 @@
   </PropertyGroup>
 
   <Import Project="NuGetPackage.targets" />
+  
+  -->
 
 </Project>

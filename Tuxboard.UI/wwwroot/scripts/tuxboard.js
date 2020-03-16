@@ -60,7 +60,7 @@
     const tuxWidgetPlacementUrl = "/Tuxboard/Put/";
     const tuxWidgetRemoveWidgetUrl = "/Tuxboard/removewidget/";
     const tuxWidgetContentUrl = "/Widget/";
-    const tuxWidgetSaveSettingsUrl = "/Widget/savesettings/";
+    const tuxWidgetSaveSettingsUrl = "/WidgetSettings/Save/";
 
 
     /* Widget header toolbar */

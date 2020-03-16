@@ -26,6 +26,8 @@ namespace Tuxboard.UI.TuxboardControllers
             _config = config.Value;
         }
 
+        #region ViewComponents
+
         [HttpGet]
         [Route("Tuxboard/Get")]
         public async Task<IActionResult> Get()
@@ -42,6 +44,10 @@ namespace Tuxboard.UI.TuxboardControllers
                         
             return ViewComponent("LayoutTemplate", tab.Layouts.FirstOrDefault());
         }
+
+        #endregion
+
+        #region API
 
         [HttpPost]
         [Route("Tuxboard/PostCollapse")]
@@ -76,7 +82,7 @@ namespace Tuxboard.UI.TuxboardControllers
             if (!success)
             {
                 return StatusCode((int) HttpStatusCode.InternalServerError,
-                    string.Format("Widget (id:{0}) was NOT removed.", model.PlacementId));
+                    $"Widget (id:{model.PlacementId}) was NOT removed.");
             }
 
             return Ok(
@@ -94,13 +100,13 @@ namespace Tuxboard.UI.TuxboardControllers
             if (placement == null)
             {
                 return StatusCode((int)HttpStatusCode.InternalServerError,
-                    string.Format("Widget Placement (id:{0}) was NOT saved.", model.PlacementId));
+                    $"Widget Placement (id:{model.PlacementId}) was NOT saved.");
             }
 
             return Ok("Widget Placement was saved.");
         }
 
-
+        #endregion
 
         [NonAction]
         private async Task<string> GetCurrentUserAsync()

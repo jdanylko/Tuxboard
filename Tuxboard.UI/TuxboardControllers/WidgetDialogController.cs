@@ -24,6 +24,8 @@ namespace Tuxboard.UI.TuxboardControllers
             _service = service;
         }
 
+        #region View Component
+
         [HttpGet]
         [Route("/WidgetDialog/")]
         public async Task<IActionResult> Widget()
@@ -33,22 +35,27 @@ namespace Tuxboard.UI.TuxboardControllers
             return PartialView("WidgetDialog", viewModel);
         }
 
+        #endregion
+
+        #region API
+
         [HttpPost]
         [Route("/WidgetDialog/AddWidget/")]
         public async Task<IActionResult> AddWidget([FromBody] AddWidgetParameter model)
         {
             var success = await _service.AddWidgetToTabAsync(model.TabId, model.WidgetId);
-
             if (!success)
             {
                 return StatusCode((int)HttpStatusCode.ExpectationFailed,
-                    string.Format("Widget (id:{0}) NOT saved.", model.WidgetId));
+                    $"Widget (id:{model.WidgetId}) NOT saved.");
 
             }
 
             return Ok();
         }
 
+        #endregion
+        
         private async Task<WidgetDialogViewModel> GetWidgetDialogViewModelAsync()
         {
             var widgets = await _service.GetWidgetsForAsync();
