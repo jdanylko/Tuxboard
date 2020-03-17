@@ -3,6 +3,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 using Tuxboard.Core.Configuration;
 using Tuxboard.Core.Infrastructure.Interfaces;
+using Tuxboard.Core.Infrastructure.ViewModels;
 
 namespace Tuxboard.UI.TuxboardControllers
 {
@@ -18,6 +19,8 @@ namespace Tuxboard.UI.TuxboardControllers
             _service = service;
         }
 
+        #region ViewComponent
+
         [HttpGet]
         [Route("/WidgetSettings/{id}")]
         public async Task<IActionResult> WidgetSettings(string id)
@@ -26,6 +29,21 @@ namespace Tuxboard.UI.TuxboardControllers
 
             return ViewComponent("WidgetSettings", placement);
         }
+
+        #endregion
+
+        #region API
+
+        [HttpPost]
+        [Route("/WidgetSettings/Save/")]
+        public async Task<IActionResult> WidgetSettings([FromBody] SaveSettingsViewModel model)
+        {
+            var result = await _service.SaveWidgetSettingsAsync(model.Settings);
+
+            return Ok(result);
+        }
+
+        #endregion
 
         [NonAction]
         private async Task<string> GetCurrentUserAsync()

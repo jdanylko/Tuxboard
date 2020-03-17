@@ -1,4 +1,5 @@
-﻿using System.Threading.Tasks;
+﻿using System.Linq;
+using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 using Tuxboard.Core.Infrastructure.Interfaces;
@@ -25,15 +26,6 @@ namespace Tuxboard.UI.TuxboardControllers
             var placement = await _service.GetWidgetPlacementAsync(id);
 
             return ViewComponent(placement.Widget.Name, placement);
-        }
-
-        [HttpPost]
-        [Route("/Widget/saveSettings/")]
-        public async Task<IActionResult> WidgetSettings([FromBody] SaveSettingsViewModel model)
-        {
-            var result = await _service.SaveWidgetSettingsAsync(model.Settings);
-
-            return Ok(result);
         }
 
     }

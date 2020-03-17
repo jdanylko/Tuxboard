@@ -60,7 +60,7 @@
     const tuxWidgetPlacementUrl = "/Tuxboard/Put/";
     const tuxWidgetRemoveWidgetUrl = "/Tuxboard/removewidget/";
     const tuxWidgetContentUrl = "/Widget/";
-    const tuxWidgetSaveSettingsUrl = "/Widget/savesettings/";
+    const tuxWidgetSaveSettingsUrl = "/WidgetSettings/Save/";
 
 
     /* Widget header toolbar */
@@ -380,7 +380,7 @@
     /* Service: Remove Widget */
     function removeWidgetFromDashboard(data) {
         if (data.success) {
-            const widget = getDashboard().querySelector("[data-id='" + data.message.id + "']");
+            const widget = getDashboard().querySelector("[data-id='" + data.id + "']");
             if (widget) {
                 widget.remove();
             }
@@ -496,8 +496,8 @@
     }
 
     /* Service: Add Widget */
-    function addWidgetToDashboard(data) {
-        if (data.success) {
+    function addWidgetToDashboard(response) {
+        if (response.status === 200) {
             if (widgetDialogInstance) {
                 widgetDialogInstance.hide();
             }
@@ -520,7 +520,6 @@
                 }
             })
             .then(validateResponse)
-            .then(readResponseAsJson)
             .then(addWidgetToDashboard)
             .catch(logError);
     }
@@ -641,10 +640,10 @@
     }
 
     /* Service: Save Layout */
-    function processSaveLayoutResponse(data) {
-        if (debug) console.log(data);
-        if (!data.success) {
-            displayLayoutErrors(data);
+    function processSaveLayoutResponse(response) {
+        if (debug) console.log(response);
+        if (!response.status === 200) {
+            displayLayoutErrors(response);
         } else {
             layoutDialogInstance.hide();
             refreshTuxboardService();
@@ -660,7 +659,6 @@
                     'Content-Type': 'application/json'
                 }
             })
-            .then(readResponseAsJson)
             .then(processSaveLayoutResponse)
             .catch(logError);
     }

@@ -1,5 +1,6 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
+using System.Net;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
@@ -23,6 +24,8 @@ namespace Tuxboard.UI.TuxboardControllers
             _service = service;
         }
 
+        #region View Component
+
         [HttpGet]
         [Route("/WidgetDialog/")]
         public async Task<IActionResult> Widget()
@@ -32,23 +35,27 @@ namespace Tuxboard.UI.TuxboardControllers
             return PartialView("WidgetDialog", viewModel);
         }
 
+        #endregion
+
+        #region API
+
         [HttpPost]
         [Route("/WidgetDialog/AddWidget/")]
         public async Task<IActionResult> AddWidget([FromBody] AddWidgetParameter model)
         {
             var success = await _service.AddWidgetToTabAsync(model.TabId, model.WidgetId);
-            
-            var result = new TuxResponse
+            if (!success)
             {
-                Success = true,
-                Message = new TuxViewMessage(
-                    success ? "Widget added." : "Widget was NOT added.",
-                    success ? TuxMessageType.Success : TuxMessageType.Danger)
-            };
+                return StatusCode((int)HttpStatusCode.ExpectationFailed,
+                    $"Widget (id:{model.WidgetId}) NOT saved.");
 
-            return Json(result);
+            }
+
+            return Ok();
         }
 
+        #endregion
+        
         private async Task<WidgetDialogViewModel> GetWidgetDialogViewModelAsync()
         {
             var widgets = await _service.GetWidgetsForAsync();

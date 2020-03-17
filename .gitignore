@@ -339,3 +339,4 @@ ASALocalRun/
 # BeatPulse healthcheck temp database
 healthchecksdb
 /Tuxboard.UI/contentFiles/cs/netcoreapp3.1
+/Tuxboard.Core/Migrations

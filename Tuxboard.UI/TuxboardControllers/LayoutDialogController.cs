@@ -1,4 +1,6 @@
-﻿using System.Linq;
+﻿
+using System.Linq;
+using System.Net;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
@@ -6,7 +8,6 @@ using Microsoft.Extensions.Options;
 using Tuxboard.Core.Configuration;
 using Tuxboard.Core.Domain.Entities;
 using Tuxboard.Core.Infrastructure.Interfaces;
-using Tuxboard.Core.Infrastructure.Models;
 using Tuxboard.Core.Infrastructure.ViewModels;
 
 namespace Tuxboard.UI.TuxboardControllers
@@ -26,6 +27,24 @@ namespace Tuxboard.UI.TuxboardControllers
             _config = config.Value;
         }
 
+        #region Partial Views
+
+        [HttpPost]
+        [Route("/LayoutDialog/AddLayoutRow/{layoutTypeId}")]
+        public async Task<IActionResult> AddLayoutRow(string layoutTypeId)
+        {
+            var types = await _service.GetLayoutTypesAsync();
+
+            var layoutRow = new LayoutRow
+            {
+                LayoutRowId = "0",
+                LayoutTypeId = layoutTypeId,
+                LayoutType = types.FirstOrDefault(e => e.LayoutTypeId == layoutTypeId)
+            };
+
+            return PartialView("LayoutRow", layoutRow);
+        }
+
         [HttpPost]
         [Route("/LayoutDialog/{id}")]
         public async Task<IActionResult> Index(string id)
@@ -33,23 +52,22 @@ namespace Tuxboard.UI.TuxboardControllers
             return PartialView("LayoutDialog", await GetLayoutDialogViewModelAsync(id));
         }
 
+        #endregion
+
+        #region API
+
         [HttpPost]
         [Route("/LayoutDialog/SaveLayout/")]
         public async Task<IActionResult> SaveLayout([FromBody] SaveLayoutViewModel model)
         {
-            var layout = await _service.GetLayoutFromTabAsync(model.TabId);
-            var success = await _service.SaveLayoutAsync(layout, model.LayoutList);
-
-            var result = new TuxResponse
+            var success = await _service.SaveLayoutAsync(model.TabId, model.LayoutList);
+            if (!success)
             {
-                Success = true,
-                Message = new TuxViewMessage(
-                    success ? "Layout saved." : "Layout NOT saved.",
-                    success ? TuxMessageType.Success : TuxMessageType.Danger,
-                    success)
-            };
+                return StatusCode((int)HttpStatusCode.InternalServerError,
+                    $"Layout (tabid:{model.TabId}) NOT saved.");
+            }
 
-            return Json(result);
+            return Ok();
         }
 
         [HttpDelete]
@@ -65,17 +83,11 @@ namespace Tuxboard.UI.TuxboardControllers
 
             var canDelete = true;
 
-            var row = layout.LayoutRows.FirstOrDefault(t => t.LayoutRowId == id);
-            if (row != null)
-            {
-                var widgetsExist = row.RowContainsWidgets();
-                if (widgetsExist)
-                {
-                    message = new TuxViewMessage(
-                        "Row contains widgets and cannot be deleted.",
-                        TuxMessageType.Danger, false, row.LayoutRowId);
-                    canDelete = false;
-                }
+            if (layout.RowContainsWidgets(id)) {
+                message = new TuxViewMessage(
+                    "Row contains widgets and cannot be deleted.",
+                    TuxMessageType.Danger, false, id);
+                canDelete = false;
             }
 
             var oneRowExists = layout.ContainsOneRow();
@@ -97,21 +109,7 @@ namespace Tuxboard.UI.TuxboardControllers
             return Ok(message);
         }
 
-        [HttpPost]
-        [Route("/LayoutDialog/AddLayoutRow/{layoutTypeId}")]
-        public async Task<IActionResult> AddLayoutRow(string layoutTypeId)
-        {
-            var types = await _service.GetLayoutTypesAsync();
-
-            var layoutRow = new LayoutRow
-            {
-                LayoutRowId = "0",
-                LayoutTypeId = layoutTypeId,
-                LayoutType = types.FirstOrDefault(e => e.LayoutTypeId == layoutTypeId)
-            };
-
-            return PartialView("LayoutRow", layoutRow);
-        }
+        #endregion
 
         private async Task<LayoutDialogViewModel> GetLayoutDialogViewModelAsync(string tabId)
         {

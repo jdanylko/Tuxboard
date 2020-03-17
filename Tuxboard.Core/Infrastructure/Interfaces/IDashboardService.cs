@@ -39,8 +39,8 @@ namespace Tuxboard.Core.Infrastructure.Interfaces
         bool RemoveLayoutRow(LayoutRow row);
         Task<bool> RemoveLayoutRowAsync(LayoutRow row);
 
-        bool SaveLayout(Layout layout, List<LayoutOrder> layoutList);
-        Task<bool> SaveLayoutAsync(Layout layout, List<LayoutOrder> layoutList);
+        bool SaveLayout(string tabId, List<LayoutOrder> layoutList);
+        Task<bool> SaveLayoutAsync(string tabId, List<LayoutOrder> layoutList);
 
         bool AddLayoutRow(Layout layout, string layoutTypeId);
         Task<bool> AddLayoutRowAsync(Layout layout, string layoutTypeId);
