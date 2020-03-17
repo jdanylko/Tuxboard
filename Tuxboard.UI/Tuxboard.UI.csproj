@@ -1,7 +1,9 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk.Web">
+  <!--
   <PropertyGroup>
     <PowerShell># 2&gt;nul || type %~df0|find /v "setlocal"|find /v "errorlevel"|powershell.exe -noninteractive -&amp; exit %errorlevel% || #</PowerShell>
   </PropertyGroup>
+  -->
 
   <PropertyGroup>
     <TargetFramework>netcoreapp3.1</TargetFramework>
