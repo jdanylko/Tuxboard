@@ -1,9 +1,91 @@
-﻿(function () {
+﻿
+export class Tuxboard {
+    public dashboardId: string = ".dashboard";
+
+    constructor() { }
+}
+
+export class Tab {
+
+    public tabId: string = ".dashboard-tab";
+
+    constructor() { }
+
+}
+
+export class Layout {
+
+    constructor() { }
+}
+
+export class LayoutRow {
+
+    constructor() { }
+}
+
+export class RowTemplate {
+    public rowTemplateId; string = ".row-template";
+
+    constructor() { }
+
+}
+
+export class Widget {
+
+    constructor() { }
+}
+
+export class WidgetSettings {
+
+    constructor() { }
+}
+
+export class Column {
+
+    public columnId: string = ".column";
+
+    constructor() { }
+}
+
+export class ChangeLayoutDialog {
+
+    constructor() { }
+}
+
+export class AddWidgetDialog {
+
+    constructor() { }
+}
+
+export class TuxboardServices {
+
+    tuxLayoutDialogUrl:string = "/layoutdialog/";
+    tuxLayoutAddRowUrl:string = "/layoutdialog/addlayoutrow/";
+    tuxSaveLayoutUrl:string = "/layoutdialog/saveLayout/";
+    tuxDeleteLayoutRowUrl:string = "/layoutdialog/DeleteLayoutRow/";
+
+    tuxWidgetDialogUrl:string = "/widgetdialog/";
+    tuxWidgetSettingsUrl:string = "/widgetsettings/";
+    tuxWidgetAddWidgetUrl:string = "/widgetdialog/addwidget/";
+
+    tuxRefreshTuxboardUrl:string = "/Tuxboard/Get/";
+    tuxToolCollapseUrl:string = "/Tuxboard/PostCollapse/";
+    tuxWidgetPlacementUrl:string = "/Tuxboard/Put/";
+    tuxWidgetRemoveWidgetUrl:string = "/Tuxboard/removewidget/";
+    tuxWidgetContentUrl:string = "/Widget/";
+    tuxWidgetSaveSettingsUrl:string = "/WidgetSettings/Save/";
+
+    constructor() { }
+
+
+
+}
+
 
     const debug = false;
 
-    const tuxDashboardColumn = ".column";
-    const tuxDashboardTab = ".dashboard-tab";
+    // const tuxDashboardColumn = ".column";
+    // const tuxDashboardTab = ".dashboard-tab";
     const tuxRowTemplate = ".row-template";
 
     const tuxWidgetClass = "card";
@@ -1175,5 +1257,3 @@
     }
 
     initialize();
-
-})();
