@@ -1,4 +1,50 @@
 ﻿
+export class WidgetToolBar {
+    
+}
+
+export class WidgetToolbarButton {
+
+    constructor() { }
+
+}
+
+export class WidgetCollapseButton extends WidgetToolbarButton {
+    public tuxWidgetToolCollapse: string = "collapse-widget";
+
+    constructor() { super(); }
+}
+
+export class WidgetRemoveButton extends WidgetToolbarButton {
+    public tuxWidgetToolRemove: string = "remove-widget";
+
+    constructor() { super(); }
+}
+
+export class TuxbarButton {
+
+    constructor() { }
+}
+
+export class ChangeLayoutButton extends TuxbarButton {
+    public tuxLayoutButton: string = "layout-button";
+
+    constructor() { super(); }
+
+}
+
+export class AddWidgetButton extends TuxbarButton {
+    public tuxWidgetButton:string = "widget-button";
+
+    constructor() { super(); }
+}
+
+export class Tuxbar {
+    public rowTemplateId; string = ".row-template";
+
+    constructor() { }
+}
+
 export class Tuxboard {
     public dashboardId: string = ".dashboard";
 
@@ -32,10 +78,18 @@ export class RowTemplate {
 
 export class Widget {
 
+    public widgetId: string = ".card";
+    public widgetTitleId: string = ".card-title";
+
     constructor() { }
 }
 
 export class WidgetSettings {
+
+    public tuxWidgetSettings: string = ".widget-settings"; // classname
+    public tuxWidgetSettingsCancel:string = ".settings-cancel"; // cancel button
+    public tuxWidgetSettingsSave:string = ".settings-save"; // save button
+    public tuxWidgetInputs:string = ".setting-value"; // input classes
 
     constructor() { }
 }
@@ -47,14 +101,33 @@ export class Column {
     constructor() { }
 }
 
-export class ChangeLayoutDialog {
+export class BaseDialog {
+    public modalBody: string = ".modal-body";
 
-    constructor() { }
 }
 
-export class AddWidgetDialog {
+export class ChangeLayoutDialog extends BaseDialog {
+    public tuxLayoutDialog:string = "layout-dialog"; // default is #layout-dialog
+    public tuxSaveLayoutButton:string = ".save-layout"; // save layout button.
+    public tuxLayoutDeleteButton:string = ".layout-delete-button";
+    public tuxLayoutList:string = ".layout-list";
+    public tuxLayoutItem:string = "layout-item";
+    public tuxLayoutTypes:string = ".layout-types a";
+    public tuxLayoutListHandle:string = ".handle";
+    public tuxLayoutMessage:string = "#layout-message";
 
-    constructor() { }
+    constructor() { super(); }
+}
+
+export class AddWidgetDialog extends BaseDialog {
+
+    public tuxWidgetDialog:string = "widget-dialog"; // default is #widget-dialog
+    public tuxWidgetTabGroup:string = ".widget-tabs"; // left-side group in #widget-dialog
+    public tuxWidgetListItem:string = "a.widget-item"; // each widget on right in #widget-dialog
+    public tuxWidgetAdd:string = ".add-widget"; // Add Widget button
+    public tuxWidgetTools:string = "card-tools"; // buttons on each widget
+
+    constructor() { super(); }
 }
 
 export class TuxboardServices {
@@ -86,32 +159,32 @@ export class TuxboardServices {
 
     // const tuxDashboardColumn = ".column";
     // const tuxDashboardTab = ".dashboard-tab";
-    const tuxRowTemplate = ".row-template";
+    // const tuxRowTemplate = ".row-template";
 
-    const tuxWidgetClass = "card";
-    const tuxWidgetTitle = ".card-title";
+    // const tuxWidgetClass = "card";
+    // const tuxWidgetTitle = ".card-title";
 
-    const tuxLayoutButton = "layout-button"; // button to trigger the layout dialog.
-    const tuxWidgetButton = "widget-button"; // button to trigger the widget dialog.
+    // const tuxLayoutButton = "layout-button"; // button to trigger the layout dialog.
+    // const tuxWidgetButton = "widget-button"; // button to trigger the widget dialog.
 
-    const cssModalBody = ".modal-body"; // for Bootstrap, the class to replace HTML in a dialog box.
+    // const cssModalBody = ".modal-body"; // for Bootstrap, the class to replace HTML in a dialog box.
 
     /* Layout Dialog */
-    const tuxLayoutDialog = "layout-dialog"; // default is #layout-dialog
-    const tuxSaveLayoutButton = ".save-layout"; // save layout button.
-    const tuxLayoutDeleteButton = ".layout-delete-button";
-    const tuxLayoutList = ".layout-list";
-    const tuxLayoutItem = "layout-item";
-    const tuxLayoutTypes = ".layout-types a";
-    const tuxLayoutListHandle = ".handle";
-    const tuxLayoutMessage = "#layout-message";
+    //const tuxLayoutDialog = "layout-dialog"; // default is #layout-dialog
+    //const tuxSaveLayoutButton = ".save-layout"; // save layout button.
+    //const tuxLayoutDeleteButton = ".layout-delete-button";
+    //const tuxLayoutList = ".layout-list";
+    //const tuxLayoutItem = "layout-item";
+    //const tuxLayoutTypes = ".layout-types a";
+    //const tuxLayoutListHandle = ".handle";
+    //const tuxLayoutMessage = "#layout-message";
 
     /* Widget Dialog */
-    const tuxWidgetDialog = "widget-dialog"; // default is #widget-dialog
-    const tuxWidgetTabGroup = ".widget-tabs"; // left-side group in #widget-dialog
-    const tuxWidgetListItem = "a.widget-item"; // each widget on right in #widget-dialog
-    const tuxWidgetAdd = ".add-widget"; // Add Widget button
-    const tuxWidgetTools = "card-tools"; // buttons on each widget
+    //const tuxWidgetDialog = "widget-dialog"; // default is #widget-dialog
+    //const tuxWidgetTabGroup = ".widget-tabs"; // left-side group in #widget-dialog
+    //const tuxWidgetListItem = "a.widget-item"; // each widget on right in #widget-dialog
+    //const tuxWidgetAdd = ".add-widget"; // Add Widget button
+    //const tuxWidgetTools = "card-tools"; // buttons on each widget
 
     const tuxOverlay = ".overlay";
     const tuxWidgetOverlay = ".overlay.loading-status"; // overlay on each dialog box/widget for loading
@@ -121,34 +194,34 @@ export class TuxboardServices {
     const tuxWidgetSelection = ".selected"; // class added to a widget when selected
 
     /* Widget Settings */
-    const tuxWidgetSettings = ".widget-settings"; // classname
-    const tuxWidgetSettingsCancel = ".settings-cancel"; // cancel button
-    const tuxWidgetSettingsSave = ".settings-save"; // save button
-    const tuxWidgetInputs = ".setting-value"; // input classes
+    //const tuxWidgetSettings = ".widget-settings"; // classname
+    //const tuxWidgetSettingsCancel = ".settings-cancel"; // cancel button
+    //const tuxWidgetSettingsSave = ".settings-save"; // save button
+    //const tuxWidgetInputs = ".setting-value"; // input classes
 
     /* Service Urls */
-    const tuxLayoutDialogUrl = "/layoutdialog/";
-    const tuxLayoutAddRowUrl = "/layoutdialog/addlayoutrow/";
-    const tuxSaveLayoutUrl = "/layoutdialog/saveLayout/";
-    const tuxDeleteLayoutRowUrl = "/layoutdialog/DeleteLayoutRow/";
+    //const tuxLayoutDialogUrl = "/layoutdialog/";
+    //const tuxLayoutAddRowUrl = "/layoutdialog/addlayoutrow/";
+    //const tuxSaveLayoutUrl = "/layoutdialog/saveLayout/";
+    //const tuxDeleteLayoutRowUrl = "/layoutdialog/DeleteLayoutRow/";
     
-    const tuxWidgetDialogUrl = "/widgetdialog/";
-    const tuxWidgetSettingsUrl = "/widgetsettings/";
-    const tuxWidgetAddWidgetUrl = "/widgetdialog/addwidget/";
+    //const tuxWidgetDialogUrl = "/widgetdialog/";
+    //const tuxWidgetSettingsUrl = "/widgetsettings/";
+    //const tuxWidgetAddWidgetUrl = "/widgetdialog/addwidget/";
 
     // API calls
-    const tuxRefreshTuxboardUrl = "/Tuxboard/Get/";
-    const tuxToolCollapseUrl = "/Tuxboard/PostCollapse/";
-    const tuxWidgetPlacementUrl = "/Tuxboard/Put/";
-    const tuxWidgetRemoveWidgetUrl = "/Tuxboard/removewidget/";
-    const tuxWidgetContentUrl = "/Widget/";
-    const tuxWidgetSaveSettingsUrl = "/WidgetSettings/Save/";
+    //const tuxRefreshTuxboardUrl = "/Tuxboard/Get/";
+    //const tuxToolCollapseUrl = "/Tuxboard/PostCollapse/";
+    //const tuxWidgetPlacementUrl = "/Tuxboard/Put/";
+    //const tuxWidgetRemoveWidgetUrl = "/Tuxboard/removewidget/";
+    //const tuxWidgetContentUrl = "/Widget/";
+    //const tuxWidgetSaveSettingsUrl = "/WidgetSettings/Save/";
 
 
     /* Widget header toolbar */
-    const tuxWidgetToolCollapse = "collapse-widget";
-    const tuxWidgetToolRemove = "remove-widget";
-    const tuxWidgetCollapsed = "collapsed";
+    //const tuxWidgetToolCollapse = "collapse-widget";
+    //const tuxWidgetToolRemove = "remove-widget";
+    const tuxWidgetCollapsed = "collapsed"; // IsCollapsed
 
     const tuxRefreshOption = ".refresh-option";
     const tuxSettingsOption = ".settings-option";
