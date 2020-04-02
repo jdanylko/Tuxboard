@@ -1,161 +1,14 @@
-﻿
-export class WidgetToolBar {
-    
-}
-
-export class WidgetToolbarButton {
-
-    constructor() { }
-
-}
-
-export class WidgetCollapseButton extends WidgetToolbarButton {
-    public tuxWidgetToolCollapse: string = "collapse-widget";
-
-    constructor() { super(); }
-}
-
-export class WidgetRemoveButton extends WidgetToolbarButton {
-    public tuxWidgetToolRemove: string = "remove-widget";
-
-    constructor() { super(); }
-}
-
-export class TuxbarButton {
-
-    constructor() { }
-}
-
-export class ChangeLayoutButton extends TuxbarButton {
-    public tuxLayoutButton: string = "layout-button";
-
-    constructor() { super(); }
-
-}
-
-export class AddWidgetButton extends TuxbarButton {
-    public tuxWidgetButton:string = "widget-button";
-
-    constructor() { super(); }
-}
-
-export class Tuxbar {
-    public rowTemplateId; string = ".row-template";
-
-    constructor() { }
-}
+﻿import { Tab } from "./Tab";
 
 export class Tuxboard {
     public dashboardId: string = ".dashboard";
 
-    constructor() { }
-}
-
-export class Tab {
-
-    public tabId: string = ".dashboard-tab";
-
-    constructor() { }
-
-}
-
-export class Layout {
+    private _tabs: Tab[];
 
     constructor() { }
 }
 
-export class LayoutRow {
-
-    constructor() { }
-}
-
-export class RowTemplate {
-    public rowTemplateId; string = ".row-template";
-
-    constructor() { }
-
-}
-
-export class Widget {
-
-    public widgetId: string = ".card";
-    public widgetTitleId: string = ".card-title";
-
-    constructor() { }
-}
-
-export class WidgetSettings {
-
-    public tuxWidgetSettings: string = ".widget-settings"; // classname
-    public tuxWidgetSettingsCancel:string = ".settings-cancel"; // cancel button
-    public tuxWidgetSettingsSave:string = ".settings-save"; // save button
-    public tuxWidgetInputs:string = ".setting-value"; // input classes
-
-    constructor() { }
-}
-
-export class Column {
-
-    public columnId: string = ".column";
-
-    constructor() { }
-}
-
-export class BaseDialog {
-    public modalBody: string = ".modal-body";
-
-}
-
-export class ChangeLayoutDialog extends BaseDialog {
-    public tuxLayoutDialog:string = "layout-dialog"; // default is #layout-dialog
-    public tuxSaveLayoutButton:string = ".save-layout"; // save layout button.
-    public tuxLayoutDeleteButton:string = ".layout-delete-button";
-    public tuxLayoutList:string = ".layout-list";
-    public tuxLayoutItem:string = "layout-item";
-    public tuxLayoutTypes:string = ".layout-types a";
-    public tuxLayoutListHandle:string = ".handle";
-    public tuxLayoutMessage:string = "#layout-message";
-
-    constructor() { super(); }
-}
-
-export class AddWidgetDialog extends BaseDialog {
-
-    public tuxWidgetDialog:string = "widget-dialog"; // default is #widget-dialog
-    public tuxWidgetTabGroup:string = ".widget-tabs"; // left-side group in #widget-dialog
-    public tuxWidgetListItem:string = "a.widget-item"; // each widget on right in #widget-dialog
-    public tuxWidgetAdd:string = ".add-widget"; // Add Widget button
-    public tuxWidgetTools:string = "card-tools"; // buttons on each widget
-
-    constructor() { super(); }
-}
-
-export class TuxboardServices {
-
-    tuxLayoutDialogUrl:string = "/layoutdialog/";
-    tuxLayoutAddRowUrl:string = "/layoutdialog/addlayoutrow/";
-    tuxSaveLayoutUrl:string = "/layoutdialog/saveLayout/";
-    tuxDeleteLayoutRowUrl:string = "/layoutdialog/DeleteLayoutRow/";
-
-    tuxWidgetDialogUrl:string = "/widgetdialog/";
-    tuxWidgetSettingsUrl:string = "/widgetsettings/";
-    tuxWidgetAddWidgetUrl:string = "/widgetdialog/addwidget/";
-
-    tuxRefreshTuxboardUrl:string = "/Tuxboard/Get/";
-    tuxToolCollapseUrl:string = "/Tuxboard/PostCollapse/";
-    tuxWidgetPlacementUrl:string = "/Tuxboard/Put/";
-    tuxWidgetRemoveWidgetUrl:string = "/Tuxboard/removewidget/";
-    tuxWidgetContentUrl:string = "/Widget/";
-    tuxWidgetSaveSettingsUrl:string = "/WidgetSettings/Save/";
-
-    constructor() { }
-
-
-
-}
-
-
-    const debug = false;
+const debug = false;
 
     // const tuxDashboardColumn = ".column";
     // const tuxDashboardTab = ".dashboard-tab";
@@ -238,34 +91,34 @@ export class TuxboardServices {
      * **********************************
      * Common getters
      * */
-    function getDataId(elem) { return elem.getAttribute("data-id") }
-    function getDomWidget(id) { return document.querySelector(`[data-id='${id}']`); }
-    function getWidgetSettings(widget) { return widget.querySelector(tuxWidgetSettings) }
-    function getPlacementId(widget) { return getDataId(widget); }
-    function getCurrentTab() { return document.querySelector(tuxDashboardTab + "[data-active='true']").attributes["data-id"]; }
-    function getDashboard() { return document.getElementsByClassName("dashboard").item(0); }
-    function getDashboardColumns() { return getDashboard().getElementsByClassName(noPeriod(tuxDashboardColumn)); }
-    function getCurrentLayoutId(ev) { var layoutRow = getParentByClass(ev, noPeriod(tuxRowTemplate)); return getDataId(layoutRow); }
-    function getColumnIndex(column) { return parseInt(column.getAttribute("data-column")); }
-    function getColumn(ev) { return getParentByClass(ev, noPeriod(tuxDashboardColumn)); }
-    function getWidgetsOnDashboard() { return getDashboard().getElementsByClassName(tuxWidgetClass); }
+    function getDashboard() { return document.querySelector<HTMLDivElement>(".dashboard"); }
+    function getDataId(elem: HTMLElement) { return elem.getAttribute("data-id") }
+    function getDomWidget(id: string) { return document.querySelector<HTMLDivElement>(`[data-id='${id}']`); }
+    function getWidgetSettings(widget: HTMLDivElement) { return widget.querySelector<HTMLDivElement>(tuxWidgetSettings) }
+    function getPlacementId(widget: HTMLDivElement) { return getDataId(widget); }
+    function getCurrentTab() { return document.querySelector<HTMLDivElement>(tuxDashboardTab + "[data-active='true']").attributes["data-id"]; }
+    function getDashboardColumns() { return getDashboard().querySelectorAll<HTMLDivElement>(tuxDashboardColumn); }
+    function getCurrentLayoutId(ev: Event) { var layoutRow = getParentByClass(ev, noPeriod(tuxRowTemplate)); return getDataId(layoutRow); }
+    function getColumnIndex(column: HTMLDivElement) { return parseInt(column.getAttribute("data-column")); }
+    function getColumn(ev: Event) { return getParentByClass(ev, noPeriod(tuxDashboardColumn)); }
+    function getWidgetsOnDashboard() { return getDashboard().querySelectorAll<HTMLDivElement>(tuxWidgetClass); }
     function getLayoutDialog() { return document.getElementById(tuxLayoutDialog); }
     function getLayoutList() { return getLayoutDialog().querySelector(tuxLayoutList); }
     function getLayoutListItems() { return getLayoutList().children; }
-    function getLayoutOverlay() { return getLayoutDialog().querySelector(tuxOverlay); }
-    function getWidgetTabGroups() { return getWidgetDialog().querySelector(tuxWidgetTabGroup); }
+    function getLayoutOverlay() { return getLayoutDialog().querySelector<HTMLDivElement>(tuxOverlay); }
+    function getWidgetTabGroups() { return getWidgetDialog().querySelector<HTMLDivElement>(tuxWidgetTabGroup); }
     function getWidgetDialog() { return document.getElementById(tuxWidgetDialog); }
-    function getAddWidgetButton() { return getWidgetDialog().querySelector(tuxWidgetAdd); }
-    function isCollapsed(widget) { return widget.classList.contains(tuxWidgetCollapsed) }
-    function getWidgetList() { return getWidgetDialog().querySelectorAll(tuxWidgetListItem); }
-    function getSelectedWidgets() { return getWidgetDialog().querySelectorAll(tuxWidgetListItem + tuxWidgetSelection); }
+    function getAddWidgetButton() { return getWidgetDialog().querySelector<HTMLInputElement>(tuxWidgetAdd); }
+    function isCollapsed(widget: HTMLDivElement) { return widget.classList.contains(tuxWidgetCollapsed) }
+    function getWidgetList() { return getWidgetDialog().querySelectorAll<HTMLDivElement>(tuxWidgetListItem); }
+    function getSelectedWidgets() { return getWidgetDialog().querySelectorAll<HTMLDivElement>(tuxWidgetListItem + tuxWidgetSelection); }
     function toId(id) { return id.startsWith("#") ? id : "#" + id; }
     function toClass(id) { return id.startsWith(".") ? id : "." + id; }
-    function noPeriod(id) { return id.startsWith(".") ? id.replace(".", "") : id; }
+    function noPeriod(id: string) { return id.startsWith(".") ? id.replace(".", "") : id; }
 
-    function getSettingValues(widget) {
-        let inputs = widget.querySelectorAll(tuxWidgetInputs);
-        return Array.from(inputs).map((elem, index) => {
+    function getSettingValues(widget: HTMLDivElement) {
+        let inputs = widget.querySelectorAll<HTMLDivElement>(tuxWidgetInputs);
+        return Array.from(inputs).map((elem: HTMLInputElement, index: number) => {
             return {
                 WidgetSettingId: getDataId(elem),
                 Value: elem.value
@@ -273,7 +126,7 @@ export class TuxboardServices {
         });
     }
 
-    function isBefore(el1, el2) {
+    function isBefore(el1: HTMLElement, el2: HTMLElement) {
         var cur;
         if (el2.parentNode === el1.parentNode) {
             for (cur = el1.previousSibling; cur; cur = cur.previousSibling) {
@@ -283,22 +136,24 @@ export class TuxboardServices {
         return false;
     }
 
-    function isTargetListItem(ev) {
-        return ev.target.tagName.toLowerCase() === "li"
-            && ev.target.classList.contains(tuxLayoutItem);
+    function isTargetListItem(ev: Event) {
+        var target = ev.target as HTMLElement;
+        return target.tagName.toLowerCase() === "li"
+            && target.classList.contains(tuxLayoutItem);
     }
 
-    function getWidgetProperties(ev) {
-        const column = getParentByClass(ev, noPeriod(tuxDashboardColumn)),
+    function getWidgetProperties(ev: Event) {
+        const column = getParentByClass(ev, noPeriod(tuxDashboardColumn)) as HTMLDivElement,
             widgets = column.getElementsByClassName(tuxWidgetClass),
             layoutRow = getParentByClass(ev, noPeriod(tuxRowTemplate));
 
+        var target = ev.target as HTMLElement;
         return {
-            PlacementId: getDataId(ev.target),
+            PlacementId: getDataId(target),
             Column: getColumnIndex(column),
             LayoutRowId: getDataId(layoutRow),
             PlacementList: Array.from(widgets)
-                .map(function (elem, index) {
+                .map(function (elem: HTMLElement, index: number) {
                     return {
                         PlacementId: getDataId(elem),
                         Index: index
@@ -309,7 +164,7 @@ export class TuxboardServices {
 
     function getSaveLayoutButton() {
         const layoutDialog = getLayoutDialog();
-        return layoutDialog.querySelector(tuxSaveLayoutButton);
+        return layoutDialog.querySelector<HTMLElement>(tuxSaveLayoutButton);
     }
 
     function getWidgetTools(widgetElem) {
@@ -317,60 +172,61 @@ export class TuxboardServices {
     }
 
     function setLayoutDialog(body) {
-        const modalBody = getLayoutDialog().querySelector(cssModalBody);
+        const modalBody = getLayoutDialog().querySelector<HTMLElement>(cssModalBody);
         modalBody.innerHTML = body;
     }
 
     function setWidgetDialog(body) {
-        const modalBody = getWidgetDialog().querySelector(cssModalBody);
+        const modalBody = getWidgetDialog().querySelector<HTMLElement>(cssModalBody);
         modalBody.innerHTML = body;
     }
 
-    function enableElement(elem) {
+    function enableElement(elem: HTMLElement) {
         elem.classList.remove("disabled");
         elem.removeAttribute("disabled");
     }
 
-    function disableElement(elem) {
+    function disableElement(elem: HTMLElement) {
         elem.classList.add("disabled");
         elem.setAttribute("disabled", "disabled");
     }
 
-    function getParentByClass(ev, selector) {
-        let current = ev.target;
+    function getParentByClass(ev: Event, selector: string) {
+        let current = ev.target as HTMLDivElement;
         if (current.classList.contains(selector))
             return current;
 
         while (current.parentNode !== null && !current.classList.contains(selector)) {
 
-            current = current.parentNode;
+            current = current.parentNode as HTMLDivElement;
         }
         return current;
     }
 
-    function getClosestByClass(element, classToSearch) {
+    function getClosestByClass(element: HTMLElement, classToSearch: string) {
         if (!element) {
             return false;
         } else if (element.classList.contains(classToSearch)) {
             return element;
         } else {
-            return getClosestByClass(element.parentElement, classToSearch);
+            var elem = element.parentElement as HTMLElement;
+            return getClosestByClass(elem, classToSearch);
         }
     }
 
-    function getClosestByTag(ev, targetTagName) {
-        let current = ev.target;
+    function getClosestByTag(ev: Event, targetTagName: string) {
+        let current = ev.target as HTMLElement;
         if (current.tagName.toLowerCase() === targetTagName.toLowerCase())
             return current;
 
         while (current.parentNode !== null && current.tagName.toLowerCase() !== targetTagName.toLowerCase()) {
 
-            current = current.parentNode;
+            current = current.parentNode as HTMLElement;
         }
         return current;
     }
 
-    function isWidget(elem) {
+    function isWidget(elem: HTMLElement) {
         if (elem) {
             return (elem.tagName.toLowerCase() === "div"
                 && elem.classList.contains(tuxWidgetClass)
@@ -393,13 +249,13 @@ export class TuxboardServices {
             container.addEventListener("dragend", dragEnd, false);
         }
 
-        function dragStart(ev) {
+        function dragStart(ev: DragEvent) {
 
             if (ev.stopPropagation) ev.stopPropagation();
 
             ev.dataTransfer.effectAllowed = 'move';
 
-            widgetDragEl = ev.target;
+            widgetDragEl = ev.target as HTMLDivElement;
             if (!previousColumn) {
                 previousColumn = getColumnIndex(getColumn(ev));
             }
@@ -456,11 +312,12 @@ export class TuxboardServices {
             }
         }
 
-        function dragEnd(ev) {
+        function dragEnd(ev: DragEvent) {
             if (ev.preventDefault) ev.preventDefault();
             if (ev.stopPropagation) ev.stopPropagation();
 
-            ev.target.style.opacity = "";
+            var target = ev.target as HTMLDivElement;
+            target.setAttribute("style", "");
 
             const containers = document.getElementsByClassName(noPeriod(tuxDashboardColumn));
             [].forEach.call(containers,
@@ -535,7 +392,7 @@ export class TuxboardServices {
     /* Service: Remove Widget */
     function removeWidgetFromDashboard(data) {
         if (data.success) {
-            const widget = getDashboard().querySelector("[data-id='" + data.id + "']");
+            const widget = getDashboard().querySelector("[data-id='" + data.message.id + "']");
             if (widget) {
                 widget.remove();
             }
@@ -614,12 +471,12 @@ export class TuxboardServices {
         showOverlay(widget);
 
         fetch(tuxWidgetContentUrl + getDataId(widget),
-                {
-                    method: "get"
-                })
+            {
+                method: "get"
+            })
             .then(validateResponse)
             .then(readResponseAsText)
-            .then(function(data) {
+            .then(function (data) {
                 if (debug) console.log(data);
                 updateWidgetContents(postData.WidgetPlacementId, data);
                 hideOverlay(widget);
@@ -636,7 +493,7 @@ export class TuxboardServices {
 
         setWidgetEvents();
 
-        overlay.style = "display:none";
+        overlay.setAttribute("style", "display:none");
     }
 
     function getWidgetDialogService() {
@@ -651,8 +508,8 @@ export class TuxboardServices {
     }
 
     /* Service: Add Widget */
-    function addWidgetToDashboard(response) {
-        if (response.status === 200) {
+    function addWidgetToDashboard(data) {
+        if (data.success) {
             if (widgetDialogInstance) {
                 widgetDialogInstance.hide();
             }
@@ -675,6 +532,7 @@ export class TuxboardServices {
                 }
             })
             .then(validateResponse)
+            .then(readResponseAsJson)
             .then(addWidgetToDashboard)
             .catch(logError);
     }
@@ -747,7 +605,7 @@ export class TuxboardServices {
         }
 
         hideOverlay(widget);
-        
+
         // initialize();
     }
 
@@ -758,12 +616,12 @@ export class TuxboardServices {
         showOverlay(widget);
 
         fetch(tuxWidgetSettingsUrl + placementId,
-                {
-                    method: "get"
-                })
+            {
+                method: "get"
+            })
             .then(validateResponse)
             .then(readResponseAsText)
-            .then(function(data) {
+            .then(function (data) {
                 if (debug) console.log(data);
                 displayWidgetSettings(widget, data);
             })
@@ -795,10 +653,10 @@ export class TuxboardServices {
     }
 
     /* Service: Save Layout */
-    function processSaveLayoutResponse(response) {
-        if (debug) console.log(response);
-        if (!response.status === 200) {
-            displayLayoutErrors(response);
+    function processSaveLayoutResponse(data) {
+        if (debug) console.log(data);
+        if (!data.success) {
+            displayLayoutErrors(data);
         } else {
             layoutDialogInstance.hide();
             refreshTuxboardService();
@@ -814,6 +672,7 @@ export class TuxboardServices {
                     'Content-Type': 'application/json'
                 }
             })
+            .then(readResponseAsJson)
             .then(processSaveLayoutResponse)
             .catch(logError);
     }
@@ -838,14 +697,14 @@ export class TuxboardServices {
         refreshWidget(widget);
     }
 
-    function setWidgetTitle(widget, setting) {
+    function setWidgetTitle(widget: HTMLDivElement, setting) {
         const widgetTitle = widget.querySelector(tuxWidgetTitle);
         if (widgetTitle) {
             widgetTitle.innerHTML = setting.value;
         }
     }
 
-    function saveSettingsService(widget) {
+    function saveSettingsService(widget: HTMLDivElement) {
         let postData = {
             Settings: getSettingValues(widget)
         }
@@ -884,13 +743,14 @@ export class TuxboardServices {
             });
     }
 
-    function selectWidget(ev) {
-        const isSelected = ev.currentTarget.classList.contains("selected");
+    function selectWidget(ev: Event) {
+        var target = ev.currentTarget as HTMLDivElement;
+        const isSelected = target.classList.contains("selected");
 
         resetSelectedWidgets();
 
         if (!isSelected) {
-            ev.currentTarget.classList.add("selected");
+            target.classList.add("selected");
         }
 
         updateAddWidget();
@@ -901,7 +761,7 @@ export class TuxboardServices {
             tabTriggers = widgetTabs.getElementsByTagName("A");
 
         for (let i = 0; i < tabTriggers.length; i++) {
-            new Tab(tabTriggers[i], {});
+            new Tab1(tabTriggers[i], {});
         }
     }
 
@@ -934,7 +794,7 @@ export class TuxboardServices {
 
     function initLayoutDialog(layoutBody) {
 
-        const overlay = getLayoutOverlay();
+        const overlay = getLayoutOverlay() as HTMLDivElement;
 
         setLayoutDialog(layoutBody);
 
@@ -948,18 +808,18 @@ export class TuxboardServices {
 
         resetColumnStatus();
 
-        overlay.style = "display:none";
+        overlay.setAttribute("style", "display:none");
     }
 
     function displayLayoutErrors(data) {
         const layoutDialog = getLayoutDialog();
         [].forEach.call(data.LayoutErrors,
             (item) => {
-                const trow = layoutDialog.querySelector(`[data-id='${item.layoutRowId}']`);
+                const trow = layoutDialog.querySelector<HTMLDivElement>(`[data-id='${item.layoutRowId}']`);
                 if (trow) {
-                    trow.style = "outline: 1px solid #F00";
+                    trow.setAttribute("style", "outline: 1px solid #F00");
                 } else {
-                    trow.style = "";
+                    trow.setAttribute("style", "");
                 }
             });
     }
@@ -1043,7 +903,7 @@ export class TuxboardServices {
         const item = dialog.querySelector(`li[data-id='${id}']`);
         const span = dialog.querySelector(tuxLayoutMessage);
         span.innerHTML = data.text;
-        item.style = "outline: 1px solid #F00";
+        item.setAttribute("style", "outline: 1px solid #F00");
     }
 
     function layoutDeleteButtonClick(ev) {
@@ -1197,7 +1057,7 @@ export class TuxboardServices {
         }
     }
 
-    function attachSettingEvents(widget) {
+    function attachSettingEvents(widget: HTMLDivElement) {
 
         let saveButton = widget.querySelector(tuxWidgetSettingsSave);
         saveButton.addEventListener("click", saveSettingsClick, false);
@@ -1206,7 +1066,7 @@ export class TuxboardServices {
         cancelButton.addEventListener("click", cancelSettingsClick, false);
     }
 
-    function cancelSettingsClick(ev) {
+    function cancelSettingsClick(ev: Event) {
         let widget = getParentByClass(ev, tuxWidgetClass);
         if (widget) {
             hideWidgetSettings(widget);
@@ -1214,8 +1074,8 @@ export class TuxboardServices {
         }
     }
 
-    function saveSettingsClick(ev) {
-        let widget = getParentByClass(ev, tuxWidgetClass);
+    function saveSettingsClick(ev: Event) {
+        let widget = getParentByClass(ev, tuxWidgetClass) as HTMLDivElement;
         if (widget) {
             saveSettingsService(widget);
         }

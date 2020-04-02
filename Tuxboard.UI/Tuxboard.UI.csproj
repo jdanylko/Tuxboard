@@ -20,7 +20,26 @@
   <ItemGroup>
     <Content Remove="bundleconfig.json" />
     <Content Remove="compilerconfig.json" />
+    <Content Remove="wwwroot\scripts\AddWidgetButton.ts" />
+    <Content Remove="wwwroot\scripts\AddWidgetDialog.ts" />
+    <Content Remove="wwwroot\scripts\BaseDialog.ts" />
+    <Content Remove="wwwroot\scripts\ChangeLayoutButton.ts" />
+    <Content Remove="wwwroot\scripts\ChangeLayoutDialog.ts" />
+    <Content Remove="wwwroot\scripts\Column.ts" />
+    <Content Remove="wwwroot\scripts\Layout.ts" />
+    <Content Remove="wwwroot\scripts\LayoutRow.ts" />
+    <Content Remove="wwwroot\scripts\RowTemplate.ts" />
+    <Content Remove="wwwroot\scripts\Tab.ts" />
+    <Content Remove="wwwroot\scripts\Tuxbar.ts" />
+    <Content Remove="wwwroot\scripts\TuxbarButton.ts" />
     <Content Remove="wwwroot\scripts\tuxboard.ts" />
+    <Content Remove="wwwroot\scripts\TuxboardServices.ts" />
+    <Content Remove="wwwroot\scripts\Widget.ts" />
+    <Content Remove="wwwroot\scripts\WidgetCollapseButton.ts" />
+    <Content Remove="wwwroot\scripts\WidgetRemoveButton.ts" />
+    <Content Remove="wwwroot\scripts\WidgetSettings.ts" />
+    <Content Remove="wwwroot\scripts\WidgetToolBar.ts" />
+    <Content Remove="wwwroot\scripts\WidgetToolbarButton.ts" />
   </ItemGroup>
 
 
