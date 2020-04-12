@@ -1,6 +1,6 @@
 ﻿export class Column {
 
-    public columnId: string = ".column";
+    public static columnId: string = ".column";
 
     constructor() { }
 }

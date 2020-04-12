@@ -1,8 +1,7 @@
-﻿import TuxbarButton = require("./TuxbarButton");
-import TuxbarButton1 = TuxbarButton.TuxbarButton;
+﻿import { TuxbarButton } from "./TuxbarButton";
 
-export class AddWidgetButton extends TuxbarButton1 {
-    public tuxWidgetButton:string = "widget-button";
+export class AddWidgetButton extends TuxbarButton {
+    public static tuxWidgetButton:string = "widget-button";
 
     constructor() { super(); }
 }

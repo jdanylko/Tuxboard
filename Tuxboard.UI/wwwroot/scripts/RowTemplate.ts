@@ -1,5 +1,5 @@
 ﻿export class RowTemplate {
-    public rowTemplateId; string = ".row-template";
+    public static rowTemplateId: string = ".row-template";
 
     constructor() { }
 

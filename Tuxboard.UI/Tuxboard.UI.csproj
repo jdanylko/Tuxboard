@@ -20,11 +20,12 @@
   <ItemGroup>
     <Content Remove="bundleconfig.json" />
     <Content Remove="compilerconfig.json" />
-    <Content Remove="wwwroot\scripts\AddWidgetButton.ts" />
     <Content Remove="wwwroot\scripts\AddWidgetDialog.ts" />
+    <Content Remove="wwwroot\scripts\AddWidgetDialog\AddWidgetServices.ts" />
     <Content Remove="wwwroot\scripts\BaseDialog.ts" />
     <Content Remove="wwwroot\scripts\ChangeLayoutButton.ts" />
     <Content Remove="wwwroot\scripts\ChangeLayoutDialog.ts" />
+    <Content Remove="wwwroot\scripts\ChangeLayoutDialog\ChangeLayoutServices.ts" />
     <Content Remove="wwwroot\scripts\Column.ts" />
     <Content Remove="wwwroot\scripts\Layout.ts" />
     <Content Remove="wwwroot\scripts\LayoutRow.ts" />
