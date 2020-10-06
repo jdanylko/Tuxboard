@@ -1,4 +1,5 @@
-﻿using Tuxboard.Core.Domain.Dto;
+﻿using System.Linq;
+using Tuxboard.Core.Domain.Dto;
 
 namespace Tuxboard.Core.Domain.Entities
 {

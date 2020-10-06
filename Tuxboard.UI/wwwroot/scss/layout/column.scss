@@ -1,4 +1,7 @@
-﻿/* Dashboard */
+﻿/* General/utility styles */
+@import "../theme/default.scss";
+
+/* Dashboard */
 .column {
     background: $column-bg;
     min-height: 200px;

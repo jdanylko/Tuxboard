@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using System.Net;
 using System.Threading.Tasks;
@@ -9,6 +10,7 @@ using Tuxboard.Core.Domain.Entities;
 using Tuxboard.Core.Infrastructure.Interfaces;
 using Tuxboard.Core.Infrastructure.Models;
 using Tuxboard.Core.Infrastructure.ViewModels;
+using Tuxboard.Core.UI;
 
 namespace Tuxboard.UI.TuxboardControllers
 {
@@ -16,12 +18,15 @@ namespace Tuxboard.UI.TuxboardControllers
     {
         private readonly ILogger<WidgetDialogController> _logger;
         private IDashboardService _service;
+        private readonly IServiceProvider _provider;
 
         public WidgetDialogController(ILogger<WidgetDialogController> logger, 
-            IDashboardService service)
+            IDashboardService service,
+            IServiceProvider provider)
         {
             _logger = logger;
             _service = service;
+            _provider = provider;
         }
 
         #region View Component
@@ -43,15 +48,25 @@ namespace Tuxboard.UI.TuxboardControllers
         [Route("/WidgetDialog/AddWidget/")]
         public async Task<IActionResult> AddWidget([FromBody] AddWidgetParameter model)
         {
-            var success = await _service.AddWidgetToTabAsync(model.TabId, model.WidgetId);
-            if (!success)
+            var response = await _service.AddWidgetToTabAsync(model.TabId, model.WidgetId);
+            if (!response.Success)
             {
                 return StatusCode((int)HttpStatusCode.ExpectationFailed,
                     $"Widget (id:{model.WidgetId}) NOT saved.");
-
             }
 
-            return Ok();
+            var widgetPlacement = await _service.GetWidgetPlacementAsync(response.PlacementId);
+
+            var helper = new ViewRenderHelper(_provider);
+            var viewTemplate = helper.RenderToString("WidgetTemplate",
+                widgetPlacement, "Components/WidgetTemplate/Default");
+
+            return Ok(new
+            {
+                response.PlacementId,
+                response.Success,
+                Template = viewTemplate
+            });
         }
 
         #endregion
@@ -82,6 +97,5 @@ namespace Tuxboard.UI.TuxboardControllers
         {
             return await Task.FromResult(TuxConfiguration.DefaultUser);
         }
-
     }
 }

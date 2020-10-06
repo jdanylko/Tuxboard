@@ -1,4 +1,0 @@
-﻿export class Layout {
-
-    constructor() { }
-}

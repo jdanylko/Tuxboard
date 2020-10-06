@@ -1,9 +1,7 @@
-﻿using System.Linq;
-using System.Threading.Tasks;
+﻿using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 using Tuxboard.Core.Infrastructure.Interfaces;
-using Tuxboard.Core.Infrastructure.ViewModels;
 
 namespace Tuxboard.UI.TuxboardControllers
 {
@@ -26,6 +24,15 @@ namespace Tuxboard.UI.TuxboardControllers
             var placement = await _service.GetWidgetPlacementAsync(id);
 
             return ViewComponent(placement.Widget.Name, placement);
+        }
+
+        [HttpGet]
+        [Route("/WidgetTemplate/{id}")]
+        public async Task<IActionResult> WidgetTemplate(string id)
+        {
+            var placement = await _service.GetWidgetPlacementAsync(id);
+
+            return ViewComponent("WidgetTemplate", placement);
         }
 
     }

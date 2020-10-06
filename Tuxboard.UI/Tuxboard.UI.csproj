@@ -18,65 +18,86 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <Content Remove="bundleconfig.json" />
-    <Content Remove="compilerconfig.json" />
-    <Content Remove="wwwroot\scripts\AddWidgetDialog.ts" />
-    <Content Remove="wwwroot\scripts\AddWidgetDialog\AddWidgetServices.ts" />
-    <Content Remove="wwwroot\scripts\BaseDialog.ts" />
-    <Content Remove="wwwroot\scripts\ChangeLayoutButton.ts" />
-    <Content Remove="wwwroot\scripts\ChangeLayoutDialog.ts" />
-    <Content Remove="wwwroot\scripts\ChangeLayoutDialog\ChangeLayoutServices.ts" />
-    <Content Remove="wwwroot\scripts\Column.ts" />
-    <Content Remove="wwwroot\scripts\Layout.ts" />
-    <Content Remove="wwwroot\scripts\LayoutRow.ts" />
-    <Content Remove="wwwroot\scripts\RowTemplate.ts" />
-    <Content Remove="wwwroot\scripts\Tab.ts" />
-    <Content Remove="wwwroot\scripts\Tuxbar.ts" />
-    <Content Remove="wwwroot\scripts\TuxbarButton.ts" />
-    <Content Remove="wwwroot\scripts\tuxboard.ts" />
-    <Content Remove="wwwroot\scripts\TuxboardServices.ts" />
-    <Content Remove="wwwroot\scripts\Widget.ts" />
-    <Content Remove="wwwroot\scripts\WidgetCollapseButton.ts" />
-    <Content Remove="wwwroot\scripts\WidgetRemoveButton.ts" />
-    <Content Remove="wwwroot\scripts\WidgetSettings.ts" />
-    <Content Remove="wwwroot\scripts\WidgetToolBar.ts" />
-    <Content Remove="wwwroot\scripts\WidgetToolbarButton.ts" />
+    <Compile Remove="ts-backup\**" />
+    <Content Remove="ts-backup\**" />
+    <EmbeddedResource Remove="ts-backup\**" />
+    <None Remove="ts-backup\**" />
+    <TypeScriptCompile Remove="node_modules\**" />
+    <TypeScriptCompile Remove="ts-backup\**" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Content Remove="tsconfig.json" />
+    <Content Remove="wwwroot\src\tuxboard.ts" />
+    <Content Remove="wwwroot\src\TuxboardService.ts" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <None Remove="compilerconfig.json-backup" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <TypeScriptCompile Remove="wwwroot\src\core\DefaultSelector.ts" />
+    <TypeScriptCompile Remove="wwwroot\src\TabCollection.ts" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Content Include="compilerconfig.json-backup" />
   </ItemGroup>
 
 
   <ItemGroup>
+    <Folder Include="wwwroot\css\" />
     <Folder Include="wwwroot\js\" />
     <Folder Include="wwwroot\lib\" />
+    <Folder Include="wwwroot\js\" />
+    <Folder Include="wwwroot\js\" />
   </ItemGroup>
 
 
   <ItemGroup>
-    <None Include="bundleconfig.json" />
-    <None Include="compilerconfig.json" />
-    <None Include="wwwroot\scripts\tuxboard.ts" />
+    <None Include="tsconfig.json" />
+    <None Include="wwwroot\src\Tuxboard.ts" />
   </ItemGroup>
 
 
   <ItemGroup>
-    <PackageReference Include="BuildBundlerMinifier" Version="3.2.435" />
+    <PackageReference Include="BuildBundlerMinifier" Version="3.2.449" />
     <PackageReference Include="BuildWebCompiler" Version="1.12.405" />
-    <PackageReference Include="Lamar" Version="4.1.0" />
-    <PackageReference Include="Lamar.Microsoft.DependencyInjection" Version="4.1.0" />
-    <PackageReference Include="Microsoft.EntityFrameworkCore.Design" Version="3.1.2">
+    <PackageReference Include="Lamar" Version="4.3.1" />
+    <PackageReference Include="Lamar.Microsoft.DependencyInjection" Version="4.3.1" />
+    <PackageReference Include="Microsoft.EntityFrameworkCore.Design" Version="3.1.8">
       <PrivateAssets>all</PrivateAssets>
       <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
     </PackageReference>
-    <PackageReference Include="Microsoft.TypeScript.MSBuild" Version="3.7.4">
+    <PackageReference Include="Microsoft.TypeScript.MSBuild" Version="4.0.3">
       <PrivateAssets>all</PrivateAssets>
       <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
     </PackageReference>
-    <PackageReference Include="Microsoft.VisualStudio.Web.CodeGeneration.Design" Version="3.1.1" />
+    <PackageReference Include="Microsoft.VisualStudio.Web.CodeGeneration.Design" Version="3.1.4" />
   </ItemGroup>
 
 
   <ItemGroup>
     <ProjectReference Include="..\Tuxboard.Core\Tuxboard.Core.csproj" />
   </ItemGroup>
+
+
+  <PropertyGroup Condition="'$(Configuration)' == 'Debug'">
+    <TypeScriptTarget>ES2016</TypeScriptTarget>
+    <TypeScriptJSXEmit>None</TypeScriptJSXEmit>
+    <TypeScriptModuleKind>CommonJS</TypeScriptModuleKind>
+    <TypeScriptCompileOnSaveEnabled>True</TypeScriptCompileOnSaveEnabled>
+    <TypeScriptNoImplicitAny>False</TypeScriptNoImplicitAny>
+    <TypeScriptRemoveComments>False</TypeScriptRemoveComments>
+    <TypeScriptOutFile />
+    <TypeScriptOutDir />
+    <TypeScriptGeneratesDeclarations>False</TypeScriptGeneratesDeclarations>
+    <TypeScriptNoEmitOnError>True</TypeScriptNoEmitOnError>
+    <TypeScriptSourceMap>True</TypeScriptSourceMap>
+    <TypeScriptMapRoot />
+    <TypeScriptSourceRoot />
+  </PropertyGroup>
 
 
   

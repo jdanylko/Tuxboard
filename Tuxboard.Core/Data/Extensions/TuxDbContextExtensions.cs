@@ -13,6 +13,13 @@ namespace Tuxboard.Core.Data.Extensions
     {
         #region Synchronous
 
+        public static Widget GetWidget(this ITuxDbContext context, string widgetId)
+        {
+            return context.Widget
+                .Include(w => w.WidgetDefaults)
+                .FirstOrDefault(r => r.WidgetId == widgetId);
+        }
+
         public static Layout GetLayoutForTab(this ITuxDbContext context, string tabId)
         {
             return context.Layout
@@ -67,12 +74,13 @@ namespace Tuxboard.Core.Data.Extensions
 
             var query = context.DashboardDefault
                 .Include(dt => dt.DashboardDefaultWidgets)
+                    .ThenInclude(ddw => ddw.Widget)
                 .Include(tab => tab.Layout)
                     .ThenInclude(layout => layout.LayoutRows)
                 .AsNoTracking();
 
             var result = planId > 0 
-                ? Queryable.FirstOrDefault(query, e => e.PlanId == planId) 
+                ? query.FirstOrDefault(e => e.PlanId == planId) 
                 : query.FirstOrDefault();
 
             if (result == null)
@@ -82,7 +90,7 @@ namespace Tuxboard.Core.Data.Extensions
             foreach (var row in layout.LayoutRows)
             {
                 row.LayoutType = layoutTypes.FirstOrDefault(e => e.LayoutTypeId == row.LayoutTypeId);
-                row.WidgetPlacements = context.GetPlacementsByLayoutRow(row.LayoutRowId);
+                //row.WidgetPlacements = context.GetPlacementsByLayoutRow(row.LayoutRowId);
             }
 
             return result;
@@ -150,11 +158,11 @@ namespace Tuxboard.Core.Data.Extensions
 
         public static List<WidgetPlacement> GetWidgetsForTab(this ITuxDbContext context, string tabId)
         {
-            var placements = Queryable.Where(context.WidgetPlacement
-                    .Include(e => e.WidgetSettings)
-                    .Include(e => e.Widget)
-                        .ThenInclude(w => w.WidgetDefaults)
-                    .AsNoTracking(), r => r.LayoutRow.Layout.TabId == tabId)
+            var placements = context.WidgetPlacement
+                .Include(e => e.WidgetSettings)
+                .Include(e => e.Widget)
+                    .ThenInclude(w => w.WidgetDefaults)
+                .AsNoTracking().Where(r => r.LayoutRow.Layout.TabId == tabId)
                 .ToList();
 
             foreach (var placement in placements)
@@ -183,6 +191,13 @@ namespace Tuxboard.Core.Data.Extensions
         #endregion
 
         #region Asynchronous
+
+        public static async Task<Widget> GetWidgetAsync(this ITuxDbContext context, string widgetId)
+        {
+            return await context.Widget
+                .Include(w => w.WidgetDefaults)
+                .FirstOrDefaultAsync(r => r.WidgetId == widgetId);
+        }
 
         public static async Task<List<WidgetPlacement>> GetPlacementsByLayoutAsync(this ITuxDbContext context, 
             string layoutId)
@@ -232,6 +247,7 @@ namespace Tuxboard.Core.Data.Extensions
 
             var query = context.DashboardDefault
                 .Include(dt => dt.DashboardDefaultWidgets)
+                    .ThenInclude(ddw => ddw.Widget)
                 .Include(tab => tab.Layout)
                     .ThenInclude(layout => layout.LayoutRows)
                 .AsNoTracking();
@@ -241,13 +257,13 @@ namespace Tuxboard.Core.Data.Extensions
                 : await query.FirstOrDefaultAsync();
 
             if (result == null) 
-                return result;
+                return null;
 
             var layout = result.Layout;
             foreach (var row in layout.LayoutRows)
             {
                 row.LayoutType = layoutTypes.FirstOrDefault(e => e.LayoutTypeId == row.LayoutTypeId);
-                row.WidgetPlacements = context.GetPlacementsByLayoutRow(row.LayoutRowId);
+                // row.WidgetPlacements = await context.GetPlacementsByLayoutRowAsync(row.LayoutRowId);
             }
 
             return result;
@@ -303,11 +319,11 @@ namespace Tuxboard.Core.Data.Extensions
 
         public static async Task<List<WidgetPlacement>> GetWidgetsForTabAsync(this ITuxDbContext context, string tabId)
         {
-            var placements = await Queryable.Where(context.WidgetPlacement
-                    .Include(e => e.WidgetSettings)
-                    .Include(e => e.Widget)
-                        .ThenInclude(w => w.WidgetDefaults)
-                    .AsNoTracking(), r => r.LayoutRow.Layout.TabId == tabId)
+            var placements = await context.WidgetPlacement
+                .Include(e => e.WidgetSettings)
+                .Include(e => e.Widget)
+                    .ThenInclude(w => w.WidgetDefaults)
+                .AsNoTracking().Where(r => r.LayoutRow.Layout.TabId == tabId)
                 .ToListAsync();
 
             return await context.UpdateMissingSettingsAsync(placements);

@@ -3,17 +3,12 @@
 <div class="row">
 
     <div class="col-3">
-        <ul class="nav nav-pills border widget-tabs" role="tablist">
+        <div class="list-group" id="list-tab" role="tablist">
             @foreach (var groupName in Model.Groups)
             {
-                <li class="nav-item">
-                    <a href="#@groupName" role="tab" aria-controls="@groupName"
-                       class="d-block nav-link @(groupName == Model.Groups.First() ? "active" : "")">
-                        @groupName
-                    </a>
-                </li>
+                <a class="list-group-item list-group-item-action @(groupName == Model.Groups.First() ? "active" : "")" id="list-@groupName-list" data-toggle="list" href="#@groupName" role="tab" aria-controls="@groupName">@groupName</a>
             }
-        </ul>
+        </div>
     </div>
     <div class="col-9">
         <div class="tab-content widget-list" id="nav-tabContent">

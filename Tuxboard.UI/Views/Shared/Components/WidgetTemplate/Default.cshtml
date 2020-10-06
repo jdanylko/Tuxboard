@@ -21,17 +21,17 @@
                         </button>
                     }
 
-                    <div class="btn-group">
+                    <div class="dropdown">
                         <button type="button" class="btn btn-sm btn-card-tool dropdown-toggle dropdown-card-tool" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                             <i class="fas fa-ellipsis-v"></i>
                         </button>
-                        <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                        <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton">
                             @if (Model.Widget.UseSettings)
                             {
-                                <a class="dropdown-item settings-option" href="javascript:void(0);"><i class="fas fa-fw fa-cogs"></i> Settings</a>
+                                <li><a class="dropdown-item settings-option" href="javascript:void(0);"><i class="fas fa-fw fa-cogs"></i> Settings</a></li>
                             }
-                            <a class="dropdown-item refresh-option" href="javascript:void(0);"><i class="fas fa-fw fa-sync"></i> Refresh</a>
-                        </div>
+                            <li><a class="dropdown-item refresh-option" href="javascript:void(0);"><i class="fas fa-fw fa-sync"></i> Refresh</a></li>
+                        </ul>
                     </div>
                 </div>
 
@@ -42,11 +42,11 @@
         <div class="card-body" @(Model.Collapsed ? "hidden" : "")>
 
         </div>
-        <div class="overlay loading-status" hidden>
+        <div class="overlay loading-status" hidden="hidden">
             <i class="fa fa-spinner fa-spin"></i>
         </div>
 
-        <div class="widget-settings" hidden>
+        <div class="widget-settings m-4" hidden="hidden">
 
         </div>
 

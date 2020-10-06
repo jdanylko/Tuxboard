@@ -4,11 +4,11 @@
 
         @foreach (var row in Model.LayoutRows.OrderBy(e => e.RowIndex))
         {
-            <div class="row-template" data-id="@row.LayoutRowId">
+            <div class="layout-row" data-id="@row.LayoutRowId">
 
                 @foreach (var col in row.GetColumnLayout())
                 {
-                    <div class="column @col.ColumnClass" data-column="@col.Index.ToString()">
+                    <div class="column @col.ColumnClass">
 
                         @foreach (var wp in row.WidgetPlacements.Where(y => y.ColumnIndex == col.Index).OrderBy(e => e.WidgetIndex))
                         {

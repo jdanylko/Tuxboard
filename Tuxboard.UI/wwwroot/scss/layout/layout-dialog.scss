@@ -1,4 +1,5 @@
-﻿/* Layout dialog */
+﻿/* General/utility styles */
+@import "../theme/default.scss";
 
 $spacingBetweenColumns: 2px;
 
@@ -47,4 +48,8 @@ $spacingBetweenColumns: 2px;
             }
         }
     }
+}
+
+.placeholder-line {
+    border-bottom: 1px dashed $placeholderLine !important;
 }

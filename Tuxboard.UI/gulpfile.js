@@ -1,76 +1,111 @@
-﻿"use strict";
+﻿/// <binding BeforeBuild='default' />
+var path = require('path'),
+    gulp = require('gulp'),
+    gp_clean = require('gulp-clean'),
+    gp_concat = require('gulp-concat'),
+    gp_sass = require('gulp-sass'),
+    gp_sourcemaps = require('gulp-sourcemaps'),
+    gp_typescript = require('gulp-typescript'),
+    gp_uglify = require('gulp-uglify'),
+    webpackConfig = require('./webpack.config.js'),
+    webpack = require("webpack-stream"),
+    launch = require('./Properties/launchSettings.json');
 
-var gulp = require("gulp"),
-    concat = require("gulp-concat"),
-    cssmin = require("gulp-cssmin"),
-    htmlmin = require("gulp-htmlmin"),
-    uglify = require("gulp-uglify"),
-    merge = require("merge-stream"),
-    del = require("del"),
-    bundleconfig = require("./bundleconfig.json");
+var basePath = path.resolve(__dirname, "wwwroot");
 
-var regex = {
-    css: /\.css$/,
-    html: /\.(html|htm)$/,
-    js: /\.js$/
+var srcPaths = {
+    src: [
+        path.resolve(basePath, "src/Tuxboard.ts"),
+        path.resolve(basePath, 'src/**/*.ts')
+    ],
+    js: [path.resolve(basePath, 'src/js/**/*.js')],
+    sass: [path.resolve(basePath, 'scss/tuxboard.scss')]
 };
 
-gulp.task("min", ["min:js", "min:css", "min:html"]);
+var destPaths = {
+    css: path.resolve(basePath, 'css'),
+    js: path.resolve(basePath, 'js')
+};
 
-gulp.task("min:js", function () {
-    var tasks = getBundles(regex.js).map(function (bundle) {
-        return gulp.src(bundle.inputFiles, { base: "." })
-            .pipe(concat(bundle.outputFileName))
-            .pipe(uglify())
-            .pipe(gulp.dest("."));
-    });
-    return merge(tasks);
+var environment = {
+    development: "Development",
+    staging: "Staging",
+    production: "Production",
+
+    current: function () {
+        return process.env.ASPNETCORE_ENVIRONMENT ||
+            (launch && launch.profiles['IIS Express'].environmentVariables.ASPNETCORE_ENVIRONMENT) ||
+            this.development;
+    },
+    isDevelopment: function () { return this.current() === this.development; },
+    isStaging: function () { return this.current() === this.staging; },
+    isProduction: function () { return this.current() === this.production; }
+};
+
+gulp.task('testTask', function (done) {
+    console.log('hello!');
+    console.log(environment.current());
+    done();
 });
 
-gulp.task("min:css", function () {
-    var tasks = getBundles(regex.css).map(function (bundle) {
-        return gulp.src(bundle.inputFiles, { base: "." })
-            .pipe(concat(bundle.outputFileName))
-            .pipe(cssmin())
-            .pipe(gulp.dest("."));
-    });
-    return merge(tasks);
+gulp.task('webpack_clean', function () {
+    return gulp.src(destPaths.js + "/*", { read: false })
+        .pipe(gp_clean({ force: true }));
 });
 
-gulp.task("min:html", function () {
-    var tasks = getBundles(regex.html).map(function (bundle) {
-        return gulp.src(bundle.inputFiles, { base: "." })
-            .pipe(concat(bundle.outputFileName))
-            .pipe(htmlmin({ collapseWhitespace: true, minifyCSS: true, minifyJS: true }))
-            .pipe(gulp.dest("."));
-    });
-    return merge(tasks);
+gulp.task('webpack', function () {
+    return gulp.src(srcPaths.src)
+        .pipe(webpack(webpackConfig))
+        .pipe(gulp.dest(destPaths.js+"/"));
 });
 
-gulp.task("clean", function () {
-    var files = bundleconfig.map(function (bundle) {
-        return bundle.outputFileName;
-    });
-
-    return del(files);
+gulp.task('app_clean', function () {
+    return gulp.src(destPaths.js + "/*", { read: false })
+        .pipe(gp_clean({ force: true }));
 });
 
-gulp.task("watch", function () {
-    getBundles(regex.js).forEach(function (bundle) {
-        gulp.watch(bundle.inputFiles, ["min:js"]);
-    });
-
-    getBundles(regex.css).forEach(function (bundle) {
-        gulp.watch(bundle.inputFiles, ["min:css"]);
-    });
-
-    getBundles(regex.html).forEach(function (bundle) {
-        gulp.watch(bundle.inputFiles, ["min:html"]);
-    });
+gulp.task('app', gulp.series(['app_clean']), function() {
+    return gulp.src(srcPaths.src)
+        .pipe(gp_sourcemaps.init())
+        .pipe(gp_typescript(require('./tsconfig.json').compilerOptions))
+        .pipe(gp_uglify({ mangle: false }))
+        .pipe(gp_sourcemaps.write('wwwroot/src'))
+        .on('error', function (err) {
+            console.error('Error!', err.message);
+        })
+        .pipe(gulp.dest(destPaths.js+"/"));
 });
 
-function getBundles(regexPattern) {
-    return bundleconfig.filter(function (bundle) {
-        return regexPattern.test(bundle.outputFileName);
-    });
-}
+
+gulp.task('js', function () {
+    return gulp.src(srcPaths.js)
+         .pipe(gp_uglify({ mangle: false })) // disable uglify
+         .pipe(gp_concat('all-js.min.js')) // disable concat
+         .on('error', function (err) {
+             console.error('Error!', err.message);
+         })
+        .pipe(gulp.dest(destPaths.js));
+});
+
+gulp.task('js_clean', function (){
+    return gulp.src(destPaths.js + "*", { read: false })
+        .pipe(gp_clean({ force: true }));
+});
+
+gulp.task('sass_clean', function () {
+    return gulp.src(destPaths.css + "*.*", { read: false })
+        .pipe(gp_clean({ force: true }));
+});
+
+gulp.task('sass', function() {
+    return gulp.src(srcPaths.sass)
+        .pipe(gp_sass())
+        .pipe(gulp.dest(destPaths.css));
+});
+
+
+gulp.task('cleanup', gulp.series(['app_clean', 'sass_clean']));
+
+
+gulp.task('default', gulp.series(['webpack', 'sass']));
+

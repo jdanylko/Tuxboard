@@ -45,8 +45,8 @@ namespace Tuxboard.Core.Infrastructure.Interfaces
         bool AddLayoutRow(Layout layout, string layoutTypeId);
         Task<bool> AddLayoutRowAsync(Layout layout, string layoutTypeId);
 
-        bool AddWidgetToTab(string tabId, string widgetId);
-        Task<bool> AddWidgetToTabAsync(string tabId, string widgetId);
+        AddWidgetResponse AddWidgetToTab(string tabId, string widgetId);
+        Task<AddWidgetResponse> AddWidgetToTabAsync(string tabId, string widgetId);
 
         bool RemoveWidget(string placementId);
         Task<bool> RemoveWidgetAsync(string placementId);

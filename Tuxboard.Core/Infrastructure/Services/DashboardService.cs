@@ -197,28 +197,40 @@ namespace Tuxboard.Core.Infrastructure.Services
             return _context.SaveChanges() > 0;
         }
 
-        public bool AddWidgetToTab(string tabId, string widgetId)
+        public AddWidgetResponse AddWidgetToTab(string tabId, string widgetId)
         {
+            var result = new AddWidgetResponse {Success = false};
+
             var layout = _context.GetLayoutForTab(tabId);
             if (layout == null)
-                return false;
+                return result;
 
-            var widget = Queryable.FirstOrDefault(_context.Widget, e => e.WidgetId == widgetId);
-            var firstLayoutRow = Enumerable.OrderBy<LayoutRow, int>(layout.LayoutRows, e => e.RowIndex).FirstOrDefault();
+            var fullWidget = _context.GetWidget(widgetId);
+            var firstLayoutRow = layout.LayoutRows.OrderBy<LayoutRow, int>(e => e.RowIndex).FirstOrDefault();
             var placement = new WidgetPlacement
             {
                 Collapsed = false,
                 LayoutRowId = firstLayoutRow.LayoutRowId,
                 ColumnIndex = 0,
                 WidgetId = widgetId,
-                Widget = widget,
-                UseTemplate = widget.UseTemplate,
-                UseSettings = widget.UseSettings,
-                WidgetIndex = firstLayoutRow.WidgetPlacements.Count+1
+                Widget = fullWidget,
+                UseTemplate = fullWidget.UseTemplate,
+                UseSettings = fullWidget.UseSettings,
+                WidgetIndex = firstLayoutRow.WidgetPlacements.Count+1,
+                WidgetSettings = fullWidget.WidgetDefaults.Select(def => new WidgetSetting
+                {
+                    Value = def.DefaultValue,
+                    WidgetDefaultId = def.WidgetDefaultId,
+                    WidgetDefault = def
+                }).ToList()
             };
+
             _context.WidgetPlacement.Add(placement);
 
-            return _context.SaveChanges() > 0;
+            result.Success = _context.SaveChanges() > 0;
+            result.PlacementId = placement.WidgetPlacementId;
+
+            return result;
         }
 
         public bool RemoveWidget(string placementId)
@@ -536,28 +548,40 @@ namespace Tuxboard.Core.Infrastructure.Services
             return await _context.SaveChangesAsync(new CancellationToken()) > 0;
         }
 
-        public async Task<bool> AddWidgetToTabAsync(string tabId, string widgetId)
+        public async Task<AddWidgetResponse> AddWidgetToTabAsync(string tabId, string widgetId)
         {
+            var result = new AddWidgetResponse {Success = false};
+            
             var layout = await _context.GetLayoutForTabAsync(tabId);
             if (layout == null)
-                return false;
+                return result;
 
-            var widget = await _context.Widget.FirstOrDefaultAsync(e => e.WidgetId == widgetId);
-            var firstLayoutRow = Enumerable.OrderBy<LayoutRow, int>(layout.LayoutRows, e=> e.RowIndex).FirstOrDefault();
+            var fullWidget = await _context.GetWidgetAsync(widgetId);
+            var firstLayoutRow = layout.LayoutRows.OrderBy(e=> e.RowIndex).FirstOrDefault();
             var placement = new WidgetPlacement
             {
                 Collapsed = false,
                 LayoutRowId = firstLayoutRow.LayoutRowId,
                 ColumnIndex = 0,
                 WidgetId = widgetId,
-                Widget = widget,
-                UseTemplate = widget.UseTemplate,
-                UseSettings = widget.UseSettings,
-                WidgetIndex = firstLayoutRow.WidgetPlacements.Count + 1
+                Widget = fullWidget,
+                UseTemplate = fullWidget.UseTemplate,
+                UseSettings = fullWidget.UseSettings,
+                WidgetIndex = firstLayoutRow.WidgetPlacements.Count + 1,
+                WidgetSettings = fullWidget.WidgetDefaults.Select(def => new WidgetSetting
+                {
+                    Value = def.DefaultValue,
+                    WidgetDefaultId = def.WidgetDefaultId,
+                    WidgetDefault = def
+                }).ToList()
             };
+
             await _context.WidgetPlacement.AddAsync(placement);
 
-            return await _context.SaveChangesAsync(new CancellationToken()) > 0;
+            result.Success = await _context.SaveChangesAsync(new CancellationToken()) > 0;
+            result.PlacementId = placement.WidgetPlacementId;
+
+            return result;
         }
 
         public async Task<bool> RemoveWidgetAsync(string placementId)

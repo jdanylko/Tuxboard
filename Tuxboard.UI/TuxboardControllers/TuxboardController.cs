@@ -50,8 +50,8 @@ namespace Tuxboard.UI.TuxboardControllers
         #region API
 
         [HttpPost]
-        [Route("Tuxboard/PostCollapse")]
-        public async Task<IActionResult> PostCollapse([FromBody] WidgetParameter parms)
+        [Route("Tuxboard/CollapseWidget")]
+        public async Task<IActionResult> CollapseWidget([FromBody] WidgetParameter parms)
         {
             // var user = await GetCurrentUserAsync();
 

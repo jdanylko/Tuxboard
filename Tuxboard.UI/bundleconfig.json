@@ -1,23 +1,23 @@
 ﻿[
-  {
-    "outputFileName": "wwwroot/css/tuxboard.min.css",
-    "inputFiles": [
-      "wwwroot/css/tuxboard.css"
-    ],
-    "minify": {
-      "enabled": true,
-      "commentMode": "none"
-    }
-  }
-  ,
-  {
-    "outputFileName": "wwwroot/js/tuxboard.min.js",
-    "inputFiles": [
-      "wwwroot/scripts/tuxboard.js"
-    ],
-    "minify": {
-      "enabled": true,
-      "commentMode": "none"
-    }
-  }
+  //{
+  //  "outputFileName": "wwwroot/css/tuxboard.min.css",
+  //  "inputFiles": [
+  //    "wwwroot/css/tuxboard.css"
+  //  ],
+  //  "minify": {
+  //    "enabled": true,
+  //    "commentMode": "none"
+  //  }
+  //}
+  //,
+  //{
+  //  "outputFileName": "wwwroot/js/tuxboard.min.js",
+  //  "inputFiles": [
+  //    "wwwroot/scripts/tuxboard.js"
+  //  ],
+  //  "minify": {
+  //    "enabled": true,
+  //    "commentMode": "none"
+  //  }
+  //}
 ]
