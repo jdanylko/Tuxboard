@@ -5,6 +5,7 @@
   <img alt="GitHub" src="https://img.shields.io/github/license/jdanylko/Tuxboard">
 </p>
 
+
 ![Tuxboard Example](images/TuxboardExample.png)
 
 Tuxboard is a dashboard library specifically for the ASP.NET Core platform. It was meant to be
