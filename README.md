@@ -9,9 +9,6 @@ a Lego-style way to build dashboards.
 
   - ASP.NET Core 3.1 (using C#)
   - Entity Framework Core 3.1
-  - <strike>Bootstrap.native 4.x (w/ NO jQuery)</strike> Bootstrap 5 (alpha 1)
-  - FontAwesome 5
-  - Web Essentials (for Markdown, Task Runner/Gulp integration, bundler, etc.)
   
 #### Features
 
