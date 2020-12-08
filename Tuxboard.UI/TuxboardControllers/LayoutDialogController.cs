@@ -1,6 +1,7 @@
 ﻿
 using System.Linq;
 using System.Net;
+using System.Security.Claims;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
@@ -74,7 +75,7 @@ namespace Tuxboard.UI.TuxboardControllers
         [Route("/LayoutDialog/DeleteLayoutRow/{id}")]
         public IActionResult DeleteLayoutRow(string id)
         {
-            var userId = TuxConfiguration.DefaultUser;
+            var userId = GetCurrentUser();
 
             TuxViewMessage message = null;
 
@@ -118,6 +119,18 @@ namespace Tuxboard.UI.TuxboardControllers
                 CurrentLayout = await _service.GetLayoutFromTabAsync(tabId),
                 LayoutTypes = await _service.GetLayoutTypesAsync()
             };
+        }
+
+        [NonAction]
+        private string GetCurrentUser()
+        {
+            if (User.Identity == null)
+                return _config.DefaultUser;
+
+            var claimsIdentity = (ClaimsIdentity)User.Identity;
+            var claim = claimsIdentity.FindFirst(ClaimTypes.NameIdentifier);
+            return claim.Value;
+
         }
     }
 }

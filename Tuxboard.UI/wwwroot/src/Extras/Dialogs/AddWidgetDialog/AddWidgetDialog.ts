@@ -2,13 +2,13 @@
 import { dataId, enableElement, disableElement, noPeriod } from "../../../core/common";
 import { AddWidgetService } from "./AddWidgetService";
 import { Tuxboard } from "../../../Tuxboard";
-import { Tab, Modal } from "../../../../lib/bootstrap/dist/js/bootstrap.bundle";
 import { WidgetPlacement } from "../../../Widget/WidgetPlacement";
 import { TuxboardService } from "../../../Services/TuxboardService";
+import { Tab, Modal } from "../../../../lib/bootstrap/dist/js/bootstrap.bundle.js";
 
 export class AddWidgetDialog extends BaseDialog {
 
-    private service:AddWidgetService = new AddWidgetService();
+    private service: AddWidgetService = new AddWidgetService();
     private tuxboardService: TuxboardService = new TuxboardService();
 
     private addWidgetDialogSelector: string = "#widget-dialog";
@@ -127,11 +127,10 @@ export class AddWidgetDialog extends BaseDialog {
             var tabTrigger = new Tab(triggerEl);
 
             triggerEl.addEventListener('click',
-                (e: Event) => {
-                    e.preventDefault();
+                ev => {
+                    ev.preventDefault();
                     tabTrigger.show();
-                },
-                false);
+                });
         });
     }
 

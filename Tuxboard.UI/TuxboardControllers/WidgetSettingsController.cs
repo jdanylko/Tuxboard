@@ -45,11 +45,5 @@ namespace Tuxboard.UI.TuxboardControllers
 
         #endregion
 
-        [NonAction]
-        private async Task<string> GetCurrentUserAsync()
-        {
-            return await Task.FromResult(TuxConfiguration.DefaultUser);
-        }
-
     }
 }

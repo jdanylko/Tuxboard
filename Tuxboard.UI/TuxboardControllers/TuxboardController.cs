@@ -1,5 +1,6 @@
 ﻿using System.Linq;
 using System.Net;
+using System.Security.Claims;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
@@ -32,7 +33,7 @@ namespace Tuxboard.UI.TuxboardControllers
         [Route("Tuxboard/Get")]
         public async Task<IActionResult> Get()
         {
-            var userId = await GetCurrentUserAsync();
+            var userId = GetCurrentUser();
 
             var dashboard = await _service.GetDashboardForAsync(_config, userId);
             if (dashboard == null)
@@ -53,8 +54,6 @@ namespace Tuxboard.UI.TuxboardControllers
         [Route("Tuxboard/CollapseWidget")]
         public async Task<IActionResult> CollapseWidget([FromBody] WidgetParameter parms)
         {
-            // var user = await GetCurrentUserAsync();
-
             if (string.IsNullOrEmpty(parms.Id))
             {
                 return NotFound("Placement id is null.");
@@ -109,10 +108,14 @@ namespace Tuxboard.UI.TuxboardControllers
         #endregion
 
         [NonAction]
-        private async Task<string> GetCurrentUserAsync()
+        private string GetCurrentUser()
         {
-            return await Task.FromResult(TuxConfiguration.DefaultUser);
-        }
+            if (User.Identity == null)
+                return _config.DefaultUser;
 
+            var claimsIdentity = (ClaimsIdentity)User.Identity;
+            var claim = claimsIdentity.FindFirst(ClaimTypes.NameIdentifier);
+            return claim.Value;
+        }
     }
 }

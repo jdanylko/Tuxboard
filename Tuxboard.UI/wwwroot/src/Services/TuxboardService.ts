@@ -124,7 +124,7 @@ export class TuxboardService extends BaseService {
             .catch(this.logError);
     }
 
-/* Service: Refresh Tuxboard */
+    /* Service: Refresh Tuxboard */
 
     async refreshService() {
 
@@ -136,24 +136,6 @@ export class TuxboardService extends BaseService {
             .then(this.readResponseAsText)
             .catch(this.logError);
     }
-
-    /* Service: Widget Settings */
-    //displayWidgetSettings(widget, data) {
-    //    const settings = getWidgetSettings(widget);
-    //    if (settings) {
-    //        settings.innerHTML = data;
-    //        hideWidgetBody(widget);
-    //        showWidgetSettings(widget);
-    //        attachSettingEvents(widget);
-    //    } else {
-    //        showWidgetBody(widget);
-    //        hideWidgetSettings(widget);
-    //    }
-
-    //    hideOverlay(widget);
-
-    //    // initialize();
-    //}
 
     getWidgetSettings(placementId: string) {
 

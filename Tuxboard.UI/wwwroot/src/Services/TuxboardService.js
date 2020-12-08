@@ -110,21 +110,6 @@ class TuxboardService extends BaseService_1.BaseService {
                 .catch(this.logError);
         });
     }
-    /* Service: Widget Settings */
-    //displayWidgetSettings(widget, data) {
-    //    const settings = getWidgetSettings(widget);
-    //    if (settings) {
-    //        settings.innerHTML = data;
-    //        hideWidgetBody(widget);
-    //        showWidgetSettings(widget);
-    //        attachSettingEvents(widget);
-    //    } else {
-    //        showWidgetBody(widget);
-    //        hideWidgetSettings(widget);
-    //    }
-    //    hideOverlay(widget);
-    //    // initialize();
-    //}
     getWidgetSettings(placementId) {
         const request = new Request(this.tuxWidgetSettingsUrl + placementId, { method: "get" });
         return fetch(request)

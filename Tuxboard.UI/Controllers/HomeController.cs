@@ -1,4 +1,5 @@
-﻿using System.Threading.Tasks;
+﻿using System.Security.Claims;
+using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.Logging;
@@ -28,7 +29,7 @@ namespace Tuxboard.UI.Controllers
 
         public async Task<IActionResult> Index()
         {
-            var user = await GetCurrentUserAsync();
+            var user = GetCurrentUser();
 
             var viewModel = new DashboardViewModel
             {
@@ -39,10 +40,15 @@ namespace Tuxboard.UI.Controllers
         }
 
         [NonAction]
-        private async Task<string> GetCurrentUserAsync()
+        private string GetCurrentUser()
         {
-            return await Task.FromResult(TuxConfiguration.DefaultUser);
-        }
+            if (User.Identity == null) 
+                return _config.DefaultUser;
+            
+            var claimsIdentity = (ClaimsIdentity)User.Identity;
+            var claim = claimsIdentity.FindFirst(ClaimTypes.NameIdentifier);
+            return claim.Value;
 
+        }
     }
 }

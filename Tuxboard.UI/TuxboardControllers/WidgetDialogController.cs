@@ -2,10 +2,10 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Net;
+using System.Security.Claims;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
-using Tuxboard.Core.Configuration;
 using Tuxboard.Core.Domain.Entities;
 using Tuxboard.Core.Infrastructure.Interfaces;
 using Tuxboard.Core.Infrastructure.Models;
@@ -91,11 +91,5 @@ namespace Tuxboard.UI.TuxboardControllers
             return result;
         }
 
-
-        [NonAction]
-        private async Task<string> GetCurrentUserAsync()
-        {
-            return await Task.FromResult(TuxConfiguration.DefaultUser);
-        }
     }
 }
