@@ -18,10 +18,16 @@ class Layout {
         if (!this.layoutRows) {
             this.layoutRows = new LayoutRowCollection_1.LayoutRowCollection(this.parent);
         }
-        return this.layoutRows.getLayoutRows();
+        if (this.layoutRows) {
+            return this.layoutRows.getLayoutRows();
+        }
+        throw new Error("No layout rows were found.");
     }
     getFirstLayoutRow() {
-        return this.layoutRows.getLayoutRows()[0];
+        if (this.layoutRows) {
+            return this.layoutRows.getLayoutRows()[0];
+        }
+        return null;
     }
     getColumns() {
         const result = [];

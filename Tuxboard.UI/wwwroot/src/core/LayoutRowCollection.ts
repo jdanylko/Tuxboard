@@ -13,8 +13,13 @@ export class LayoutRowCollection {
     }
 
     fromLayout() {
-        return Array.from(this.parent.querySelectorAll<HTMLElement>(this.layoutRowSelector))
-            .map((element, index) => this.createLayoutRow(element, index));
+        if (this.layoutRowSelector && this.parent) {
+            const rows = Array.from(this.parent.querySelectorAll<HTMLElement>(this.layoutRowSelector));
+            if (rows) {
+                return rows.map((element, index) => this.createLayoutRow(element, index));
+            }
+        }
+        throw new Error("No layout rows were found.");
     }
 
     createLayoutRow(element: HTMLElement, index: number) {
@@ -28,13 +33,4 @@ export class LayoutRowCollection {
     getLayoutRows() {
         return this.fromLayout();
     }
-
-    //getColumns() {
-    //    const columns: Column[] = [];
-    //    this.fromLayout().map((elem: LayoutRow, index: number) => {
-    //        columns.push(...elem.getColumns());
-    //    });
-    //    return columns;
-    //}
-
 }

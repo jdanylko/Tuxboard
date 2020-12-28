@@ -2,7 +2,7 @@
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.WidgetToolbarButton = void 0;
 class WidgetToolbarButton {
-    constructor(parent, selector) {
+    constructor(parent, selector = null) {
         this.parent = parent;
         this.selector = selector;
     }

@@ -4,7 +4,7 @@ import { AddWidgetService } from "./AddWidgetService";
 import { Tuxboard } from "../../../Tuxboard";
 import { WidgetPlacement } from "../../../Widget/WidgetPlacement";
 import { TuxboardService } from "../../../Services/TuxboardService";
-import { Tab, Modal } from "../../../../lib/bootstrap/dist/js/bootstrap.bundle.js";
+import { Tab, Modal } from "bootstrap";
 
 export class AddWidgetDialog extends BaseDialog {
 

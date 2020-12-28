@@ -29,13 +29,21 @@ namespace Tuxboard.UI
                 .GetSection(nameof(TuxboardConfig))
                 .Bind(appConfig);
 
-            services.AddDbContext<TuxDbContext>(options => options.UseSqlServer(appConfig.ConnectionString));
+            services.AddDbContext<TuxDbContext>(options => 
+                options.UseSqlServer(appConfig.ConnectionString));
 
             services.AddControllersWithViews();
             
             services.Configure<RazorViewEngineOptions>(o =>
             {
-                o.ViewLocationExpanders.Add(new WidgetViewLocationExpander());
+                o.ViewLocationFormats.Add(appConfig.WidgetPath);
+                o.ViewLocationFormats.Add(appConfig.ViewPath);
+                o.ViewLocationFormats.Add(appConfig.ComponentPath + RazorViewEngine.ViewExtension);
+                //o.ViewLocationExpanders.Add(
+                //    new TuxboardViewLocationExpander(
+                //        appConfig.WidgetPath,
+                //        appConfig.ViewPath,
+                //        appConfig.ComponentPath + RazorViewEngine.ViewExtension));
             });
 
         }

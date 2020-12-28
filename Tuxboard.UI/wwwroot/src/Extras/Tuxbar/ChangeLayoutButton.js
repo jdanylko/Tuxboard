@@ -12,7 +12,7 @@ Object.defineProperty(exports, "__esModule", { value: true });
 exports.ChangeLayoutButton = void 0;
 const TuxbarButton_1 = require("./TuxbarButton");
 const ChangeLayoutDialog_1 = require("../Dialogs/ChangeLayoutDialog/ChangeLayoutDialog");
-const bootstrap_bundle_1 = require("../../../lib/bootstrap/dist/js/bootstrap.bundle");
+const bootstrap_1 = require("bootstrap");
 const ChangeLayoutService_1 = require("../Dialogs/ChangeLayoutDialog/ChangeLayoutService");
 class ChangeLayoutButton extends TuxbarButton_1.TuxbarButton {
     constructor(tuxBar, changeLayoutSelector = null) {
@@ -42,7 +42,7 @@ class ChangeLayoutButton extends TuxbarButton_1.TuxbarButton {
                 dialog.hideOverlay();
             });
         }), { once: true });
-        const bsDialog = new bootstrap_bundle_1.Modal(dialog.getLayoutDialog());
+        const bsDialog = new bootstrap_1.Modal(dialog.getLayoutDialog());
         bsDialog.show();
     }
 }

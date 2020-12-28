@@ -6,13 +6,13 @@ export class WidgetToolbarButton {
 
     constructor(
         protected readonly parent: WidgetToolBar,
-        protected selector : string) {
+        protected selector: string = null) {
     }
 
-    getDom() { return this.parent.getDom().querySelector(this.selector); }
+    public getDom() { return this.parent.getDom().querySelector(this.selector); }
 
-    setName(name: string) { this.name = name; }
-    getName() { return name; }
+    public setName(name: string) { this.name = name; }
+    public getName() { return name; }
 
-    getSelector() { return this.selector; }
+    public getSelector() { return this.selector; }
 }

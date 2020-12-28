@@ -26,13 +26,12 @@ namespace Tuxboard.Core.UI
             var actionContext = new ActionContext(httpContext, new RouteData(), new ActionDescriptor());
 
             var engine = _serviceProvider.GetService(typeof(IRazorViewEngine)) as IRazorViewEngine;
-            var tempDataProvider = _serviceProvider.GetService(typeof(ITempDataProvider)) as ITempDataProvider;
-
             if (engine == null)
             {
                 throw new Exception("Can't find IRazorViewEngine");
             }
 
+            var tempDataProvider = _serviceProvider.GetService(typeof(ITempDataProvider)) as ITempDataProvider;
 
             var viewEngineResult = engine.FindView(actionContext, viewPath, false);
 
@@ -57,9 +56,6 @@ namespace Tuxboard.Core.UI
 
                 return output.ToString();
             }
-
-
-
         }
     }
 }

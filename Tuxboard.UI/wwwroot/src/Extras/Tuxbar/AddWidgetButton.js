@@ -3,7 +3,7 @@ Object.defineProperty(exports, "__esModule", { value: true });
 exports.AddWidgetButton = void 0;
 const TuxbarButton_1 = require("./TuxbarButton");
 const AddWidgetDialog_1 = require("../Dialogs/AddWidgetDialog/AddWidgetDialog");
-const bootstrap_bundle_1 = require("../../../lib/bootstrap/dist/js/bootstrap.bundle");
+const bootstrap_1 = require("bootstrap");
 const AddWidgetService_1 = require("../../Extras/Dialogs/AddWidgetDialog/AddWidgetService");
 class AddWidgetButton extends TuxbarButton_1.TuxbarButton {
     constructor(tuxBar, addWidgetButtonSelector = null) {
@@ -31,7 +31,7 @@ class AddWidgetButton extends TuxbarButton_1.TuxbarButton {
                 dialog.hideOverlay();
             });
         }, { once: true });
-        const bsDialog = new bootstrap_bundle_1.Modal(dialog.getWidgetDialog());
+        const bsDialog = new bootstrap_1.Modal(dialog.getWidgetDialog());
         bsDialog.show();
     }
 }

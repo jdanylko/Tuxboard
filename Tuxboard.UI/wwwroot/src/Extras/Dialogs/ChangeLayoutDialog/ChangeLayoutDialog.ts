@@ -5,7 +5,7 @@ import { Tuxboard } from "../../../Tuxboard";
 import { dataId, isBefore, isLayoutListItem, getDataId } from "../../../core/common";
 import { LayoutModel } from "./LayoutModel";
 import { ChangeLayoutService } from "./ChangeLayoutService";
-import { Modal, Dropdown } from "../../../../lib/bootstrap/dist/js/bootstrap.bundle";
+import { Modal, Dropdown } from "bootstrap";
 
 export class ChangeLayoutDialog extends BaseDialog {
 

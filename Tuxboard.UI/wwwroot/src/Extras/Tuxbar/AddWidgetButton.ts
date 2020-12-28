@@ -1,7 +1,7 @@
 ﻿import { TuxbarButton } from "./TuxbarButton";
 import { Tuxbar } from "./Tuxbar";
 import { AddWidgetDialog } from "../Dialogs/AddWidgetDialog/AddWidgetDialog";
-import { Modal, Tab } from "../../../lib/bootstrap/dist/js/bootstrap.bundle";
+import { Modal, Tab } from "bootstrap";
 import { AddWidgetService } from "../../Extras/Dialogs/AddWidgetDialog/AddWidgetService";
 
 export class AddWidgetButton extends TuxbarButton {

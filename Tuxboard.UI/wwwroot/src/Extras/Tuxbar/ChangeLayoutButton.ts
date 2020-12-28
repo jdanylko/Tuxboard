@@ -2,7 +2,7 @@
 import { Tuxbar } from "./Tuxbar";
 import { ChangeLayoutDialog } from "../Dialogs/ChangeLayoutDialog/ChangeLayoutDialog";
 import { Tuxboard } from "../../Tuxboard";
-import { Modal } from "../../../lib/bootstrap/dist/js/bootstrap.bundle";
+import { Modal } from "bootstrap";
 import { ChangeLayoutService } from "../Dialogs/ChangeLayoutDialog/ChangeLayoutService";
 
 export class ChangeLayoutButton extends TuxbarButton {

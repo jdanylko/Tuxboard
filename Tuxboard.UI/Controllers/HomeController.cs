@@ -1,8 +1,8 @@
-﻿using System.Security.Claims;
-using System.Threading.Tasks;
-using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.Logging;
+using System.Security.Claims;
+using System.Threading.Tasks;
 using Tuxboard.Core.Configuration;
 using Tuxboard.Core.Infrastructure.Interfaces;
 using Tuxboard.Core.Infrastructure.ViewModels;
@@ -17,7 +17,7 @@ namespace Tuxboard.UI.Controllers
         private TuxboardConfig _config = new TuxboardConfig();
 
         public HomeController(ILogger<HomeController> logger,
-            IDashboardService service, 
+            IDashboardService service,
             IConfiguration config)
         {
             _logger = logger;
@@ -31,6 +31,8 @@ namespace Tuxboard.UI.Controllers
         {
             var user = GetCurrentUser();
 
+            // ViewData["Title"] = "Home Page";
+
             var viewModel = new DashboardViewModel
             {
                 Dashboard = await _service.GetDashboardForAsync(_config, user)
@@ -42,9 +44,9 @@ namespace Tuxboard.UI.Controllers
         [NonAction]
         private string GetCurrentUser()
         {
-            if (User.Identity == null) 
+            if (string.IsNullOrEmpty(User.Identity.Name))
                 return _config.DefaultUser;
-            
+
             var claimsIdentity = (ClaimsIdentity)User.Identity;
             var claim = claimsIdentity.FindFirst(ClaimTypes.NameIdentifier);
             return claim.Value;

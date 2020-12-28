@@ -2,7 +2,7 @@
 import { WidgetCollapseButton } from "./WidgetCollapseButton";
 import { WidgetRemoveButton } from "./WidgetRemoveButton";
 import { WidgetPlacement } from "../WidgetPlacement";
-import { WidgetSettings } from "../WidgetSettings";
+// import { WidgetSettings } from "../WidgetSettings";
 
 export class WidgetToolBar {
 
@@ -12,11 +12,11 @@ export class WidgetToolBar {
     private dropdownRefreshOption: string = ".refresh-option";
     private dropdownSettingsOption: string = ".settings-option";
 
-    private buttons = new Array<WidgetToolbarButton>();
+    private buttonList = new Array<WidgetToolbarButton>();
 
     constructor(
         private readonly widgetPlacement: WidgetPlacement,
-        selector: string = null
+        selector: string = null,
     ) {
         this.widgetToolbarSelector = selector || this.widgetToolbarSelector;
 
@@ -37,18 +37,18 @@ export class WidgetToolBar {
     getWidgetPlacement() { return this.widgetPlacement; }
 
     addButton(button: WidgetToolbarButton) {
-        this.buttons.push(button);
+        this.buttonList.push(button);
     }
 
     removeButton(button: WidgetToolbarButton) {
         const name = button.getName();
-        const index = this.buttons.indexOf(name, 0);
+        const index = this.buttonList.findIndex(item=> item.getName() === name);
         if (index > -1) {
-            this.buttons.splice(index, 1);
+            this.buttonList.splice(index, 1);
         }
     }
 
-    setupWidgetDropdown() {
+    private setupWidgetDropdown() {
 
         /* dropdown options */
         const settingsOption = this.widgetPlacement.getDom().querySelector(this.dropdownSettingsOption);
@@ -65,38 +65,7 @@ export class WidgetToolBar {
                 this.widgetPlacement.update();
             }, false);
         }
+
+        return;
     }
-
-    attachSettingEvents(widget: HTMLDivElement) {
-
-        //let saveButton = widget.querySelector(tuxWidgetSettingsSave);
-        //saveButton.addEventListener("click", saveSettingsClick, false);
-
-        //let cancelButton = widget.querySelector(tuxWidgetSettingsCancel);
-        //cancelButton.addEventListener("click", cancelSettingsClick, false);
-    }
-
-    cancelSettingsClick(ev: Event) {
-        //let widget = getParentByClass(ev, tuxWidgetClass);
-        //if (widget) {
-        //    hideWidgetSettings(widget);
-        //    showWidgetBody(widget);
-        //}
-    }
-
-    saveSettingsClick(ev: Event) {
-        //let widget = getParentByClass(ev, tuxWidgetClass) as HTMLDivElement;
-        //if (widget) {
-        //    saveSettingsService(widget);
-        //}
-    }
-
-    settingsClick(ev: Event) {
-        //let widget = getParentByClass(ev, tuxWidgetClass);
-        //if (widget) {
-        //    getWidgetSettingsService(getPlacementId(widget));
-        //}
-    }
-
-    
 }

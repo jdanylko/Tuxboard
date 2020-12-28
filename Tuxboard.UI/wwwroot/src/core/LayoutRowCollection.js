@@ -9,8 +9,13 @@ class LayoutRowCollection {
         this.layoutRowSelector = selector || this.layoutRowSelector;
     }
     fromLayout() {
-        return Array.from(this.parent.querySelectorAll(this.layoutRowSelector))
-            .map((element, index) => this.createLayoutRow(element, index));
+        if (this.layoutRowSelector && this.parent) {
+            const rows = Array.from(this.parent.querySelectorAll(this.layoutRowSelector));
+            if (rows) {
+                return rows.map((element, index) => this.createLayoutRow(element, index));
+            }
+        }
+        throw new Error("No layout rows were found.");
     }
     createLayoutRow(element, index) {
         const row = new LayoutRow_1.LayoutRow(this.parent);

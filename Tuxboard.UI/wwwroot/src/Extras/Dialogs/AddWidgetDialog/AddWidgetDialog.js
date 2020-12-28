@@ -5,7 +5,7 @@ const BaseDialog_1 = require("../../../core/BaseDialog");
 const common_1 = require("../../../core/common");
 const AddWidgetService_1 = require("./AddWidgetService");
 const TuxboardService_1 = require("../../../Services/TuxboardService");
-const bootstrap_bundle_js_1 = require("../../../../lib/bootstrap/dist/js/bootstrap.bundle.js");
+const bootstrap_1 = require("bootstrap");
 class AddWidgetDialog extends BaseDialog_1.BaseDialog {
     constructor(tuxboard, dialogSelector = null) {
         super(dialogSelector);
@@ -32,7 +32,7 @@ class AddWidgetDialog extends BaseDialog_1.BaseDialog {
             modalBody.innerHTML = body;
     }
     hide() {
-        const modal = bootstrap_bundle_js_1.Modal.getInstance(this.getWidgetDialog()); // Returns a Bootstrap modal instance
+        const modal = bootstrap_1.Modal.getInstance(this.getWidgetDialog()); // Returns a Bootstrap modal instance
         if (modal) {
             modal.hide();
         }
@@ -96,7 +96,7 @@ class AddWidgetDialog extends BaseDialog_1.BaseDialog {
     setupWidgetTabs() {
         const tabTriggers = this.getWidgetTabGroups();
         tabTriggers.forEach(triggerEl => {
-            var tabTrigger = new bootstrap_bundle_js_1.Tab(triggerEl);
+            var tabTrigger = new bootstrap_1.Tab(triggerEl);
             triggerEl.addEventListener('click', ev => {
                 ev.preventDefault();
                 tabTrigger.show();

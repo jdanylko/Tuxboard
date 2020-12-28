@@ -27,6 +27,7 @@
   </ItemGroup>
 
   <ItemGroup>
+    <Content Remove="compilerconfig.json" />
     <Content Remove="tsconfig.json" />
     <Content Remove="wwwroot\src\tuxboard.ts" />
     <Content Remove="wwwroot\src\TuxboardService.ts" />
@@ -41,21 +42,17 @@
     <TypeScriptCompile Remove="wwwroot\src\TabCollection.ts" />
   </ItemGroup>
 
-  <ItemGroup>
-    <Content Include="compilerconfig.json-backup" />
-  </ItemGroup>
-
 
   <ItemGroup>
     <Folder Include="wwwroot\css\" />
     <Folder Include="wwwroot\js\" />
-    <Folder Include="wwwroot\lib\" />
     <Folder Include="wwwroot\js\" />
     <Folder Include="wwwroot\js\" />
   </ItemGroup>
 
 
   <ItemGroup>
+    <None Include="compilerconfig.json" />
     <None Include="tsconfig.json" />
     <None Include="wwwroot\src\Tuxboard.ts" />
   </ItemGroup>

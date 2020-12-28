@@ -6,7 +6,7 @@ const LayoutItem_1 = require("./LayoutItem");
 const common_1 = require("../../../core/common");
 const LayoutModel_1 = require("./LayoutModel");
 const ChangeLayoutService_1 = require("./ChangeLayoutService");
-const bootstrap_bundle_1 = require("../../../../lib/bootstrap/dist/js/bootstrap.bundle");
+const bootstrap_1 = require("bootstrap");
 class ChangeLayoutDialog extends BaseDialog_1.BaseDialog {
     constructor(tuxboard, dialogSelector = null) {
         super(dialogSelector);
@@ -46,14 +46,14 @@ class ChangeLayoutDialog extends BaseDialog_1.BaseDialog {
     initialize(layoutBody) {
         this.setLayoutDialog(layoutBody);
         // Bootstrap
-        let dropdown = new bootstrap_bundle_1.Dropdown(this.getDropdown());
+        let dropdown = new bootstrap_1.Dropdown(this.getDropdown());
         this.initLayoutDragAndDrop();
         this.attachLayoutEvents();
         this.updateLayoutRowEvents();
         this.resetColumnStatus();
     }
     hide() {
-        const modal = bootstrap_bundle_1.Modal.getInstance(this.getLayoutDialog()); // Returns a Bootstrap modal instance
+        const modal = bootstrap_1.Modal.getInstance(this.getLayoutDialog()); // Returns a Bootstrap modal instance
         if (modal) {
             modal.hide();
         }
