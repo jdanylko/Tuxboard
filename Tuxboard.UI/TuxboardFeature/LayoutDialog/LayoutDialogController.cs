@@ -16,7 +16,7 @@ namespace Tuxboard.UI.TuxboardFeature.LayoutDialog
     {
         private readonly ILogger<LayoutDialogController> _logger;
         private readonly IDashboardService _service;
-        private readonly TuxboardConfig _config;
+        private readonly ITuxboardConfig _config;
 
         public LayoutDialogController(ILogger<LayoutDialogController> logger, 
             IDashboardService service, 
@@ -78,7 +78,7 @@ namespace Tuxboard.UI.TuxboardFeature.LayoutDialog
 
             TuxViewMessage message = null;
 
-            var dashboard = _service.GetDashboardFor(userId);
+            var dashboard = _service.GetDashboardFor(_config, userId);
             var layout = dashboard.GetLayoutByLayoutRow(id);
 
             var canDelete = true;

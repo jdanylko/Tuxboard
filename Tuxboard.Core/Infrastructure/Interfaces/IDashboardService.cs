@@ -9,8 +9,8 @@ namespace Tuxboard.Core.Infrastructure.Interfaces
 {
     public interface IDashboardService
     {
-        Dashboard GetDashboardFor(string userId);
-        Task<Dashboard> GetDashboardForAsync(TuxboardConfig config, string userId);
+        Dashboard GetDashboardFor(ITuxboardConfig config, string userId);
+        Task<Dashboard> GetDashboardForAsync(ITuxboardConfig config, string userId);
         
         Layout GetLayoutFromTab(string tabId);
         Task<Layout> GetLayoutFromTabAsync(string tabId);

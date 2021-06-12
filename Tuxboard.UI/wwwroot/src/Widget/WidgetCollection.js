@@ -1,8 +1,5 @@
-"use strict";
-Object.defineProperty(exports, "__esModule", { value: true });
-exports.WidgetCollection = void 0;
-const WidgetPlacement_1 = require("../Widget/WidgetPlacement");
-class WidgetCollection {
+import { WidgetPlacement } from "../Widget/WidgetPlacement";
+export class WidgetCollection {
     constructor(parent, columnIndex, layoutRowId, selector = null) {
         this.parent = parent;
         this.columnIndex = columnIndex;
@@ -18,7 +15,7 @@ class WidgetCollection {
             .map((element, index) => this.createWidget(element, index));
     }
     createWidget(element, index) {
-        const widget = new WidgetPlacement_1.WidgetPlacement(this.parent);
+        const widget = new WidgetPlacement(this.parent);
         const id = element.getAttribute(widget.getAttributeName());
         widget.setPlacementId(id);
         widget.setIndex(index);
@@ -29,5 +26,3 @@ class WidgetCollection {
         return widget.getProperties();
     }
 }
-exports.WidgetCollection = WidgetCollection;
-//# sourceMappingURL=WidgetCollection.js.map

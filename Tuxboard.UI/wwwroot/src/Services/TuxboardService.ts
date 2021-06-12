@@ -113,12 +113,12 @@ export class TuxboardService extends BaseService {
 
     /* Service: Get Widget */
 
-    async getWidgetService(placementId: string) {
+    getWidgetService(placementId: string) {
 
         const request = new Request(this.tuxWidgetContentUrl + placementId,
             { method: "get" });
 
-        return await fetch(request)
+        return fetch(request)
             .then(this.validateResponse)
             .then(this.readResponseAsText)
             .catch(this.logError);
@@ -126,12 +126,12 @@ export class TuxboardService extends BaseService {
 
     /* Service: Refresh Tuxboard */
 
-    async refreshService() {
+    refreshService() {
 
         const request = new Request(this.tuxRefreshTuxboardUrl,
             { method: "get" });
 
-        return await fetch(request)
+        return fetch(request)
             .then(this.validateResponse)
             .then(this.readResponseAsText)
             .catch(this.logError);

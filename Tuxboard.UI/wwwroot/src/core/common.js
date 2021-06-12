@@ -1,10 +1,7 @@
-"use strict";
-Object.defineProperty(exports, "__esModule", { value: true });
-exports.isLayoutListItem = exports.createFromHtml = exports.isBefore = exports.getWidgetIndex = exports.getColumnIndexByDragInfo = exports.getColumnByPlacement = exports.getWidgetSnapshot = exports.getClosestByClass = exports.isWidget = exports.clearNodes = exports.disableElement = exports.enableElement = exports.noPeriod = exports.getPlacementId = exports.getDomWidget = exports.getDataId = exports.collapsedToggleSelector = exports.isStaticAttribute = exports.dataId = void 0;
-const PlacementItem_1 = require("../Models/PlacementItem");
-exports.dataId = "data-id";
-exports.isStaticAttribute = "data-static";
-exports.collapsedToggleSelector = "collapsed";
+import { PlacementItem } from "../Models/PlacementItem";
+export const dataId = "data-id";
+export const isStaticAttribute = "data-static";
+export const collapsedToggleSelector = "collapsed";
 /* Widget Class (commonly used) */
 //export let widgetSelector: string = ".card";
 //export function setWidgetSelector(value:string) {
@@ -13,34 +10,26 @@ exports.collapsedToggleSelector = "collapsed";
 //export function getWidgetSelector() {
 //    return widgetSelector;
 //}
-function getDataId(elem) { return elem.getAttribute(exports.dataId); }
-exports.getDataId = getDataId;
-function getDomWidget(id) {
-    const dId = `[${exports.dataId}='${id}']`;
+export function getDataId(elem) { return elem.getAttribute(dataId); }
+export function getDomWidget(id) {
+    const dId = `[${dataId}='${id}']`;
     return document.querySelector(dId);
 }
-exports.getDomWidget = getDomWidget;
-function getPlacementId(widget) { return getDataId(widget); }
-exports.getPlacementId = getPlacementId;
-function noPeriod(id) { return id.startsWith(".") ? id.replace(".", "") : id; }
-exports.noPeriod = noPeriod;
-function enableElement(elem) { elem.classList.remove("disabled"); elem.removeAttribute("disabled"); }
-exports.enableElement = enableElement;
-function disableElement(elem) { elem.classList.add("disabled"); elem.setAttribute("disabled", "disabled"); }
-exports.disableElement = disableElement;
-function clearNodes(node) {
+export function getPlacementId(widget) { return getDataId(widget); }
+export function noPeriod(id) { return id.startsWith(".") ? id.replace(".", "") : id; }
+export function enableElement(elem) { elem.classList.remove("disabled"); elem.removeAttribute("disabled"); }
+export function disableElement(elem) { elem.classList.add("disabled"); elem.setAttribute("disabled", "disabled"); }
+export function clearNodes(node) {
     // node.innerHTML = "";
     while (node.firstChild)
         node.firstChild.remove();
 }
-exports.clearNodes = clearNodes;
-function isWidget(target, widgetSelector) {
+export function isWidget(target, widgetSelector) {
     return (target.tagName.toLowerCase() === "div" &&
         target.classList.contains(noPeriod(widgetSelector)) &&
         getDataId(target) !== "");
 }
-exports.isWidget = isWidget;
-function getClosestByClass(element, classToSearch) {
+export function getClosestByClass(element, classToSearch) {
     while (element) {
         if (element.classList.contains(classToSearch)) {
             return element;
@@ -48,40 +37,35 @@ function getClosestByClass(element, classToSearch) {
         element = element.parentElement;
     }
 }
-exports.getClosestByClass = getClosestByClass;
-function getWidgetSnapshot(dragInfo) {
+export function getWidgetSnapshot(dragInfo) {
     const widgetList = Array.from(document.querySelectorAll(".card")); // TODO: DefaultSelector.getInstance().layoutRowSelector));
     return widgetList.map((elem) => {
         const placementId = getDataId(elem);
         const rowTemplate = getClosestByClass(elem, noPeriod(".layout-row")); // TODO: DefaultSelector.getInstance().layoutRowSelector));
         const widgetIndex = getWidgetIndex(dragInfo, placementId);
         const columnIndex = getColumnIndexByDragInfo(dragInfo, placementId);
-        const isStatic = elem.getAttribute(exports.isStaticAttribute) === "true";
-        return new PlacementItem_1.PlacementItem(getDataId(elem), widgetIndex, rowTemplate.getAttribute(exports.dataId), columnIndex, isStatic);
+        const isStatic = elem.getAttribute(isStaticAttribute) === "true";
+        return new PlacementItem(getDataId(elem), widgetIndex, rowTemplate.getAttribute(dataId), columnIndex, isStatic);
     });
 }
-exports.getWidgetSnapshot = getWidgetSnapshot;
-function getColumnByPlacement(dragInfo, placementId) {
+export function getColumnByPlacement(dragInfo, placementId) {
     const placement = getDomWidget(placementId);
     return getClosestByClass(placement, noPeriod(".column")); // TODO: DefaultSelector.getInstance().columnSelector));
 }
-exports.getColumnByPlacement = getColumnByPlacement;
-function getColumnIndexByDragInfo(dragInfo, placementId) {
+export function getColumnIndexByDragInfo(dragInfo, placementId) {
     const column = getColumnByPlacement(dragInfo, placementId);
     return Array.from(column.parentElement.querySelectorAll(".column")) // TODO: DefaultSelector.getInstance().columnSelector))
-        .findIndex((column) => column.querySelector(`[${exports.dataId}='${placementId}']`) != null);
+        .findIndex((column) => column.querySelector(`[${dataId}='${placementId}']`) != null);
 }
-exports.getColumnIndexByDragInfo = getColumnIndexByDragInfo;
-function getWidgetIndex(dragInfo, placementId) {
+export function getWidgetIndex(dragInfo, placementId) {
     const column = getColumnByPlacement(dragInfo, placementId);
     const columnWidgets = column.querySelectorAll(".card"); // TODO: DefaultSelector.getInstance().columnSelector))
     return Array.from(columnWidgets)
         .findIndex((widget, index) => {
-        return widget.getAttribute(exports.dataId) === placementId;
+        return widget.getAttribute(dataId) === placementId;
     });
 }
-exports.getWidgetIndex = getWidgetIndex;
-function isBefore(el1, el2) {
+export function isBefore(el1, el2) {
     var cur;
     if (el2.parentNode === el1.parentNode) {
         for (cur = el1.previousSibling; cur; cur = cur.previousSibling) {
@@ -91,15 +75,11 @@ function isBefore(el1, el2) {
     }
     return false;
 }
-exports.isBefore = isBefore;
-function createFromHtml(htmlString) {
+export function createFromHtml(htmlString) {
     var div = document.createElement('div');
     div.innerHTML = htmlString.trim();
     return Array.from(div.children);
 }
-exports.createFromHtml = createFromHtml;
-function isLayoutListItem(elem) {
+export function isLayoutListItem(elem) {
     return elem && elem.tagName.toLowerCase() === "li" && elem.classList.contains("layout-item"); // TODO: Layout-Item
 }
-exports.isLayoutListItem = isLayoutListItem;
-//# sourceMappingURL=common.js.map

@@ -1,15 +1,12 @@
-"use strict";
-Object.defineProperty(exports, "__esModule", { value: true });
-exports.WidgetCollapseButton = void 0;
-const WidgetToolbarButton_1 = require("./WidgetToolbarButton");
-const common_1 = require("../../core/common");
-const TuxboardService_1 = require("../../Services/TuxboardService");
-class WidgetCollapseButton extends WidgetToolbarButton_1.WidgetToolbarButton {
+import { WidgetToolbarButton } from "./WidgetToolbarButton";
+import { dataId, getDomWidget } from "../../core/common";
+import { TuxboardService } from "../../Services/TuxboardService";
+export class WidgetCollapseButton extends WidgetToolbarButton {
     constructor(parent, buttonSelector = null) {
         super(parent, buttonSelector);
         this.collapsedButtonSelector = ".collapse-widget";
         this.collapsedToggleSelector = "collapsed";
-        this.service = new TuxboardService_1.TuxboardService();
+        this.service = new TuxboardService();
         this.selector = buttonSelector || this.collapsedButtonSelector;
         this.setName("collapseButton");
         const element = this.getDom();
@@ -21,7 +18,7 @@ class WidgetCollapseButton extends WidgetToolbarButton_1.WidgetToolbarButton {
         const button = ev.currentTarget;
         if (!button)
             return;
-        const placementId = button.getAttribute(common_1.dataId);
+        const placementId = button.getAttribute(dataId);
         const widget = toolbar.getWidgetPlacement().getDom();
         if (widget) {
             const minimized = widget.classList.contains(this.collapsedToggleSelector);
@@ -40,7 +37,7 @@ class WidgetCollapseButton extends WidgetToolbarButton_1.WidgetToolbarButton {
         }
     }
     getWidgetBody(placementId) {
-        const widget = common_1.getDomWidget(placementId);
+        const widget = getDomWidget(placementId);
         if (widget)
             return widget.querySelector(".card"); // TODO: DefaultSelector.getInstance().widgetBodySelector);
         return null;
@@ -58,5 +55,3 @@ class WidgetCollapseButton extends WidgetToolbarButton_1.WidgetToolbarButton {
         }
     }
 }
-exports.WidgetCollapseButton = WidgetCollapseButton;
-//# sourceMappingURL=WidgetCollapseButton.js.map

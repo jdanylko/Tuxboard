@@ -1,16 +1,13 @@
-"use strict";
-Object.defineProperty(exports, "__esModule", { value: true });
-exports.LayoutRow = void 0;
-const common_1 = require("./common");
-const ColumnCollection_1 = require("./ColumnCollection");
-class LayoutRow {
+import { dataId } from "./common";
+import { ColumnCollection } from "./ColumnCollection";
+export class LayoutRow {
     constructor(parent, selector = null) {
         this.parent = parent;
         this.layoutRowSelector = ".layout-row";
         this.layoutRowSelector = selector || this.layoutRowSelector;
     }
     getDom() { return this.parent.querySelector(this.getSelector()); }
-    getAttributeName() { return common_1.dataId; }
+    getAttributeName() { return dataId; }
     setId(value) { this.id = value; }
     setIndex(value) { this.index = value; }
     getSelector() {
@@ -19,7 +16,7 @@ class LayoutRow {
     }
     getColumns() {
         if (!this.columns) {
-            this.columns = new ColumnCollection_1.ColumnCollection(this.getDom(), this.id);
+            this.columns = new ColumnCollection(this.getDom(), this.id);
         }
         return this.columns.fromLayoutRow();
     }
@@ -29,5 +26,3 @@ class LayoutRow {
         });
     }
 }
-exports.LayoutRow = LayoutRow;
-//# sourceMappingURL=LayoutRow.js.map

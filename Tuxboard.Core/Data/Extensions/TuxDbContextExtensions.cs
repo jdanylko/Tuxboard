@@ -40,7 +40,7 @@ namespace Tuxboard.Core.Data.Extensions
             return context.Dashboard.FirstOrDefault(e => e.UserId == userId) != null;
         }
 
-        public static Dashboard GetDashboardFor(this ITuxDbContext context, TuxboardConfig config, string userId)
+        public static Dashboard GetDashboardFor(this ITuxDbContext context, ITuxboardConfig config, string userId)
         {
             var layoutTypes = context.LayoutType.ToList();
 
@@ -48,7 +48,8 @@ namespace Tuxboard.Core.Data.Extensions
                 .Include(db => db.Tabs)
                     .ThenInclude(tab => tab.Layouts)
                     .ThenInclude(layout => layout.LayoutRows)
-                .AsNoTracking().FirstOrDefault(t => t.UserId == userId);
+                .AsNoTracking()
+                .FirstOrDefault(t => t.UserId == userId);
 
             if (dashboard == null)
                 return dashboard;
@@ -192,19 +193,15 @@ namespace Tuxboard.Core.Data.Extensions
 
         #region Asynchronous
 
-        public static async Task<Widget> GetWidgetAsync(this ITuxDbContext context, string widgetId)
-        {
-            return await context.Widget
+        public static Task<Widget> GetWidgetAsync(this ITuxDbContext context, string widgetId) =>
+            context.Widget
                 .Include(w => w.WidgetDefaults)
                 .FirstOrDefaultAsync(r => r.WidgetId == widgetId);
-        }
 
-        public static async Task<List<WidgetPlacement>> GetPlacementsByLayoutAsync(this ITuxDbContext context, 
-            string layoutId)
-        {
-            return await context.WidgetPlacement.Where(r => r.LayoutRowId == layoutId)
+        public static Task<List<WidgetPlacement>> GetPlacementsByLayoutAsync(this ITuxDbContext context, 
+            string layoutId) =>
+            context.WidgetPlacement.Where(r => r.LayoutRowId == layoutId)
                 .ToListAsync();
-        }
 
         public static async Task<bool> DashboardExistsForAsync(this ITuxDbContext context, string userId)
         {
@@ -213,9 +210,9 @@ namespace Tuxboard.Core.Data.Extensions
         }
 
         public static async Task<Dashboard> GetDashboardForAsync(this ITuxDbContext context,
-            TuxboardConfig config, string userId)
+            ITuxboardConfig config, string userId)
         {
-            var layoutTypes = context.LayoutType.ToList();
+            var layoutTypes = await context.LayoutType.ToListAsync();
 
             var dashboard = await context.Dashboard
                 .Include(db => db.Tabs)
@@ -269,14 +266,12 @@ namespace Tuxboard.Core.Data.Extensions
             return result;
         }
 
-        public static async Task<Layout> GetLayoutForTabAsync(this ITuxDbContext context, string tabId)
-        {
-            return await context.Layout
+        public static Task<Layout> GetLayoutForTabAsync(this ITuxDbContext context, string tabId) =>
+            context.Layout
                 .Include(e => e.LayoutRows)
-                    .ThenInclude(e => e.LayoutType)
+                .ThenInclude(e => e.LayoutType)
                 .AsNoTracking()
                 .FirstOrDefaultAsync(r => r.TabId == tabId);
-        }
 
         public static async Task<List<WidgetPlacement>> GetPlacementsByLayoutRowAsync(this ITuxDbContext context,
             string layoutRowId)
@@ -312,10 +307,8 @@ namespace Tuxboard.Core.Data.Extensions
             return layout;
         }
 
-        public static async Task<List<WidgetPlacement>> GetWidgetsForTabAsync(this ITuxDbContext context, DashboardTab tab)
-        {
-            return await GetWidgetsForTabAsync(context, (string) tab.TabId);
-        }
+        public static Task<List<WidgetPlacement>> GetWidgetsForTabAsync(this ITuxDbContext context, DashboardTab tab) => 
+            GetWidgetsForTabAsync(context, (string) tab.TabId);
 
         public static async Task<List<WidgetPlacement>> GetWidgetsForTabAsync(this ITuxDbContext context, string tabId)
         {
@@ -348,14 +341,12 @@ namespace Tuxboard.Core.Data.Extensions
             return placements;
         }
 
-        public static async Task<WidgetPlacement> GetWidgetPlacementAsync(this ITuxDbContext context, string widgetPlacementId)
-        {
-            return await context.WidgetPlacement
+        public static Task<WidgetPlacement> GetWidgetPlacementAsync(this ITuxDbContext context, string widgetPlacementId) =>
+            context.WidgetPlacement
                 .Include(e => e.WidgetSettings)
                 .Include(e => e.Widget)
                     .ThenInclude(w => w.WidgetDefaults)
                 .FirstOrDefaultAsync(r => r.WidgetPlacementId == widgetPlacementId);
-        }
 
         #endregion
     }

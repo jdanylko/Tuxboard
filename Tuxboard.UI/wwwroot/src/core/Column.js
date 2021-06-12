@@ -1,9 +1,6 @@
-"use strict";
-Object.defineProperty(exports, "__esModule", { value: true });
-exports.Column = void 0;
-const common_1 = require("./common");
-const WidgetCollection_1 = require("../Widget/WidgetCollection");
-class Column {
+import { dataId, getClosestByClass, noPeriod } from "./common";
+import { WidgetCollection } from "../Widget/WidgetCollection";
+export class Column {
     constructor(parent, selector = null) {
         this.parent = parent;
         this.selector = selector;
@@ -11,7 +8,7 @@ class Column {
         this.columnSelector = selector || this.columnSelector;
     }
     getDom() { return this.parent; }
-    getAttributeName() { return common_1.dataId; }
+    getAttributeName() { return dataId; }
     getIndex() { return this.index; }
     setIndex(value) { this.index = value; }
     setLayoutRowId(value) { this.layoutRowId = value; }
@@ -24,7 +21,7 @@ class Column {
     }
     getWidgetCollection() {
         if (!this.widgets) {
-            this.widgets = new WidgetCollection_1.WidgetCollection(this.parent, this.index, this.layoutRowId);
+            this.widgets = new WidgetCollection(this.parent, this.index, this.layoutRowId);
         }
         return this.widgets;
     }
@@ -34,8 +31,6 @@ class Column {
     }
     getColumnByPlacement(placementId) {
         const placement = this.getPlacement(placementId);
-        return common_1.getClosestByClass(placement, common_1.noPeriod(this.columnSelector));
+        return getClosestByClass(placement, noPeriod(this.columnSelector));
     }
 }
-exports.Column = Column;
-//# sourceMappingURL=Column.js.map

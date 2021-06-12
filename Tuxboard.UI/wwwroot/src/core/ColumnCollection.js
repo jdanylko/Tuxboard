@@ -1,8 +1,5 @@
-"use strict";
-Object.defineProperty(exports, "__esModule", { value: true });
-exports.ColumnCollection = void 0;
-const Column_1 = require("./Column");
-class ColumnCollection {
+import { Column } from "./Column";
+export class ColumnCollection {
     constructor(parent, layoutRowId, selector = null) {
         this.parent = parent;
         this.layoutRowId = layoutRowId;
@@ -14,7 +11,7 @@ class ColumnCollection {
             .map((element, index) => this.createColumn(element, index));
     }
     createColumn(element, index) {
-        const column = new Column_1.Column(element);
+        const column = new Column(element);
         column.setIndex(index);
         column.setLayoutRowId(this.layoutRowId);
         return column;
@@ -25,5 +22,3 @@ class ColumnCollection {
         });
     }
 }
-exports.ColumnCollection = ColumnCollection;
-//# sourceMappingURL=ColumnCollection.js.map

@@ -1,21 +1,9 @@
-"use strict";
-var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, generator) {
-    function adopt(value) { return value instanceof P ? value : new P(function (resolve) { resolve(value); }); }
-    return new (P || (P = Promise))(function (resolve, reject) {
-        function fulfilled(value) { try { step(generator.next(value)); } catch (e) { reject(e); } }
-        function rejected(value) { try { step(generator["throw"](value)); } catch (e) { reject(e); } }
-        function step(result) { result.done ? resolve(result.value) : adopt(result.value).then(fulfilled, rejected); }
-        step((generator = generator.apply(thisArg, _arguments || [])).next());
-    });
-};
-Object.defineProperty(exports, "__esModule", { value: true });
-exports.WidgetPlacement = void 0;
-const common_1 = require("../core/common");
-const WidgetSettings_1 = require("./WidgetSettings");
-const WidgetToolBar_1 = require("./WidgetToolbar/WidgetToolBar");
-const TuxboardService_1 = require("../Services/TuxboardService");
-const WidgetProperties_1 = require("../Models/WidgetProperties");
-class WidgetPlacement {
+import { dataId, isStaticAttribute, clearNodes, collapsedToggleSelector } from "../core/common";
+import { WidgetSettings } from "./WidgetSettings";
+import { WidgetToolBar } from "./WidgetToolbar/WidgetToolBar";
+import { TuxboardService } from "../Services/TuxboardService";
+import { WidgetProperties } from "../Models/WidgetProperties";
+export class WidgetPlacement {
     constructor(parent, selector = null) {
         this.parent = parent;
         this.widgetSelector = ".card";
@@ -24,18 +12,18 @@ class WidgetPlacement {
         this.generalOverlaySelector = ".overlay";
         this.loadingSelector = ".loading-status";
         this.widgetOverlaySelector = this.generalOverlaySelector + this.loadingSelector;
-        this.service = new TuxboardService_1.TuxboardService();
+        this.service = new TuxboardService();
         this.widgetSelector = selector || this.widgetSelector;
-        this.settings = new WidgetSettings_1.WidgetSettings(this);
+        this.settings = new WidgetSettings(this);
     }
     isCollapsed() {
-        return this.getDom().classList.contains(common_1.collapsedToggleSelector);
+        return this.getDom().classList.contains(collapsedToggleSelector);
     }
     isStatic() {
-        return this.getDom().getAttribute(common_1.isStaticAttribute) === "true";
+        return this.getDom().getAttribute(isStaticAttribute) === "true";
     }
     getDom() { return this.parent.querySelector(this.getSelector()); }
-    getAttributeName() { return common_1.dataId; }
+    getAttributeName() { return dataId; }
     setPlacementId(value) { this.placementId = value; }
     getPlacementId() { return this.placementId; }
     setIndex(value) { this.index = value; }
@@ -86,7 +74,7 @@ class WidgetPlacement {
         if (widget) {
             const modalBody = widget.querySelector(this.widgetBodySelector);
             if (modalBody) {
-                common_1.clearNodes(modalBody);
+                clearNodes(modalBody);
                 modalBody.insertAdjacentHTML('afterbegin', html);
             }
         }
@@ -102,28 +90,24 @@ class WidgetPlacement {
     }
     updateWidgetToolbar() {
         if (typeof this.toolbar != "object") {
-            this.toolbar = new WidgetToolBar_1.WidgetToolBar(this);
+            this.toolbar = new WidgetToolBar(this);
         }
     }
     update() {
-        return __awaiter(this, void 0, void 0, function* () {
-            if (this.isStatic())
-                return;
-            this.showOverlay();
-            yield this.service.getWidgetService(this.placementId)
-                .then((data) => {
-                this.setBody(data);
-                if (!this.isCollapsed()) {
-                    this.showBody();
-                }
-                this.hideOverlay();
-                this.updateWidgetToolbar();
-            });
+        if (this.isStatic())
+            return;
+        this.showOverlay();
+        this.service.getWidgetService(this.placementId)
+            .then((data) => {
+            this.setBody(data);
+            if (!this.isCollapsed()) {
+                this.showBody();
+            }
+            this.hideOverlay();
+            this.updateWidgetToolbar();
         });
     }
     getProperties() {
-        return new WidgetProperties_1.WidgetProperties(this.placementId, this.getColumnIndex(), this.getIndex(), this.parent.getAttribute(common_1.dataId));
+        return new WidgetProperties(this.placementId, this.getColumnIndex(), this.getIndex(), this.parent.getAttribute(dataId));
     }
 }
-exports.WidgetPlacement = WidgetPlacement;
-//# sourceMappingURL=WidgetPlacement.js.map

@@ -1,8 +1,5 @@
-"use strict";
-Object.defineProperty(exports, "__esModule", { value: true });
-exports.LayoutRowCollection = void 0;
-const LayoutRow_1 = require("./LayoutRow");
-class LayoutRowCollection {
+import { LayoutRow } from "./LayoutRow";
+export class LayoutRowCollection {
     constructor(parent, selector = null) {
         this.parent = parent;
         this.layoutRowSelector = ".layout-row";
@@ -18,7 +15,7 @@ class LayoutRowCollection {
         throw new Error("No layout rows were found.");
     }
     createLayoutRow(element, index) {
-        const row = new LayoutRow_1.LayoutRow(this.parent);
+        const row = new LayoutRow(this.parent);
         const id = element.getAttribute(row.getAttributeName());
         row.setId(id);
         row.setIndex(index);
@@ -28,5 +25,3 @@ class LayoutRowCollection {
         return this.fromLayout();
     }
 }
-exports.LayoutRowCollection = LayoutRowCollection;
-//# sourceMappingURL=LayoutRowCollection.js.map

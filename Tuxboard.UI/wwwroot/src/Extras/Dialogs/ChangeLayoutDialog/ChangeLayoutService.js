@@ -1,9 +1,6 @@
-"use strict";
-Object.defineProperty(exports, "__esModule", { value: true });
-exports.ChangeLayoutService = void 0;
-const BaseService_1 = require("../../../core/BaseService");
-const common_1 = require("../../../core/common");
-class ChangeLayoutService extends BaseService_1.BaseService {
+import { BaseService } from "../../../core/BaseService";
+import { dataId } from "../../../core/common";
+export class ChangeLayoutService extends BaseService {
     constructor(debug = false) {
         super(debug);
         this.tuxLayoutDialogUrl = "/layoutdialog/";
@@ -29,7 +26,7 @@ class ChangeLayoutService extends BaseService_1.BaseService {
     }
     /* Service: Delete Row */
     deleteRowFromLayoutDialogService(row) {
-        const id = row.getAttribute(common_1.dataId);
+        const id = row.getAttribute(dataId);
         if (id === "0") { // new, we can remove it.
             row.remove();
         }
@@ -56,5 +53,3 @@ class ChangeLayoutService extends BaseService_1.BaseService {
             .catch(this.logError);
     }
 }
-exports.ChangeLayoutService = ChangeLayoutService;
-//# sourceMappingURL=ChangeLayoutService.js.map

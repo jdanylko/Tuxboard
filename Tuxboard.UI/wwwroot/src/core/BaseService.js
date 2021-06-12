@@ -1,7 +1,4 @@
-"use strict";
-Object.defineProperty(exports, "__esModule", { value: true });
-exports.BaseService = void 0;
-class BaseService {
+export class BaseService {
     constructor(debugParam = false) {
         this.debug = debugParam;
     }
@@ -25,5 +22,3 @@ class BaseService {
         console.log('Issue w/ fetch call: \n', error);
     }
 }
-exports.BaseService = BaseService;
-//# sourceMappingURL=BaseService.js.map

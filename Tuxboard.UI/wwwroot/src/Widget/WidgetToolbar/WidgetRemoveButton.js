@@ -1,14 +1,11 @@
-"use strict";
-Object.defineProperty(exports, "__esModule", { value: true });
-exports.WidgetRemoveButton = void 0;
-const WidgetToolbarButton_1 = require("./WidgetToolbarButton");
-const TuxboardService_1 = require("../../Services/TuxboardService");
-const common_1 = require("../../core/common");
-class WidgetRemoveButton extends WidgetToolbarButton_1.WidgetToolbarButton {
+import { WidgetToolbarButton } from "./WidgetToolbarButton";
+import { TuxboardService } from "../../Services/TuxboardService";
+import { dataId } from "../../core/common";
+export class WidgetRemoveButton extends WidgetToolbarButton {
     constructor(parent, buttonSelector = null) {
         super(parent, buttonSelector);
         this.removeWidgetButtonSelector = ".remove-widget";
-        this.service = new TuxboardService_1.TuxboardService();
+        this.service = new TuxboardService();
         this.selector = buttonSelector || this.removeWidgetButtonSelector;
         this.setName("removeButton");
         const element = this.getDom();
@@ -20,11 +17,11 @@ class WidgetRemoveButton extends WidgetToolbarButton_1.WidgetToolbarButton {
         const button = ev.currentTarget;
         if (!button)
             return;
-        const placementId = button.getAttribute(common_1.dataId);
+        const placementId = button.getAttribute(dataId);
         this.service.removeWidgetService(placementId)
             .then((result) => {
             if (result && result.success) {
-                const widgetId = `[${common_1.dataId}='${result.id}']`;
+                const widgetId = `[${dataId}='${result.id}']`;
                 const widget = document.querySelector(widgetId);
                 if (widget) {
                     widget.remove();
@@ -33,5 +30,3 @@ class WidgetRemoveButton extends WidgetToolbarButton_1.WidgetToolbarButton {
         });
     }
 }
-exports.WidgetRemoveButton = WidgetRemoveButton;
-//# sourceMappingURL=WidgetRemoveButton.js.map

@@ -1,7 +1,4 @@
-"use strict";
-Object.defineProperty(exports, "__esModule", { value: true });
-exports.WidgetToolbarButton = void 0;
-class WidgetToolbarButton {
+export class WidgetToolbarButton {
     constructor(parent, selector = null) {
         this.parent = parent;
         this.selector = selector;
@@ -11,5 +8,3 @@ class WidgetToolbarButton {
     getName() { return name; }
     getSelector() { return this.selector; }
 }
-exports.WidgetToolbarButton = WidgetToolbarButton;
-//# sourceMappingURL=WidgetToolbarButton.js.map

@@ -5,7 +5,8 @@
     {
         foreach (var layout in tab.Layouts)
         {
-            <vc:layout-template layout="layout"></vc:layout-template>
+            @await Component.InvokeAsync("LayoutTemplate", layout)
+
         }
     }
 </section>

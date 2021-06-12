@@ -28,7 +28,7 @@ namespace Tuxboard.Core.UI
             return viewLocations.Concat(
                 new List<string>
                 {
-                    _widgetFolder, _viewFolder/*, _componentFolder*/
+                    _widgetFolder, _viewFolder, _componentFolder
                 }
             );
         }

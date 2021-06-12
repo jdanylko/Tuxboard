@@ -4,7 +4,6 @@ using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 using Microsoft.EntityFrameworkCore;
-using Microsoft.Extensions.Configuration;
 using Tuxboard.Core.Configuration;
 using Tuxboard.Core.Data.Context;
 using Tuxboard.Core.Data.Extensions;
@@ -19,32 +18,28 @@ namespace Tuxboard.Core.Infrastructure.Services
     {
         private readonly ITuxDbContext _context;
 
-        protected readonly TuxboardConfig _config;
-
-        public DashboardService(ITuxDbContext context, IConfiguration config)
+        public DashboardService(ITuxDbContext context)
         {
             _context = context;
-            _config = config.Get<TuxboardConfig>();
         }
 
         #region Sync
 
-        public Dashboard GetDashboardFor(string userId)
+        public Dashboard GetDashboardFor(ITuxboardConfig config, string userId)
         {
-            Dashboard dashboard;
             if (!_context.DashboardExistsFor(userId))
             {
                 // Pass in a planid (int) to pull back specific dashboards.
                 // If nothing passed, it'll grab the first Dashboard Template.
                 var template = _context.GetDashboardTemplateFor();
 
-                dashboard = CreateDashboardFrom(template, userId);
+                CreateDashboardFrom(template, userId);
 
                 _context.SaveChanges();
             }
 
-            dashboard = _context.GetDashboardFor(_config, userId);
-            dashboard.Settings = _config;
+            var dashboard = _context.GetDashboardFor(config, userId);
+            dashboard.Settings = config;
 
             return dashboard;
         }
@@ -56,7 +51,7 @@ namespace Tuxboard.Core.Infrastructure.Services
 
         public bool RemoveLayoutRow(LayoutRow row)
         {
-            var item = Queryable.FirstOrDefault(_context.LayoutRow, t => t.LayoutRowId == row.LayoutRowId);
+            var item = _context.LayoutRow.FirstOrDefault(t => t.LayoutRowId == row.LayoutRowId);
             if (item != null)
             {
                 _context.LayoutRow.Remove(item);
@@ -81,7 +76,7 @@ namespace Tuxboard.Core.Infrastructure.Services
 
         public Widget GetWidget(string id)
         {
-            return Queryable.FirstOrDefault(_context.Widget, e => e.WidgetId == id);
+            return _context.Widget.FirstOrDefault(e => e.WidgetId == id);
         }
 
         public WidgetPlacement GetWidgetPlacement(string widgetPlacementId)
@@ -108,7 +103,7 @@ namespace Tuxboard.Core.Infrastructure.Services
         {
             if (planId > 0)
             {
-                return Queryable.Where(_context.Widget, u => Enumerable.Any<WidgetPlan>(u.WidgetPlans, i => i.PlanId == planId))
+                return _context.Widget.Where(u => u.WidgetPlans.Any(i => i.PlanId == planId))
                     .ToList();
             }
             return GetWidgets();
@@ -205,19 +200,19 @@ namespace Tuxboard.Core.Infrastructure.Services
             if (layout == null)
                 return result;
 
-            var fullWidget = _context.GetWidget(widgetId);
-            var firstLayoutRow = layout.LayoutRows.OrderBy<LayoutRow, int>(e => e.RowIndex).FirstOrDefault();
+            var widget = _context.GetWidget(widgetId);
+            var firstLayoutRow = layout.LayoutRows.OrderBy(e => e.RowIndex).FirstOrDefault();
             var placement = new WidgetPlacement
             {
                 Collapsed = false,
                 LayoutRowId = firstLayoutRow.LayoutRowId,
                 ColumnIndex = 0,
                 WidgetId = widgetId,
-                Widget = fullWidget,
-                UseTemplate = fullWidget.UseTemplate,
-                UseSettings = fullWidget.UseSettings,
+                Widget = widget,
+                UseTemplate = widget.UseTemplate,
+                UseSettings = widget.UseSettings,
                 WidgetIndex = firstLayoutRow.WidgetPlacements.Count+1,
-                WidgetSettings = fullWidget.WidgetDefaults.Select(def => new WidgetSetting
+                WidgetSettings = widget.WidgetDefaults.Select(def => new WidgetSetting
                 {
                     Value = def.DefaultValue,
                     WidgetDefaultId = def.WidgetDefaultId,
@@ -280,7 +275,7 @@ namespace Tuxboard.Core.Infrastructure.Services
             // update placements from previous layout.
             var placements = _context.GetPlacementsByLayout(param.PreviousLayout);
             var index = 0;
-            foreach (var wp in placements.Where(e => e.ColumnIndex == param.Column).OrderBy<WidgetPlacement, int>(e => e.WidgetIndex))
+            foreach (var wp in placements.Where(e => e.ColumnIndex == param.Column).OrderBy(e => e.WidgetIndex))
             {
                 wp.WidgetIndex = index++;
             }
@@ -290,7 +285,7 @@ namespace Tuxboard.Core.Infrastructure.Services
 
         public WidgetPlacement UpdateCollapsed(string id, bool collapsed)
         {
-            var item = Queryable.FirstOrDefault(_context.WidgetPlacement, e => e.WidgetPlacementId == id);
+            var item = _context.WidgetPlacement.FirstOrDefault(e => e.WidgetPlacementId == id);
             if (item == null)
                 return null;
 
@@ -306,7 +301,7 @@ namespace Tuxboard.Core.Infrastructure.Services
 
             foreach (var widgetSetting in settings)
             {
-                var setting = Queryable.FirstOrDefault(_context.WidgetSetting, e =>
+                var setting = _context.WidgetSetting.FirstOrDefault(e =>
                     e.WidgetSettingId == widgetSetting.WidgetSettingId);
                 if (setting == null) continue;
 
@@ -317,7 +312,7 @@ namespace Tuxboard.Core.Infrastructure.Services
 
             if (!result.Any()) return new List<WidgetSettingDto>();
 
-            var placementId = result.FirstOrDefault().WidgetPlacementId;
+            var placementId = result.FirstOrDefault()?.WidgetPlacementId;
             var placement = _context.GetWidgetPlacement(placementId);
 
             return placement.ToSettingsDto();
@@ -327,16 +322,15 @@ namespace Tuxboard.Core.Infrastructure.Services
 
         #region Async
 
-        public async Task<Dashboard> GetDashboardForAsync(TuxboardConfig config, string userId)
+        public async Task<Dashboard> GetDashboardForAsync(ITuxboardConfig config, string userId)
         {
-            Dashboard dashboard;
             if (!await _context.DashboardExistsForAsync(userId))
             {
                 // Pass in a planid (int) to pull back specific dashboards.
                 // If nothing passed, it'll grab the first Dashboard Template.
                 var template = await _context.GetDashboardTemplateForAsync();
 
-                dashboard = CreateDashboardFrom(template, userId);
+                await CreateDashboardFromAsync(template, userId);
 
                 await _context.SaveChangesAsync(new CancellationToken());
             }
@@ -344,25 +338,26 @@ namespace Tuxboard.Core.Infrastructure.Services
             return await _context.GetDashboardForAsync(config, userId);
         }
 
-        public async Task<Widget> GetWidgetAsync(string id)
+        public Task<Widget> GetWidgetAsync(string id)
         {
-            return await _context.Widget.FirstOrDefaultAsync(e => e.WidgetId == id);
+            return _context.Widget.FirstOrDefaultAsync(e => e.WidgetId == id);
         }
 
-        public async Task<WidgetPlacement> GetWidgetPlacementAsync(string id)
+        public Task<WidgetPlacement> GetWidgetPlacementAsync(string id)
         {
-            return await _context.GetWidgetPlacementAsync(id);
+            return _context.GetWidgetPlacementAsync(id);
         }
 
-        public async Task<Layout> GetLayoutFromTabAsync(string tabId)
+        public Task<Layout> GetLayoutFromTabAsync(string tabId)
         {
-            return await _context.GetLayoutForTabAsync(tabId);
+            return _context.GetLayoutForTabAsync(tabId);
         }
 
         public async Task<bool> RemoveLayoutRowAsync(LayoutRow row)
         {
             var token = new CancellationToken();
-            var item = await _context.LayoutRow.FirstOrDefaultAsync(t => t.LayoutRowId == row.LayoutRowId);
+            var item = await _context.LayoutRow.FirstOrDefaultAsync(
+                t => t.LayoutRowId == row.LayoutRowId, cancellationToken: token);
             if (item != null)
             {
                 _context.LayoutRow.Remove(item);
@@ -378,7 +373,7 @@ namespace Tuxboard.Core.Infrastructure.Services
             var success = true;
 
             // Delete
-            foreach (var layoutRow in oldLayout.LayoutRows.Where<LayoutRow>(e => newList.All(y => y.LayoutRowId != e.LayoutRowId)))
+            foreach (var layoutRow in oldLayout.LayoutRows.Where(e => newList.All(y => y.LayoutRowId != e.LayoutRowId)))
             {
                 var item = await _context.LayoutRow.FirstOrDefaultAsync(e => e.LayoutRowId == layoutRow.LayoutRowId);
                 if (item != null)
@@ -490,7 +485,7 @@ namespace Tuxboard.Core.Infrastructure.Services
             // update placements from previous layout.
             var placements = await _context.GetPlacementsByLayoutAsync(param.PreviousLayout);
             var index = 0;
-            foreach (var wp in placements.Where(e => e.ColumnIndex == param.Column).OrderBy<WidgetPlacement, int>(e=> e.WidgetIndex))
+            foreach (var wp in placements.Where(e => e.ColumnIndex == param.Column).OrderBy(e=> e.WidgetIndex))
             {
                 wp.WidgetIndex = index++;
             }
@@ -501,7 +496,7 @@ namespace Tuxboard.Core.Infrastructure.Services
 
         public async Task<WidgetPlacement> UpdateCollapsedAsync(string id, bool collapsed)
         {
-            var item = Queryable.FirstOrDefault(_context.WidgetPlacement, e => e.WidgetPlacementId == id);
+            var item = _context.WidgetPlacement.FirstOrDefault(e => e.WidgetPlacementId == id);
             if (item == null) 
                 return null;
 
@@ -511,30 +506,20 @@ namespace Tuxboard.Core.Infrastructure.Services
             return item;
         }
 
-        public async Task<List<WidgetPlacement>> GetWidgetsForTabAsync(DashboardTab tab)
-        {
-            return await _context.GetWidgetsForTabAsync(tab);
-        }
+        public Task<List<WidgetPlacement>> GetWidgetsForTabAsync(DashboardTab tab) => 
+            _context.GetWidgetsForTabAsync(tab);
 
-        public async Task<List<LayoutType>> GetLayoutTypesAsync()
-        {
-            return await _context.LayoutType.ToListAsync();
-        }
+        public Task<List<LayoutType>> GetLayoutTypesAsync() => 
+            _context.LayoutType.ToListAsync();
 
-        public async Task<List<Widget>> GetWidgetsAsync()
-        {
-            return await _context.Widget.ToListAsync();
-        }
+        public Task<List<Widget>> GetWidgetsAsync() => 
+            _context.Widget.ToListAsync();
 
-        public async Task<List<Widget>> GetWidgetsForAsync(int planId=0)
-        {
-            if (planId > 0)
-            {
-                return await Queryable.Where(_context.Widget, u => Enumerable.Any<WidgetPlan>(u.WidgetPlans, i => i.PlanId == planId))
-                    .ToListAsync();
-            }
-            return await GetWidgetsAsync();
-        }
+        public Task<List<Widget>> GetWidgetsForAsync(int planId=0) =>
+            planId > 0
+                ? _context.Widget.Where(u => u.WidgetPlans.Any(i => i.PlanId == planId))
+                    .ToListAsync()
+                : GetWidgetsAsync();
 
         public async Task<bool> AddLayoutRowAsync(Layout layout, string layoutTypeId)
         {
@@ -615,7 +600,10 @@ namespace Tuxboard.Core.Infrastructure.Services
                 result.Add(setting);
             }
 
-            if (!result.Any()) return new List<WidgetSettingDto>();
+            if (!result.Any())
+            {
+                return new List<WidgetSettingDto>();
+            }
             
             var placementId = result.FirstOrDefault().WidgetPlacementId;
             var placement = await _context.GetWidgetPlacementAsync(placementId);

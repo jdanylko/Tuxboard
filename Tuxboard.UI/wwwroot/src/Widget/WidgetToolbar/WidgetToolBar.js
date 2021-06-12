@@ -1,10 +1,7 @@
-"use strict";
-Object.defineProperty(exports, "__esModule", { value: true });
-exports.WidgetToolBar = void 0;
-const WidgetCollapseButton_1 = require("./WidgetCollapseButton");
-const WidgetRemoveButton_1 = require("./WidgetRemoveButton");
+import { WidgetCollapseButton } from "./WidgetCollapseButton";
+import { WidgetRemoveButton } from "./WidgetRemoveButton";
 // import { WidgetSettings } from "../WidgetSettings";
-class WidgetToolBar {
+export class WidgetToolBar {
     constructor(widgetPlacement, selector = null) {
         this.widgetPlacement = widgetPlacement;
         this.widgetToolbarSelector = ".card-tools";
@@ -14,8 +11,8 @@ class WidgetToolBar {
         this.buttonList = new Array();
         this.widgetToolbarSelector = selector || this.widgetToolbarSelector;
         // Default buttons
-        this.addButton(new WidgetCollapseButton_1.WidgetCollapseButton(this));
-        this.addButton(new WidgetRemoveButton_1.WidgetRemoveButton(this));
+        this.addButton(new WidgetCollapseButton(this));
+        this.addButton(new WidgetRemoveButton(this));
         // Dropdown options
         this.setupWidgetDropdown();
     }
@@ -53,5 +50,3 @@ class WidgetToolBar {
         return;
     }
 }
-exports.WidgetToolBar = WidgetToolBar;
-//# sourceMappingURL=WidgetToolBar.js.map

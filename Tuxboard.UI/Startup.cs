@@ -36,14 +36,14 @@ namespace Tuxboard.UI
             
             services.Configure<RazorViewEngineOptions>(o =>
             {
-                o.ViewLocationFormats.Add(appConfig.WidgetPath);
-                o.ViewLocationFormats.Add(appConfig.ViewPath);
-                o.ViewLocationFormats.Add(appConfig.ComponentPath + RazorViewEngine.ViewExtension);
-                //o.ViewLocationExpanders.Add(
-                //    new TuxboardViewLocationExpander(
-                //        appConfig.WidgetPath,
-                //        appConfig.ViewPath,
-                //        appConfig.ComponentPath + RazorViewEngine.ViewExtension));
+                //o.ViewLocationFormats.Add(appConfig.WidgetFolder);
+                //o.ViewLocationFormats.Add(appConfig.ViewFolder);
+                //o.ViewLocationFormats.Add(appConfig.ComponentFolder + RazorViewEngine.ViewExtension);
+                o.ViewLocationExpanders.Add(
+                    new TuxboardViewLocationExpander(
+                        appConfig.WidgetFolder,
+                        appConfig.ViewFolder,
+                        appConfig.ComponentFolder + RazorViewEngine.ViewExtension));
             });
 
         }

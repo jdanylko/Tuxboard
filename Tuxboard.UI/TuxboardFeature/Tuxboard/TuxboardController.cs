@@ -16,7 +16,7 @@ namespace Tuxboard.UI.TuxboardFeature.Tuxboard
     {
         private readonly ILogger<TuxboardController> _logger;
         private readonly IDashboardService _service;
-        private readonly TuxboardConfig _config;
+        private readonly ITuxboardConfig _config;
 
         public TuxboardController(ILogger<TuxboardController> logger, 
             IDashboardService service, 

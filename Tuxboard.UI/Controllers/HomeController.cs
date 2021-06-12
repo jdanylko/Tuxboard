@@ -14,7 +14,7 @@ namespace Tuxboard.UI.Controllers
     {
         private readonly ILogger<HomeController> _logger;
         private readonly IDashboardService _service;
-        private TuxboardConfig _config = new TuxboardConfig();
+        private readonly ITuxboardConfig _config = new TuxboardConfig();
 
         public HomeController(ILogger<HomeController> logger,
             IDashboardService service,
@@ -31,7 +31,7 @@ namespace Tuxboard.UI.Controllers
         {
             var user = GetCurrentUser();
 
-            // ViewData["Title"] = "Home Page";
+            //ViewData["Title"] = "Home Page";
 
             var viewModel = new DashboardViewModel
             {

@@ -12,9 +12,9 @@ Object.defineProperty(exports, "__esModule", { value: true });
 exports.Tuxboard = void 0;
 const common_1 = require("./core/common");
 const Tab_1 = require("./core/Tab");
+const Tuxbar_1 = require("./Extras/Tuxbar/Tuxbar");
 const TuxboardService_1 = require("./Services/TuxboardService");
 const DragWidgetInfo_1 = require("./Models/DragWidgetInfo");
-const Tuxbar_1 = require("./Extras/Tuxbar/Tuxbar");
 class Tuxboard {
     constructor(selector = null) {
         this.service = new TuxboardService_1.TuxboardService();
@@ -79,9 +79,9 @@ class Tuxboard {
         this.updateWidgets(widgetPlacements);
     }
     updateWidgets(widgets) {
-        widgets.map((placement) => __awaiter(this, void 0, void 0, function* () {
-            yield placement.update();
-        }));
+        widgets.map((placement) => {
+            placement.update();
+        });
     }
     getWidgetsByTab(tab) {
         return tab.getLayout().getWidgetPlacements();
@@ -210,7 +210,6 @@ class Tuxboard {
     }
 }
 exports.Tuxboard = Tuxboard;
-//(async function() {
 window.addEventListener('DOMContentLoaded', () => {
     const dashboard = new Tuxboard();
     const tuxbar = new Tuxbar_1.Tuxbar(dashboard);

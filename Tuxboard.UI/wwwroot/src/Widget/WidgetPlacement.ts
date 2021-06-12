@@ -126,14 +126,14 @@ export class WidgetPlacement {
         }
     }
 
-    async update() {
+    update() {
 
         if (this.isStatic())
             return;
 
         this.showOverlay();
 
-        await this.service.getWidgetService(this.placementId)
+        this.service.getWidgetService(this.placementId)
             .then((data: string) => {
                 this.setBody(data);
 

@@ -12,7 +12,7 @@
 
                         @foreach (var wp in row.WidgetPlacements.Where(y => y.ColumnIndex == col.Index).OrderBy(e => e.WidgetIndex))
                         {
-                            <vc:widget-template placement="wp"></vc:widget-template>
+                            @await Component.InvokeAsync("WidgetTemplate", wp)
                         }
                     </div>
                 }

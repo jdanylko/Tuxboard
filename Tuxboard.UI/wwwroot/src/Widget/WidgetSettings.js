@@ -1,10 +1,7 @@
-"use strict";
-Object.defineProperty(exports, "__esModule", { value: true });
-exports.WidgetSettings = void 0;
-const TuxboardService_1 = require("../Services/TuxboardService");
-const common_1 = require("../core/common");
-const SettingValue_1 = require("../Models/SettingValue");
-class WidgetSettings {
+import { TuxboardService } from "../Services/TuxboardService";
+import { clearNodes, getDataId } from "../core/common";
+import { SettingValue } from "../Models/SettingValue";
+export class WidgetSettings {
     constructor(widget, selector = null) {
         this.widget = widget;
         this.selector = selector;
@@ -12,7 +9,7 @@ class WidgetSettings {
         this.widgetSettingsCancelButtonSelector = ".settings-cancel";
         this.widgetSettingsSaveButtonSelector = ".settings-save";
         this.widgetSettingInputsSelector = ".setting-value";
-        this.service = new TuxboardService_1.TuxboardService();
+        this.service = new TuxboardService();
         this.widgetSettingsSelector = selector || this.widgetSettingsSelector;
     }
     getDom() {
@@ -46,7 +43,7 @@ class WidgetSettings {
     getSettingValues() {
         const inputs = this.getDom().querySelectorAll(this.widgetSettingInputsSelector);
         return Array.from(inputs).map((elem, index) => {
-            return new SettingValue_1.SettingValue(common_1.getDataId(elem), elem.value);
+            return new SettingValue(getDataId(elem), elem.value);
         });
     }
     saveSettingsClick(ev) {
@@ -68,7 +65,7 @@ class WidgetSettings {
             .then((data) => {
             const settings = this.getDom();
             if (settings) {
-                common_1.clearNodes(settings);
+                clearNodes(settings);
                 settings.insertAdjacentHTML("beforeend", String(data));
                 this.widget.hideBody();
                 this.widget.hideOverlay();
@@ -82,5 +79,3 @@ class WidgetSettings {
         });
     }
 }
-exports.WidgetSettings = WidgetSettings;
-//# sourceMappingURL=WidgetSettings.js.map

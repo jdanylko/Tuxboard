@@ -9,7 +9,7 @@ namespace Tuxboard.Core.Domain.Entities
     public partial class Dashboard
     {
         [NotMapped]
-        public TuxboardConfig Settings { get; set; }
+        public ITuxboardConfig Settings { get; set; }
 
         public static Dashboard Create(string userId)
         {
@@ -35,7 +35,7 @@ namespace Tuxboard.Core.Domain.Entities
         
         public LayoutRow GetLayoutRow(LayoutRow row)
         {
-            return GetLayoutRow((string) row.LayoutRowId);
+            return GetLayoutRow(row.LayoutRowId);
         }
 
         public LayoutRow GetLayoutRow(string layoutRowId)
@@ -54,24 +54,20 @@ namespace Tuxboard.Core.Domain.Entities
         public bool RowContainsWidgets(LayoutRow row)
         {
             var tab = GetCurrentTab();
-            return tab == null 
-                ? tab.RowContainsWidgets(row) 
-                : false;
+            return tab == null && tab.RowContainsWidgets(row);
         }
 
         public bool RowContainsWidgets(string rowId)
         {
             var tab = GetCurrentTab();
-            return tab == null 
-                ? tab.RowContainsWidgets(rowId) 
-                : false;
+            return tab == null && tab.RowContainsWidgets(rowId);
         }
 
         public bool ContainsOneRow()
         {
             var tab = GetCurrentTab();
             // Should ALWAYS be one layout...for now.
-            var layout = Enumerable.FirstOrDefault<Layout>(tab.Layouts);
+            var layout = tab.Layouts.FirstOrDefault();
             return layout.ContainsOneRow();
         }
 
@@ -83,7 +79,7 @@ namespace Tuxboard.Core.Domain.Entities
         public DashboardTab GetTab(int tabIndex)
         {
             // Zero-Based!
-            return Enumerable.ElementAtOrDefault<DashboardTab>(Tabs, tabIndex-1);
+            return Tabs.ElementAtOrDefault(tabIndex-1);
         }
 
         public DashboardDto ToDto()
@@ -91,7 +87,7 @@ namespace Tuxboard.Core.Domain.Entities
             return new DashboardDto
             {
                 SelectedTab = this.SelectedTab,
-                Tabs = Enumerable.Select<DashboardTab, DashboardTabDto>(Tabs, tab => tab.ToDto())
+                Tabs = Tabs.Select(tab => tab.ToDto())
                     .ToList() // Tabs
             };
         }

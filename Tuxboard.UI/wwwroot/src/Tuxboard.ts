@@ -1,15 +1,15 @@
 ﻿import {
-    getDataId, dataId, isWidget, noPeriod, getClosestByClass, getWidgetSnapshot, clearNodes,
+    dataId, getDataId, isWidget, noPeriod, getClosestByClass, getWidgetSnapshot, clearNodes,
     createFromHtml
 } from "./core/common";
-import { Tab } from "./core/Tab";
-import { TuxboardService } from "./Services/TuxboardService";
-import { Layout } from "./core/Layout";
-import { LayoutRow } from "./core/LayoutRow";
 import { Column } from "./core/Column";
+import { Layout } from "./core/Layout";
+import { Tab } from "./core/Tab";
+import { Tuxbar } from "./Extras/Tuxbar/Tuxbar";
+import { TuxboardService } from "./Services/TuxboardService";
+import { LayoutRow } from "./core/LayoutRow";
 import { DragWidgetInfo } from "./Models/DragWidgetInfo";
 import { WidgetPlacement } from "./Widget/WidgetPlacement";
-import { Tuxbar } from "./Extras/Tuxbar/Tuxbar";
 
 export class Tuxboard {
 
@@ -90,8 +90,8 @@ export class Tuxboard {
     }
 
     updateWidgets(widgets: WidgetPlacement[]) {
-        widgets.map( async (placement: WidgetPlacement) => {
-            await placement.update();
+        widgets.map( (placement: WidgetPlacement) => {
+            placement.update();
         });
     }
 
@@ -254,7 +254,6 @@ export class Tuxboard {
     }
 }
 
-//(async function() {
 window.addEventListener('DOMContentLoaded', () => {
     const dashboard: Tuxboard = new Tuxboard();
     const tuxbar: Tuxbar = new Tuxbar(dashboard);

@@ -40,8 +40,8 @@ export class ChangeLayoutButton extends TuxbarButton {
         const dialog = new ChangeLayoutDialog(dashboard);
 
         dialog.getDom().addEventListener('show.bs.modal',
-            async e => {
-                await this.service.getLayoutDialog(tab.getCurrentTabId())
+            e => {
+                this.service.getLayoutDialog(tab.getCurrentTabId())
                     .then((result: string) => {
                         dialog.initialize(result);
                         dialog.hideOverlay();

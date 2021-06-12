@@ -1,8 +1,5 @@
-"use strict";
-Object.defineProperty(exports, "__esModule", { value: true });
-exports.Layout = void 0;
-const LayoutRowCollection_1 = require("./LayoutRowCollection");
-class Layout {
+import { LayoutRowCollection } from "./LayoutRowCollection";
+export class Layout {
     constructor(parent, selector = null) {
         this.parent = parent;
         this.layoutRowSelector = ".layout-row";
@@ -16,7 +13,7 @@ class Layout {
     }
     getLayoutRows() {
         if (!this.layoutRows) {
-            this.layoutRows = new LayoutRowCollection_1.LayoutRowCollection(this.parent);
+            this.layoutRows = new LayoutRowCollection(this.parent);
         }
         if (this.layoutRows) {
             return this.layoutRows.getLayoutRows();
@@ -56,5 +53,3 @@ class Layout {
         return widgets;
     }
 }
-exports.Layout = Layout;
-//# sourceMappingURL=Layout.js.map

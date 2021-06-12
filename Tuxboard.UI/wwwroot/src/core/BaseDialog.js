@@ -1,7 +1,4 @@
-"use strict";
-Object.defineProperty(exports, "__esModule", { value: true });
-exports.BaseDialog = void 0;
-class BaseDialog {
+export class BaseDialog {
     constructor(selector) {
         this.selector = selector;
         this.dialogBodySelector = ".modal-body";
@@ -28,5 +25,3 @@ class BaseDialog {
         }
     }
 }
-exports.BaseDialog = BaseDialog;
-//# sourceMappingURL=BaseDialog.js.map

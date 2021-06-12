@@ -3,6 +3,7 @@ using Tuxboard.Core.Domain.Entities;
 
 namespace Tuxboard.UI.TuxboardFeature.Components.WidgetTemplate
 {
+    [ViewComponent]
     public class WidgetTemplateViewComponent : ViewComponent
     {
         public IViewComponentResult Invoke(WidgetPlacement placement)

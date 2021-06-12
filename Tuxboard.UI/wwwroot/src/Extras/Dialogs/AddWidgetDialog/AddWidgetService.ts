@@ -9,16 +9,6 @@ export class AddWidgetService extends BaseService {
         super(debug);
     }
 
-    ///* Service: Add Widget */
-    //addWidgetToDashboard(data) {
-    //    if (data.success) {
-    //        if (widgetDialogInstance) {
-    //            widgetDialogInstance.hide();
-    //        }
-    //        refreshTuxboardService();
-    //    }
-    //}
-
     addWidgetService(tabId:string, widgetId:string) {
         const request = new Request(this.tuxWidgetAddWidgetUrl,
             {
@@ -37,28 +27,7 @@ export class AddWidgetService extends BaseService {
             .then(this.readResponseAsText)
             .catch(this.logError);
 
-        //return this.fetchJson(new Request(this.tuxWidgetAddWidgetUrl,
-        //    {
-        //        method: "post",
-        //        body: JSON.stringify({
-        //            TabId: tabId,
-        //            WidgetId: widgetId
-        //        })
-        //    }
-        //));
     }
-
-    /* Service: Widgets Dialog Box */
-    //displayWidgetDialog(data) {
-    //    const widgetDialog = document.getElementById(tuxWidgetDialog),
-    //        overlay = widgetDialog.querySelector(tuxOverlay);
-
-    //    setWidgetDialog(data);
-
-    //    setWidgetEvents();
-
-    //    overlay.setAttribute("style", "display:none");
-    //}
 
     getWidgetDialogService() {
         const request = new Request(this.tuxWidgetDialogUrl);

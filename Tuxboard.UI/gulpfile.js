@@ -2,24 +2,29 @@
 var path = require('path'),
     gulp = require('gulp'),
     gp_clean = require('gulp-clean'),
-    gp_concat = require('gulp-concat'),
+    sourcemaps = require('gulp-sourcemaps'),
+    uglify = require("gulp-uglify"),
+    buffer = require('vinyl-buffer'),
+    source = require('vinyl-source-stream'),
+    rename = require("gulp-rename"),
     gp_sass = require('gulp-sass'),
-    gp_sourcemaps = require('gulp-sourcemaps'),
-    gp_typescript = require('gulp-typescript'),
-    gp_uglify = require('gulp-uglify'),
-    webpack = require("webpack-stream"),
-    launch = require('./Properties/launchSettings.json');
+    browserify = require("browserify"),
+    ts = require("gulp-typescript");
 
-var basePath = path.resolve(__dirname, "wwwroot");
+    var basePath = path.resolve(__dirname, "wwwroot");
+
+var tsProject = ts.createProject('tsconfig.json');
 
 var projectName = "tuxboard";
 
 var srcPaths = {
+    srcJs: [
+        path.resolve(basePath, 'src/'+projectName+'.js')
+    ],
     src: [
         path.resolve(basePath, 'src/'+projectName+'.ts'),
-        path.resolve(basePath, 'src/**/*.ts')
     ],
-    js: [path.resolve(basePath, 'src/js/**/*.js')],
+    js: [path.resolve(basePath, 'src/**/*.js')],
     sass: [path.resolve(basePath, 'scss/' + projectName +'.scss')]
 };
 
@@ -28,94 +33,73 @@ var destPaths = {
     js: path.resolve(basePath, 'js')
 };
 
-var environment = {
-    development: "development",
-    production: "production",
-
-    current: function () {
-        return (process.env.ASPNETCORE_ENVIRONMENT ||
-            (launch && launch.profiles['IIS Express'].environmentVariables.ASPNETCORE_ENVIRONMENT) ||
-            this.development).toLowerCase();
-    },
-    isDevelopment: function () { return this.current() === this.development; },
-    isProduction: function () { return this.current() === this.production; },
-    getConfig: function() {
-        if (this.isDevelopment()) {
-            return require("./webpack.dev.js");
-        }
-        return require("./webpack.prod.js");
-    }
-};
-
-gulp.task('testTask', function (done) {
+gulp.task('testTask', done => {
     console.log('hello!');
     done();
 });
 
-/* Webpack */
-
-gulp.task('webpack_clean', function () {
-    return gulp.src(destPaths.js + "/*", { read: false })
-        .pipe(gp_clean({ force: true }));
-});
-
-gulp.task('webpack', function () {
-    return gulp.src(srcPaths.src)
-        .pipe(webpack(environment.getConfig()))
-        .pipe(gulp.dest(destPaths.js+"/"));
-});
-
 /* TypeScript */
-gulp.task('ts_clean', function () {
-    return gulp.src(destPaths.js + "/*", { read: false })
-        .pipe(gp_clean({ force: true }));
+gulp.task("ts", done => {
+    return tsProject.src()
+        .pipe(tsProject())
+        .pipe(gulp.dest(path.resolve(basePath, 'src')));
 });
 
-gulp.task('ts', gulp.series(['ts_clean']), function() {
-    return gulp.src(srcPaths.src)
-        .pipe(gp_sourcemaps.init())
-        .pipe(gp_typescript(require('./tsconfig.json').compilerOptions))
-        .pipe(gp_uglify({ mangle: false }))
-        .pipe(gp_sourcemaps.write('wwwroot/src'))
-        .on('error',
-            function(err) {
-                console.error('Error!', err.message);
-            })
-        .pipe(gulp.dest(destPaths.js + "/"));
+gulp.task("ts_clean", done => {
+    return gulp.src(srcPaths.srcJs)
+        .pipe(gp_clean({ force: true }));
 });
 
 /* JavaScript */
-gulp.task('js', function () {
-    return gulp.src(srcPaths.js)
-        .pipe(gp_uglify({ mangle: false })) // disable uglify
-        .pipe(gp_concat(projectName + '.min.js')) // disable concat
-        .on('error',
-            function(err) {
-                console.error('Error!', err.message);
-            })
-        .pipe(gulp.dest(destPaths.js));
-});
+gulp.task('js', done => {
 
-gulp.task('js_clean', function (){
-    return gulp.src(destPaths.js + "*", { read: false })
+    srcPaths.js.forEach(file => {
+
+        const b = browserify({
+            entries: file, // Only need initial file, browserify finds the deps
+            debug: true, // Enable sourcemaps
+            transform: [['babelify', { 'presets': ["es2015"] }]]
+        });
+
+        b.bundle()
+            .pipe(source(path.basename(file)))
+            .pipe(rename(path => {
+                path.basename += ".min";
+                path.extname = ".js";
+            }))
+            .pipe(buffer())
+            .pipe(sourcemaps.init({ loadMaps: true }))
+            .pipe(uglify())
+            .pipe(sourcemaps.write())
+            .pipe(gulp.dest(destPaths.js));
+
+        done();
+    });
+
+});
+gulp.task('js_clean', done => {
+    return gulp.src(path.resolve(destPaths.js, '**/*.js'), { read: false })
         .pipe(gp_clean({ force: true }));
 });
 
 /* SASS/CSS */
-gulp.task('sass_clean', function () {
+gulp.task('sass_clean', done => {
     return gulp.src(destPaths.css + "*.*", { read: false })
         .pipe(gp_clean({ force: true }));
 });
 
-gulp.task('sass', function() {
+gulp.task('sass', done => {
     return gulp.src(srcPaths.sass)
-        .pipe(gp_sass())
+        .pipe(gp_sass({ outputStyle: 'compressed' }))
+        .pipe(rename({
+            suffix: '.min'
+        }))
         .pipe(gulp.dest(destPaths.css));
 });
 
 /* Defaults */
+gulp.task('cleanup', gulp.series(['ts_clean', 'js_clean', 'sass_clean']));
 
-gulp.task('cleanup', gulp.series(['ts_clean', 'sass_clean']));
+gulp.task('default', gulp.series(['ts', 'js', 'sass']));
 
-gulp.task('default', gulp.series(['webpack', 'sass']));
 
