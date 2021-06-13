@@ -5,7 +5,7 @@ export class BaseDialog {
     protected generalOverlaySelector: string = ".overlay";
     protected loadingSelector: string = ".loading-status";
     protected dialogOverlaySelector: string = this.generalOverlaySelector + this.loadingSelector;
-    
+
     constructor(protected selector: string) { }
 
     getDom() {
@@ -29,5 +29,4 @@ export class BaseDialog {
             overlay.setAttribute("hidden", "");
         }
     }
-
 }

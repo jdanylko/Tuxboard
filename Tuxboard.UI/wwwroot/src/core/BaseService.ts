@@ -7,7 +7,7 @@
     }
 
     protected validateResponse(response:Response) {
-        console.log(response);
+        // console.log(response);
         if (!response.ok) {
             const status = `${response.status} - ${response.statusText}`;
             throw Error(status);
@@ -16,12 +16,12 @@
     }
 
     protected readResponseAsJson<T>(response:Response) {
-        console.log(response);
+        // console.log(response);
         return response.json();
     }
 
     protected readResponseAsText(response:Response) {
-        console.log(response);
+        // console.log(response);
         return response.text();
     }
 

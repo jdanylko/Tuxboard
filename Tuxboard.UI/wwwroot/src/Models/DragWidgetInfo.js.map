@@ -1,1 +1,0 @@
-{"version":3,"file":"DragWidgetInfo.js","sourceRoot":"","sources":["DragWidgetInfo.ts"],"names":[],"mappings":";;;AAEA,MAAa,cAAc;IACvB,YACW,WAAmB,EACnB,kBAA0B,EAC1B,kBAA0B,EAC1B,mBAA2B,EAC3B,mBAA2B;QAJ3B,gBAAW,GAAX,WAAW,CAAQ;QACnB,uBAAkB,GAAlB,kBAAkB,CAAQ;QAC1B,uBAAkB,GAAlB,kBAAkB,CAAQ;QAC1B,wBAAmB,GAAnB,mBAAmB,CAAQ;QAC3B,wBAAmB,GAAnB,mBAAmB,CAAQ;IAClC,CAAC;CAGR;AAVD,wCAUC"}

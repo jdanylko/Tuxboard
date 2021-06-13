@@ -11,27 +11,62 @@ var path = require('path'),
     browserify = require("browserify"),
     ts = require("gulp-typescript");
 
-    var basePath = path.resolve(__dirname, "wwwroot");
+var basePath = path.resolve(__dirname, "wwwroot");
+const modulePath = path.resolve(__dirname, "node_modules");
 
 var tsProject = ts.createProject('tsconfig.json');
 
 var projectName = "tuxboard";
 
 var srcPaths = {
-    srcJs: [
-        path.resolve(basePath, 'src/'+projectName+'.js')
+    lib: [
+        {
+            src: path.resolve(modulePath, '@popperjs/core/dist/**/*'),
+            dest: path.resolve(basePath, 'lib/popperjs/')
+        },
+        {
+            src: path.resolve(modulePath, 'bootstrap/dist/**/*'),
+            dest: path.resolve(basePath, 'lib/bootstrap/')
+        },
+        {
+            src: path.resolve(modulePath, '@fortawesome/fontawesome-free/**/*'),
+            dest: path.resolve(basePath, 'lib/fontawesome/')
+        }
     ],
-    src: [
-        path.resolve(basePath, 'src/'+projectName+'.ts'),
-    ],
-    js: [path.resolve(basePath, 'src/**/*.js')],
-    sass: [path.resolve(basePath, 'scss/' + projectName +'.scss')]
+    srcJs: path.resolve(basePath, 'src/' + projectName + '.js'),
+    src: path.resolve(basePath, 'src/'+projectName+'.ts'),
+    js: path.resolve(basePath, 'src/**/*.js'),
+    jsMap: path.resolve(basePath, 'src/**/*.map'),
+    sass: [
+        path.resolve(basePath, 'scss/' + projectName + '.scss')
+    ]
 };
 
 var destPaths = {
     css: path.resolve(basePath, 'css'),
     js: path.resolve(basePath, 'js')
 };
+
+/* Tasks */
+
+/* Copy Libraries to their location */
+gulp.task('copy-libraries',
+    done => {
+        srcPaths.lib.forEach(item => {
+            return gulp.src(item.src)
+                .pipe(gulp.dest(item.dest));
+        });
+        done();
+    });
+
+gulp.task('clean-libraries',
+    done => {
+        srcPaths.lib.forEach(item => {
+            return gulp.src(item.dest)
+                .pipe(gp_clean({ force: true }));
+        });
+        done();
+    });
 
 gulp.task('testTask', done => {
     console.log('hello!');
@@ -53,16 +88,16 @@ gulp.task("ts_clean", done => {
 /* JavaScript */
 gulp.task('js', done => {
 
-    srcPaths.js.forEach(file => {
+    // srcPaths.js.forEach(file => {
 
         const b = browserify({
-            entries: file, // Only need initial file, browserify finds the deps
-            debug: true, // Enable sourcemaps
+            entries: srcPaths.srcJs,
+            debug: true,
             transform: [['babelify', { 'presets': ["es2015"] }]]
         });
 
         b.bundle()
-            .pipe(source(path.basename(file)))
+            .pipe(source(path.basename(srcPaths.srcJs)))
             .pipe(rename(path => {
                 path.basename += ".min";
                 path.extname = ".js";
@@ -74,11 +109,17 @@ gulp.task('js', done => {
             .pipe(gulp.dest(destPaths.js));
 
         done();
-    });
+    // });
 
 });
+
 gulp.task('js_clean', done => {
-    return gulp.src(path.resolve(destPaths.js, '**/*.js'), { read: false })
+    return gulp.src(srcPaths.js, { read: false })
+        .pipe(gp_clean({ force: true }));
+});
+
+gulp.task('js_map_clean', done => {
+    return gulp.src(srcPaths.jsMap, { read: false })
         .pipe(gp_clean({ force: true }));
 });
 
@@ -98,8 +139,8 @@ gulp.task('sass', done => {
 });
 
 /* Defaults */
-gulp.task('cleanup', gulp.series(['ts_clean', 'js_clean', 'sass_clean']));
+gulp.task('cleanup', gulp.series(['clean-libraries', 'ts_clean', 'js_clean', 'js_map_clean', 'sass_clean']));
 
-gulp.task('default', gulp.series(['ts', 'js', 'sass']));
+gulp.task('default', gulp.series(['copy-libraries', 'ts', 'js', 'sass']));
 
 

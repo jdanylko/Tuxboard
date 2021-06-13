@@ -1,14 +1,20 @@
-﻿import {
-    dataId, getDataId, isWidget, noPeriod, getClosestByClass, getWidgetSnapshot, clearNodes,
-    createFromHtml
+﻿import { Column } from "./core/Column";
+import {
+    clearNodes,
+    createFromHtml,
+    dataId,
+    getClosestByClass,
+    getDataId,
+    getWidgetSnapshot,
+    isWidget,
+    noPeriod
 } from "./core/common";
-import { Column } from "./core/Column";
+import { DragWidgetInfo } from "./Models/DragWidgetInfo";
 import { Layout } from "./core/Layout";
+import { LayoutRow } from "./core/LayoutRow";
 import { Tab } from "./core/Tab";
 import { Tuxbar } from "./Extras/Tuxbar/Tuxbar";
 import { TuxboardService } from "./Services/TuxboardService";
-import { LayoutRow } from "./core/LayoutRow";
-import { DragWidgetInfo } from "./Models/DragWidgetInfo";
 import { WidgetPlacement } from "./Widget/WidgetPlacement";
 
 export class Tuxboard {
@@ -78,7 +84,7 @@ export class Tuxboard {
                     nodes.forEach(node => db.insertAdjacentElement("beforeend", node)); // Layout Rows
                 }
             })
-            .catch(err => console.log(err));
+            .catch((err) => console.log(err));
 
         this.initialize();
         this.updateAllWidgets();
