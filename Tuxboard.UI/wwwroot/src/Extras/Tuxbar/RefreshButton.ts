@@ -1,5 +1,5 @@
-﻿import { TuxbarButton } from "./TuxbarButton";
-import { Tuxbar } from "./Tuxbar";
+﻿import { Tuxbar } from "./Tuxbar";
+import { TuxbarButton } from "./TuxbarButton";
 
 export class RefreshButton extends TuxbarButton {
 

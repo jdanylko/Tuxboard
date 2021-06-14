@@ -1,8 +1,7 @@
-﻿import { WidgetToolbarButton } from "./WidgetToolbarButton";
-import { WidgetCollapseButton } from "./WidgetCollapseButton";
-import { WidgetRemoveButton } from "./WidgetRemoveButton";
+﻿import { WidgetCollapseButton } from "./WidgetCollapseButton";
 import { WidgetPlacement } from "../WidgetPlacement";
-// import { WidgetSettings } from "../WidgetSettings";
+import { WidgetRemoveButton } from "./WidgetRemoveButton";
+import { WidgetToolbarButton } from "./WidgetToolbarButton";
 
 export class WidgetToolBar {
 
@@ -28,19 +27,19 @@ export class WidgetToolBar {
         this.setupWidgetDropdown();
     }
 
-    getDom() {
+    public getDom() {
         return this.widgetPlacement
             .getDom()
             .querySelector(this.widgetToolbarSelector) as HTMLElement;
     }
 
-    getWidgetPlacement() { return this.widgetPlacement; }
+    public getWidgetPlacement() { return this.widgetPlacement; }
 
-    addButton(button: WidgetToolbarButton) {
+    public addButton(button: WidgetToolbarButton) {
         this.buttonList.push(button);
     }
 
-    removeButton(button: WidgetToolbarButton) {
+    public removeButton(button: WidgetToolbarButton) {
         const name = button.getName();
         const index = this.buttonList.findIndex(item=> item.getName() === name);
         if (index > -1) {

@@ -8,22 +8,22 @@ export class BaseDialog {
 
     constructor(protected selector: string) { }
 
-    getDom() {
+    public getDom() {
         return document.querySelector(this.selector);
     }
 
-    getOverlay() {
+    public getOverlay() {
         return this.getDom().querySelector(this.generalOverlaySelector);
     }
-    
-    showOverlay() {
+
+    public showOverlay() {
         const overlay = this.getOverlay();
         if (overlay && overlay.hasAttribute("hidden")) {
             overlay.removeAttribute("hidden");
         }
     }
 
-    hideOverlay() {
+    public hideOverlay() {
         const overlay = this.getOverlay();
         if (overlay && !overlay.hasAttribute("hidden")) {
             overlay.setAttribute("hidden", "");

@@ -1,5 +1,5 @@
-﻿import { LayoutRow } from "./LayoutRow";
-import {Column} from "./Column";
+﻿import { Column } from "./Column";
+import { LayoutRow } from "./LayoutRow";
 
 export class LayoutRowCollection {
 
@@ -12,7 +12,7 @@ export class LayoutRowCollection {
         this.layoutRowSelector = selector || this.layoutRowSelector;
     }
 
-    fromLayout() {
+    public fromLayout() {
         if (this.layoutRowSelector && this.parent) {
             const rows = Array.from(this.parent.querySelectorAll<HTMLElement>(this.layoutRowSelector));
             if (rows) {
@@ -22,7 +22,7 @@ export class LayoutRowCollection {
         throw new Error("No layout rows were found.");
     }
 
-    createLayoutRow(element: HTMLElement, index: number) {
+    public createLayoutRow(element: HTMLElement, index: number) {
         const row = new LayoutRow(this.parent);
         const id = element.getAttribute(row.getAttributeName());
         row.setId(id);
@@ -30,7 +30,7 @@ export class LayoutRowCollection {
         return row;
     }
 
-    getLayoutRows() {
+    public getLayoutRows() {
         return this.fromLayout();
     }
 }

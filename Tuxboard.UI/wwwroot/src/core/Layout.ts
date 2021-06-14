@@ -1,12 +1,12 @@
-﻿import { LayoutRowCollection } from "./LayoutRowCollection";
-import { Tab } from "./Tab";
-import { Column } from "./Column";
-import { WidgetPlacement } from "../Widget/WidgetPlacement";
+﻿import { Column } from "./Column";
 import { LayoutRow } from "./LayoutRow";
+import { LayoutRowCollection } from "./LayoutRowCollection";
+import { Tab } from "./Tab";
+import { WidgetPlacement } from "../Widget/WidgetPlacement";
 
 export class Layout {
 
-    layoutRows: LayoutRowCollection;
+    public layoutRows: LayoutRowCollection;
 
     private layoutRowSelector: string = ".layout-row";
 
@@ -17,17 +17,15 @@ export class Layout {
         this.layoutRowSelector = selector || this.layoutRowSelector;
     }
 
-    getDom() {
+    public getDom() {
         return this.parent.querySelectorAll(this.layoutRowSelector);
     }
 
-
-
-    fromTab(tab: Tab) {
+    public fromTab(tab: Tab) {
         return tab.getDom().querySelectorAll(this.layoutRowSelector);
     }
 
-    getLayoutRows() {
+    public getLayoutRows() {
         if (!this.layoutRows) {
             this.layoutRows = new LayoutRowCollection(this.parent);
         }
@@ -37,14 +35,14 @@ export class Layout {
         throw new Error("No layout rows were found.");
     }
 
-    getFirstLayoutRow() {
+    public getFirstLayoutRow() {
         if (this.layoutRows) {
             return this.layoutRows.getLayoutRows()[0];
         }
         return null;
     }
 
-    getColumns() {
+    public getColumns() {
         const result: Column[] = [];
 
         const rows = this.getLayoutRows();
@@ -55,7 +53,7 @@ export class Layout {
         return result;
     }
 
-    getWidgetPlacements() {
+    public getWidgetPlacements() {
         const widgets: WidgetPlacement[] = [];
         const rows = this.getLayoutRows();
         rows.map((row: LayoutRow, index: number) => {

@@ -1,11 +1,11 @@
-﻿import { Layout } from "./Layout";
-import { dataId } from "./common";
+﻿import { dataId } from "./common";
+import { Layout } from "./Layout";
 
 export class Tab {
 
     private tabSelector: string = ".dashboard-tab";
 
-    layout: Layout;
+    private layout: Layout;
 
     constructor(
         private readonly parent: HTMLElement,
@@ -14,25 +14,23 @@ export class Tab {
         this.tabSelector = selector || this.tabSelector;
     }
 
-    getDom() {
+    public getDom() {
         return this.parent.querySelector(this.tabSelector) as HTMLElement;
     }
 
-    getLayout() {
+    public getLayout() {
         if (!this.layout) {
             this.layout = new Layout(this.getDom());
         }
         return this.layout;
     }
 
-    getCurrentTab() {
+    public getCurrentTab() {
         return document.querySelector<HTMLElement>(this.tabSelector + "[data-active='true']");
     }
 
-    getCurrentTabId() {
+    public getCurrentTabId() {
         const tab = this.getCurrentTab();
         return tab.getAttribute(dataId);
     }
-
-
 }

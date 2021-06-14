@@ -1,10 +1,10 @@
-﻿import { BaseDialog } from "../../../core/BaseDialog";
-import { dataId, enableElement, disableElement, noPeriod } from "../../../core/common";
-import { AddWidgetService } from "./AddWidgetService";
+﻿import { AddWidgetService } from "./AddWidgetService";
+import { BaseDialog } from "../../../core/BaseDialog";
+import { dataId, disableElement, enableElement, noPeriod } from "../../../core/common";
 import { Tuxboard } from "../../../Tuxboard";
-import { WidgetPlacement } from "../../../Widget/WidgetPlacement";
 import { TuxboardService } from "../../../Services/TuxboardService";
-import { Tab, Modal } from "bootstrap";
+import { WidgetPlacement } from "../../../Widget/WidgetPlacement";
+import { Modal, Tab } from "bootstrap";
 
 export class AddWidgetDialog extends BaseDialog {
 
@@ -26,29 +26,51 @@ export class AddWidgetDialog extends BaseDialog {
         this.selector = dialogSelector || this.addWidgetDialogSelector;
     }
 
-    getDataId(elem: HTMLElement) { return elem.getAttribute(dataId) }
-    getWidgetDialog() { return document.querySelector(this.addWidgetDialogSelector); }
-    getWidgetList() { return this.getWidgetDialog().querySelectorAll(this.widgetListItemSelector); }
-    getAddWidgetButton() { return this.getWidgetDialog().querySelector(this.addWidgetButtonSelector); }
-    getWidgetTabGroups() { return this.getWidgetDialog().querySelectorAll(this.widgetTabGroupSelector); }
-    getSelectedWidget() { return this.getWidgetDialog().querySelector(this.widgetListItemSelector + this.widgetSelectionSelector); }
-    getSelectedSelector() { return noPeriod(this.widgetSelectionSelector); }
-
-    setWidgetDialog(body: string) {
-        const modalBody = this.getWidgetDialog().querySelector(this.dialogBodySelector);
-        if (modalBody) modalBody.innerHTML = body;
+    public getDataId(elem: HTMLElement) {
+        return elem.getAttribute(dataId)
+    }
+    public getWidgetDialog() {
+        return document.querySelector(this.addWidgetDialogSelector);
     }
 
-    hide() {
+    public getWidgetList() {
+        return this.getWidgetDialog().querySelectorAll(this.widgetListItemSelector);
+    }
+
+    public getAddWidgetButton() {
+        return this.getWidgetDialog().querySelector(this.addWidgetButtonSelector);
+    }
+
+    public getWidgetTabGroups() {
+        return this.getWidgetDialog().querySelectorAll(this.widgetTabGroupSelector);
+    }
+
+    public getSelectedWidget() {
+        return this.getWidgetDialog().querySelector(
+            this.widgetListItemSelector + this.widgetSelectionSelector);
+    }
+
+    public getSelectedSelector() {
+        return noPeriod(this.widgetSelectionSelector);
+    }
+
+    public setWidgetDialog(body: string) {
+        const modalBody = this.getWidgetDialog().querySelector(this.dialogBodySelector);
+        if (modalBody) {
+            modalBody.innerHTML = body;
+        }
+    }
+
+    public hide() {
         const modal = Modal.getInstance(this.getWidgetDialog()); // Returns a Bootstrap modal instance
         if (modal) {
             modal.hide();
         }
     }
 
-    updateAddWidget() {
-        const addWidgetButton = this.getAddWidgetButton(),
-            selected = this.getSelectedWidget();
+    public updateAddWidget() {
+        const addWidgetButton = this.getAddWidgetButton();
+        const selected = this.getSelectedWidget();
         if (selected) {
             enableElement(addWidgetButton);
         } else {
@@ -56,7 +78,7 @@ export class AddWidgetDialog extends BaseDialog {
         }
     }
 
-    resetSelectedWidgets() {
+    public resetSelectedWidgets() {
         const widgets = this.getWidgetList();
         [].forEach.call(widgets,
             (item: HTMLElement) => {
@@ -64,7 +86,7 @@ export class AddWidgetDialog extends BaseDialog {
             });
     }
 
-    selectWidget(ev: Event) {
+    public selectWidget(ev: Event) {
         var target = ev.currentTarget as HTMLDivElement;
         const isSelected = target.classList.contains(this.getSelectedSelector());
 
@@ -77,10 +99,10 @@ export class AddWidgetDialog extends BaseDialog {
         this.updateAddWidget();
     }
 
-    addWidgetClick(ev: Event) {
+    public addWidgetClick(ev: Event) {
         const widget = this.getSelectedWidget();
-        const widgetId = widget.getAttribute(dataId),
-            tab = this.tuxboard.getTab();
+        const widgetId = widget.getAttribute(dataId);
+        const tab = this.tuxboard.getTab();
         const layout = tab.getLayout();
         const layoutRow = layout.getFirstLayoutRow();
         const columns = layoutRow.getColumns();
@@ -93,7 +115,9 @@ export class AddWidgetDialog extends BaseDialog {
                 }
 
                 const response = JSON.parse(data);
-                if (!response.success) return;
+                if (!response.success) {
+                    return;
+                }
 
                 this.hide();
                 const columnDom = column.getDom();
@@ -107,7 +131,7 @@ export class AddWidgetDialog extends BaseDialog {
     }
 
 
-    setupWidgetClicks() {
+    public setupWidgetClicks() {
         const widgetAddButton = this.getAddWidgetButton();
         widgetAddButton.addEventListener("click",
             (ev: Event) => this.addWidgetClick(ev),
@@ -119,22 +143,22 @@ export class AddWidgetDialog extends BaseDialog {
             });
     }
 
-    setupWidgetTabs() {
+    public setupWidgetTabs() {
         const tabTriggers = this.getWidgetTabGroups();
 
         tabTriggers.forEach(triggerEl => {
 
-            var tabTrigger = new Tab(triggerEl);
+            const tabTrigger = new Tab(triggerEl);
 
-            triggerEl.addEventListener('click',
-                ev => {
+            triggerEl.addEventListener("click",
+                (ev:Event): void => {
                     ev.preventDefault();
                     tabTrigger.show();
                 });
         });
     }
 
-    initialize(modalBody: string) {
+    public initialize(modalBody: string) {
         this.setWidgetDialog(modalBody);
         this.setupWidgetTabs();
         this.setupWidgetClicks();

@@ -1,9 +1,9 @@
-﻿import { TuxbarMessage } from "./TuxbarMessage";
-import { AddWidgetButton } from "./AddWidgetButton";
+﻿import { AddWidgetButton } from "./AddWidgetButton";
+import { TuxbarMessage } from "./TuxbarMessage";
 import { ChangeLayoutButton } from "./ChangeLayoutButton";
-import { Tuxboard } from "../../Tuxboard";
 import { ITuxbarControl } from "./ITuxbarControl";
 import { RefreshButton } from "./RefreshButton";
+import { Tuxboard } from "../../Tuxboard";
 
 export class Tuxbar {
 
@@ -13,26 +13,24 @@ export class Tuxbar {
 
     constructor(
         readonly parent: Tuxboard,
-        selector: string = null
-    ) {
+        selector: string = null) {
         this.tuxbarSelector = selector || this.tuxbarSelector;
 
         this.initialize();
     }
 
-    getDom() {
+    public getDom() {
         return document.querySelector(this.tuxbarSelector) as HTMLElement;
     }
 
-    getTuxboard() {
+    public getTuxboard() {
         return this.parent;
     }
 
-    initialize() {
+    public initialize() {
         this.controls.push(new AddWidgetButton(this));
         this.controls.push(new ChangeLayoutButton(this));
         this.controls.push(new RefreshButton(this));
         this.controls.push(new TuxbarMessage(this));
     }
-
 }

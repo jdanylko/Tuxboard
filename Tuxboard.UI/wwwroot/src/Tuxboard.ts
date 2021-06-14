@@ -7,11 +7,11 @@ import {
     getDataId,
     getWidgetSnapshot,
     isWidget,
-    noPeriod
-} from "./core/common";
+    noPeriod } from "./core/common";
 import { DragWidgetInfo } from "./Models/DragWidgetInfo";
 import { Layout } from "./core/Layout";
 import { LayoutRow } from "./core/LayoutRow";
+import { PlacementItem } from "./Models/PlacementItem";
 import { Tab } from "./core/Tab";
 import { Tuxbar } from "./Extras/Tuxbar/Tuxbar";
 import { TuxboardService } from "./Services/TuxboardService";
@@ -19,8 +19,8 @@ import { WidgetPlacement } from "./Widget/WidgetPlacement";
 
 export class Tuxboard {
 
-    dragInfo: DragWidgetInfo;
-    service: TuxboardService = new TuxboardService();
+    private dragInfo: DragWidgetInfo;
+    private service: TuxboardService = new TuxboardService();
 
     private tab: Tab;
     private tuxboardSelector: string = ".dashboard";
@@ -33,19 +33,19 @@ export class Tuxboard {
         this.updateAllWidgets();
     }
 
-    getDom(): HTMLElement {
+    public getDom(): HTMLElement {
         return document.querySelector<HTMLElement>(this.tuxboardSelector);
     }
 
-    getDashboardId(): string {
+    public getDashboardId(): string {
         return getDataId(this.getDom());
     }
 
-    initialize() {
+    public initialize() {
         this.attachDragAndDropEvents();
     }
 
-    getTab(reload: boolean = false) {
+    public getTab(reload: boolean = false) {
         if (!this.tab || reload) {
             if (this.tab) {
                 delete this.tab;
@@ -55,13 +55,17 @@ export class Tuxboard {
         return this.tab;
     }
 
-    addWidget(placementId: string) {
+    public addWidget(placementId: string) {
         this.service.getWidgetTemplate(placementId)
             .then((data: string) => {
-                if (!data) return;
+                if (!data) {
+                    return;
+                }
 
                 const column = this.getFirstColumn();
-                if (!column) return;
+                if (!column) {
+                    return;
+                }
 
                 this.addWidgetToColumn(column, data);
                 const widgets = this.getWidgetsByColumn(column);
@@ -74,14 +78,14 @@ export class Tuxboard {
 
     }
 
-    async refresh() {
+    public async refresh() {
         await this.service.refreshService()
             .then((data: string) => {
                 const db = this.getDom();
                 if (db) {
                     clearNodes(db);
-                    const nodes = createFromHtml(String(data));
-                    nodes.forEach(node => db.insertAdjacentElement("beforeend", node)); // Layout Rows
+                    const nodes = createFromHtml(data);
+                    nodes.forEach((node) => db.insertAdjacentElement("beforeend", node)); // Layout Rows
                 }
             })
             .catch((err) => console.log(err));
@@ -90,48 +94,48 @@ export class Tuxboard {
         this.updateAllWidgets();
     }
 
-    updateAllWidgets() {
+    public updateAllWidgets() {
         const widgetPlacements = this.getWidgetsByTab(this.getTab(true));
         this.updateWidgets(widgetPlacements);
     }
 
-    updateWidgets(widgets: WidgetPlacement[]) {
-        widgets.map( (placement: WidgetPlacement) => {
+    public updateWidgets(widgets: WidgetPlacement[]) {
+        Array.from(widgets).map( (placement: WidgetPlacement) => {
             placement.update();
         });
     }
 
-    getWidgetsByTab(tab: Tab) {
+    public getWidgetsByTab(tab: Tab) {
         return tab.getLayout().getWidgetPlacements();
     }
 
-    getLayoutByTab(tab: Tab) {
+    public getLayoutByTab(tab: Tab) {
         return tab.getLayout();
     }
 
-    getLayoutRowsByLayout(layout: Layout) {
+    public getLayoutRowsByLayout(layout: Layout) {
         return layout.getLayoutRows();
     }
 
-    getColumnsByLayoutRow(layoutRow: LayoutRow) {
+    public getColumnsByLayoutRow(layoutRow: LayoutRow) {
         return layoutRow.getColumns();
     }
 
-    getWidgetsByColumn(column: Column) {
+    public getWidgetsByColumn(column: Column) {
         return column.getWidgetCollection();
     }
 
-    hasWidgets(tab: Tab) {
+    public hasWidgets(tab: Tab) {
         return this.getWidgetsByTab(tab).length > 0;
     }
 
-    addWidgetToColumn(column: Column, template: string) {
+    public addWidgetToColumn(column: Column, template: string) {
         if (column) {
             column.getDom().insertAdjacentHTML("beforeend", template);
         }
     }
 
-    getFirstColumn() {
+    public getFirstColumn() {
         const layout = this.getLayoutByTab(this.getTab());
         const columns = this.getColumnsByLayoutRow(layout.layoutRows[0]);
         return columns && columns.length > 0 ? columns[0] : null;
@@ -144,12 +148,12 @@ export class Tuxboard {
     // Drag and Drop
     /////////////////////
 
-    attachDragAndDropEvents() {
+    public attachDragAndDropEvents() {
         const layout = this.getTab().getLayout();
         const columns = layout.getColumns();
 
         for (const column of columns) {
-            column.getDom().addEventListener('dragstart', (ev: DragEvent) => {
+            column.getDom().addEventListener("dragstart", (ev: DragEvent) => {
                 this.dragStart(ev, column, this);
             }, false);
             column.getDom().addEventListener("dragover", this.dragover, false);
@@ -160,9 +164,11 @@ export class Tuxboard {
         }
     }
 
-    dragStart(ev: DragEvent, column: Column, self: Tuxboard) {
+    public dragStart(ev: DragEvent, column: Column, self: Tuxboard) {
 
-        if (ev.stopPropagation) ev.stopPropagation();
+        if (ev.stopPropagation) {
+            ev.stopPropagation();
+        }
 
         ev.dataTransfer.effectAllowed = 'move';
 
@@ -179,9 +185,13 @@ export class Tuxboard {
         ev.dataTransfer.setData('text', JSON.stringify(self.dragInfo));
     }
 
-    dragover(ev: DragEvent) {
-        if (ev.preventDefault) ev.preventDefault();
-        if (ev.stopPropagation) ev.stopPropagation();
+    public dragover(ev: DragEvent) {
+        if (ev.preventDefault) {
+            ev.preventDefault();
+        }
+        if (ev.stopPropagation) {
+            ev.stopPropagation();
+        }
 
         ev.dataTransfer.dropEffect = 'move';
 
@@ -190,9 +200,13 @@ export class Tuxboard {
         return isWidget(target, ".card"); // TODO: DefaultSelector.getInstance().widgetSelector);
     }
 
-    dragenter(ev: DragEvent) {
-        if (ev.preventDefault) ev.preventDefault();
-        if (ev.stopPropagation) ev.stopPropagation();
+    public dragenter(ev: DragEvent) {
+        if (ev.preventDefault) {
+            ev.preventDefault();
+        }
+        if (ev.stopPropagation) {
+            ev.stopPropagation();
+        }
 
         const target = ev.target as HTMLElement;
         if (target) {
@@ -200,9 +214,13 @@ export class Tuxboard {
         }
     }
 
-    dragLeave(ev: DragEvent) {
-        if (ev.preventDefault) ev.preventDefault();
-        if (ev.stopPropagation) ev.stopPropagation();
+    public dragLeave(ev: DragEvent) {
+        if (ev.preventDefault) {
+            ev.preventDefault();
+        }
+        if (ev.stopPropagation) {
+            ev.stopPropagation();
+        }
 
         const target = ev.target as HTMLElement;
         if (target) {
@@ -210,9 +228,13 @@ export class Tuxboard {
         }
     }
 
-    drop(ev: DragEvent, self: Tuxboard) {
-        if (ev.preventDefault) ev.preventDefault();
-        if (ev.stopPropagation) ev.stopPropagation();
+    public drop(ev: DragEvent, self: Tuxboard) {
+        if (ev.preventDefault) {
+            ev.preventDefault();
+        }
+        if (ev.stopPropagation) {
+            ev.stopPropagation();
+        }
 
         const targetElement = ev.target as HTMLElement; // .column or .card
 
@@ -235,9 +257,13 @@ export class Tuxboard {
         }
     }
 
-    dragEnd(ev: DragEvent, self: Tuxboard) {
-        if (ev.preventDefault) ev.preventDefault();
-        if (ev.stopPropagation) ev.stopPropagation();
+    public dragEnd(ev: DragEvent, self: Tuxboard) {
+        if (ev.preventDefault) {
+            ev.preventDefault();
+        }
+        if (ev.stopPropagation) {
+            ev.stopPropagation();
+        }
 
         document.querySelectorAll(".column") // TODO: DefaultSelector.getInstance().columnSelector)
             .forEach((elem: HTMLElement) => elem.classList.remove("over"));
@@ -247,7 +273,7 @@ export class Tuxboard {
         self.dragInfo.placementList = getWidgetSnapshot(self.dragInfo);
 
         const selected = self.dragInfo.placementList
-            .filter(elem => elem.PlacementId === id);
+            .filter((elem:PlacementItem) => elem.PlacementId === id);
         if (selected && selected.length > 0) {
             self.dragInfo.currentLayoutRowId = selected[0].LayoutRowId;
             self.dragInfo.currentColumnIndex = selected[0].ColumnIndex;
@@ -260,8 +286,8 @@ export class Tuxboard {
     }
 }
 
-window.addEventListener('DOMContentLoaded', () => {
+window.addEventListener("DOMContentLoaded", () => {
     const dashboard: Tuxboard = new Tuxboard();
     const tuxbar: Tuxbar = new Tuxbar(dashboard);
 });
-//})
+

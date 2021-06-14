@@ -1,11 +1,11 @@
 ﻿import { BaseDialog } from "../../../core/BaseDialog";
-import { Tab } from "../../../core/Tab";
-import { LayoutItem } from "./LayoutItem";
-import { Tuxboard } from "../../../Tuxboard";
-import { dataId, isBefore, isLayoutListItem, getDataId } from "../../../core/common";
-import { LayoutModel } from "./LayoutModel";
 import { ChangeLayoutService } from "./ChangeLayoutService";
-import { Modal, Dropdown } from "bootstrap";
+import { dataId, getDataId, isBefore, isLayoutListItem } from "../../../core/common";
+import { Dropdown, Modal } from "bootstrap";
+import { LayoutItem } from "./LayoutItem";
+import { LayoutModel } from "./LayoutModel";
+import { Tab } from "../../../core/Tab";
+import { Tuxboard } from "../../../Tuxboard";
 
 export class ChangeLayoutDialog extends BaseDialog {
 
@@ -37,31 +37,35 @@ export class ChangeLayoutDialog extends BaseDialog {
     }
 
     /* Common: Utility */
-    getLayoutOverlay() { return this.getLayoutDialog().querySelector(this.generalOverlaySelector); }
-    getLayoutDialog() { return document.querySelector(this.layoutDialogSelector); }
-    getLayoutList() { return this.getLayoutDialog().querySelector(this.layoutListSelector); }
-    getDropdown() { return this.getLayoutDialog().querySelector(this.dropdownToggleSelector); }
-    getLayoutListItems() { return this.getLayoutList().children; }
-    getLayoutItemSelector(id:string) { return `${this.layoutItemSelector}[${dataId}="${id}"]`} // .layout-item[data-id="id"]
+    public getLayoutOverlay() {
+        return this.getLayoutDialog().querySelector(this.generalOverlaySelector);
+    }
+    public getLayoutDialog() { return document.querySelector(this.layoutDialogSelector); }
+    public getLayoutList() { return this.getLayoutDialog().querySelector(this.layoutListSelector); }
+    public getDropdown() { return this.getLayoutDialog().querySelector(this.dropdownToggleSelector); }
+    public getLayoutListItems() { return this.getLayoutList().children; }
+    public getLayoutItemSelector(id: string) {
+        return `${this.layoutItemSelector}[${dataId}="${id}"]`
+    }
 
-    getSaveLayoutButton() {
+    public getSaveLayoutButton() {
         const layoutDialog = this.getLayoutDialog();
         return layoutDialog.querySelector(this.saveLayoutButtonSelector);
     }
 
-    setLayoutDialog(body: string) {
+    public setLayoutDialog(body: string) {
         const modalBody = this.getLayoutDialog().querySelector(this.dialogBodySelector);
         if (modalBody) {
             modalBody.innerHTML = body;
         }
     }
 
-    initialize(layoutBody: string) {
+    public initialize(layoutBody: string) {
 
         this.setLayoutDialog(layoutBody);
 
         // Bootstrap
-        let dropdown = new Dropdown(this.getDropdown());
+        const dropdown = new Dropdown(this.getDropdown());
 
         this.initLayoutDragAndDrop();
 
@@ -71,14 +75,14 @@ export class ChangeLayoutDialog extends BaseDialog {
         this.resetColumnStatus();
     }
 
-    hide() {
+    public hide() {
         const modal = Modal.getInstance(this.getLayoutDialog()); // Returns a Bootstrap modal instance
         if (modal) {
             modal.hide();
         }
     }
 
-    displayLayoutErrors(data) {
+    public displayLayoutErrors(data) {
         const layoutDialog = this.getLayoutDialog();
         [].forEach.call(data.LayoutErrors,
             (item) => {
@@ -86,12 +90,12 @@ export class ChangeLayoutDialog extends BaseDialog {
                 if (trow) {
                     trow.setAttribute("style", "outline: 1px solid #F00");
                 } else {
-                    trow.setAttribute("style", "");
+                    trow.removeAttribute("style");
                 }
             });
     }
 
-    saveCurrentLayout(ev: Event) {
+    public saveCurrentLayout(ev: Event) {
 
         const layoutData = new Array<LayoutItem>();
 
@@ -114,8 +118,7 @@ export class ChangeLayoutDialog extends BaseDialog {
             });
     }
 
-
-    attachLayoutEvents() {
+    public attachLayoutEvents() {
 
         const layoutDialog = this.getLayoutDialog();
 
@@ -128,10 +131,9 @@ export class ChangeLayoutDialog extends BaseDialog {
         [].forEach.call(links, (item) => {
             item.addEventListener("click", (ev:Event) => this.addLayoutRow(ev), { once: true });
         });
-        
     }
 
-    updateLayoutRowEvents() {
+    public updateLayoutRowEvents() {
 
         const layoutDialog = this.getLayoutDialog();
 
@@ -143,7 +145,7 @@ export class ChangeLayoutDialog extends BaseDialog {
             });
     }
 
-    addLayoutRow(ev:Event) {
+    public addLayoutRow(ev:Event) {
         const evTarget = ev.target as HTMLElement;
         const layoutTypeId = evTarget.attributes[dataId].value;
         this.layoutService.addLayoutRow(layoutTypeId)
@@ -152,13 +154,13 @@ export class ChangeLayoutDialog extends BaseDialog {
             });
     }
 
-    getRowByEvent(ev) {
+    public getRowByEvent(ev) {
         const evTarget = ev.target;
         const id = evTarget.attributes[dataId].value;
         return this.getLayoutDialog().querySelector(this.getLayoutItemSelector(id)) as HTMLElement;
     }
 
-    updateLayoutData(html:string) {
+    public updateLayoutData(html:string) {
         this.resetColumnStatus();
         const columnElement = this.getLayoutList();
         columnElement.insertAdjacentHTML("beforeend", html);
@@ -168,7 +170,7 @@ export class ChangeLayoutDialog extends BaseDialog {
         this.updateLayoutRowEvents();
     }
 
-    resetColumnStatus() {
+    public resetColumnStatus() {
         const dialog = this.getLayoutDialog();
         const liList = this.getLayoutListItems();
         [].forEach.call(liList,
@@ -182,7 +184,7 @@ export class ChangeLayoutDialog extends BaseDialog {
         }
     }
 
-    setColumnStatus(id:string, data) {
+    public setColumnStatus(id:string, data) {
         const dialog = this.getLayoutDialog();
         const idSelector = `li[${dataId}='${id}']`;
         const item = dialog.querySelector(idSelector);
@@ -191,9 +193,11 @@ export class ChangeLayoutDialog extends BaseDialog {
         item.setAttribute("style", "outline: 1px solid #F00");
     }
 
-    layoutDeleteButtonClick(ev:Event) {
+    public layoutDeleteButtonClick(ev:Event) {
         const row = this.getRowByEvent(ev);
-        if (!row) return;
+        if (!row) {
+            return;
+        }
 
         const id = getDataId(row);
         this.layoutService.deleteRowFromLayoutDialogService(row)
@@ -207,7 +211,7 @@ export class ChangeLayoutDialog extends BaseDialog {
             });
     }
 
-    initLayoutDragAndDrop() {
+    public initLayoutDragAndDrop() {
         const layoutList = this.getLayoutList();
         const liList = this.getLayoutListItems();
 
@@ -217,7 +221,7 @@ export class ChangeLayoutDialog extends BaseDialog {
                 handle.addEventListener("mousedown", handleMouseDown, false);
                 handle.addEventListener("mouseup", handleMouseUp, false);
                 const listItem = handle.parentNode.parentNode;
-                listItem.addEventListener('dragstart', layoutDragStart, false);
+                listItem.addEventListener("dragstart", layoutDragStart, false);
             });
 
         layoutList.addEventListener("dragover", (ev: DragEvent) => {
@@ -241,16 +245,18 @@ export class ChangeLayoutDialog extends BaseDialog {
 
         function layoutDragStart(ev: DragEvent) {
 
-            ev.dataTransfer.effectAllowed = 'move';
+            ev.dataTransfer.effectAllowed = "move";
 
             let target = ev.target as HTMLLIElement;
             if (target instanceof HTMLLIElement) {
-                ev.dataTransfer.setData('text', target.getAttribute(dataId));
+                ev.dataTransfer.setData("text", target.getAttribute(dataId));
             }
         }
 
         function layoutDragEnter(ev: DragEvent) {
-            if (ev.preventDefault) ev.preventDefault();
+            if (ev.preventDefault) {
+                ev.preventDefault();
+            }
 
             if (ev.target instanceof HTMLUListElement) {
 
@@ -264,7 +270,9 @@ export class ChangeLayoutDialog extends BaseDialog {
         }
 
         function layoutDragLeave(ev: DragEvent) {
-            if (ev.preventDefault) ev.preventDefault();
+            if (ev.preventDefault) {
+                ev.preventDefault();
+            }
 
             if (ev.target instanceof HTMLUListElement) {
 
@@ -278,16 +286,18 @@ export class ChangeLayoutDialog extends BaseDialog {
         }
 
         function layoutDragOver(ev: DragEvent, dialog: ChangeLayoutDialog) {
-            if (ev.preventDefault) ev.preventDefault();
+            if (ev.preventDefault) {
+                ev.preventDefault();
+            }
 
-            ev.dataTransfer.dropEffect = 'move';
+            ev.dataTransfer.dropEffect = "move";
 
             const target = ev.target as HTMLElement;
 
-            const id = ev.dataTransfer.getData('text');
+            const id = ev.dataTransfer.getData("text");
 
             // TODO: fix "layout-item"
-            let elem = document.querySelector(".layout-item[data-id='" + id + "']");
+            const elem: Element = document.querySelector(".layout-item[data-id='" + id + "']");
 
             if (elem && isLayoutListItem(target)) {
 
@@ -304,10 +314,12 @@ export class ChangeLayoutDialog extends BaseDialog {
         }
 
         function layoutDrop(ev: DragEvent) {
-            if (ev.preventDefault) ev.preventDefault();
+            if (ev.preventDefault) {
+                ev.preventDefault();
+            }
 
-            const id = ev.dataTransfer.getData('text');
-            let elem = document.querySelector(".layout-item[data-id='" + id + "']");
+            const id = ev.dataTransfer.getData("text");
+            const elem: Element = document.querySelector(".layout-item[data-id='" + id + "']");
 
             let target = ev.target as HTMLElement;
 

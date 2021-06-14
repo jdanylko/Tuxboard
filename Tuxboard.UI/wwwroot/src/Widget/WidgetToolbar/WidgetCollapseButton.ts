@@ -1,7 +1,7 @@
-﻿import { WidgetToolbarButton } from "./WidgetToolbarButton";
-import { dataId, getDomWidget } from "../../core/common";
+﻿import { dataId, getDomWidget } from "../../core/common";
 import { TuxboardService } from "../../Services/TuxboardService";
 import { WidgetToolBar } from "./WidgetToolBar";
+import { WidgetToolbarButton } from "./WidgetToolbarButton";
 
 export class WidgetCollapseButton extends WidgetToolbarButton {
 
@@ -26,11 +26,12 @@ export class WidgetCollapseButton extends WidgetToolbarButton {
         }
     }
 
-    minimizeWidget(ev: Event, toolbar: WidgetToolBar) {
+    public minimizeWidget(ev: Event, toolbar: WidgetToolBar) {
 
         const button: HTMLElement = ev.currentTarget as HTMLElement;
-        if (!button)
+        if (!button) {
             return;
+        }
 
         const placementId = button.getAttribute(dataId);
         const widget = toolbar.getWidgetPlacement().getDom();
@@ -46,32 +47,31 @@ export class WidgetCollapseButton extends WidgetToolbarButton {
                 widget.classList.add(this.collapsedToggleSelector);
                 this.hideWidgetBody(placementId);
                 this.service.updateCollapsedWidgetService(placementId, true)
-                    .then((data) => { });
+                    .then((data) => { return; });
             }
         }
     }
 
-    getWidgetBody(placementId: string) {
+    public getWidgetBody(placementId: string) {
         const widget = getDomWidget(placementId);
-        if (widget)
-            return widget.querySelector(".card"); // TODO: DefaultSelector.getInstance().widgetBodySelector);
+        // TODO: DefaultSelector.getInstance().widgetBodySelector);
+        if (widget) {
+            return widget.querySelector(".card");
+        }
         return null;
     }
-    
-    hideWidgetBody(placementId:string) {
+
+    public hideWidgetBody(placementId: string) {
         const body = this.getWidgetBody(placementId);
         if (body) {
             body.setAttribute("hidden", "");
         }
     }
 
-    showWidgetBody(placementId: string) {
+    public showWidgetBody(placementId: string) {
         const body = this.getWidgetBody(placementId);
         if (body) {
             body.removeAttribute("hidden");
         }
     }
-
-
-
 }

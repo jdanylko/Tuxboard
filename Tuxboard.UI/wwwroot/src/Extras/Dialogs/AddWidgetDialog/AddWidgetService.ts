@@ -2,14 +2,14 @@
 
 export class AddWidgetService extends BaseService {
 
-    tuxWidgetDialogUrl: string = "/widgetdialog/";
-    tuxWidgetAddWidgetUrl: string = "/widgetdialog/addwidget/";
+    private tuxWidgetDialogUrl: string = "/widgetdialog/";
+    private tuxWidgetAddWidgetUrl: string = "/widgetdialog/addwidget/";
 
     constructor(debug: boolean = false) {
         super(debug);
     }
 
-    addWidgetService(tabId:string, widgetId:string) {
+    public addWidgetService(tabId:string, widgetId:string) {
         const request = new Request(this.tuxWidgetAddWidgetUrl,
             {
                 method: "post",
@@ -18,7 +18,7 @@ export class AddWidgetService extends BaseService {
                     WidgetId: widgetId
                 }),
                 headers: {
-                    'Content-Type': 'application/json'
+                    "Content-Type": "application/json"
                 }
             }
         );
@@ -29,13 +29,11 @@ export class AddWidgetService extends BaseService {
 
     }
 
-    getWidgetDialogService() {
+    public getWidgetDialogService() {
         const request = new Request(this.tuxWidgetDialogUrl);
         return fetch(request)
             .then(this.validateResponse)
             .then(this.readResponseAsText)
             .catch(this.logError);
     }
-
-
 }

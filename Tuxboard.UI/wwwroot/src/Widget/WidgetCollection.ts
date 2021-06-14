@@ -13,16 +13,16 @@ export class WidgetCollection {
         this.widgetSelector = selector || this.widgetSelector;
     }
 
-    getWidgetSelector() {
+    public getWidgetSelector() {
         return this.widgetSelector;
     }
 
-    getWidgets() {
+    public getWidgets() {
         return Array.from(this.parent.querySelectorAll<HTMLElement>(this.widgetSelector))
             .map((element, index) => this.createWidget(element, index));
     }
 
-    createWidget(element: HTMLElement, index: number) {
+    public createWidget(element: HTMLElement, index: number) {
         const widget = new WidgetPlacement(this.parent);
         const id = element.getAttribute(widget.getAttributeName());
         widget.setPlacementId(id);
@@ -32,7 +32,7 @@ export class WidgetCollection {
         return widget;
     }
 
-    getWidgetProperties(widget: WidgetPlacement) {
+    public getWidgetProperties(widget: WidgetPlacement) {
         return widget.getProperties();
     }
 }

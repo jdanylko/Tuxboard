@@ -1,7 +1,7 @@
-﻿import { WidgetToolbarButton } from "./WidgetToolbarButton";
+﻿import { dataId } from "../../core/common";
 import { TuxboardService } from "../../Services/TuxboardService";
-import { dataId } from "../../core/common";
 import { TuxViewMessage } from "../../Models/TuxViewMessage";
+import { WidgetToolbarButton } from "./WidgetToolbarButton";
 import { WidgetToolBar } from "./WidgetToolBar";
 
 export class WidgetRemoveButton extends WidgetToolbarButton {
@@ -26,11 +26,12 @@ export class WidgetRemoveButton extends WidgetToolbarButton {
         }
     }
 
-    removeWidget(ev: Event, toolbar: WidgetToolBar) {
+    public removeWidget(ev: Event, toolbar: WidgetToolBar) {
 
         const button: HTMLElement = ev.currentTarget as HTMLElement;
-        if (!button)
+        if (!button) {
             return;
+        }
 
         const placementId = button.getAttribute(dataId);
 

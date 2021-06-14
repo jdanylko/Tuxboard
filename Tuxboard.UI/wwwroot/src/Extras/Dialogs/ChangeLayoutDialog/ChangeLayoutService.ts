@@ -14,7 +14,7 @@ export class ChangeLayoutService extends BaseService {
     }
 
     /* Service: Load Layout Dialog */
-    getLayoutDialog(tabId: string) {
+    public getLayoutDialog(tabId: string) {
         const request = new Request(this.tuxLayoutDialogUrl + tabId,
             { method: "post" });
 
@@ -25,7 +25,7 @@ export class ChangeLayoutService extends BaseService {
     }
 
     /* Service: Add Layout Row */
-    addLayoutRow(typeId: string) {
+    public addLayoutRow(typeId: string) {
         const request = new Request(this.tuxLayoutAddRowUrl + typeId, { method: "post" });
 
         return fetch(request)
@@ -35,7 +35,7 @@ export class ChangeLayoutService extends BaseService {
     }
 
     /* Service: Delete Row */
-    deleteRowFromLayoutDialogService(row: HTMLElement) {
+    public deleteRowFromLayoutDialogService(row: HTMLElement) {
         const id = row.getAttribute(dataId);
         if (id === "0") { // new, we can remove it.
             row.remove();
@@ -50,7 +50,7 @@ export class ChangeLayoutService extends BaseService {
     }
 
     /* Service: Save Layout */
-    saveLayoutService(bodyData: LayoutModel) {
+    public saveLayoutService(bodyData: LayoutModel) {
         const request = new Request(this.tuxSaveLayoutUrl,
             {
                 method: 'post',
@@ -65,5 +65,4 @@ export class ChangeLayoutService extends BaseService {
             // .then(this.readResponseAsJson)
             .catch(this.logError);
     }
-
 }

@@ -12,20 +12,20 @@ export class ColumnCollection {
         this.columnSelector = selector || this.columnSelector;
     }
 
-    fromLayoutRow() {
+    public fromLayoutRow() {
         return Array.from(this.parent.querySelectorAll<HTMLElement>(this.columnSelector))
             .map((element: HTMLElement, index: number) => this.createColumn(element, index)
         );
     }
 
-    createColumn(element: HTMLElement, index: number) {
+    public createColumn(element: HTMLElement, index: number) {
         const column = new Column(element);
         column.setIndex(index);
         column.setLayoutRowId(this.layoutRowId);
         return column;
     }
 
-    getWidgets() {
+    public getWidgets() {
         return this.fromLayoutRow().map((elem: Column, index: number) => {
             return elem.getWidgetCollection();
         });

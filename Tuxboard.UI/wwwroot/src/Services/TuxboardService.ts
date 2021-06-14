@@ -5,18 +5,18 @@ import { WidgetSettingValue } from "../Models/WidgetSettingValue";
 
 export class TuxboardService extends BaseService {
 
-    tuxWidgetDialogUrl: string = "/widgetdialog/";
-    tuxWidgetSettingsUrl: string = "/widgetsettings/";
-    tuxWidgetAddWidgetUrl: string = "/widgetdialog/addwidget/";
+    private tuxWidgetDialogUrl: string = "/widgetdialog/";
+    private tuxWidgetSettingsUrl: string = "/widgetsettings/";
+    private tuxWidgetAddWidgetUrl: string = "/widgetdialog/addwidget/";
 
-    tuxWidgetTemplateUrl: string = "/WidgetTemplate/";
+    private tuxWidgetTemplateUrl: string = "/WidgetTemplate/";
 
-    tuxRefreshTuxboardUrl: string = "/Tuxboard/Get/";
-    tuxToolCollapseUrl: string = "/Tuxboard/CollapseWidget/";
-    tuxWidgetPlacementUrl: string = "/Tuxboard/Put/";
-    tuxWidgetRemoveWidgetUrl: string = "/Tuxboard/removewidget/";
-    tuxWidgetContentUrl: string = "/Widget/";
-    tuxWidgetSaveSettingsUrl: string = "/WidgetSettings/Save/";
+    private tuxRefreshTuxboardUrl: string = "/Tuxboard/Get/";
+    private tuxToolCollapseUrl: string = "/Tuxboard/CollapseWidget/";
+    private tuxWidgetPlacementUrl: string = "/Tuxboard/Put/";
+    private tuxWidgetRemoveWidgetUrl: string = "/Tuxboard/removewidget/";
+    private tuxWidgetContentUrl: string = "/Widget/";
+    private tuxWidgetSaveSettingsUrl: string = "/WidgetSettings/Save/";
 
     constructor(debugParam: boolean = false) {
         super(debugParam);
@@ -25,9 +25,9 @@ export class TuxboardService extends BaseService {
     /* Services */
 
     /* Service: Save Widget Placement */
-    updateWidgetPlacementStatus(/* use data */) { }
+    public updateWidgetPlacementStatus(/* use data */) { }
 
-    saveWidgetPlacementService(ev: Event, dragInfo: DragInfo) {
+    public saveWidgetPlacementService(ev: Event, dragInfo: DragInfo) {
 
         const postData = {
             Column: dragInfo.currentColumnIndex,
@@ -35,7 +35,7 @@ export class TuxboardService extends BaseService {
             PreviousColumn: dragInfo.previousColumnIndex,
             PreviousLayout: dragInfo.previousLayoutRowId,
             PlacementId: dragInfo.placementId,
-            PlacementList: dragInfo.placementList
+            PlacementList: dragInfo.placementList,
         };
 
         const request = new Request(this.tuxWidgetPlacementUrl,
@@ -55,7 +55,7 @@ export class TuxboardService extends BaseService {
 
     /* Service: Remove Widget */
 
-    removeWidgetService(placementId: string) {
+    public removeWidgetService(placementId: string) {
 
         const postData = {
             TabId: "",
@@ -79,7 +79,7 @@ export class TuxboardService extends BaseService {
 
     /* Service: Update Collapsed Widget */
 
-    updateCollapsedWidgetService(widgetId: string, collapsed: boolean) {
+    public updateCollapsedWidgetService(widgetId: string, collapsed: boolean) {
 
         const postData = {
             Id: widgetId,
@@ -100,7 +100,7 @@ export class TuxboardService extends BaseService {
 
     /* Service: Get Widget Template */
 
-    getWidgetTemplate(placementId: string) {
+    public getWidgetTemplate(placementId: string) {
 
         const request = new Request(this.tuxWidgetTemplateUrl + placementId,
             { method: "get" });
@@ -113,7 +113,7 @@ export class TuxboardService extends BaseService {
 
     /* Service: Get Widget */
 
-    getWidgetService(placementId: string) {
+    public getWidgetService(placementId: string) {
 
         const request = new Request(this.tuxWidgetContentUrl + placementId,
             { method: "get" });
@@ -126,7 +126,7 @@ export class TuxboardService extends BaseService {
 
     /* Service: Refresh Tuxboard */
 
-    refreshService() {
+    public refreshService() {
 
         const request = new Request(this.tuxRefreshTuxboardUrl,
             { method: "get" });
@@ -137,7 +137,7 @@ export class TuxboardService extends BaseService {
             .catch(this.logError);
     }
 
-    getWidgetSettings(placementId: string) {
+    public getWidgetSettings(placementId: string) {
 
         const request = new Request(this.tuxWidgetSettingsUrl + placementId,
             { method: "get" });
@@ -150,22 +150,22 @@ export class TuxboardService extends BaseService {
 
     /* Service: Save Widget Settings */
 
-    saveSettings(values: SettingValue[]) {
-        let postData = {
+    public saveSettings(values: SettingValue[]) {
+        const postData = {
             Settings: Array.from(values).map((item: SettingValue) => {
                 return {
                     WidgetSettingId: item.WidgetSettingId,
                     Value: item.Value
                 }
             })
-        }
+        };
 
         const request = new Request(this.tuxWidgetSaveSettingsUrl,
             {
                 method: "POST",
                 body: JSON.stringify(postData),
                 headers: {
-                    'Content-Type': 'application/json'
+                    "Content-Type": "application/json"
                 }
             });
 
@@ -174,5 +174,4 @@ export class TuxboardService extends BaseService {
             .then(this.readResponseAsJson)
             .catch(this.logError);
     }
-
 }

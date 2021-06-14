@@ -1,8 +1,8 @@
-﻿import { TuxbarButton } from "./TuxbarButton";
-import { Tuxbar } from "./Tuxbar";
-import { AddWidgetDialog } from "../Dialogs/AddWidgetDialog/AddWidgetDialog";
-import { Modal, Tab } from "bootstrap";
+﻿import { AddWidgetDialog } from "../Dialogs/AddWidgetDialog/AddWidgetDialog";
 import { AddWidgetService } from "../../Extras/Dialogs/AddWidgetDialog/AddWidgetService";
+import { Modal, Tab } from "bootstrap";
+import { Tuxbar } from "./Tuxbar";
+import { TuxbarButton } from "./TuxbarButton";
 
 export class AddWidgetButton extends TuxbarButton {
 
@@ -24,19 +24,20 @@ export class AddWidgetButton extends TuxbarButton {
         }
     }
 
-    getDom() {
+    public getDom() {
         return this.tuxBar.getDom().querySelector(this.selector);
     }
 
-    displayDialogEvent(ev: Event, tuxbar: Tuxbar) {
+    public displayDialogEvent(ev: Event, tuxbar: Tuxbar) {
 
         const button: HTMLElement = ev.currentTarget as HTMLElement;
-        if (!button)
+        if (!button) {
             return;
+        }
 
         const dialog = new AddWidgetDialog(tuxbar.getTuxboard());
         dialog.getWidgetDialog().addEventListener('show.bs.modal',
-            e => {
+            () => {
                 this.service.getWidgetDialogService()
                     .then((result: string) => {
                         dialog.initialize(result);
@@ -48,5 +49,4 @@ export class AddWidgetButton extends TuxbarButton {
         const bsDialog = new Modal(dialog.getWidgetDialog());
         bsDialog.show();
     }
-
 }

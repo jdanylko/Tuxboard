@@ -6,5 +6,4 @@ export class WidgetProperties {
         public ColumnIndex: number,
         public Index: number,
         public LayoutRowId: string) { }
-
 }

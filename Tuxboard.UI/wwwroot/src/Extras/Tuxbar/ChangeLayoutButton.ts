@@ -1,9 +1,9 @@
-﻿import { TuxbarButton } from "./TuxbarButton";
-import { Tuxbar } from "./Tuxbar";
-import { ChangeLayoutDialog } from "../Dialogs/ChangeLayoutDialog/ChangeLayoutDialog";
-import { Tuxboard } from "../../Tuxboard";
-import { Modal } from "bootstrap";
+﻿import { ChangeLayoutDialog } from "../Dialogs/ChangeLayoutDialog/ChangeLayoutDialog";
 import { ChangeLayoutService } from "../Dialogs/ChangeLayoutDialog/ChangeLayoutService";
+import { Modal } from "bootstrap";
+import { Tuxbar } from "./Tuxbar";
+import { TuxbarButton } from "./TuxbarButton";
+import { Tuxboard } from "../../Tuxboard";
 
 export class ChangeLayoutButton extends TuxbarButton {
 
@@ -25,22 +25,23 @@ export class ChangeLayoutButton extends TuxbarButton {
         }
     }
 
-    getDom() {
+    public getDom() {
         return this.tuxBar.getDom().querySelector(this.selector)
     }
 
-    changeLayoutClick(ev: Event, tuxbar: Tuxbar) {
+    public changeLayoutClick(ev: Event, tuxbar: Tuxbar) {
 
         const button: HTMLElement = ev.currentTarget as HTMLElement;
-        if (!button)
+        if (!button) {
             return;
+        }
 
         const dashboard: Tuxboard = tuxbar.getTuxboard();
         const tab = dashboard.getTab();
         const dialog = new ChangeLayoutDialog(dashboard);
 
-        dialog.getDom().addEventListener('show.bs.modal',
-            e => {
+        dialog.getDom().addEventListener("show.bs.modal",
+            (e): void => {
                 this.service.getLayoutDialog(tab.getCurrentTabId())
                     .then((result: string) => {
                         dialog.initialize(result);

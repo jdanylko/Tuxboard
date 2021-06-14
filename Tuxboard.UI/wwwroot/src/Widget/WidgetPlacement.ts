@@ -1,8 +1,8 @@
 ﻿import { dataId, isStaticAttribute, clearNodes, collapsedToggleSelector } from "../core/common";
+import { TuxboardService } from "../Services/TuxboardService";
+import { WidgetProperties } from "../Models/WidgetProperties";
 import { WidgetSettings } from "./WidgetSettings";
 import { WidgetToolBar } from "./WidgetToolbar/WidgetToolBar";
-import { TuxboardService } from "../Services/TuxboardService";
-import { WidgetProperties} from "../Models/WidgetProperties";
 
 export class WidgetPlacement {
 
@@ -13,7 +13,7 @@ export class WidgetPlacement {
     private generalOverlaySelector: string = ".overlay";
     private loadingSelector: string = ".loading-status";
     private widgetOverlaySelector: string = this.generalOverlaySelector + this.loadingSelector;
-    
+
     // Comment out for no toolbar
     private toolbar: WidgetToolBar;
 
@@ -32,73 +32,100 @@ export class WidgetPlacement {
         this.settings = new WidgetSettings(this);
     }
 
-    isCollapsed() {
+    public isCollapsed() {
         return this.getDom().classList.contains(collapsedToggleSelector);
     }
 
-    isStatic() {
+    public isStatic() {
         return this.getDom().getAttribute(isStaticAttribute) === "true";
     }
 
-    getDom():HTMLElement { return this.parent.querySelector(this.getSelector()) }
-    getAttributeName() { return dataId }
-    setPlacementId(value: string) { this.placementId = value }
-    getPlacementId():string { return this.placementId }
-    setIndex(value: number) { this.index = value }
-    getIndex() { return this.index }
-    setColumnIndex(value: number) { this.columnIndex = value }
-    getColumnIndex() { return this.columnIndex }
+    public getDom(): HTMLElement {
+        return this.parent.querySelector(this.getSelector())
+    }
+    public getAttributeName() {
+        return dataId
+    }
 
-    getSelector() { return this.getSelectorWithId(this.getPlacementId()); }
+    public setPlacementId(value: string) {
+        this.placementId = value
+    }
+    public getPlacementId(): string {
+        return this.placementId
+    }
+    public setIndex(value: number) {
+        this.index = value
+    }
+    public getIndex() {
+        return this.index
+    }
+    public setColumnIndex(value: number) {
+        this.columnIndex = value
+    }
+    public getColumnIndex() {
+        return this.columnIndex
+    }
 
-    getSelectorWithId(placementId: string) {
+    public getSelector() {
+        return this.getSelectorWithId(this.getPlacementId());
+    }
+
+    public getSelectorWithId(placementId: string) {
         // ".card[data-id='blahblahblah']"
         return `${this.widgetSelector}[${this.getAttributeName()}='${placementId}']`;
     }
 
-    getBody() {
+    public getBody() {
         return this.getDom().querySelector(this.widgetBodySelector);
     }
 
-    hideBody() {
+    public hideBody() {
         const body = this.getBody();
         if (body && body.getAttribute('hidden') === null) {
             body.setAttribute('hidden', '');
         }
     }
 
-    showBody() {
+    public showBody() {
         const body = this.getBody();
         if (body && body.getAttribute('hidden') !== null) {
             body.removeAttribute('hidden');
         }
     }
 
-    getOverlay() {
+    public getOverlay() {
         return this.getDom().querySelector(this.widgetOverlaySelector);
     }
 
-    showOverlay() {
+    public showOverlay() {
         const overlay = this.getOverlay();
         if (overlay && overlay.getAttribute('hidden') !== null) {
             overlay.removeAttribute('hidden');
         }
     }
 
-    hideOverlay() {
+    public hideOverlay() {
         const overlay = this.getOverlay();
         if (overlay && overlay.getAttribute('hidden') === null) {
             overlay.setAttribute('hidden', '');
         }
     }
 
-    getWidgetBodySelector() { return this.widgetBodySelector; }
-    setWidgetBodySelector(value: string) { this.widgetBodySelector = value; }
+    public getWidgetBodySelector() {
+        return this.widgetBodySelector;
+    }
+    public setWidgetBodySelector(value: string) {
+        this.widgetBodySelector = value;
+    }
 
-    getWidgetOverlay() { return this.widgetOverlaySelector; }
-    setWidgetOverlay(value: string) { this.widgetOverlaySelector = value; }
+    public getWidgetOverlay() {
+        return this.widgetOverlaySelector;
+    }
+    public setWidgetOverlay(value: string) {
+        this.widgetOverlaySelector = value;
+    }
 
-    setBody(html: string) {
+    public setBody(html: string) {
         const widget = this.getDom();
         if (widget) {
             const modalBody = widget.querySelector(this.widgetBodySelector);
@@ -109,27 +136,28 @@ export class WidgetPlacement {
         }
     }
 
-    setTitle(title: string) {
+    public setTitle(title: string) {
         const widgetTitle = this.getDom().querySelector(this.widgetTitleSelector);
         if (widgetTitle) {
             widgetTitle.innerHTML = title;
         }
     }
 
-    showWidgetSettings() {
+    public showWidgetSettings() {
         this.settings.displaySettings();
     }
 
-    updateWidgetToolbar() {
+    public updateWidgetToolbar() {
         if (typeof this.toolbar != "object") {
             this.toolbar = new WidgetToolBar(this);
         }
     }
 
-    update() {
+    public update() {
 
-        if (this.isStatic())
+        if (this.isStatic()) {
             return;
+        }
 
         this.showOverlay();
 
@@ -146,7 +174,7 @@ export class WidgetPlacement {
             });
     }
 
-    getProperties() {
+    public getProperties() {
         return new WidgetProperties(
             this.placementId,
             this.getColumnIndex(),
@@ -154,5 +182,4 @@ export class WidgetPlacement {
             this.parent.getAttribute(dataId)
         );
     }
-
 }

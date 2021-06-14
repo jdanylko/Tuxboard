@@ -2,5 +2,5 @@
     Success,
     Warning,
     Danger,
-    Information
+    Information,
 }
