@@ -36,7 +36,7 @@ export class AddWidgetButton extends TuxbarButton {
         }
 
         const dialog = new AddWidgetDialog(tuxbar.getTuxboard());
-        dialog.getWidgetDialog().addEventListener('show.bs.modal',
+        dialog.getWidgetDialog().addEventListener("show.bs.modal",
             () => {
                 this.service.getWidgetDialogService()
                     .then((result: string) => {

@@ -36,9 +36,6 @@ namespace Tuxboard.UI
             
             services.Configure<RazorViewEngineOptions>(o =>
             {
-                //o.ViewLocationFormats.Add(appConfig.WidgetFolder);
-                //o.ViewLocationFormats.Add(appConfig.ViewFolder);
-                //o.ViewLocationFormats.Add(appConfig.ComponentFolder + RazorViewEngine.ViewExtension);
                 o.ViewLocationExpanders.Add(
                     new TuxboardViewLocationExpander(
                         appConfig.WidgetFolder,

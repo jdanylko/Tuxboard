@@ -3,7 +3,7 @@
     <ul class="layout-list list-unstyled">
         @foreach (var row in Model.CurrentLayout.LayoutRows.OrderBy(t => t.RowIndex))
         {
-            <partial name="LayoutRow" model="row" />
+            @await Html.PartialAsync("LayoutRow", row)
         }
     </ul>
 

@@ -340,3 +340,5 @@ ASALocalRun/
 healthchecksdb
 /Tuxboard.UI/contentFiles/cs/netcoreapp3.1
 /Tuxboard.Core/Migrations
+/Tuxboard.UI/wwwroot/lib
+/Tuxboard.UI/wwwroot/js

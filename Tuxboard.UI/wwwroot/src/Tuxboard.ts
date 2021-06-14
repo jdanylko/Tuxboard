@@ -7,7 +7,8 @@ import {
     getDataId,
     getWidgetSnapshot,
     isWidget,
-    noPeriod } from "./core/common";
+    noPeriod
+} from "./core/common";
 import { DragWidgetInfo } from "./Models/DragWidgetInfo";
 import { Layout } from "./core/Layout";
 import { LayoutRow } from "./core/LayoutRow";
@@ -100,7 +101,7 @@ export class Tuxboard {
     }
 
     public updateWidgets(widgets: WidgetPlacement[]) {
-        Array.from(widgets).map( (placement: WidgetPlacement) => {
+        Array.from(widgets).map((placement: WidgetPlacement) => {
             placement.update();
         });
     }
@@ -273,7 +274,7 @@ export class Tuxboard {
         self.dragInfo.placementList = getWidgetSnapshot(self.dragInfo);
 
         const selected = self.dragInfo.placementList
-            .filter((elem:PlacementItem) => elem.PlacementId === id);
+            .filter((elem: PlacementItem) => elem.PlacementId === id);
         if (selected && selected.length > 0) {
             self.dragInfo.currentLayoutRowId = selected[0].LayoutRowId;
             self.dragInfo.currentColumnIndex = selected[0].ColumnIndex;
