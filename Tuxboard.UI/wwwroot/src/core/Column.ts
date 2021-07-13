@@ -14,8 +14,8 @@ export class Column {
 
     constructor(
         private readonly parent: HTMLElement,
-        private readonly selector: string = null
-    ) {
+        private readonly selector: string = null)
+    {
         this.columnSelector = selector || this.columnSelector;
     }
 
@@ -42,8 +42,9 @@ export class Column {
     }
 
     public getPlacement(placementId: string) {
-        const item = this.getWidgetCollection().getWidgets().find((item, index) => item.getPlacementId() === placementId);
-        return item.getDom();
+        const widget = this.getWidgetCollection().getWidgets()
+            .find((item, index) => item.getPlacementId() === placementId);
+        return widget.getDom();
     }
 
     public getColumnByPlacement(placementId:string) {

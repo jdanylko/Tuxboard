@@ -7,8 +7,7 @@ import {
     getDataId,
     getWidgetSnapshot,
     isWidget,
-    noPeriod
-} from "./core/common";
+    noPeriod } from "./core/common";
 import { DragWidgetInfo } from "./Models/DragWidgetInfo";
 import { Layout } from "./core/Layout";
 import { LayoutRow } from "./core/LayoutRow";
@@ -180,8 +179,7 @@ export class Tuxboard {
             column.getIndex(),
             column.layoutRowId,
             column.getIndex(),
-            column.layoutRowId
-        );
+            column.layoutRowId);
 
         ev.dataTransfer.setData('text', JSON.stringify(self.dragInfo));
     }

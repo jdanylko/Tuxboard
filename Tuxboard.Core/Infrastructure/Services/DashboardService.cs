@@ -25,6 +25,11 @@ namespace Tuxboard.Core.Infrastructure.Services
 
         #region Sync
 
+        public Dashboard GetDashboard(ITuxboardConfig config)
+        {
+            return _context.GetDashboard(config);
+        }
+
         public Dashboard GetDashboardFor(ITuxboardConfig config, string userId)
         {
             if (!_context.DashboardExistsFor(userId))
@@ -60,6 +65,16 @@ namespace Tuxboard.Core.Infrastructure.Services
         }
 
         public Dashboard CreateDashboardFrom(DashboardDefault template, string userId)
+        {
+            return CreateFromTemplate(template, userId);
+        }
+
+        public Dashboard CreateDashboardFrom(DashboardDefault template)
+        {
+            return CreateFromTemplate(template);
+        }
+
+        public Dashboard CreateFromTemplate(DashboardDefault template, string userId = null)
         {
             var dashboard = Dashboard.Create(userId);
             _context.Dashboard.Add(dashboard);
@@ -322,6 +337,22 @@ namespace Tuxboard.Core.Infrastructure.Services
 
         #region Async
 
+        public async Task<Dashboard> GetDashboardAsync(ITuxboardConfig config)
+        {
+            if (!await _context.DashboardExistsAsync())
+            {
+                // Pass in a planid (int) to pull back specific dashboards.
+                // If nothing passed, it'll grab the first Dashboard Template.
+                var template = await _context.GetDashboardTemplateForAsync();
+
+                await CreateDashboardFromAsync(template);
+
+                await _context.SaveChangesAsync(new CancellationToken());
+            }
+
+            return await _context.GetDashboardAsync(config);
+        }
+
         public async Task<Dashboard> GetDashboardForAsync(ITuxboardConfig config, string userId)
         {
             if (!await _context.DashboardExistsForAsync(userId))
@@ -435,13 +466,21 @@ namespace Tuxboard.Core.Infrastructure.Services
             return success;
         }
 
-        public async Task<Dashboard> CreateDashboardFromAsync(DashboardDefault template, string userId)
+        public Task<Dashboard> CreateDashboardFromAsync(DashboardDefault template, string userId)
+        {
+            return CreateFromTemplateAsync(template, userId);
+        }
+
+        public Task<Dashboard> CreateDashboardFromAsync(DashboardDefault template)
+        {
+            return CreateFromTemplateAsync(template);
+        }
+
+        public async Task<Dashboard> CreateFromTemplateAsync(DashboardDefault template, string userId = null)
         {
             var dashboard = Dashboard.Create(userId);
             await _context.Dashboard.AddAsync(dashboard);
-
-            // Need to save for the TabId to be used below.
-            await _context.SaveChangesAsync(new CancellationToken());
+            await _context.SaveChangesAsync(CancellationToken.None);
 
             var currentTab = dashboard.GetCurrentTab();
             var tabId = currentTab.TabId;
@@ -449,6 +488,7 @@ namespace Tuxboard.Core.Infrastructure.Services
             currentTab.Layouts = Layout.CreateDefaultLayouts(tabId, template);
 
             return dashboard;
+
         }
 
         public async Task<WidgetPlacement> SaveWidgetPlacementAsync(PlacementParameter param)

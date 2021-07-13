@@ -124,7 +124,7 @@ namespace Tuxboard.UI.TuxboardFeature.LayoutDialog
         private string GetCurrentUser()
         {
             if (string.IsNullOrEmpty(User.Identity.Name))
-                return _config.DefaultUser;
+                return null;
 
             var claimsIdentity = (ClaimsIdentity)User.Identity;
             var claim = claimsIdentity.FindFirst(ClaimTypes.NameIdentifier);

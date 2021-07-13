@@ -6,6 +6,7 @@
     "@babel/core": "^7.13.8",
     "@fortawesome/fontawesome-free": "^5.15.3",
     "@popperjs/core": "^2.9.2",
+    "@types/bootstrap": "^5.0.16",
     "@types/gulp": "^4.0.8",
     "babel-preset-es2015": "^6.24.1",
     "babelify": "^7.3.0",

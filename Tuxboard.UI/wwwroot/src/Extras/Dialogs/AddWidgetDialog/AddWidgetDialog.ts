@@ -1,10 +1,10 @@
 ﻿import { AddWidgetService } from "./AddWidgetService";
 import { BaseDialog } from "../../../core/BaseDialog";
 import { dataId, disableElement, enableElement, noPeriod } from "../../../core/common";
+import { Modal, Tab } from "bootstrap";
 import { Tuxboard } from "../../../Tuxboard";
 import { TuxboardService } from "../../../Services/TuxboardService";
 import { WidgetPlacement } from "../../../Widget/WidgetPlacement";
-import { Modal, Tab } from "bootstrap";
 
 export class AddWidgetDialog extends BaseDialog {
 
@@ -62,7 +62,7 @@ export class AddWidgetDialog extends BaseDialog {
     }
 
     public hide() {
-        const modal = Modal.getInstance(this.getWidgetDialog()); // Returns a Bootstrap modal instance
+        const modal = Modal.getInstance(this.getWidgetDialog());
         if (modal) {
             modal.hide();
         }
@@ -87,7 +87,7 @@ export class AddWidgetDialog extends BaseDialog {
     }
 
     public selectWidget(ev: Event) {
-        var target = ev.currentTarget as HTMLDivElement;
+        const target = ev.currentTarget as HTMLDivElement;
         const isSelected = target.classList.contains(this.getSelectedSelector());
 
         this.resetSelectedWidgets();
@@ -146,7 +146,7 @@ export class AddWidgetDialog extends BaseDialog {
     public setupWidgetTabs() {
         const tabTriggers = this.getWidgetTabGroups();
 
-        tabTriggers.forEach(triggerEl => {
+        tabTriggers.forEach((triggerEl): void => {
 
             const tabTrigger = new Tab(triggerEl);
 

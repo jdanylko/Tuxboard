@@ -7,6 +7,8 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Tuxboard.UI", "Tuxboard.UI\
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Tuxboard.Core", "Tuxboard.Core\Tuxboard.Core.csproj", "{F4CE05B7-7777-45FD-B6EC-F35D3E351C63}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "StaticDashboard", "StaticDashboard\StaticDashboard.csproj", "{B92386D4-9E02-4F31-942C-5D6911B6151C}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -21,6 +23,10 @@ Global
 		{F4CE05B7-7777-45FD-B6EC-F35D3E351C63}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{F4CE05B7-7777-45FD-B6EC-F35D3E351C63}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{F4CE05B7-7777-45FD-B6EC-F35D3E351C63}.Release|Any CPU.Build.0 = Release|Any CPU
+		{B92386D4-9E02-4F31-942C-5D6911B6151C}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{B92386D4-9E02-4F31-942C-5D6911B6151C}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{B92386D4-9E02-4F31-942C-5D6911B6151C}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{B92386D4-9E02-4F31-942C-5D6911B6151C}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

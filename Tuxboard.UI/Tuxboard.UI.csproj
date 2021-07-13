@@ -6,7 +6,7 @@
   -->
 
   <PropertyGroup>
-    <TargetFramework>netcoreapp3.1</TargetFramework>
+    <TargetFramework>net5.0</TargetFramework>
     <GeneratePackageOnBuild>false</GeneratePackageOnBuild>
     <Authors>Jonathan "JD" Danylko</Authors>
     <Product>Tuxboard</Product>
@@ -59,17 +59,17 @@
   <ItemGroup>
     <PackageReference Include="BuildBundlerMinifier" Version="3.2.449" />
     <PackageReference Include="BuildWebCompiler" Version="1.12.405" />
-    <PackageReference Include="Lamar" Version="4.3.1" />
-    <PackageReference Include="Lamar.Microsoft.DependencyInjection" Version="4.3.1" />
-    <PackageReference Include="Microsoft.EntityFrameworkCore.Design" Version="3.1.8">
+    <PackageReference Include="Lamar" Version="5.0.4" />
+    <PackageReference Include="Lamar.Microsoft.DependencyInjection" Version="5.0.4" />
+    <PackageReference Include="Microsoft.EntityFrameworkCore.Design" Version="5.0.7">
       <PrivateAssets>all</PrivateAssets>
       <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
     </PackageReference>
-    <PackageReference Include="Microsoft.TypeScript.MSBuild" Version="4.0.3">
+    <PackageReference Include="Microsoft.TypeScript.MSBuild" Version="4.3.2">
       <PrivateAssets>all</PrivateAssets>
       <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
     </PackageReference>
-    <PackageReference Include="Microsoft.VisualStudio.Web.CodeGeneration.Design" Version="3.1.4" />
+    <PackageReference Include="Microsoft.VisualStudio.Web.CodeGeneration.Design" Version="5.0.2" />
   </ItemGroup>
 
 

@@ -7,8 +7,8 @@ export class ColumnCollection {
     constructor(
         private readonly parent: HTMLElement,
         private readonly layoutRowId: string,
-        selector: string = null
-    ) {
+        selector: string = null)
+    {
         this.columnSelector = selector || this.columnSelector;
     }
 

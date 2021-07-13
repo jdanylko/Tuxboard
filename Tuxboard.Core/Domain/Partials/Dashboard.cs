@@ -11,13 +11,14 @@ namespace Tuxboard.Core.Domain.Entities
         [NotMapped]
         public ITuxboardConfig Settings { get; set; }
 
-        public static Dashboard Create(string userId)
+        public static Dashboard Create(string userId = null)
         {
-            return new Dashboard
+            return new()
             {
                 SelectedTab = 1,
-                Tabs = new List<DashboardTab> {
-                    new DashboardTab
+                Tabs = new List<DashboardTab>
+                {
+                    new()
                     {
                         TabIndex = 1,
                         TabTitle = "Default"

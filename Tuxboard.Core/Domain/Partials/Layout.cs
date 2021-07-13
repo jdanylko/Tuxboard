@@ -18,8 +18,22 @@ namespace Tuxboard.Core.Domain.Entities
 
         public static List<Layout> CreateDefaultLayouts(string tabId, DashboardDefault defaultDashboard)
         {
+            // No default dashboard exists.
+            if (defaultDashboard == null)
+            {
+                return new List<Layout>
+                {
+                    new()
+                    {
+                        LayoutIndex = 1,
+                        TabId = tabId
+                    }
+                };
+            }
+
             return new List<Layout>{
-                new Layout {
+                new()
+                {
                     LayoutIndex = defaultDashboard.Layout.LayoutIndex,
                     TabId = tabId,
                     LayoutRows = new List<LayoutRow>(
@@ -44,11 +58,11 @@ namespace Tuxboard.Core.Domain.Entities
 
         public LayoutDto ToDto()
         {
-            return new LayoutDto
+            return new()
             {
                 LayoutId = LayoutId,
                 LayoutIndex = LayoutIndex,
-                LayoutRows = Enumerable.Select<LayoutRow, LayoutRowDto>(LayoutRows, e => e.ToDto())
+                LayoutRows = LayoutRows.Select<LayoutRow, LayoutRowDto>(e => e.ToDto())
                     .OrderBy(y=> y.RowIndex)
                     .ToList()
             };
@@ -98,7 +112,7 @@ namespace Tuxboard.Core.Domain.Entities
 
         public WidgetPlacement GetWidgetPlacement(string placementId)
         {
-            return LayoutRows.SelectMany<LayoutRow, WidgetPlacement>(e => e.WidgetPlacements)
+            return LayoutRows.SelectMany(e => e.WidgetPlacements)
                 .FirstOrDefault(e => e.WidgetPlacementId == placementId);
         }
     }

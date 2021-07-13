@@ -2,6 +2,6 @@
 
 export class LayoutModel {
 
-    constructor(public LayoutList: Array<LayoutItem>, public TabId: string) { }
+    constructor(public LayoutList: LayoutItem[], public TabId: string) { }
 
 }

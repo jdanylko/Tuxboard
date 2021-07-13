@@ -26,6 +26,6 @@
     }
 
     protected logError(error:Error) {
-        console.log('Issue w/ fetch call: \n', error);
+        // console.log("Issue w/ fetch call: \n", error);
     }
 }

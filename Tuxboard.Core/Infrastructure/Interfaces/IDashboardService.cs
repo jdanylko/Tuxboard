@@ -11,6 +11,9 @@ namespace Tuxboard.Core.Infrastructure.Interfaces
     {
         Dashboard GetDashboardFor(ITuxboardConfig config, string userId);
         Task<Dashboard> GetDashboardForAsync(ITuxboardConfig config, string userId);
+
+        Dashboard GetDashboard(ITuxboardConfig config);
+        Task<Dashboard> GetDashboardAsync(ITuxboardConfig config);
         
         Layout GetLayoutFromTab(string tabId);
         Task<Layout> GetLayoutFromTabAsync(string tabId);
@@ -18,8 +21,8 @@ namespace Tuxboard.Core.Infrastructure.Interfaces
         List<WidgetPlacement> GetWidgetsForTab(DashboardTab tab);
         Task<List<WidgetPlacement>> GetWidgetsForTabAsync(DashboardTab tab);
 
-        Dashboard CreateDashboardFrom(DashboardDefault template, string userId);
-        Task<Dashboard> CreateDashboardFromAsync(DashboardDefault template, string userId);
+        Dashboard CreateDashboardFrom(DashboardDefault template, string userId = "");
+        Task<Dashboard> CreateDashboardFromAsync(DashboardDefault template, string userId = "");
 
         List<LayoutType> GetLayoutTypes();
         Task<List<LayoutType>> GetLayoutTypesAsync();

@@ -13,8 +13,8 @@ export class LayoutRow {
 
     constructor(
         private readonly parent: HTMLElement,
-        selector: string = null
-    ) {
+        selector: string = null)
+    {
         this.layoutRowSelector = selector || this.layoutRowSelector;
     }
 
