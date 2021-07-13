@@ -342,3 +342,6 @@ healthchecksdb
 /Tuxboard.Core/Migrations
 /Tuxboard.UI/wwwroot/lib
 /Tuxboard.UI/wwwroot/js
+/UserDashboard/wwwroot/lib
+/UserSpecificDashboard/wwwroot/css/tuxboard.min.css
+/UserSpecificDashboard/wwwroot/js/tuxboard.min.js
