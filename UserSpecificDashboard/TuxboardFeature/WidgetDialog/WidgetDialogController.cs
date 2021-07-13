@@ -11,7 +11,7 @@ using Tuxboard.Core.Infrastructure.Models;
 using Tuxboard.Core.Infrastructure.ViewModels;
 using Tuxboard.Core.UI;
 
-namespace Tuxboard.UI.TuxboardFeature.WidgetDialog
+namespace UserSpecificDashboard.TuxboardFeature.WidgetDialog
 {
     public class WidgetDialogController : Controller
     {

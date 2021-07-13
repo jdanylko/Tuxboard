@@ -3,7 +3,7 @@ using Microsoft.AspNetCore.Mvc;
 using Tuxboard.Core.Domain.Entities;
 using Tuxboard.Core.UI;
 
-namespace Tuxboard.UI.TuxboardFeature.Widgets.Table
+namespace UserSpecificDashboard.TuxboardFeature.Widgets.Table
 {
     [ViewComponent(Name="table")]
     public class TableViewComponent : ViewComponent

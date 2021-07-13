@@ -1,4 +1,4 @@
-﻿namespace Tuxboard.UI.TuxboardFeature.Widgets.Chart.ChartJsModel
+﻿namespace UserSpecificDashboard.TuxboardFeature.Widgets.Chart.ChartJsModel
 {
     public class yAxes
     {

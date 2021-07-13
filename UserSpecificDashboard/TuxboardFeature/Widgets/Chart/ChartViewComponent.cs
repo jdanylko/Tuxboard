@@ -2,7 +2,7 @@
 using Tuxboard.Core.Domain.Entities;
 using Tuxboard.Core.UI;
 
-namespace Tuxboard.UI.TuxboardFeature.Widgets.Chart
+namespace UserSpecificDashboard.TuxboardFeature.Widgets.Chart
 {
     [ViewComponent(Name="chart")]
     public class ChartViewComponent : ViewComponent

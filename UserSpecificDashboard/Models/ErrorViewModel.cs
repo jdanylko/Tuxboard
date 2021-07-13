@@ -1,4 +1,4 @@
-namespace Tuxboard.UI.Models
+namespace UserSpecificDashboard.Models
 {
     public class ErrorViewModel
     {

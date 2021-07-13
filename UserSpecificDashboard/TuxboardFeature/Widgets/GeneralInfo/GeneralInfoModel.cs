@@ -1,6 +1,6 @@
 ﻿using Tuxboard.Core.Infrastructure.Models;
 
-namespace Tuxboard.UI.TuxboardFeature.Widgets.GeneralInfo
+namespace UserSpecificDashboard.TuxboardFeature.Widgets.GeneralInfo
 {
     public class GeneralInfoModel : WidgetModel
     {

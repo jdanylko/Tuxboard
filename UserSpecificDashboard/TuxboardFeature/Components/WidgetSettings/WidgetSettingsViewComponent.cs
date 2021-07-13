@@ -2,7 +2,7 @@
 using Microsoft.AspNetCore.Razor.TagHelpers;
 using Tuxboard.Core.Domain.Entities;
 
-namespace Tuxboard.UI.TuxboardFeature.Components.WidgetSettings
+namespace UserSpecificDashboard.TuxboardFeature.Components.WidgetSettings
 {
     [HtmlTargetElement("widget-settings")]
     public class WidgetSettingsViewComponent : ViewComponent

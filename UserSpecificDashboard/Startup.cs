@@ -9,7 +9,7 @@ using Tuxboard.Core.Configuration;
 using Tuxboard.Core.Data.Context;
 using Tuxboard.Core.UI;
 
-namespace Tuxboard.UI
+namespace UserSpecificDashboard
 {
     public class Startup
     {

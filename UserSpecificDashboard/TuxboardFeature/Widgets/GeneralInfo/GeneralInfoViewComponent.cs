@@ -2,7 +2,7 @@
 using Tuxboard.Core.Domain.Entities;
 using Tuxboard.Core.UI;
 
-namespace Tuxboard.UI.TuxboardFeature.Widgets.GeneralInfo
+namespace UserSpecificDashboard.TuxboardFeature.Widgets.GeneralInfo
 {
     [ViewComponent(Name = "generalinfo")]
     public class GeneralInfoViewComponent : ViewComponent

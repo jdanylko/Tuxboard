@@ -1,7 +1,7 @@
 ﻿using Tuxboard.Core.Infrastructure.Models;
-using Tuxboard.UI.TuxboardFeature.Widgets.Chart.ChartJsModel;
+using UserSpecificDashboard.TuxboardFeature.Widgets.Chart.ChartJsModel;
 
-namespace Tuxboard.UI.TuxboardFeature.Widgets.Chart
+namespace UserSpecificDashboard.TuxboardFeature.Widgets.Chart
 {
     public class ChartModel : WidgetModel
     {

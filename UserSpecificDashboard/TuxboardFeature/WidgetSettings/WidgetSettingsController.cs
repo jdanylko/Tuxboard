@@ -4,7 +4,7 @@ using Microsoft.Extensions.Logging;
 using Tuxboard.Core.Infrastructure.Interfaces;
 using Tuxboard.Core.Infrastructure.ViewModels;
 
-namespace Tuxboard.UI.TuxboardFeature.WidgetSettings
+namespace UserSpecificDashboard.TuxboardFeature.WidgetSettings
 {
     public class WidgetSettingsController : Controller
     {

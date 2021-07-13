@@ -1,7 +1,7 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Razor.TagHelpers;
 
-namespace Tuxboard.UI.TuxboardFeature.Components.Tuxbar
+namespace UserSpecificDashboard.TuxboardFeature.Components.Tuxbar
 {
     [HtmlTargetElement("tuxbar")]
     public class TuxbarViewComponent : ViewComponent

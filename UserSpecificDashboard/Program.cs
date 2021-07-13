@@ -2,9 +2,9 @@ using Lamar.Microsoft.DependencyInjection;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.Hosting;
-using Tuxboard.UI.LamarRegistry;
+using UserSpecificDashboard.LamarRegistry;
 
-namespace Tuxboard.UI
+namespace UserSpecificDashboard
 {
     public class Program
     {

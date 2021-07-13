@@ -4,7 +4,7 @@ using Tuxboard.Core.Data.Context;
 using Tuxboard.Core.Infrastructure.Interfaces;
 using Tuxboard.Core.Infrastructure.Services;
 
-namespace Tuxboard.UI.LamarRegistry
+namespace UserSpecificDashboard.LamarRegistry
 {
     public class TuxboardRegistry : ServiceRegistry
     {

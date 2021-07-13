@@ -3,7 +3,7 @@ using Tuxboard.Core.Domain.Entities;
 using Tuxboard.Core.Infrastructure.Models;
 using Tuxboard.Core.UI;
 
-namespace Tuxboard.UI.TuxboardFeature.Widgets.HelloWorld
+namespace UserSpecificDashboard.TuxboardFeature.Widgets.HelloWorld
 {
     [ViewComponent(Name="helloworld")]
     public class HelloWorldViewComponent : ViewComponent

@@ -10,7 +10,7 @@ using Tuxboard.Core.Domain.Entities;
 using Tuxboard.Core.Infrastructure.Interfaces;
 using Tuxboard.Core.Infrastructure.Models;
 
-namespace Tuxboard.UI.TuxboardFeature.Tuxboard
+namespace UserSpecificDashboard.TuxboardFeature.Tuxboard
 {
     public class TuxboardController : Controller
     {

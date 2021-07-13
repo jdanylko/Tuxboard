@@ -3,7 +3,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 using Tuxboard.Core.Infrastructure.Interfaces;
 
-namespace Tuxboard.UI.TuxboardFeature
+namespace UserSpecificDashboard.TuxboardFeature
 {
     public class WidgetContentController : Controller
     {

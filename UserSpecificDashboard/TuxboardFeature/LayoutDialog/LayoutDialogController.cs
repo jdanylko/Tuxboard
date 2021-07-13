@@ -10,7 +10,7 @@ using Tuxboard.Core.Domain.Entities;
 using Tuxboard.Core.Infrastructure.Interfaces;
 using Tuxboard.Core.Infrastructure.ViewModels;
 
-namespace Tuxboard.UI.TuxboardFeature.LayoutDialog
+namespace UserSpecificDashboard.TuxboardFeature.LayoutDialog
 {
     public class LayoutDialogController : Controller
     {

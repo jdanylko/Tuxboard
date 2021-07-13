@@ -1,9 +1,7 @@
-﻿using System.Threading.Tasks;
-using Microsoft.AspNetCore.Mvc;
-using Microsoft.AspNetCore.Razor.TagHelpers;
+﻿using Microsoft.AspNetCore.Mvc;
 using Tuxboard.Core.Domain.Entities;
 
-namespace Tuxboard.UI.TuxboardFeature.Components.Tuxboard
+namespace UserSpecificDashboard.TuxboardFeature.Components.Tuxboard
 {
     [ViewComponent]
     public class TuxboardViewComponent : ViewComponent

@@ -1,7 +1,7 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using Tuxboard.Core.Domain.Entities;
 
-namespace Tuxboard.UI.TuxboardFeature.Components.LayoutTemplate
+namespace UserSpecificDashboard.TuxboardFeature.Components.LayoutTemplate
 {
     public class LayoutTemplateViewComponent : ViewComponent
     {

@@ -1,4 +1,4 @@
-﻿namespace Tuxboard.UI.TuxboardFeature.Widgets.Table
+﻿namespace UserSpecificDashboard.TuxboardFeature.Widgets.Table
 {
     public class Product
     {

@@ -1,13 +1,13 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using System.Security.Claims;
+using System.Threading.Tasks;
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.Logging;
-using System.Security.Claims;
-using System.Threading.Tasks;
 using Tuxboard.Core.Configuration;
 using Tuxboard.Core.Infrastructure.Interfaces;
 using Tuxboard.Core.Infrastructure.ViewModels;
 
-namespace Tuxboard.UI.Controllers
+namespace UserSpecificDashboard.Controllers
 {
 
     public class HomeController : Controller
