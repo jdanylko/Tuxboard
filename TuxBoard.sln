@@ -3,7 +3,7 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 16
 VisualStudioVersion = 16.0.29411.108
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Tuxboard.UI", "Tuxboard.UI\Tuxboard.UI.csproj", "{2AA92AAE-8D95-4426-A6B5-DA4A5B6E62B6}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "UserSpecificDashboard", "UserSpecificDashboard\UserSpecificDashboard.csproj", "{2AA92AAE-8D95-4426-A6B5-DA4A5B6E62B6}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Tuxboard.Core", "Tuxboard.Core\Tuxboard.Core.csproj", "{F4CE05B7-7777-45FD-B6EC-F35D3E351C63}"
 EndProject
