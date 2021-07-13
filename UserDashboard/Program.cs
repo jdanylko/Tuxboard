@@ -1,11 +1,10 @@
-using Microsoft.AspNetCore.Hosting;
-using Microsoft.Extensions.Configuration;
-using Microsoft.Extensions.Hosting;
-using Microsoft.Extensions.Logging;
-using System;
-using System.Collections.Generic;
-using System.Linq;
 using System.Threading.Tasks;
+using Microsoft.AspNetCore.Hosting;
+using Microsoft.Extensions.Hosting;
+using UserDashboard.LamarRegistry;
+using Lamar.Microsoft.DependencyInjection;
+using Microsoft.Extensions.Configuration;
+
 
 namespace UserDashboard
 {
@@ -18,9 +17,26 @@ namespace UserDashboard
 
         public static IHostBuilder CreateHostBuilder(string[] args) =>
             Host.CreateDefaultBuilder(args)
+                //.UseLamar<TuxboardRegistry>()
                 .ConfigureWebHostDefaults(webBuilder =>
                 {
                     webBuilder.UseStartup<Startup>();
                 });
+
+        //public static async Task Main(string[] args)
+        //{
+        //    var builder = new HostBuilder();
+        //    builder.UseLamar<TuxboardRegistry>()
+        //        .ConfigureAppConfiguration((hostingContext, config) =>
+        //        {
+        //            config.AddJsonFile("appsettings.json", optional: false, reloadOnChange: false);
+        //        })
+        //        .ConfigureWebHostDefaults(webBuilder =>
+        //        {
+        //            webBuilder.UseStartup<Startup>();
+        //        });
+
+        //    await builder.Build().RunAsync();
+        //}
     }
 }

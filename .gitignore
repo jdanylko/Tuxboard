@@ -345,3 +345,4 @@ healthchecksdb
 /UserDashboard/wwwroot/lib
 /UserSpecificDashboard/wwwroot/css/tuxboard.min.css
 /UserSpecificDashboard/wwwroot/js/tuxboard.min.js
+/UserSpecificDashboard/wwwroot/lib

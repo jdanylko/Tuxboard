@@ -1,0 +1,29 @@
+﻿@model Tuxboard.Core.Infrastructure.ViewModels.LayoutDialogViewModel
+
+<div class="row">
+    <!-- Toolbar -->
+    <div class="offset-1 col-10">
+        <div class="dropdown my-2">
+            <button class="btn btn-secondary dropdown-toggle" type="button" id="btnLayoutButton" data-toggle="dropdown" aria-expanded="false">
+                Add Row
+            </button>
+            <ul class="dropdown-menu layout-types" aria-labelledby="btnLayoutDropdown">
+                @foreach (var layoutType in Model.LayoutTypes)
+                {
+                    <li><a class="dropdown-item" href="#" data-id="@layoutType.LayoutTypeId">@Html.Raw(layoutType.Title)</a></li>
+                }
+            </ul>
+        </div>
+    </div>
+
+</div>
+
+<div class="row">
+
+    <div class="offset-1 col-10">
+        <div class="layout-columns">
+            @await Html.PartialAsync("LayoutColumn", Model)
+        </div>
+    </div>
+
+</div>
