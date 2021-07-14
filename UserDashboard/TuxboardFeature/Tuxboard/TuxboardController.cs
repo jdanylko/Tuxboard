@@ -27,15 +27,22 @@ namespace UserDashboard.TuxboardFeature.Tuxboard
             _config = config.Value;
         }
 
-        #region ViewComponents
-
         [HttpGet]
         [Route("Tuxboard/Get")]
         public async Task<IActionResult> Get()
         {
             var userId = GetCurrentUser();
 
-            var dashboard = await _service.GetDashboardForAsync(_config, userId);
+            Dashboard dashboard;
+            if (string.IsNullOrEmpty(userId))
+            {
+                dashboard = await _service.GetDashboardAsync(_config);
+            }
+            else
+            {
+                dashboard = await _service.GetDashboardForAsync(_config, userId);
+            }
+
             if (dashboard == null)
             {
                 return NotFound("Could not find dashboard.");
@@ -45,10 +52,6 @@ namespace UserDashboard.TuxboardFeature.Tuxboard
                         
             return ViewComponent("LayoutTemplate", tab.Layouts.FirstOrDefault());
         }
-
-        #endregion
-
-        #region API
 
         [HttpPost]
         [Route("Tuxboard/CollapseWidget")]
@@ -74,8 +77,6 @@ namespace UserDashboard.TuxboardFeature.Tuxboard
         [Route("/Tuxboard/RemoveWidget/")]
         public async Task<IActionResult> RemoveWidget([FromBody] DeleteWidgetParameter model)
         {
-            // var user = await GetCurrentUserAsync();
-
             var success = await _service.RemoveWidgetAsync(model.PlacementId);
 
             if (!success)
@@ -92,8 +93,6 @@ namespace UserDashboard.TuxboardFeature.Tuxboard
         [Route("Tuxboard/Put")]
         public async Task<IActionResult> Put([FromBody] PlacementParameter model)
         {
-            //var user = await GetCurrentUserAsync();
-
             var placement = await _service.SaveWidgetPlacementAsync(model);
 
             if (placement == null)
@@ -104,8 +103,6 @@ namespace UserDashboard.TuxboardFeature.Tuxboard
 
             return Ok("Widget Placement was saved.");
         }
-
-        #endregion
 
         [NonAction]
         private string GetCurrentUser()
