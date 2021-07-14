@@ -1,9 +1,5 @@
-using System.Threading.Tasks;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Hosting;
-using UserDashboard.LamarRegistry;
-using Lamar.Microsoft.DependencyInjection;
-using Microsoft.Extensions.Configuration;
 
 
 namespace UserDashboard

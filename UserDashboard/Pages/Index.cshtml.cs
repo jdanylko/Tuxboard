@@ -32,7 +32,16 @@ namespace UserDashboard.Pages
         {
             var userId = GetCurrentUserId();
 
-            Dashboard = await _service.GetDashboardForAsync(_config, userId);
+            // General public dashboard.
+            if (string.IsNullOrEmpty(userId))
+            {
+                Dashboard = await _service.GetDashboardAsync(_config);
+            }
+            else
+            {
+                // User-specific dashboard
+                Dashboard = await _service.GetDashboardForAsync(_config, userId);
+            }
         }
 
         private string GetCurrentUserId()

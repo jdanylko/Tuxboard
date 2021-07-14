@@ -346,3 +346,6 @@ healthchecksdb
 /UserSpecificDashboard/wwwroot/css/tuxboard.min.css
 /UserSpecificDashboard/wwwroot/js/tuxboard.min.js
 /UserSpecificDashboard/wwwroot/lib
+/UserDashboard/wwwroot/css/tuxboard.min.css
+/UserDashboard/wwwroot/js/tuxboard.min.js
+/UserDashboard/package-lock.json
