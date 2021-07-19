@@ -9,13 +9,14 @@ export class TuxboardService extends BaseService {
     private tuxWidgetSettingsUrl: string = "/widgetsettings/";
     private tuxWidgetAddWidgetUrl: string = "/widgetdialog/addwidget/";
 
-    private tuxWidgetTemplateUrl: string = "/WidgetTemplate/";
-
     private tuxRefreshTuxboardUrl: string = "/Tuxboard/Get/";
-    private tuxToolCollapseUrl: string = "/Tuxboard/CollapseWidget/";
+    private tuxToolCollapseUrl: string = "?/Tuxboard/CollapseWidget/";
     private tuxWidgetPlacementUrl: string = "/Tuxboard/Put/";
     private tuxWidgetRemoveWidgetUrl: string = "/Tuxboard/removewidget/";
+
     private tuxWidgetContentUrl: string = "/Widget/";
+    private tuxWidgetTemplateUrl: string = "/Widget/{0}?handler=Template";
+
     private tuxWidgetSaveSettingsUrl: string = "/WidgetSettings/Save/";
 
     constructor(debugParam: boolean = false) {
@@ -102,7 +103,7 @@ export class TuxboardService extends BaseService {
 
     public getWidgetTemplate(placementId: string) {
 
-        const request = new Request(this.tuxWidgetTemplateUrl + placementId,
+        const request = new Request(this.tuxWidgetTemplateUrl.replace("{0}", placementId),
             { method: "get" });
 
         return fetch(request)

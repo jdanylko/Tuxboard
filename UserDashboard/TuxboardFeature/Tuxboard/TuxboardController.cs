@@ -12,107 +12,107 @@ using Tuxboard.Core.Infrastructure.Models;
 
 namespace UserDashboard.TuxboardFeature.Tuxboard
 {
-    public class TuxboardController : Controller
-    {
-        private readonly ILogger<TuxboardController> _logger;
-        private readonly IDashboardService _service;
-        private readonly ITuxboardConfig _config;
+    //public class TuxboardController : Controller
+    //{
+    //    private readonly ILogger<TuxboardController> _logger;
+    //    private readonly IDashboardService _service;
+    //    private readonly ITuxboardConfig _config;
 
-        public TuxboardController(ILogger<TuxboardController> logger, 
-            IDashboardService service, 
-            IOptions<TuxboardConfig> config)
-        {
-            _logger = logger;
-            _service = service;
-            _config = config.Value;
-        }
+    //    public TuxboardController(ILogger<TuxboardController> logger, 
+    //        IDashboardService service, 
+    //        IOptions<TuxboardConfig> config)
+    //    {
+    //        _logger = logger;
+    //        _service = service;
+    //        _config = config.Value;
+    //    }
 
-        [HttpGet]
-        [Route("Tuxboard/Get")]
-        public async Task<IActionResult> Get()
-        {
-            var userId = GetCurrentUser();
+    //    [HttpGet]
+    //    [Route("Tuxboard/Get")]
+    //    public async Task<IActionResult> Get()
+    //    {
+    //        var userId = GetCurrentUser();
 
-            Dashboard dashboard;
-            if (string.IsNullOrEmpty(userId))
-            {
-                dashboard = await _service.GetDashboardAsync(_config);
-            }
-            else
-            {
-                dashboard = await _service.GetDashboardForAsync(_config, userId);
-            }
+    //        Dashboard dashboard;
+    //        if (string.IsNullOrEmpty(userId))
+    //        {
+    //            dashboard = await _service.GetDashboardAsync(_config);
+    //        }
+    //        else
+    //        {
+    //            dashboard = await _service.GetDashboardForAsync(_config, userId);
+    //        }
 
-            if (dashboard == null)
-            {
-                return NotFound("Could not find dashboard.");
-            }
+    //        if (dashboard == null)
+    //        {
+    //            return NotFound("Could not find dashboard.");
+    //        }
 
-            var tab = dashboard.Tabs.FirstOrDefault();
+    //        var tab = dashboard.Tabs.FirstOrDefault();
                         
-            return ViewComponent("LayoutTemplate", tab.Layouts.FirstOrDefault());
-        }
+    //        return ViewComponent("LayoutTemplate", tab.Layouts.FirstOrDefault());
+    //    }
 
-        [HttpPost]
-        [Route("Tuxboard/CollapseWidget")]
-        public async Task<IActionResult> CollapseWidget([FromBody] WidgetParameter parms)
-        {
-            if (string.IsNullOrEmpty(parms.Id))
-            {
-                return NotFound("Placement id is null.");
-            }
+    //    [HttpPost]
+    //    [Route("Tuxboard/CollapseWidget")]
+    //    public async Task<IActionResult> CollapseWidget([FromBody] WidgetParameter parms)
+    //    {
+    //        if (string.IsNullOrEmpty(parms.Id))
+    //        {
+    //            return NotFound("Placement id is null.");
+    //        }
 
-            var placement = await _service.GetWidgetPlacementAsync(parms.Id);
-            if (placement == null)
-            {
-                return NotFound("Could not find widget.");
-            }
+    //        var placement = await _service.GetWidgetPlacementAsync(parms.Id);
+    //        if (placement == null)
+    //        {
+    //            return NotFound("Could not find widget.");
+    //        }
 
-            await _service.UpdateCollapsedAsync(parms.Id, parms.Collapsed == 1);
+    //        await _service.UpdateCollapsedAsync(parms.Id, parms.Collapsed == 1);
 
-            return Ok();
-        }
+    //        return Ok();
+    //    }
 
-        [HttpDelete]
-        [Route("/Tuxboard/RemoveWidget/")]
-        public async Task<IActionResult> RemoveWidget([FromBody] DeleteWidgetParameter model)
-        {
-            var success = await _service.RemoveWidgetAsync(model.PlacementId);
+    //    [HttpDelete]
+    //    [Route("/Tuxboard/RemoveWidget/")]
+    //    public async Task<IActionResult> RemoveWidget([FromBody] DeleteWidgetParameter model)
+    //    {
+    //        var success = await _service.RemoveWidgetAsync(model.PlacementId);
 
-            if (!success)
-            {
-                return StatusCode((int) HttpStatusCode.InternalServerError,
-                    $"Widget (id:{model.PlacementId}) was NOT removed.");
-            }
+    //        if (!success)
+    //        {
+    //            return StatusCode((int) HttpStatusCode.InternalServerError,
+    //                $"Widget (id:{model.PlacementId}) was NOT removed.");
+    //        }
 
-            return Ok(
-                new TuxViewMessage("Widget was removed", TuxMessageType.Success, true, model.PlacementId));
-        }
+    //        return Ok(
+    //            new TuxViewMessage("Widget was removed", TuxMessageType.Success, true, model.PlacementId));
+    //    }
 
-        [HttpPut]
-        [Route("Tuxboard/Put")]
-        public async Task<IActionResult> Put([FromBody] PlacementParameter model)
-        {
-            var placement = await _service.SaveWidgetPlacementAsync(model);
+    //    [HttpPut]
+    //    [Route("Tuxboard/Put")]
+    //    public async Task<IActionResult> Put([FromBody] PlacementParameter model)
+    //    {
+    //        var placement = await _service.SaveWidgetPlacementAsync(model);
 
-            if (placement == null)
-            {
-                return StatusCode((int)HttpStatusCode.InternalServerError,
-                    $"Widget Placement (id:{model.PlacementId}) was NOT saved.");
-            }
+    //        if (placement == null)
+    //        {
+    //            return StatusCode((int)HttpStatusCode.InternalServerError,
+    //                $"Widget Placement (id:{model.PlacementId}) was NOT saved.");
+    //        }
 
-            return Ok("Widget Placement was saved.");
-        }
+    //        return Ok("Widget Placement was saved.");
+    //    }
 
-        [NonAction]
-        private string GetCurrentUser()
-        {
-            if (string.IsNullOrEmpty(User.Identity.Name)) 
-                return null;
+    //    [NonAction]
+    //    private string GetCurrentUser()
+    //    {
+    //        if (string.IsNullOrEmpty(User.Identity.Name)) 
+    //            return null;
 
-            var claimsIdentity = (ClaimsIdentity)User.Identity;
-            var claim = claimsIdentity.FindFirst(ClaimTypes.NameIdentifier);
-            return claim.Value;
-        }
-    }
+    //        var claimsIdentity = (ClaimsIdentity)User.Identity;
+    //        var claim = claimsIdentity.FindFirst(ClaimTypes.NameIdentifier);
+    //        return claim.Value;
+    //    }
+    //}
 }
