@@ -108,11 +108,11 @@ namespace UserDashboard.Pages
 
         private string GetCurrentUserId()
         {
-            if (User.Identity == null 
+            if (User.Identity == null
                 || string.IsNullOrEmpty(User.Identity.Name))
                 return null;
 
-            var claimsIdentity = (ClaimsIdentity) User.Identity;
+            var claimsIdentity = (ClaimsIdentity)User.Identity;
             var claim = claimsIdentity.FindFirst(ClaimTypes.NameIdentifier);
             return claim.Value;
         }

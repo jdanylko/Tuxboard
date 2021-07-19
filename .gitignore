@@ -349,3 +349,4 @@ healthchecksdb
 /UserDashboard/wwwroot/css/tuxboard.min.css
 /UserDashboard/wwwroot/js/tuxboard.min.js
 /UserDashboard/package-lock.json
+/UserSpecificDashboard/package-lock.json

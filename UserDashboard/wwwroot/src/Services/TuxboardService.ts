@@ -5,12 +5,10 @@ import { WidgetSettingValue } from "../Models/WidgetSettingValue";
 
 export class TuxboardService extends BaseService {
 
-    private tuxWidgetDialogUrl: string = "/widgetdialog/";
     private tuxWidgetSettingsUrl: string = "/widgetsettings/";
-    private tuxWidgetAddWidgetUrl: string = "/widgetdialog/addwidget/";
 
     private tuxRefreshTuxboardUrl: string = "/Tuxboard/Get/";
-    private tuxToolCollapseUrl: string = "?/Tuxboard/CollapseWidget/";
+    private tuxToolCollapseUrl: string = "/Tuxboard/CollapseWidget/";
     private tuxWidgetPlacementUrl: string = "/Tuxboard/Put/";
     private tuxWidgetRemoveWidgetUrl: string = "/Tuxboard/removewidget/";
 
