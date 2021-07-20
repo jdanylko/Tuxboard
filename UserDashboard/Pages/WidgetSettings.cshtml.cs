@@ -12,13 +12,13 @@ namespace UserDashboard.Pages
 {
     public class WidgetSettingsModel : PageModel
     {
-        private readonly ILogger<IndexModel> _logger;
+        private readonly ILogger<WidgetSettingsModel> _logger;
         private readonly IDashboardService _service;
         private readonly ITuxboardConfig _config;
 
         public Dashboard Dashboard { get; set; }
 
-        public WidgetSettingsModel(ILogger<IndexModel> logger,
+        public WidgetSettingsModel(ILogger<WidgetSettingsModel> logger,
             IDashboardService service,
             IConfiguration config)
         {

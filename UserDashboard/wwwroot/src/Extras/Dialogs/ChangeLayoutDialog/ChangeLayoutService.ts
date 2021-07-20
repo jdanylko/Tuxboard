@@ -5,9 +5,9 @@ import { LayoutModel } from "./LayoutModel";
 export class ChangeLayoutService extends BaseService {
 
     private tuxLayoutDialogUrl: string = "/layoutdialog/";
-    private tuxLayoutAddRowUrl: string = "/layoutdialog/addlayoutrow/";
-    private tuxSaveLayoutUrl: string = "/layoutdialog/saveLayout/";
-    private tuxDeleteLayoutRowUrl: string = "/layoutdialog/DeleteLayoutRow/";
+    private tuxLayoutAddRowUrl: string = "/layoutdialog/{0}?handler=AddLayoutRow/";
+    private tuxSaveLayoutUrl: string = "/layoutdialog?handler=SaveLayout/";
+    private tuxDeleteLayoutRowUrl: string = "/layoutdialog?handler=DeleteLayoutRow";
 
     constructor(debug: boolean = false) {
         super(debug);
@@ -26,7 +26,8 @@ export class ChangeLayoutService extends BaseService {
 
     /* Service: Add Layout Row */
     public addLayoutRow(typeId: string) {
-        const request = new Request(this.tuxLayoutAddRowUrl + typeId, { method: "post" });
+        var url = this.tuxLayoutAddRowUrl.replace("{0}", typeId);
+        const request = new Request(url, { method: "post" });
 
         return fetch(request)
             .then(this.validateResponse)

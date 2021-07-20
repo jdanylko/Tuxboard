@@ -3,7 +3,7 @@
 export class AddWidgetService extends BaseService {
 
     private tuxWidgetDialogUrl: string = "/widgetdialog/";
-    private tuxWidgetAddWidgetUrl: string = "/widgetdialog/addwidget/";
+    private tuxWidgetAddWidgetUrl: string = "/widgetdialog?handler=AddWidget/";
 
     constructor(debug: boolean = false) {
         super(debug);

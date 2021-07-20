@@ -13,82 +13,82 @@ using Tuxboard.Core.UI;
 
 namespace UserDashboard.TuxboardFeature.WidgetDialog
 {
-    public class WidgetDialogController : Controller
-    {
-        private readonly ILogger<WidgetDialogController> _logger;
-        private IDashboardService _service;
-        private readonly IServiceProvider _provider;
+    //public class WidgetDialogController : Controller
+    //{
+    //    private readonly ILogger<WidgetDialogController> _logger;
+    //    private IDashboardService _service;
+    //    private readonly IServiceProvider _provider;
 
-        public WidgetDialogController(ILogger<WidgetDialogController> logger, 
-            IDashboardService service,
-            IServiceProvider provider)
-        {
-            _logger = logger;
-            _service = service;
-            _provider = provider;
-        }
+    //    public WidgetDialogController(ILogger<WidgetDialogController> logger, 
+    //        IDashboardService service,
+    //        IServiceProvider provider)
+    //    {
+    //        _logger = logger;
+    //        _service = service;
+    //        _provider = provider;
+    //    }
 
-        #region View Component
+    //    #region View Component
 
-        [HttpGet]
-        [Route("/WidgetDialog/")]
-        public async Task<IActionResult> Widget()
-        {
-            var viewModel = await GetWidgetDialogViewModelAsync();
+    //    [HttpGet]
+    //    [Route("/WidgetDialog/")]
+    //    public async Task<IActionResult> Widget()
+    //    {
+    //        var viewModel = await GetWidgetDialogViewModelAsync();
 
-            return PartialView("WidgetDialog", viewModel);
-        }
+    //        return PartialView("WidgetDialog", viewModel);
+    //    }
 
-        #endregion
+    //    #endregion
 
-        #region API
+    //    #region API
 
-        [HttpPost]
-        [Route("/WidgetDialog/AddWidget/")]
-        public async Task<IActionResult> AddWidget([FromBody] AddWidgetParameter model)
-        {
-            var response = await _service.AddWidgetToTabAsync(model.TabId, model.WidgetId);
-            if (!response.Success)
-            {
-                return StatusCode((int)HttpStatusCode.ExpectationFailed,
-                    $"Widget (id:{model.WidgetId}) NOT saved.");
-            }
+    //    [HttpPost]
+    //    [Route("/WidgetDialog/AddWidget/")]
+    //    public async Task<IActionResult> AddWidget([FromBody] AddWidgetParameter model)
+    //    {
+    //        var response = await _service.AddWidgetToTabAsync(model.TabId, model.WidgetId);
+    //        if (!response.Success)
+    //        {
+    //            return StatusCode((int)HttpStatusCode.ExpectationFailed,
+    //                $"Widget (id:{model.WidgetId}) NOT saved.");
+    //        }
 
-            var widgetPlacement = await _service.GetWidgetPlacementAsync(response.PlacementId);
+    //        var widgetPlacement = await _service.GetWidgetPlacementAsync(response.PlacementId);
 
-            var helper = new ViewRenderHelper(_provider);
-            var viewTemplate = helper.RenderToString("WidgetTemplate",
-                widgetPlacement, "Components/WidgetTemplate/Default");
+    //        var helper = new ViewRenderHelper(_provider);
+    //        var viewTemplate = helper.RenderToString("WidgetTemplate",
+    //            widgetPlacement, "Components/WidgetTemplate/Default");
 
-            return Ok(new
-            {
-                response.PlacementId,
-                response.Success,
-                Template = viewTemplate
-            });
-        }
+    //        return Ok(new
+    //        {
+    //            response.PlacementId,
+    //            response.Success,
+    //            Template = viewTemplate
+    //        });
+    //    }
 
-        #endregion
+    //    #endregion
         
-        private async Task<WidgetDialogViewModel> GetWidgetDialogViewModelAsync()
-        {
-            var widgets = await _service.GetWidgetsForAsync();
+    //    private async Task<WidgetDialogViewModel> GetWidgetDialogViewModelAsync()
+    //    {
+    //        var widgets = await _service.GetWidgetsForAsync();
 
-            widgets.ForEach(widget =>
-            {
-                widget.GroupName = string.IsNullOrEmpty(widget.GroupName)
-                    ? "General"
-                    : widget.GroupName;
-            });
+    //        widgets.ForEach(widget =>
+    //        {
+    //            widget.GroupName = string.IsNullOrEmpty(widget.GroupName)
+    //                ? "General"
+    //                : widget.GroupName;
+    //        });
 
-            var result = new WidgetDialogViewModel
-            {
-                Groups = widgets.Select(y => y.GroupName).Distinct().ToList(),
-                Widgets = new List<Widget>(widgets)
-            };
+    //        var result = new WidgetDialogViewModel
+    //        {
+    //            Groups = widgets.Select(y => y.GroupName).Distinct().ToList(),
+    //            Widgets = new List<Widget>(widgets)
+    //        };
 
-            return result;
-        }
+    //        return result;
+    //    }
 
-    }
+    //}
 }

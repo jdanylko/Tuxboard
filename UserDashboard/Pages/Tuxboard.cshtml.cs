@@ -15,13 +15,13 @@ namespace UserDashboard.Pages
 {
     public class TuxboardModel : PageModel
     {
-        private readonly ILogger<IndexModel> _logger;
+        private readonly ILogger<TuxboardModel> _logger;
         private readonly IDashboardService _service;
         private readonly ITuxboardConfig _config;
 
         public Dashboard Dashboard { get; set; }
 
-        public TuxboardModel(ILogger<IndexModel> logger,
+        public TuxboardModel(ILogger<TuxboardModel> logger,
             IDashboardService service,
             IConfiguration config)
         {
