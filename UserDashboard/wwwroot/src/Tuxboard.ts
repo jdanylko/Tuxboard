@@ -136,8 +136,8 @@ export class Tuxboard {
     }
 
     public getFirstColumn() {
-        const layout = this.getLayoutByTab(this.getTab());
-        const columns = this.getColumnsByLayoutRow(layout.layoutRows[0]);
+        const layout:Layout = this.getLayoutByTab(this.getTab());
+        const columns = this.getColumnsByLayoutRow(layout.getLayoutRows()[0]);
         return columns && columns.length > 0 ? columns[0] : null;
     }
 

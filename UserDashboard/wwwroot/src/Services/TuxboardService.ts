@@ -15,7 +15,7 @@ export class TuxboardService extends BaseService {
     private tuxWidgetContentUrl: string = "/Widget/";
     private tuxWidgetTemplateUrl: string = "/Widget/{0}?handler=Template";
 
-    private tuxWidgetSaveSettingsUrl: string = "/WidgetSettings/Save/";
+    private tuxWidgetSaveSettingsUrl: string = "/WidgetSettings?handler=Save";
 
     constructor(debugParam: boolean = false) {
         super(debugParam);
