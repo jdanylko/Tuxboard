@@ -37,7 +37,7 @@ namespace UserDashboard.Pages
             return ViewComponent("LayoutDialog", await GetLayoutDialogViewModelAsync(id));
         }
 
-        public async Task<IActionResult> OnGetAddLayoutRow(string layoutTypeId)
+        public async Task<IActionResult> OnPostAddLayoutRow(string layoutTypeId)
         {
             var types = await _service.GetLayoutTypesAsync();
 
@@ -63,13 +63,13 @@ namespace UserDashboard.Pages
             return new OkResult();
         }
 
-        public IActionResult OnDeleteDeleteLayoutRow(string id)
+        public async Task<IActionResult> OnPostDeleteLayoutRow(string id)
         {
             var userId = GetCurrentUser();
 
             TuxViewMessage message = null;
 
-            var dashboard = _service.GetDashboardFor(_config, userId);
+            var dashboard = await _service.GetDashboardForAsync(_config, userId);
             var layout = dashboard.GetLayoutByLayoutRow(id);
 
             var canDelete = true;

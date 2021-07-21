@@ -6,8 +6,8 @@ export class ChangeLayoutService extends BaseService {
 
     private tuxLayoutDialogUrl: string = "/layoutdialog/";
     private tuxLayoutAddRowUrl: string = "/layoutdialog/{0}?handler=AddLayoutRow/";
-    private tuxSaveLayoutUrl: string = "/layoutdialog?handler=SaveLayout/";
-    private tuxDeleteLayoutRowUrl: string = "/layoutdialog?handler=DeleteLayoutRow";
+    private tuxSaveLayoutUrl: string = "/layoutdialog/?handler=SaveLayout/";
+    private tuxDeleteLayoutRowUrl: string = "/layoutdialog/{0}?handler=DeleteLayoutRow";
 
     constructor(debug: boolean = false) {
         super(debug);
@@ -16,7 +16,7 @@ export class ChangeLayoutService extends BaseService {
     /* Service: Load Layout Dialog */
     public getLayoutDialog(tabId: string) {
         const request = new Request(this.tuxLayoutDialogUrl + tabId,
-            { method: "post" });
+            { method: "get" });
 
         return fetch(request)
             .then(this.validateResponse)
@@ -41,7 +41,8 @@ export class ChangeLayoutService extends BaseService {
         if (id === "0") { // new, we can remove it.
             row.remove();
         } else {
-            const request = new Request(this.tuxDeleteLayoutRowUrl + id, { method: 'delete' });
+            var url = this.tuxDeleteLayoutRowUrl.replace("{0}", id);
+            const request = new Request(url, { method: 'post' });
 
             return fetch(request)
                 .then(this.validateResponse)
