@@ -351,3 +351,9 @@ healthchecksdb
 /UserDashboard/package-lock.json
 /UserSpecificDashboard/package-lock.json
 /UserDashboard/wwwroot/src
+/UserSpecificDashboard/wwwroot/src/core
+/UserSpecificDashboard/wwwroot/src/Extras
+/UserSpecificDashboard/wwwroot/src/Models
+/UserSpecificDashboard/wwwroot/src/Services
+/UserSpecificDashboard/wwwroot/src/Widget
+/UserSpecificDashboard/wwwroot/src
