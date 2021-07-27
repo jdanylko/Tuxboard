@@ -35,18 +35,19 @@ export class WidgetCollapseButton extends WidgetToolbarButton {
 
         const placementId = button.getAttribute(dataId);
         const widget = toolbar.getWidgetPlacement().getDom();
+        const token = toolbar.getWidgetPlacement().getToken();
 
         if (widget) {
             const minimized = widget.classList.contains(this.collapsedToggleSelector);
             if (minimized) {
                 widget.classList.remove(this.collapsedToggleSelector);
                 this.showWidgetBody(placementId);
-                this.service.updateCollapsedWidgetService(placementId, false)
-                    .then((data) => {});
+                this.service.updateCollapsedWidgetService(placementId, false, token)
+                    .then((data) => { return; });
             } else {
                 widget.classList.add(this.collapsedToggleSelector);
                 this.hideWidgetBody(placementId);
-                this.service.updateCollapsedWidgetService(placementId, true)
+                this.service.updateCollapsedWidgetService(placementId, true, token)
                     .then((data) => { return; });
             }
         }

@@ -34,8 +34,9 @@ export class WidgetRemoveButton extends WidgetToolbarButton {
         }
 
         const placementId = button.getAttribute(dataId);
+        const token = this.parent.getWidgetPlacement().getToken();
 
-        this.service.removeWidgetService(placementId)
+        this.service.removeWidgetService(placementId, token)
             .then((result: TuxViewMessage) => {
                 if (result && result.success) {
                     const widgetId = `[${dataId}='${result.id}']`;

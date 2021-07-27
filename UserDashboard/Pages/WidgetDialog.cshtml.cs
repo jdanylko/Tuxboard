@@ -66,7 +66,6 @@ namespace UserDashboard.Pages
         private async Task<WidgetDialogViewModel> GetWidgetDialogViewModelAsync()
         {
             var widgets = await _service.GetWidgetsForAsync();
-
             widgets.ForEach(widget =>
             {
                 widget.GroupName = string.IsNullOrEmpty(widget.GroupName)

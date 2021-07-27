@@ -1,11 +1,14 @@
 ﻿@model Tuxboard.Core.Domain.Entities.Dashboard
 
 <section class="dashboard" id="@Model.DashboardId">
-    @foreach (var tab in Model.Tabs)
-    {
-        foreach (var layout in tab.Layouts)
+    <form method="post">
+        @Html.AntiForgeryToken()
+        @foreach (var tab in Model.Tabs)
         {
-            @await Component.InvokeAsync("LayoutTemplate", layout)
+            foreach (var layout in tab.Layouts)
+            {
+                @await Component.InvokeAsync("LayoutTemplate", layout)
+            }
         }
-    }
+    </form>
 </section>

@@ -116,7 +116,9 @@ export class ChangeLayoutDialog extends BaseDialog {
 
         const postData = new LayoutModel(layoutData, this.currentTab.getCurrentTabId());
 
-        this.layoutService.saveLayoutService(postData)
+        const tabId = this.currentTab.getCurrentTabId();
+        const token = this.getToken();
+        this.layoutService.saveLayoutService(tabId, postData, token)
             .then(() => {
                 this.hide();
                 this.tuxboard.refresh();
@@ -134,7 +136,8 @@ export class ChangeLayoutDialog extends BaseDialog {
         // Layout Types in dropdown
         const links = layoutDialog.querySelectorAll(this.layoutTypesSelector);
         [].forEach.call(links, (item) => {
-            item.addEventListener("click", (ev:Event) => this.addLayoutRow(ev), { once: true });
+            // item.addEventListener("click", (ev:Event) => this.addLayoutRow(ev), { once: true });
+            item.addEventListener("click", (ev: Event) => this.addLayoutRow(ev));
         });
     }
 
@@ -153,7 +156,9 @@ export class ChangeLayoutDialog extends BaseDialog {
     public addLayoutRow(ev:Event) {
         const evTarget = ev.target as HTMLElement;
         const layoutTypeId = evTarget.attributes[dataId].value;
-        this.layoutService.addLayoutRow(layoutTypeId)
+        const token = this.getToken();
+        const tabId = this.currentTab.getCurrentTabId();
+        this.layoutService.addLayoutRow(tabId, layoutTypeId, token)
             .then((data: string) => {
                 this.updateLayoutData(data);
             });
@@ -189,7 +194,7 @@ export class ChangeLayoutDialog extends BaseDialog {
         }
     }
 
-    public setColumnStatus(id:string, data) {
+    public setRowStatus(id:string, data) {
         const dialog = this.getLayoutDialog();
         const idSelector = `li[${dataId}='${id}']`;
         const item = dialog.querySelector(idSelector);
@@ -209,11 +214,13 @@ export class ChangeLayoutDialog extends BaseDialog {
         const token = this.getToken();
         this.layoutService.deleteRowFromLayoutDialogService(tabId, row, token)
             .then((data) => {
-                if (data.success) {
-                    this.resetColumnStatus();
-                    row.remove();
-                } else {
-                    this.setColumnStatus(id, data);
+                if (data) {
+                    if (data.success) {
+                        this.resetColumnStatus();
+                        row.remove();
+                    } else {
+                        this.setRowStatus(id, data);
+                    }
                 }
             });
     }

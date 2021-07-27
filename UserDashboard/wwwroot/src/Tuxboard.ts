@@ -41,6 +41,11 @@ export class Tuxboard {
         return getDataId(this.getDom());
     }
 
+    public getToken(): string {
+        const dashboard = this.getDom();
+        return dashboard.querySelector('input[name="__RequestVerificationToken"]').getAttribute("value");
+    }
+
     public initialize() {
         this.attachDragAndDropEvents();
     }
@@ -69,8 +74,8 @@ export class Tuxboard {
 
                 this.addWidgetToColumn(column, data);
                 const widgets = this.getWidgetsByColumn(column);
-                const widgetList = widgets.getWidgets()
-                    .filter((item: WidgetPlacement, index: number) => item.getPlacementId() === placementId);
+                const widgetList = widgets.getWidgets(this.getToken())
+                    .filter((item: WidgetPlacement) => item.getPlacementId() === placementId);
                 if (widgetList) {
                     this.updateWidgets(widgetList);
                 }
@@ -78,20 +83,21 @@ export class Tuxboard {
 
     }
 
-    public async refresh() {
-        await this.service.refreshService()
+    public refresh() {
+        this.service.refreshService()
             .then((data: string) => {
                 const db = this.getDom();
                 if (db) {
                     clearNodes(db);
                     const nodes = createFromHtml(data);
                     nodes.forEach((node) => db.insertAdjacentElement("beforeend", node)); // Layout Rows
+
+                    this.initialize();
+                    this.updateAllWidgets();
                 }
             })
             .catch((err) => console.log(err));
 
-        this.initialize();
-        this.updateAllWidgets();
     }
 
     public updateAllWidgets() {
@@ -106,7 +112,8 @@ export class Tuxboard {
     }
 
     public getWidgetsByTab(tab: Tab) {
-        return tab.getLayout().getWidgetPlacements();
+        const token = this.getToken();
+        return tab.getLayout().getWidgetPlacements(token);
     }
 
     public getLayoutByTab(tab: Tab) {
@@ -278,7 +285,9 @@ export class Tuxboard {
             self.dragInfo.currentColumnIndex = selected[0].ColumnIndex;
         }
 
-        this.service.saveWidgetPlacementService(ev, self.dragInfo)
+        const token = this.getToken();
+
+        this.service.saveWidgetPlacementService(ev, self.dragInfo, token)
             .then((result) => console.log("Saved. Message: " + result));
 
         ev.dataTransfer.clearData();

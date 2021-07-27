@@ -56,8 +56,7 @@ namespace UserDashboard.Pages
             return ViewComponent("LayoutTemplate", tab.Layouts.FirstOrDefault());
         }
 
-        // Collapse Widget
-        public async Task<IActionResult> OnPost([FromBody] WidgetParameter parms)
+        public async Task<IActionResult> OnPostCollapseWidget([FromBody] WidgetParameter parms)
         {
             if (string.IsNullOrEmpty(parms.Id))
             {
@@ -70,7 +69,7 @@ namespace UserDashboard.Pages
                 return NotFound("Could not find widget.");
             }
 
-            await _service.UpdateCollapsedAsync(parms.Id, parms.Collapsed == 1);
+            await _service.UpdateCollapsedAsync(parms.Id, parms.Collapsed);
 
             return new OkObjectResult(null);
         }
@@ -91,7 +90,7 @@ namespace UserDashboard.Pages
         }
 
         // Save Widget location
-        public async Task<IActionResult> OnPut([FromBody] PlacementParameter model)
+        public async Task<IActionResult> OnPostSaveWidgetPosition([FromBody] PlacementParameter model)
         {
             var placement = await _service.SaveWidgetPlacementAsync(model);
 

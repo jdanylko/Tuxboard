@@ -5,8 +5,8 @@ import { LayoutModel } from "./LayoutModel";
 export class ChangeLayoutService extends BaseService {
 
     private tuxLayoutDialogUrl: string = "/layoutdialog/";
-    private tuxLayoutAddRowUrl: string = "/layoutdialog/{0}?handler=AddLayoutRow/";
-    private tuxSaveLayoutUrl: string = "/layoutdialog/{0}?handler=SaveLayout/";
+    private tuxLayoutAddRowUrl: string = "/layoutdialog/{0}?handler=AddLayoutRow";
+    private tuxSaveLayoutUrl: string = "/layoutdialog/{0}?handler=SaveLayout";
     private tuxDeleteLayoutRowUrl: string = "/layoutdialog/{0}?handler=DeleteLayoutRow";
 
     constructor(debug: boolean = false) {
@@ -25,9 +25,21 @@ export class ChangeLayoutService extends BaseService {
     }
 
     /* Service: Add Layout Row */
-    public addLayoutRow(typeId: string) {
-        const url: string = this.tuxLayoutAddRowUrl.replace("{0}", typeId);
-        const request = new Request(url, { method: "post" });
+    public addLayoutRow(tabId:string, typeId: string, token:string) {
+        const url: string = this.tuxLayoutAddRowUrl.replace("{0}", tabId);
+        const postData = {
+            id: tabId,
+            layoutTypeId: typeId
+        };
+        const request = new Request(url,
+            {
+                body: JSON.stringify(postData),
+                headers: {
+                    'Content-Type': 'application/json',
+                    'RequestVerificationToken': token,
+                },
+                method: "post",
+            });
 
         return fetch(request)
             .then(this.validateResponse)
@@ -64,13 +76,15 @@ export class ChangeLayoutService extends BaseService {
     }
 
     /* Service: Save Layout */
-    public saveLayoutService(bodyData: LayoutModel) {
-        const request = new Request(this.tuxSaveLayoutUrl,
+    public saveLayoutService(tabId: string, bodyData: LayoutModel, token:string) {
+        const url = this.tuxSaveLayoutUrl.replace("{0}", tabId);
+        const request = new Request(url,
             {
                 method: 'post',
                 body: JSON.stringify(bodyData),
                 headers: {
-                    'Content-Type': 'application/json'
+                    'Content-Type': 'application/json',
+                    'RequestVerificationToken': token,
                 }
             });
 

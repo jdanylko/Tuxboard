@@ -63,7 +63,8 @@ export class WidgetSettings {
 
     public saveSettingsClick(ev: Event) {
         const values = this.getSettingValues();
-        this.service.saveSettings(values)
+        const token = this.widget.getToken();
+        this.service.saveSettings(values, token)
             .then((response:WidgetSettingValue[]) => {
 
                 // Find the title if there is one

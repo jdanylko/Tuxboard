@@ -12,7 +12,7 @@ export class Tuxbar {
     private controls: ITuxbarControl[] = [];
 
     constructor(
-        readonly parent: Tuxboard,
+        private readonly parent: Tuxboard,
         selector: string = null) {
         this.tuxbarSelector = selector || this.tuxbarSelector;
 

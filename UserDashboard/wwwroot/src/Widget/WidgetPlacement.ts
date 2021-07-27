@@ -23,6 +23,7 @@ export class WidgetPlacement {
     private placementId: string;
     private index: number;
     private columnIndex: number;
+    private token: string;
 
     constructor(
         private readonly parent: HTMLElement,
@@ -45,6 +46,14 @@ export class WidgetPlacement {
     }
     public getAttributeName() {
         return dataId
+    }
+
+    public setToken(value: string) {
+        this.token = value
+    }
+
+    public getToken() {
+        return this.token
     }
 
     public setPlacementId(value: string) {

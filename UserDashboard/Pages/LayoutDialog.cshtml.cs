@@ -37,18 +37,18 @@ namespace UserDashboard.Pages
             return ViewComponent("LayoutDialog", await GetLayoutDialogViewModelAsync(id));
         }
 
-        public async Task<IActionResult> OnPostAddLayoutRow(string layoutTypeId)
+        public async Task<IActionResult> OnPostAddLayoutRow([FromBody] PostData data)
         {
             var types = await _service.GetLayoutTypesAsync();
 
             var layoutRow = new LayoutRow
             {
                 LayoutRowId = "0",
-                LayoutTypeId = layoutTypeId,
-                LayoutType = types.FirstOrDefault(e => e.LayoutTypeId == layoutTypeId)
+                LayoutTypeId = data.LayoutTypeId,
+                LayoutType = types.FirstOrDefault(e => e.LayoutTypeId == data.LayoutTypeId)
             };
 
-            return ViewComponent("LayoutDialog", layoutRow);
+            return ViewComponent("LayoutRow", layoutRow);
         }
 
         public async Task<IActionResult> OnPostSaveLayout([FromBody] SaveLayoutViewModel model)
@@ -71,7 +71,10 @@ namespace UserDashboard.Pages
 
             TuxViewMessage message = null;
 
-            var dashboard = await _service.GetDashboardForAsync(_config, userId);
+            var dashboard = string.IsNullOrEmpty(userId)
+                ? await _service.GetDashboardAsync(_config)
+                : await _service.GetDashboardForAsync(_config, userId);
+
             var layout = dashboard.GetLayoutByLayoutRow(id);
 
             var canDelete = true;

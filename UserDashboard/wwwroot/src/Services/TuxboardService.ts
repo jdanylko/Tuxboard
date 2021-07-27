@@ -7,10 +7,10 @@ export class TuxboardService extends BaseService {
 
     private tuxWidgetSettingsUrl: string = "/widgetsettings/";
 
-    private tuxRefreshTuxboardUrl: string = "/Tuxboard/Get/";
-    private tuxToolCollapseUrl: string = "/Tuxboard/CollapseWidget/";
-    private tuxWidgetPlacementUrl: string = "/Tuxboard/Put/";
-    private tuxWidgetRemoveWidgetUrl: string = "/Tuxboard/removewidget/";
+    private tuxRefreshTuxboardUrl: string = "/Tuxboard/";
+    private tuxToolCollapseUrl: string = "/Tuxboard?handler=CollapseWidget";
+    private tuxWidgetPlacementUrl: string = "/Tuxboard?handler=SaveWidgetPosition";
+    private tuxWidgetRemoveWidgetUrl: string = "/Tuxboard?handler=RemoveWidget";
 
     private tuxWidgetContentUrl: string = "/Widget/";
     private tuxWidgetTemplateUrl: string = "/Widget/{0}?handler=Template";
@@ -26,7 +26,7 @@ export class TuxboardService extends BaseService {
     /* Service: Save Widget Placement */
     public updateWidgetPlacementStatus(/* use data */) { }
 
-    public saveWidgetPlacementService(ev: Event, dragInfo: DragInfo) {
+    public saveWidgetPlacementService(ev: Event, dragInfo: DragInfo, token:string) {
 
         const postData = {
             Column: dragInfo.currentColumnIndex,
@@ -39,10 +39,11 @@ export class TuxboardService extends BaseService {
 
         const request = new Request(this.tuxWidgetPlacementUrl,
             {
-                method: "put",
+                method: "post",
                 body: JSON.stringify(postData),
                 headers: {
-                    'Content-Type': 'application/json'
+                    'Content-Type': 'application/json',
+                    'RequestVerificationToken': token,
                 }
             });
 
@@ -54,7 +55,7 @@ export class TuxboardService extends BaseService {
 
     /* Service: Remove Widget */
 
-    public removeWidgetService(placementId: string) {
+    public removeWidgetService(placementId: string, token: string) {
 
         const postData = {
             TabId: "",
@@ -66,7 +67,8 @@ export class TuxboardService extends BaseService {
                 method: 'delete',
                 body: JSON.stringify(postData),
                 headers: {
-                    'Content-Type': 'application/json'
+                    'Content-Type': 'application/json',
+                    'RequestVerificationToken': token,
                 }
             });
 
@@ -78,17 +80,20 @@ export class TuxboardService extends BaseService {
 
     /* Service: Update Collapsed Widget */
 
-    public updateCollapsedWidgetService(widgetId: string, collapsed: boolean) {
+    public updateCollapsedWidgetService(widgetId: string, collapsed: boolean, token:string) {
 
         const postData = {
-            Id: widgetId,
-            Collapsed: collapsed
+            id: widgetId,
+            collapsed: collapsed,
         };
-
         const request = new Request(this.tuxToolCollapseUrl,
             {
                 method: 'post',
-                body: JSON.stringify(postData)
+                body: JSON.stringify(postData),
+                headers: {
+                    "Content-Type": "application/json",
+                    "RequestVerificationToken": token,
+                }
             });
 
         return fetch(request)
@@ -149,7 +154,7 @@ export class TuxboardService extends BaseService {
 
     /* Service: Save Widget Settings */
 
-    public saveSettings(values: SettingValue[]) {
+    public saveSettings(values: SettingValue[], token:string) {
         const postData = {
             Settings: Array.from(values).map((item: SettingValue) => {
                 return {
@@ -164,7 +169,8 @@ export class TuxboardService extends BaseService {
                 method: "POST",
                 body: JSON.stringify(postData),
                 headers: {
-                    "Content-Type": "application/json"
+                    'Content-Type': 'application/json',
+                    'RequestVerificationToken': token,
                 }
             });
 

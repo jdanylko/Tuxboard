@@ -53,13 +53,13 @@ export class Layout {
         return result;
     }
 
-    public getWidgetPlacements() {
+    public getWidgetPlacements(token:string = "") {
         const widgets: WidgetPlacement[] = [];
         const rows = this.getLayoutRows();
         rows.map((row: LayoutRow, index: number) => {
             const columns = row.getColumns();
             columns.map((col: Column, num: number) => {
-                const items = col.getWidgetCollection().getWidgets();
+                const items = col.getWidgetCollection().getWidgets(token);
                 widgets.push(...items);
             });
         });

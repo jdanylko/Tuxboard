@@ -61,6 +61,12 @@ export class AddWidgetDialog extends BaseDialog {
         }
     }
 
+    public getToken(): string {
+        const dialog = this.getWidgetDialog();
+        return dialog.querySelector('input[name="__RequestVerificationToken"]').getAttribute("value");
+    }
+
+
     public hide() {
         const modal = Modal.getInstance(this.getWidgetDialog());
         if (modal) {
@@ -107,8 +113,9 @@ export class AddWidgetDialog extends BaseDialog {
         const layoutRow = layout.getFirstLayoutRow();
         const columns = layoutRow.getColumns();
         const column = columns && columns.length > 0 ? columns[0] : null;
+        const token = this.getToken();
 
-        this.service.addWidgetService(tab.getCurrentTabId(), widgetId)
+        this.service.addWidgetService(tab.getCurrentTabId(), widgetId, token)
             .then( (data:string) => {
                 if (!data) {
                     return;
@@ -139,7 +146,7 @@ export class AddWidgetDialog extends BaseDialog {
 
         [].forEach.call(this.getWidgetList(),
             (item: HTMLElement) => {
-                item.addEventListener("click", (ev: Event) => this.selectWidget(ev), { once: true } );
+                item.addEventListener("click", (ev: Event) => this.selectWidget(ev) );
             });
     }
 
