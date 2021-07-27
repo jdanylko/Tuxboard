@@ -6,7 +6,7 @@ export class ChangeLayoutService extends BaseService {
 
     private tuxLayoutDialogUrl: string = "/layoutdialog/";
     private tuxLayoutAddRowUrl: string = "/layoutdialog/{0}?handler=AddLayoutRow/";
-    private tuxSaveLayoutUrl: string = "/layoutdialog/?handler=SaveLayout/";
+    private tuxSaveLayoutUrl: string = "/layoutdialog/{0}?handler=SaveLayout/";
     private tuxDeleteLayoutRowUrl: string = "/layoutdialog/{0}?handler=DeleteLayoutRow";
 
     constructor(debug: boolean = false) {
@@ -26,7 +26,7 @@ export class ChangeLayoutService extends BaseService {
 
     /* Service: Add Layout Row */
     public addLayoutRow(typeId: string) {
-        var url = this.tuxLayoutAddRowUrl.replace("{0}", typeId);
+        const url: string = this.tuxLayoutAddRowUrl.replace("{0}", typeId);
         const request = new Request(url, { method: "post" });
 
         return fetch(request)
@@ -36,13 +36,25 @@ export class ChangeLayoutService extends BaseService {
     }
 
     /* Service: Delete Row */
-    public deleteRowFromLayoutDialogService(row: HTMLElement) {
+    public deleteRowFromLayoutDialogService(tabId: string, row: HTMLElement, token:string) {
         const id = row.getAttribute(dataId);
         if (id === "0") { // new, we can remove it.
             row.remove();
         } else {
-            var url = this.tuxDeleteLayoutRowUrl.replace("{0}", id);
-            const request = new Request(url, { method: 'post' });
+            const postData = {
+                id: tabId,
+                layoutRowId: id
+            };
+            const url = this.tuxDeleteLayoutRowUrl.replace("{0}", tabId);
+            const request = new Request(url,
+                {
+                    body: JSON.stringify(postData),
+                    headers: {
+                        'Content-Type': 'application/json',
+                        'RequestVerificationToken': token,
+                    },
+                    method: "post",
+                });
 
             return fetch(request)
                 .then(this.validateResponse)

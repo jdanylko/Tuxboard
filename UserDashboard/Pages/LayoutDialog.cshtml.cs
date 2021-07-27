@@ -63,9 +63,11 @@ namespace UserDashboard.Pages
             return new OkResult();
         }
 
-        public async Task<IActionResult> OnPostDeleteLayoutRow(string id)
+        public async Task<IActionResult> OnPostDeleteLayoutRow([FromBody] PostData data)
         {
             var userId = GetCurrentUser();
+
+            var id = data.LayoutRowId;
 
             TuxViewMessage message = null;
 
@@ -124,6 +126,14 @@ namespace UserDashboard.Pages
             return claim.Value;
 
         }
+
+    }
+
+    public class PostData
+    {
+        public string Id { get; set; }
+        public string LayoutRowId { get; set; }
+        public string LayoutTypeId { get; set; }
 
     }
 }

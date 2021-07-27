@@ -48,7 +48,7 @@ export class ChangeLayoutButton extends TuxbarButton {
                         dialog.hideOverlay();
                     });
             },
-            { once: true });
+            { once: false });
 
         const bsDialog = new Modal(dialog.getLayoutDialog());
         bsDialog.show();

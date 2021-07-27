@@ -1,13 +1,15 @@
-﻿import { BaseDialog } from "../../../core/BaseDialog";
-import { ChangeLayoutService } from "./ChangeLayoutService";
+﻿import { Dropdown, Modal } from "bootstrap";
+import { BaseDialog } from "../../../core/BaseDialog";
 import { dataId, getDataId, isBefore, isLayoutListItem } from "../../../core/common";
-import { Dropdown, Modal } from "bootstrap";
-import { LayoutItem } from "./LayoutItem";
-import { LayoutModel } from "./LayoutModel";
 import { Tab } from "../../../core/Tab";
 import { Tuxboard } from "../../../Tuxboard";
+import { ChangeLayoutService } from "./ChangeLayoutService";
+import { LayoutItem } from "./LayoutItem";
+import { LayoutModel } from "./LayoutModel";
 
 export class ChangeLayoutDialog extends BaseDialog {
+
+    public canRefresh: boolean = false;
 
     private layoutService: ChangeLayoutService = new ChangeLayoutService();
     private currentTab: Tab;
@@ -22,8 +24,6 @@ export class ChangeLayoutDialog extends BaseDialog {
     private layoutTypesSelector: string = ".layout-types a";
     private layoutListHandleSelector: string = ".handle";
     private layoutMessageSelector: string = "#layout-message";
-
-    public canRefresh: boolean = false;
 
     constructor(
         private readonly tuxboard: Tuxboard,
@@ -60,6 +60,11 @@ export class ChangeLayoutDialog extends BaseDialog {
         }
     }
 
+    public getToken():string {
+        const dialog = this.getLayoutDialog();
+        return dialog.querySelector('input[name="__RequestVerificationToken"]').getAttribute("value");
+    }
+
     public initialize(layoutBody: string) {
 
         this.setLayoutDialog(layoutBody);
@@ -86,7 +91,7 @@ export class ChangeLayoutDialog extends BaseDialog {
         const layoutDialog = this.getLayoutDialog();
         [].forEach.call(data.LayoutErrors,
             (item) => {
-                const trow = layoutDialog.querySelector<HTMLDivElement>(`[data-id='${item.layoutRowId}']`);
+                const trow = layoutDialog.querySelector<Element>(`[data-id='${item.layoutRowId}']`);
                 if (trow) {
                     trow.setAttribute("style", "outline: 1px solid #F00");
                 } else {
@@ -200,7 +205,9 @@ export class ChangeLayoutDialog extends BaseDialog {
         }
 
         const id = getDataId(row);
-        this.layoutService.deleteRowFromLayoutDialogService(row)
+        const tabId = this.currentTab.getCurrentTabId();
+        const token = this.getToken();
+        this.layoutService.deleteRowFromLayoutDialogService(tabId, row, token)
             .then((data) => {
                 if (data.success) {
                     this.resetColumnStatus();
