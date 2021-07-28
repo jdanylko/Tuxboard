@@ -21,7 +21,11 @@ export class ChangeLayoutButton extends TuxbarButton {
 
         const element = this.getDom();
         if (element) {
-            element.addEventListener("click", (ev: Event) => { this.changeLayoutClick(ev, tuxBar); }, false);
+            element.addEventListener("click", (ev: Event) => {
+                ev.preventDefault();
+                ev.stopPropagation();
+                this.changeLayoutClick(ev, tuxBar);
+            }, false);
         }
     }
 

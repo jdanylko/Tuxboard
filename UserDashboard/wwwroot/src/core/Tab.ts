@@ -19,7 +19,7 @@ export class Tab {
     }
 
     public getLayout() {
-        if (!this.layout) {
+        if (this.layout === undefined) {
             this.layout = new Layout(this.getDom());
         }
         return this.layout;

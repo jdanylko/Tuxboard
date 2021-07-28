@@ -16,7 +16,9 @@ export class RefreshButton extends TuxbarButton {
         const element = this.getDom();
         if (element) {
             element.addEventListener("click", (ev: Event) => {
-                 this.tuxBar.getTuxboard().refresh();
+                ev.preventDefault();
+                ev.stopPropagation();
+                this.tuxBar.getTuxboard().refresh();
             }, false);
         }
     }

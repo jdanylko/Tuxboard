@@ -136,7 +136,7 @@ export class WidgetPlacement {
 
     public setBody(html: string) {
         const widget = this.getDom();
-        if (widget) {
+        if (widget !== undefined) {
             const modalBody = widget.querySelector(this.widgetBodySelector);
             if (modalBody) {
                 clearNodes(modalBody);
@@ -147,7 +147,7 @@ export class WidgetPlacement {
 
     public setTitle(title: string) {
         const widgetTitle = this.getDom().querySelector(this.widgetTitleSelector);
-        if (widgetTitle) {
+        if (widgetTitle !== undefined) {
             widgetTitle.innerHTML = title;
         }
     }

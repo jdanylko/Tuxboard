@@ -26,17 +26,17 @@ export class Layout {
     }
 
     public getLayoutRows() {
-        if (!this.layoutRows) {
+        if (this.layoutRows === undefined) {
             this.layoutRows = new LayoutRowCollection(this.parent);
         }
-        if (this.layoutRows) {
+        if (this.layoutRows !== undefined) {
             return this.layoutRows.getLayoutRows();
         }
         throw new Error("No layout rows were found.");
     }
 
     public getFirstLayoutRow() {
-        if (this.layoutRows) {
+        if (this.layoutRows !== undefined) {
             return this.layoutRows.getLayoutRows()[0];
         }
         return null;

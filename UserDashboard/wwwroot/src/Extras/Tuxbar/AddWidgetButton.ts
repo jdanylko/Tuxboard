@@ -20,7 +20,11 @@ export class AddWidgetButton extends TuxbarButton {
 
         const element = this.tuxBar.getDom().querySelector(this.selector);
         if (element) {
-            element.addEventListener("click", (ev: Event) => { this.displayDialogEvent(ev, tuxBar); }, false);
+            element.addEventListener("click", (ev: Event) => {
+                ev.preventDefault();
+                ev.stopPropagation();
+                this.displayDialogEvent(ev, tuxBar);
+            }, false);
         }
     }
 

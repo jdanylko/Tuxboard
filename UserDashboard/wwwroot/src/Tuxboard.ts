@@ -33,6 +33,26 @@ export class Tuxboard {
         this.updateAllWidgets();
     }
 
+    public initialize() {
+        this.attachDragAndDropEvents();
+    }
+
+    public updateAllWidgets() {
+        const widgetPlacements = this.getWidgetsByTab(this.getTab(true));
+        this.updateWidgets(widgetPlacements);
+    }
+
+    public updateWidgets(widgets: WidgetPlacement[]) {
+        Array.from(widgets).map((placement: WidgetPlacement) => {
+            placement.update();
+        });
+    }
+
+    public getToken(): string {
+        const dashboard = this.getDom();
+        return dashboard.querySelector('input[name="__RequestVerificationToken"]').getAttribute("value");
+    }
+
     public getDom(): HTMLElement {
         return document.querySelector<HTMLElement>(this.tuxboardSelector);
     }
@@ -41,22 +61,16 @@ export class Tuxboard {
         return getDataId(this.getDom());
     }
 
-    public getToken(): string {
-        const dashboard = this.getDom();
-        return dashboard.querySelector('input[name="__RequestVerificationToken"]').getAttribute("value");
-    }
-
-    public initialize() {
-        this.attachDragAndDropEvents();
-    }
-
     public getTab(reload: boolean = false) {
-        if (!this.tab || reload) {
-            if (this.tab) {
-                delete this.tab;
-            }
+
+        if (reload) {
+            delete this.tab;
+        }
+
+        if (this.tab === undefined) {
             this.tab = new Tab(this.getDom());
         }
+
         return this.tab;
     }
 
@@ -88,9 +102,10 @@ export class Tuxboard {
             .then((data: string) => {
                 const db = this.getDom();
                 if (db) {
-                    clearNodes(db);
-                    const nodes = createFromHtml(data);
-                    nodes.forEach((node) => db.insertAdjacentElement("beforeend", node)); // Layout Rows
+                    db.innerHTML = data;
+                    //clearNodes(db);
+                    //const nodes = createFromHtml(data);
+                    //nodes.forEach((node) => db.insertAdjacentElement("beforeend", node)); // Layout Rows
 
                     this.initialize();
                     this.updateAllWidgets();
@@ -98,17 +113,6 @@ export class Tuxboard {
             })
             .catch((err) => console.log(err));
 
-    }
-
-    public updateAllWidgets() {
-        const widgetPlacements = this.getWidgetsByTab(this.getTab(true));
-        this.updateWidgets(widgetPlacements);
-    }
-
-    public updateWidgets(widgets: WidgetPlacement[]) {
-        Array.from(widgets).map((placement: WidgetPlacement) => {
-            placement.update();
-        });
     }
 
     public getWidgetsByTab(tab: Tab) {
@@ -156,7 +160,7 @@ export class Tuxboard {
     /////////////////////
 
     public attachDragAndDropEvents() {
-        const layout = this.getTab().getLayout();
+        const layout = this.getTab(true).getLayout();
         const columns = layout.getColumns();
 
         for (const column of columns) {

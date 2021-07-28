@@ -51,14 +51,14 @@ export class WidgetToolBar {
 
         /* dropdown options */
         const settingsOption = this.widgetPlacement.getDom().querySelector(this.dropdownSettingsOption);
-        if (settingsOption) {
+        if (settingsOption !== undefined) {
             settingsOption.addEventListener("click", (ev: Event) => {
                 this.widgetPlacement.showWidgetSettings();
             }, false);
         }
 
         const refreshOption = this.widgetPlacement.getDom().querySelector(this.dropdownRefreshOption);
-        if (refreshOption) {
+        if (refreshOption !== undefined) {
             refreshOption.addEventListener("click", (ev: Event) => {
                 ev.preventDefault();
                 this.widgetPlacement.update();
