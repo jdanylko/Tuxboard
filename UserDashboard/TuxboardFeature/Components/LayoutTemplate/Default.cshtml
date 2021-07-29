@@ -1,5 +1,9 @@
 ﻿@model Tuxboard.Core.Domain.Entities.Layout
 
+<form method="post">
+
+    @Html.AntiForgeryToken()
+
     <div class="dashboard-tab" data-id="@Model.TabId" data-active="true">
 
         @foreach (var row in Model.LayoutRows.OrderBy(e => e.RowIndex))
@@ -20,4 +24,5 @@
             </div>
         }
         <div class="clearfix"></div>
-</div>
+    </div>
+</form>

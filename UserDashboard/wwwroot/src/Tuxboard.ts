@@ -30,11 +30,28 @@ export class Tuxboard {
         this.tuxboardSelector = selector || this.tuxboardSelector;
 
         this.initialize();
-        this.updateAllWidgets();
     }
 
     public initialize() {
         this.attachDragAndDropEvents();
+    }
+
+    public refresh() {
+        this.service.refreshService()
+            .then((data: string) => {
+                const db = this.getDom();
+                if (db) {
+                    // db.innerHTML = data;
+                    clearNodes(db);
+                    const nodes = createFromHtml(data);
+                    nodes.forEach((node) => db.insertAdjacentElement("beforeend", node)); // Layout Rows
+
+                }
+            }).then(() => {
+                this.initialize();
+                this.updateAllWidgets();
+            })
+            .catch((err) => console.log(err));
     }
 
     public updateAllWidgets() {
@@ -50,7 +67,12 @@ export class Tuxboard {
 
     public getToken(): string {
         const dashboard = this.getDom();
-        return dashboard.querySelector('input[name="__RequestVerificationToken"]').getAttribute("value");
+        const token = dashboard.querySelector('input[name="__RequestVerificationToken"]');
+        let result = "";
+        if (token) {
+            result = token.getAttribute("value");
+        }
+        return result;
     }
 
     public getDom(): HTMLElement {
@@ -94,24 +116,6 @@ export class Tuxboard {
                     this.updateWidgets(widgetList);
                 }
             });
-
-    }
-
-    public refresh() {
-        this.service.refreshService()
-            .then((data: string) => {
-                const db = this.getDom();
-                if (db) {
-                    db.innerHTML = data;
-                    //clearNodes(db);
-                    //const nodes = createFromHtml(data);
-                    //nodes.forEach((node) => db.insertAdjacentElement("beforeend", node)); // Layout Rows
-
-                    this.initialize();
-                    this.updateAllWidgets();
-                }
-            })
-            .catch((err) => console.log(err));
 
     }
 
@@ -301,5 +305,6 @@ export class Tuxboard {
 window.addEventListener("DOMContentLoaded", () => {
     const dashboard: Tuxboard = new Tuxboard();
     const tuxbar: Tuxbar = new Tuxbar(dashboard);
+    dashboard.refresh();
 });
 
