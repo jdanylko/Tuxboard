@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Net;
+using System.Security.Claims;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.Extensions.Logging;
@@ -61,11 +62,15 @@ namespace UserDashboard.Pages
             });
         }
 
-
-
         private async Task<WidgetDialogViewModel> GetWidgetDialogViewModelAsync()
         {
+            // Get the PlanId for the user (WidgetPlan <-> Plan)
+            // to retrieve specific widgets for a user based on a plan.
+            // Integrate the PlanId into the IdentityUser as an extra property.
+            // var planId = 1 (default is 0).
+
             var widgets = await _service.GetWidgetsForAsync();
+
             widgets.ForEach(widget =>
             {
                 widget.GroupName = string.IsNullOrEmpty(widget.GroupName)
