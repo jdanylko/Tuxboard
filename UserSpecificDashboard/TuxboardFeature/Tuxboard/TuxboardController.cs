@@ -65,7 +65,7 @@ namespace UserSpecificDashboard.TuxboardFeature.Tuxboard
                 return NotFound("Could not find widget.");
             }
 
-            await _service.UpdateCollapsedAsync(parms.Id, parms.Collapsed);
+            await _service.UpdateCollapsedAsync(parms.Id, parms.Collapsed );
 
             return Ok();
         }
