@@ -1,17 +1,20 @@
-# Tu><board [![Build Status](https://jdanylko.visualstudio.com/Tuxboard/_apis/build/status/jdanylko.Tuxboard?branchName=master)](https://jdanylko.visualstudio.com/Tuxboard/_build/latest?definitionId=3&branchName=master) [![MIT license](http://img.shields.io/badge/license-MIT-brightgreen.svg)](http://opensource.org/licenses/MIT)
+# Tu><board 
+
+<p>
+  <img src="https://jdanylko.visualstudio.com/Tuxboard/_apis/build/status/jdanylko.Tuxboard?branchName=master" />
+  <img alt="GitHub" src="https://img.shields.io/github/license/jdanylko/Tuxboard">
+</p>
+
 
 ![Tuxboard Example](images/TuxboardExample.png)
 
-Tuxboard is a dashboard framework specifically for the ASP.NET Core platform. It was meant to be
+Tuxboard is a dashboard library specifically for the ASP.NET Core platform. It was meant to be
 a Lego-style way to build dashboards.
 
 #### Technology Stack
 
   - ASP.NET Core 3.1 (using C#)
   - Entity Framework Core 3.1
-  - Bootstrap.native 4.x (w/ NO jQuery)
-  - FontAwesome 5
-  - Web Essentials (for Markdown, Task Runner/Gulp integration, bundler, etc.)
   
 #### Features
 
@@ -21,7 +24,7 @@ a Lego-style way to build dashboards.
  * Small, compact code for performance in C# and JavaScript (native JavaScript)
  * While the Tuxboard uses Bootstrap, easily conform Tuxboard to any CSS Framework.
 
-#### Why build a Dashboard framework
+#### Why build a Dashboard library
 In my career, I've built a number of dashboards from scratch. 
 As with all projects, each dashboard had pluses and minuses as each project completed.
 
