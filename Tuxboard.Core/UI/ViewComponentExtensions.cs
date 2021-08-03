@@ -9,7 +9,8 @@ namespace Tuxboard.Core.UI
     {
         public static ViewViewComponentResult WidgetView(this ViewComponent component, WidgetModel model)
         {
-            var viewName = $"{TuxConfiguration.WidgetDefaultPath}{model.Placement.Widget.Name}/{TuxConfiguration.WidgetDefaultFileName}";
+            var viewName = 
+                $"{TuxConfiguration.WidgetDefaultPath}{model.Placement.Widget.Name}/{TuxConfiguration.WidgetDefaultFileName}";
             return component.View(viewName, model);
         }
     }

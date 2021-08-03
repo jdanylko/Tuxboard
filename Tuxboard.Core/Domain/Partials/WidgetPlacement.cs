@@ -26,13 +26,13 @@ namespace Tuxboard.Core.Domain.Entities
 
         private WidgetSetting GetSettingById(string settingId)
         {
-            return Enumerable.FirstOrDefault<WidgetSetting>(WidgetSettings, e => e.WidgetSettingId == settingId);
+            return WidgetSettings.FirstOrDefault(e => e.WidgetSettingId == settingId);
         }
 
         private WidgetSetting GetSettingByName(string settingName)
         {
-            var widgetDefault= Enumerable.FirstOrDefault<WidgetDefault>(Widget.WidgetDefaults, e => e.SettingName.ToLower() == settingName.ToLower());
-            return Enumerable.FirstOrDefault<WidgetSetting>(WidgetSettings, t => t.WidgetDefaultId == widgetDefault.WidgetDefaultId);
+            var widgetDefault= Widget.WidgetDefaults.FirstOrDefault(e => e.SettingName.ToLower() == settingName.ToLower());
+            return WidgetSettings.FirstOrDefault(t => t.WidgetDefaultId == widgetDefault.WidgetDefaultId);
         }
 
         public string GetSettingValueById(string settingId)
@@ -51,13 +51,13 @@ namespace Tuxboard.Core.Domain.Entities
         {
             var setting = GetSettingById(settingId);
             var defaultSetting =
-                Enumerable.FirstOrDefault<WidgetDefault>(Widget.WidgetDefaults, e => e.WidgetDefaultId == setting.WidgetDefaultId);
+                Widget.WidgetDefaults.FirstOrDefault(e => e.WidgetDefaultId == setting.WidgetDefaultId);
             return defaultSetting != null ? defaultSetting.SettingTitle : string.Empty;
         }
 
         public bool HasSettings => WidgetSettings.Count > 0;
 
-        public bool SettingDefaultsExist => Enumerable.Any<WidgetDefault>(Widget.WidgetDefaults);
+        public bool SettingDefaultsExist => Widget.WidgetDefaults.Any();
 
         public bool MissingSettings => WidgetSettings.Count != Widget.WidgetDefaults.Count;
 
@@ -66,7 +66,7 @@ namespace Tuxboard.Core.Domain.Entities
             foreach (var widgetDefault in Widget.WidgetDefaults)
             {
                 var setting =
-                    Enumerable.FirstOrDefault<WidgetSetting>(WidgetSettings, e => e.WidgetDefaultId == widgetDefault.WidgetDefaultId);
+                    WidgetSettings.FirstOrDefault(e => e.WidgetDefaultId == widgetDefault.WidgetDefaultId);
                 if (setting == null)
                 {
                     WidgetSettings.Add(CreateFrom(widgetDefault));
@@ -86,11 +86,11 @@ namespace Tuxboard.Core.Domain.Entities
 
         public List<WidgetSettingDto> ToSettingsDto()
         {
-            return Enumerable.Select(WidgetSettings, setting => new
+            return WidgetSettings.Select(setting => new
                 {
                     setting,
                     defaultSetting =
-                        Enumerable.FirstOrDefault<WidgetDefault>(Widget.WidgetDefaults, e => e.WidgetDefaultId == setting.WidgetDefaultId)
+                        Widget.WidgetDefaults.FirstOrDefault(e => e.WidgetDefaultId == setting.WidgetDefaultId)
                 })
                 .Where(t => t.defaultSetting != null)
                 .Select(t => new WidgetSettingDto

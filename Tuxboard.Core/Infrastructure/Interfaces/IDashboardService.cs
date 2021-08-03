@@ -9,8 +9,11 @@ namespace Tuxboard.Core.Infrastructure.Interfaces
 {
     public interface IDashboardService
     {
-        Dashboard GetDashboardFor(string userId);
-        Task<Dashboard> GetDashboardForAsync(TuxboardConfig config, string userId);
+        Dashboard GetDashboardFor(ITuxboardConfig config, string userId);
+        Task<Dashboard> GetDashboardForAsync(ITuxboardConfig config, string userId);
+
+        Dashboard GetDashboard(ITuxboardConfig config);
+        Task<Dashboard> GetDashboardAsync(ITuxboardConfig config);
         
         Layout GetLayoutFromTab(string tabId);
         Task<Layout> GetLayoutFromTabAsync(string tabId);
@@ -18,8 +21,8 @@ namespace Tuxboard.Core.Infrastructure.Interfaces
         List<WidgetPlacement> GetWidgetsForTab(DashboardTab tab);
         Task<List<WidgetPlacement>> GetWidgetsForTabAsync(DashboardTab tab);
 
-        Dashboard CreateDashboardFrom(DashboardDefault template, string userId);
-        Task<Dashboard> CreateDashboardFromAsync(DashboardDefault template, string userId);
+        Dashboard CreateDashboardFrom(DashboardDefault template, string userId = "");
+        Task<Dashboard> CreateDashboardFromAsync(DashboardDefault template, string userId = "");
 
         List<LayoutType> GetLayoutTypes();
         Task<List<LayoutType>> GetLayoutTypesAsync();
@@ -45,8 +48,8 @@ namespace Tuxboard.Core.Infrastructure.Interfaces
         bool AddLayoutRow(Layout layout, string layoutTypeId);
         Task<bool> AddLayoutRowAsync(Layout layout, string layoutTypeId);
 
-        bool AddWidgetToTab(string tabId, string widgetId);
-        Task<bool> AddWidgetToTabAsync(string tabId, string widgetId);
+        AddWidgetResponse AddWidgetToTab(string tabId, string widgetId);
+        Task<AddWidgetResponse> AddWidgetToTabAsync(string tabId, string widgetId);
 
         bool RemoveWidget(string placementId);
         Task<bool> RemoveWidgetAsync(string placementId);

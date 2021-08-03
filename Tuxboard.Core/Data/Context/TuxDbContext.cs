@@ -1,14 +1,20 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Configuration;
+using Tuxboard.Core.Configuration;
 using Tuxboard.Core.Domain.Entities;
 
 namespace Tuxboard.Core.Data.Context
 {
     public class TuxDbContext : DbContext, ITuxDbContext
     {
-        public TuxDbContext(DbContextOptions<TuxDbContext> options)
+        private IConfiguration _config;
+
+        public TuxDbContext(DbContextOptions<TuxDbContext> options, IConfiguration config)
             : base(options)
         {
+            _config = config;
         }
 
         public virtual DbSet<Dashboard> Dashboard { get; set; }
@@ -29,6 +35,16 @@ namespace Tuxboard.Core.Data.Context
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             base.OnModelCreating(modelBuilder);
+
+            var tuxboardConfig = _config.GetSection(nameof(TuxboardConfig));
+
+            if (tuxboardConfig.Exists())
+            {
+                var schema = string.IsNullOrEmpty(tuxboardConfig[nameof(TuxboardConfig.Schema)]) 
+                    ? "dbo" 
+                    : tuxboardConfig[nameof(TuxboardConfig.Schema)];
+                modelBuilder.HasDefaultSchema(schema);
+            }
 
             modelBuilder.Entity<Dashboard>(entity =>
             {
@@ -397,7 +413,7 @@ namespace Tuxboard.Core.Data.Context
                 .HasData(
                     new List<Layout>
                     {
-                        new Layout {LayoutId = "5267DA05-AFE4-4753-9CEE-D5D32C2B068E", TabId = null, LayoutIndex = 1}
+                        new() {LayoutId = "5267DA05-AFE4-4753-9CEE-D5D32C2B068E", TabId = null, LayoutIndex = 1}
                     }
                 );
 
@@ -405,10 +421,10 @@ namespace Tuxboard.Core.Data.Context
                 .HasData(
                     new List<LayoutType>
                     {
-                        new LayoutType {LayoutTypeId = "1", Title = "Three Columns, Equal", Layout = "col-4/col-4/col-4"},
-                        new LayoutType {LayoutTypeId = "2", Title = "Three Columns, 50% Middle", Layout = "col-3/col-6/col-3"},
-                        new LayoutType {LayoutTypeId = "3", Title = "Four Columns, 25%", Layout = "col-3/col-3/col-3/col-3"},
-                        new LayoutType {LayoutTypeId = "4", Title = "Two Columns, 50%", Layout = "col-6/col-6"}
+                        new() {LayoutTypeId = "1", Title = "Three Columns, Equal", Layout = "col-4/col-4/col-4"},
+                        new() {LayoutTypeId = "2", Title = "Three Columns, 50% Middle", Layout = "col-3/col-6/col-3"},
+                        new() {LayoutTypeId = "3", Title = "Four Columns, 25%", Layout = "col-3/col-3/col-3/col-3"},
+                        new() {LayoutTypeId = "4", Title = "Two Columns, 50%", Layout = "col-6/col-6"}
                     }
                 );
 
@@ -416,7 +432,7 @@ namespace Tuxboard.Core.Data.Context
                 .HasData(
                     new List<LayoutRow>
                     {
-                        new LayoutRow
+                        new()
                         {
                             LayoutRowId = "D58AFCD2-2007-4FD0-87A9-93C85C667F3F",
                             LayoutId = "5267DA05-AFE4-4753-9CEE-D5D32C2B068E",
@@ -430,7 +446,7 @@ namespace Tuxboard.Core.Data.Context
                 .HasData(
                     new List<DashboardDefault>
                     {
-                        new DashboardDefault
+                        new()
                         {
                             DefaultId = "0D96A18E-90B8-4A9F-9DF1-126653D68FE6",
                             LayoutId = "5267DA05-AFE4-4753-9CEE-D5D32C2B068E",
@@ -443,7 +459,7 @@ namespace Tuxboard.Core.Data.Context
                 .HasData(
                     new List<Widget>
                     {
-                        new Widget
+                        new()
                         {
                             WidgetId = "1885170C-7C48-4557-ABC7-BC06D3FC51EE",
                             Name = "generalinfo",
@@ -452,7 +468,7 @@ namespace Tuxboard.Core.Data.Context
                             ImageUrl = "", GroupName = "", Permission = 0, Moveable = false, CanDelete = false,
                             UseSettings = false, UseTemplate = false
                         },
-                        new Widget
+                        new()
                         {
                             WidgetId = "C9A9DB53-14CA-4551-87E7-F9656F39A396",
                             Name = "helloworld",
@@ -461,7 +477,7 @@ namespace Tuxboard.Core.Data.Context
                             ImageUrl = "", GroupName = "", Permission = 0, Moveable = true, CanDelete = true,
                             UseSettings = true, UseTemplate = true
                         },
-                        new Widget
+                        new()
                         {
                             WidgetId = "EE84443B-7EE7-4754-BB3C-313CC0DA6039",
                             Name = "table",
@@ -477,7 +493,7 @@ namespace Tuxboard.Core.Data.Context
                 .HasData(
                     new List<WidgetDefault>
                     {
-                        new WidgetDefault
+                        new()
                         {
                             WidgetDefaultId = "046F4AA8-5E45-4C86-B2F8-CBF3E42647E7",
                             WidgetId = "EE84443B-7EE7-4754-BB3C-313CC0DA6039",
@@ -486,7 +502,7 @@ namespace Tuxboard.Core.Data.Context
                             DefaultValue = "Sample Table",
                             SettingIndex = 1
                         },
-                        new WidgetDefault
+                        new()
                         {
                             WidgetDefaultId = "5C85537A-1319-48ED-A475-83D3DC3E7A8D",
                             WidgetId = "C9A9DB53-14CA-4551-87E7-F9656F39A396",
@@ -502,7 +518,7 @@ namespace Tuxboard.Core.Data.Context
                 .HasData(
                     new List<DashboardDefaultWidget>
                     {
-                        new DashboardDefaultWidget
+                        new()
                         {
                             DefaultWidgetId = "D21E94CF-86A9-4058-BB72-F269728AC8AD",
                             DashboardDefaultId = "0D96A18E-90B8-4A9F-9DF1-126653D68FE6",

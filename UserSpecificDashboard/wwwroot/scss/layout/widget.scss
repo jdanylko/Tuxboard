@@ -1,0 +1,54 @@
+﻿
+.card[draggable] .card-header {
+    cursor: move;
+}
+
+.card {
+    margin-bottom: 1em;
+    transition: 1s ease-in-out;
+
+    .card-body {
+        transition: .2s ease-in-out;
+    }
+
+    &.collapsed > .card-body {
+        height: 0;
+        transition: .2s ease-in-out;
+        padding: 0;
+        display: none;
+    }
+
+    .card-header {
+        padding: 0;
+
+        .navbar {
+            padding: .1rem .7rem;
+
+            .card-title {
+                margin-bottom: 0;
+
+                .navbar-text {
+                    padding-bottom: 0;
+                }
+            }
+
+            .card-tools {
+
+                .dropdown-menu {
+
+                    .dropdown-item {
+                        padding: .25rem .7rem
+                    }
+                }
+
+                .btn-card-tool {
+                }
+
+                .dropdown-toggle::after {
+                    display: none;
+                }
+            }
+        }
+    }
+
+}

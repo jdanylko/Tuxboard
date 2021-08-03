@@ -1,0 +1,58 @@
+﻿@model Tuxboard.Core.Domain.Entities.WidgetPlacement
+
+@if (Model.UseTemplate)
+{
+    <div class="card @(Model.Collapsed ? "collapsed" : "")" @(Html.Raw(Model.Widget.Moveable ? "draggable=\"true\"" : "")) data-name="@Model.Widget.Name" data-id="@Model.WidgetPlacementId">
+        <div class="card-header">
+
+            <nav class="navbar">
+                <span class="card-title">
+                    @Model.GetSettingValueByName("widgettitle")
+                </span>
+
+                <div class="btn-group card-tools" role="group" aria-label="Widget Tools">
+                    <button type="button" class="btn btn-sm btn-card-tool collapse-widget" data-widget="collapse" data-id="@Model.WidgetPlacementId">
+                        <i class="fa fa-minus"></i>
+                    </button>
+                    @if (Model.Widget.CanDelete)
+                    {
+                        <button type="button" class="btn btn-sm btn-card-tool remove-widget" data-widget="remove" data-id="@Model.WidgetPlacementId">
+                            <i class="fa fa-times"></i>
+                        </button>
+                    }
+
+                    <div class="dropdown">
+                        <button type="button" class="btn btn-sm btn-card-tool dropdown-toggle dropdown-card-tool" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                            <i class="fas fa-ellipsis-v"></i>
+                        </button>
+                        <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                            @if (Model.Widget.UseSettings)
+                            {
+                                <li><a class="dropdown-item settings-option" href="javascript:void(0);"><i class="fas fa-fw fa-cogs"></i> Settings</a></li>
+                            }
+                            <li><a class="dropdown-item refresh-option" href="javascript:void(0);"><i class="fas fa-fw fa-sync"></i> Refresh</a></li>
+                        </ul>
+                    </div>
+                </div>
+
+            </nav>
+
+        </div>
+
+        <div class="card-body" @(Model.Collapsed ? "hidden" : "")>
+
+        </div>
+        <div class="overlay loading-status" hidden="hidden">
+            <i class="fa fa-spinner fa-spin"></i>
+        </div>
+
+        <div class="widget-settings m-4" hidden="hidden">
+
+        </div>
+
+    </div>
+}
+else
+{
+    @await Component.InvokeAsync(Model.Widget.Name, Model)
+}
