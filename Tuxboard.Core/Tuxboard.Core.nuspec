@@ -7,12 +7,12 @@
     <owners>Jonathan "JD" Danylko</owners>
     <requireLicenseAcceptance>false</requireLicenseAcceptance>
     <projectUrl>https://github.com/jdanylko/Tuxboard</projectUrl>
-    <description>ASP.NET Core 3.1 library for Tuxboard, an open-source dashboard library.</description>
+    <description>ASP.NET Core/5 library for Tuxboard, an open-source dashboard library.</description>
     <copyright>2019-2020</copyright>
     <tags>CSharp C# Dashboard</tags>
     <repository type="C#" url="https://github.com/jdanylko/Tuxboard" />
     <dependencies>
-      <group targetFramework=".NETCoreApp3.1">
+      <group targetFramework="net5.0">
         <dependency id="Microsoft.AspNetCore.Mvc" version="2.2.0" exclude="Build,Analyzers" />
         <dependency id="Microsoft.EntityFrameworkCore" version="3.1.1" exclude="Build,Analyzers" />
         <dependency id="Microsoft.EntityFrameworkCore.SqlServer" version="3.1.1" exclude="Build,Analyzers" />
@@ -20,6 +20,6 @@
     </dependencies>
   </metadata>
   <files>
-    <file src="bin\Release\netcoreapp3.1\Tuxboard.Core.dll" target="lib\netcoreapp3.1\Tuxboard.Core.dll" />
+    <file src="bin\Release\net5.0\Tuxboard.Core.dll" target="lib\net5.0\Tuxboard.Core.dll" />
   </files>
 </package>
