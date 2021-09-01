@@ -13,8 +13,8 @@ a Lego-style way to build dashboards.
 
 #### Technology Stack
 
-  - ASP.NET Core 3.1 (using C#)
-  - Entity Framework Core 3.1
+  - ASP.NET Core/5 (using C#)
+  - Entity Framework Core 5.1
   
 #### Features
 
