@@ -93,7 +93,7 @@ export function getWidgetIndex(dragInfo: DragWidgetInfo, placementId:string) {
         });
 }
 
-export function isBefore(el1, el2) {
+export function isBefore(el1: HTMLDivElement, el2: HTMLDivElement) {
     if (el2.parentNode === el1.parentNode) {
         let cur;
         for (cur = el1.previousSibling; cur; cur = cur.previousSibling) {

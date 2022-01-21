@@ -184,7 +184,7 @@ export class ChangeLayoutDialog extends BaseDialog {
         }
     }
 
-    public setColumnStatus(id:string, data) {
+    public setColumnStatus(id:string, data:any) {
         const dialog = this.getLayoutDialog();
         const idSelector = `li[${dataId}='${id}']`;
         const item = dialog.querySelector(idSelector);
@@ -292,12 +292,12 @@ export class ChangeLayoutDialog extends BaseDialog {
 
             ev.dataTransfer.dropEffect = "move";
 
-            const target = ev.target as HTMLElement;
+            const target = ev.target as HTMLDivElement;
 
             const id = ev.dataTransfer.getData("text");
 
             // TODO: fix "layout-item"
-            const elem: Element = document.querySelector(".layout-item[data-id='" + id + "']");
+            const elem: HTMLDivElement = document.querySelector(".layout-item[data-id='" + id + "']");
 
             if (elem && isLayoutListItem(target)) {
 
@@ -319,12 +319,12 @@ export class ChangeLayoutDialog extends BaseDialog {
             }
 
             const id = ev.dataTransfer.getData("text");
-            const elem: Element = document.querySelector(".layout-item[data-id='" + id + "']");
+            const elem: HTMLDivElement = document.querySelector(".layout-item[data-id='" + id + "']");
 
-            let target = ev.target as HTMLElement;
+            let target = ev.target as HTMLDivElement;
 
             while (!isLayoutListItem(target)) {
-                target = target.parentNode as HTMLElement;
+                target = target.parentNode as HTMLDivElement;
             }
 
             if (elem && isLayoutListItem(target)) {
