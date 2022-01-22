@@ -8,6 +8,8 @@
 
 ![Tuxboard Example](images/TuxboardExample.png)
 
+**UPDATE:** Version 1.2.0 is now available on NuGet.
+
 Tuxboard is a dashboard library specifically for the ASP.NET Core platform. It was meant to be
 a Lego-style way to build dashboards.
 
