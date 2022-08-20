@@ -19,8 +19,8 @@
       <dependency id="Selenium.WebDriver" version="3.14.0" />
     </dependencies>-->
     <group>
-      <PackageReference Include="Microsoft.AspNetCore.Mvc.ViewFeatures" Version="2.2.0" />
-      <PackageReference Include="Microsoft.AspNetCore.Mvc" Version="2.2.0" />
+      <dependency id="Microsoft.AspNetCore.Mvc.ViewFeatures" version="2.2.0" exclude="Compile,Build,Analyzers" />
+      <dependency id="Microsoft.AspNetCore.Mvc" version="2.2.0" exclude="Compile,Build,Analyzers" />
     </group>
     <group targetFramework="net5.0">
       <dependency id="Microsoft.EntityFrameworkCore" version="5.0.13" exclude="Compile,Build,Analyzers" />
