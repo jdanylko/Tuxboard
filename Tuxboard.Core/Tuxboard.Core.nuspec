@@ -11,23 +11,16 @@
     <copyright>2019-2022</copyright>
     <tags>CSharp C# Dashboard</tags>
     <repository type="C#" url="https://github.com/jdanylko/Tuxboard" />
-    <!--<dependencies>
-      <dependencies>
-      <dependency id="Newtonsoft.Json" version="11.0.2" />
-      <dependency id="RestSharp" version="106.3.1" />
-      <dependency id="Selenium.Support" version="3.14.0" />
-      <dependency id="Selenium.WebDriver" version="3.14.0" />
-    </dependencies>-->
-    <group>
-      <PackageReference Include="Microsoft.AspNetCore.Mvc.ViewFeatures" Version="2.2.0" />
-      <PackageReference Include="Microsoft.AspNetCore.Mvc" Version="2.2.0" />
-    </group>
     <group targetFramework="net5.0">
+      <dependency id="Microsoft.AspNetCore.Mvc.ViewFeatures" version="2.2.0" exclude="Compile,Build,Analyzers" />
+      <dependency id="Microsoft.AspNetCore.Mvc" version="2.2.0" exclude="Compile,Build,Analyzers" />
       <dependency id="Microsoft.EntityFrameworkCore" version="5.0.13" exclude="Compile,Build,Analyzers" />
       <dependency id="Microsoft.EntityFrameworkCore.SqlServer" version="5.0.13" exclude="Compile,Build,Analyzers" />
       <dependency id="Microsoft.Extensions.DependencyInjection.Abstractions" version="3.1.28" exclude="Compile,Build,Analyzers" />
     </group>
     <group targetFramework="net6.0">
+      <dependency id="Microsoft.AspNetCore.Mvc.ViewFeatures" version="2.2.0" exclude="Compile,Build,Analyzers" />
+      <dependency id="Microsoft.AspNetCore.Mvc" version="2.2.0" exclude="Compile,Build,Analyzers" />
       <dependency id="Microsoft.EntityFrameworkCore" version="6.0.8" exclude="Compile,Build,Analyzers" />
       <dependency id="Microsoft.EntityFrameworkCore.SqlServer" version="6.0.8" exclude="Compile,Build,Analyzers" />
       <dependency id="Microsoft.Extensions.DependencyInjection.Abstractions" version="6.0.8" exclude="Compile,Build,Analyzers" />
