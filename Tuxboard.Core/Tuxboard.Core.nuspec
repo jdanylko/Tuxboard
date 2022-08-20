@@ -3,7 +3,6 @@
   <metadata>
     <id>Tuxboard.Core</id>
     <version>1.3.0</version>
-    <PackageVersion>1.3.0</PackageVersion>
     <authors>Jonathan "JD" Danylko</authors>
     <owners>Jonathan "JD" Danylko</owners>
     <requireLicenseAcceptance>false</requireLicenseAcceptance>
