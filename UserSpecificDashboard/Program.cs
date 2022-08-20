@@ -2,7 +2,6 @@ using Lamar.Microsoft.DependencyInjection;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.Hosting;
-using UserSpecificDashboard.LamarRegistry;
 
 namespace UserSpecificDashboard
 {
@@ -12,7 +11,7 @@ namespace UserSpecificDashboard
         {
             var builder = new HostBuilder();
             builder
-                .UseLamar<TuxboardRegistry>()
+                .UseLamar()
                 .ConfigureAppConfiguration((hostingContext, config) =>
                 {
                     config.AddJsonFile(
