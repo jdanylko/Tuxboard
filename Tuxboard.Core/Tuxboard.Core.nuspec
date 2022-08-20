@@ -11,20 +11,22 @@
     <copyright>2019-2022</copyright>
     <tags>CSharp C# Dashboard</tags>
     <repository type="C#" url="https://github.com/jdanylko/Tuxboard" />
-    <group targetFramework="net5.0">
-      <dependency id="Microsoft.AspNetCore.Mvc.ViewFeatures" version="2.2.0" exclude="Compile,Build,Analyzers" />
-      <dependency id="Microsoft.AspNetCore.Mvc" version="2.2.0" exclude="Compile,Build,Analyzers" />
-      <dependency id="Microsoft.EntityFrameworkCore" version="5.0.13" exclude="Compile,Build,Analyzers" />
-      <dependency id="Microsoft.EntityFrameworkCore.SqlServer" version="5.0.13" exclude="Compile,Build,Analyzers" />
-      <dependency id="Microsoft.Extensions.DependencyInjection.Abstractions" version="3.1.28" exclude="Compile,Build,Analyzers" />
-    </group>
-    <group targetFramework="net6.0">
-      <dependency id="Microsoft.AspNetCore.Mvc.ViewFeatures" version="2.2.0" exclude="Compile,Build,Analyzers" />
-      <dependency id="Microsoft.AspNetCore.Mvc" version="2.2.0" exclude="Compile,Build,Analyzers" />
-      <dependency id="Microsoft.EntityFrameworkCore" version="6.0.8" exclude="Compile,Build,Analyzers" />
-      <dependency id="Microsoft.EntityFrameworkCore.SqlServer" version="6.0.8" exclude="Compile,Build,Analyzers" />
-      <dependency id="Microsoft.Extensions.DependencyInjection.Abstractions" version="6.0.8" exclude="Compile,Build,Analyzers" />
-    </group>
+    <dependencies>
+      <group targetFramework="net5.0">
+        <dependency id="Microsoft.AspNetCore.Mvc.ViewFeatures" version="2.2.0" exclude="Compile,Build,Analyzers" />
+        <dependency id="Microsoft.AspNetCore.Mvc" version="2.2.0" exclude="Compile,Build,Analyzers" />
+        <dependency id="Microsoft.EntityFrameworkCore" version="5.0.13" exclude="Compile,Build,Analyzers" />
+        <dependency id="Microsoft.EntityFrameworkCore.SqlServer" version="5.0.13" exclude="Compile,Build,Analyzers" />
+        <dependency id="Microsoft.Extensions.DependencyInjection.Abstractions" version="3.1.28" exclude="Compile,Build,Analyzers" />
+      </group>
+      <group targetFramework="net6.0">
+        <dependency id="Microsoft.AspNetCore.Mvc.ViewFeatures" version="2.2.0" exclude="Compile,Build,Analyzers" />
+        <dependency id="Microsoft.AspNetCore.Mvc" version="2.2.0" exclude="Compile,Build,Analyzers" />
+        <dependency id="Microsoft.EntityFrameworkCore" version="6.0.8" exclude="Compile,Build,Analyzers" />
+        <dependency id="Microsoft.EntityFrameworkCore.SqlServer" version="6.0.8" exclude="Compile,Build,Analyzers" />
+        <dependency id="Microsoft.Extensions.DependencyInjection.Abstractions" version="6.0.8" exclude="Compile,Build,Analyzers" />
+      </group>
+    </dependencies>
   </metadata>
   <files>
     <file src="bin\Release\net5.0\Tuxboard.Core.dll" target="lib\net5.0\Tuxboard.Core.dll" />
