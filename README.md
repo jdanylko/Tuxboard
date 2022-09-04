@@ -8,15 +8,15 @@
 
 ![Tuxboard Example](images/TuxboardExample.png)
 
-**UPDATE:** Version 1.2.0 is now available on <a href="https://www.nuget.org/packages/Tuxboard.Core/" title="Go to Tuxboard.Core on NuGet.org">NuGet</a>.
+**UPDATE:** Version 1.3.1 is now available on <a href="https://www.nuget.org/packages/Tuxboard.Core/" title="Go to Tuxboard.Core on NuGet.org">NuGet</a>.
 
 Tuxboard is a dashboard library specifically for the ASP.NET Core platform. It was meant to be
 a Lego-style way to build dashboards.
 
 #### Technology Stack
 
-  - ASP.NET Core/5 (using C#)
-  - Entity Framework Core 5.1
+  - ASP.NET Core (using C#)
+  - Entity Framework Core
   
 #### Features
 
@@ -24,7 +24,7 @@ a Lego-style way to build dashboards.
  * Customize dashboards for general audiences (a static dashboard), user-based dashboards, or even role-based dashboards (both dynamic dashboards).
  * Extend your dashboard by building dynamic or static widgets.
  * Small, compact code for performance in C# and JavaScript (native JavaScript)
- * While the Tuxboard uses Bootstrap, easily conform Tuxboard to any CSS Framework.
+ * While Tuxboard uses Bootstrap, it can easily conform to any CSS Framework.
 
 #### Why build a Dashboard library
 In my career, I've built a number of dashboards from scratch. 
