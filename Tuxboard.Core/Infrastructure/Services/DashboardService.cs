@@ -4,6 +4,11 @@ using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 using Microsoft.EntityFrameworkCore;
+#if NET7_0
+
+#else
+using Microsoft.EntityFrameworkCore;
+#endif
 using Tuxboard.Core.Configuration;
 using Tuxboard.Core.Data.Context;
 using Tuxboard.Core.Data.Extensions;
