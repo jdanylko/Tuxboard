@@ -57,8 +57,8 @@
 
 
   <ItemGroup>
-    <PackageReference Include="Lamar" Version="8.0.1" />
-    <PackageReference Include="Lamar.Microsoft.DependencyInjection" Version="8.0.1" />
+    <PackageReference Include="Lamar" Version="10.0.2" />
+    <PackageReference Include="Lamar.Microsoft.DependencyInjection" Version="10.0.2" />
     <PackageReference Include="Microsoft.EntityFrameworkCore.Design" Version="6.0.8">
       <PrivateAssets>all</PrivateAssets>
       <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
