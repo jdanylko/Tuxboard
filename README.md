@@ -30,7 +30,7 @@ a Lego-style way to build dashboards.
 In my career, I've built a number of dashboards from scratch. 
 As with all projects, each dashboard had pluses and minuses as each project completed.
 
-Even with existing libraries out there, there really wasn't anything out there for the ASP.NET platform.
+Even with existing libraries, there really wasn't anything out there for the ASP.NET platform.
 
 So the initiative was set to write one.
 
@@ -41,5 +41,6 @@ their own custom widgets and robust layouts.
 
 ## Getting Started
 
-Please check the [Wiki](https://github.com/jdanylko/TuxBoard/wiki) for installation.
+ * Please check the [Wiki](https://github.com/jdanylko/TuxBoard/wiki) for installation.
+ * I'm writing a collection of [Tuxboard posts](https://www.danylkoweb.com/Tuxboard/) on DanylkoWeb.com
 
