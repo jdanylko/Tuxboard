@@ -5,35 +5,35 @@ using Microsoft.Extensions.Configuration;
 using Tuxboard.Core.Configuration;
 using Tuxboard.Core.Domain.Entities;
 
-namespace Tuxboard.Core.Data.Context
-{
-    public class TuxDbContext : DbContext, ITuxDbContext
-    {
-        private IConfiguration _config;
+namespace Tuxboard.Core.Data.Context;
 
-        public TuxDbContext(DbContextOptions<TuxDbContext> options, IConfiguration config)
-            : base(options)
-        {
+public class TuxDbContext : DbContext, ITuxDbContext
+{
+    private IConfiguration _config;
+
+    public TuxDbContext(DbContextOptions<TuxDbContext> options, IConfiguration config)
+        : base(options)
+    {
             _config = config;
         }
 
-        public virtual DbSet<Dashboard> Dashboard { get; set; }
-        public virtual DbSet<DashboardDefault> DashboardDefault { get; set; }
-        public virtual DbSet<DashboardDefaultWidget> DashboardDefaultWidget { get; set; }
-        public virtual DbSet<DashboardTab> DashboardTab { get; set; }
-        public virtual DbSet<Layout> Layout { get; set; }
-        public virtual DbSet<LayoutRow> LayoutRow { get; set; }
-        public virtual DbSet<LayoutType> LayoutType { get; set; }
-        public virtual DbSet<Plan> Plan { get; set; }
-        public virtual DbSet<Widget> Widget { get; set; }
-        public virtual DbSet<WidgetDefault> WidgetDefault { get; set; }
-        public virtual DbSet<WidgetDefaultOption> WidgetDefaultOption { get; set; }
-        public virtual DbSet<WidgetPlacement> WidgetPlacement { get; set; }
-        public virtual DbSet<WidgetPlan> WidgetPlan { get; set; }
-        public virtual DbSet<WidgetSetting> WidgetSetting { get; set; }
+    public virtual DbSet<Dashboard> Dashboard { get; set; }
+    public virtual DbSet<DashboardDefault> DashboardDefault { get; set; }
+    public virtual DbSet<DashboardDefaultWidget> DashboardDefaultWidget { get; set; }
+    public virtual DbSet<DashboardTab> DashboardTab { get; set; }
+    public virtual DbSet<Layout> Layout { get; set; }
+    public virtual DbSet<LayoutRow> LayoutRow { get; set; }
+    public virtual DbSet<LayoutType> LayoutType { get; set; }
+    public virtual DbSet<Plan> Plan { get; set; }
+    public virtual DbSet<Widget> Widget { get; set; }
+    public virtual DbSet<WidgetDefault> WidgetDefault { get; set; }
+    public virtual DbSet<WidgetDefaultOption> WidgetDefaultOption { get; set; }
+    public virtual DbSet<WidgetPlacement> WidgetPlacement { get; set; }
+    public virtual DbSet<WidgetPlan> WidgetPlan { get; set; }
+    public virtual DbSet<WidgetSetting> WidgetSetting { get; set; }
 
-        protected override void OnModelCreating(ModelBuilder modelBuilder)
-        {
+    protected override void OnModelCreating(ModelBuilder modelBuilder)
+    {
             base.OnModelCreating(modelBuilder);
 
             var tuxboardConfig = _config.GetSection(nameof(TuxboardConfig));
@@ -406,8 +406,8 @@ namespace Tuxboard.Core.Data.Context
             SeedData(modelBuilder);
         }
 
-        private void SeedData(ModelBuilder modelBuilder)
-        {
+    private void SeedData(ModelBuilder modelBuilder)
+    {
             // Test Data
             modelBuilder.Entity<Layout>()
                 .HasData(
@@ -530,5 +530,4 @@ namespace Tuxboard.Core.Data.Context
                     }
                 );
         }
-    }
 }

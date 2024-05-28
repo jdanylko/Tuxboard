@@ -1,10 +1,8 @@
-﻿namespace Tuxboard.Core.Infrastructure.Models
+﻿namespace Tuxboard.Core.Infrastructure.Models;
+
+public class DeleteLayoutRowParameter
 {
-    public class DeleteLayoutRowParameter
-    {
-        public string LayoutRowId { get; set; }
+    public string LayoutRowId { get; set; }
 
-        public string TabId { get; set; }
-    }
-
+    public string TabId { get; set; }
 }

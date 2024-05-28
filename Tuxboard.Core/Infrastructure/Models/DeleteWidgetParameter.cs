@@ -1,9 +1,8 @@
-﻿namespace Tuxboard.Core.Infrastructure.Models
+﻿namespace Tuxboard.Core.Infrastructure.Models;
+
+public class DeleteWidgetParameter
 {
-    public class DeleteWidgetParameter
-    {
-        public string UserId { get; set; }
-        public string TabId { get; set; }
-        public string PlacementId { get; set; }
-    }
+    public string UserId { get; set; }
+    public string TabId { get; set; }
+    public string PlacementId { get; set; }
 }

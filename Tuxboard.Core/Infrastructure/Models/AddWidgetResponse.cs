@@ -1,8 +1,7 @@
-﻿namespace Tuxboard.Core.Infrastructure.Models
+﻿namespace Tuxboard.Core.Infrastructure.Models;
+
+public class AddWidgetResponse
 {
-    public class AddWidgetResponse
-    {
-        public bool Success { get; set; }
-        public string PlacementId { get; set; }
-    }
+    public bool Success { get; set; }
+    public string PlacementId { get; set; }
 }

@@ -3,12 +3,12 @@ using System.Linq;
 using Tuxboard.Core.Domain.Dto;
 using Tuxboard.Core.Domain.Entities;
 
-namespace Tuxboard.Core.Domain.Entities
+namespace Tuxboard.Core.Domain.Entities;
+
+public partial class WidgetPlacement
 {
-    public partial class WidgetPlacement
+    public WidgetPlacementDto ToDto()
     {
-        public WidgetPlacementDto ToDto()
-        {
             return new WidgetPlacementDto
             {
                 ColumnIndex = ColumnIndex,
@@ -24,45 +24,45 @@ namespace Tuxboard.Core.Domain.Entities
             };
         }
 
-        private WidgetSetting GetSettingById(string settingId)
-        {
+    private WidgetSetting GetSettingById(string settingId)
+    {
             return WidgetSettings.FirstOrDefault(e => e.WidgetSettingId == settingId);
         }
 
-        private WidgetSetting GetSettingByName(string settingName)
-        {
+    private WidgetSetting GetSettingByName(string settingName)
+    {
             var widgetDefault= Widget.WidgetDefaults.FirstOrDefault(e => e.SettingName.ToLower() == settingName.ToLower());
             return WidgetSettings.FirstOrDefault(t => t.WidgetDefaultId == widgetDefault.WidgetDefaultId);
         }
 
-        public string GetSettingValueById(string settingId)
-        {
+    public string GetSettingValueById(string settingId)
+    {
             var setting = GetSettingById(settingId);
             return setting != null ? setting.Value : string.Empty;
         }
 
-        public string GetSettingValueByName(string settingName)
-        {
+    public string GetSettingValueByName(string settingName)
+    {
             var setting = GetSettingByName(settingName);
             return setting != null ? setting.Value : string.Empty;
         }
 
-        public string GetSettingTitleById(string settingId)
-        {
+    public string GetSettingTitleById(string settingId)
+    {
             var setting = GetSettingById(settingId);
             var defaultSetting =
                 Widget.WidgetDefaults.FirstOrDefault(e => e.WidgetDefaultId == setting.WidgetDefaultId);
             return defaultSetting != null ? defaultSetting.SettingTitle : string.Empty;
         }
 
-        public bool HasSettings => WidgetSettings.Count > 0;
+    public bool HasSettings => WidgetSettings.Count > 0;
 
-        public bool SettingDefaultsExist => Widget.WidgetDefaults.Any();
+    public bool SettingDefaultsExist => Widget.WidgetDefaults.Any();
 
-        public bool MissingSettings => WidgetSettings.Count != Widget.WidgetDefaults.Count;
+    public bool MissingSettings => WidgetSettings.Count != Widget.WidgetDefaults.Count;
 
-        public void UpdateWidgetSettings()
-        {
+    public void UpdateWidgetSettings()
+    {
             foreach (var widgetDefault in Widget.WidgetDefaults)
             {
                 var setting =
@@ -74,8 +74,8 @@ namespace Tuxboard.Core.Domain.Entities
             }
         }
 
-        public WidgetSetting CreateFrom(WidgetDefault widgetDefault)
-        {
+    public WidgetSetting CreateFrom(WidgetDefault widgetDefault)
+    {
             return new WidgetSetting
             {
                 WidgetDefaultId = widgetDefault.WidgetDefaultId,
@@ -84,8 +84,8 @@ namespace Tuxboard.Core.Domain.Entities
             };
         }
 
-        public List<WidgetSettingDto> ToSettingsDto()
-        {
+    public List<WidgetSettingDto> ToSettingsDto()
+    {
             return WidgetSettings.Select(setting => new
                 {
                     setting,
@@ -101,5 +101,4 @@ namespace Tuxboard.Core.Domain.Entities
                 })
                 .ToList();
         }
-    }
 }
