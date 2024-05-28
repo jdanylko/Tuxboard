@@ -1,12 +1,11 @@
 # Tu><board 
 
+![Tuxboard Example](images/TuxboardExample.png)
+
 <p>
-  <img src="https://jdanylko.visualstudio.com/Tuxboard/_apis/build/status/jdanylko.Tuxboard?branchName=master" />
+  <img src="https://jdanylko.visualstudio.com/Tuxboard/_apis/build/status%2Fjdanylko.Tuxboard?branchName=master" />
   <img alt="GitHub" src="https://img.shields.io/github/license/jdanylko/Tuxboard">
 </p>
-
-
-![Tuxboard Example](images/TuxboardExample.png)
 
 **UPDATE:** Version 1.5.1 is now available on <a href="https://www.nuget.org/packages/Tuxboard.Core/" title="Go to Tuxboard.Core on NuGet.org">NuGet</a>.
 
@@ -15,7 +14,7 @@ a Lego-style way to build dashboards.
 
 #### Technology Stack
 
-  - ASP.NET Core (using C#)
+  - ASP.NET Core 6.0 or higher (using C#)
   - Entity Framework Core
   
 #### Features
