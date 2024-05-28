@@ -3,7 +3,7 @@
 ![Tuxboard Example](images/TuxboardExample.png)
 
 <p>
-  <img src="https://jdanylko.visualstudio.com/Tuxboard/_apis/build/status%2Fjdanylko.Tuxboard?branchName=master" />
+  <img src="https://jdanylko.vsrm.visualstudio.com/_apis/public/Release/badge/624b04d9-c444-4cb9-bd43-23d11c8291b0/1/2" />
   <img alt="GitHub" src="https://img.shields.io/github/license/jdanylko/Tuxboard">
 </p>
 
