@@ -9,7 +9,7 @@
     <projectUrl>https://github.com/jdanylko/Tuxboard</projectUrl>
     <description>Tuxboard, an open-source dashboard library for ASP.NET Core</description>
     <copyright>2019-2024</copyright>
-    <tags>CSharp C# Dashboard</tags>
+    <tags>CSharp C# Dashboard OpenSource</tags>
     <repository type="C#" url="https://github.com/jdanylko/Tuxboard" />
     <dependencies>
       <group targetFramework="net6.0">
