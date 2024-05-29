@@ -1,8 +1,0 @@
-﻿@model Tuxboard.Core.Infrastructure.ViewModels.LayoutDialogViewModel
- 
-<ul class="layout-list list-unstyled">
-    @foreach (var row in Model.CurrentLayout.LayoutRows.OrderBy(t => t.RowIndex))
-    {
-        @await Component.InvokeAsync("LayoutRow", row)
-    }
-</ul>
