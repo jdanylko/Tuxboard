@@ -70,4 +70,7 @@ public interface IDashboardService
     int ChangeLayoutRowTo(LayoutRow row, LayoutType layoutType);
     Task<int> ChangeLayoutRowToAsync(LayoutRow row, LayoutType layoutType, CancellationToken token = default);
 
+    int ChangeLayoutRowTo(LayoutRow row, int layoutTypeId);
+    Task<int> ChangeLayoutRowToAsync(LayoutRow row, int layoutType, CancellationToken token = default);
+
 }
