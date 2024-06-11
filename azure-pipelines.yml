@@ -36,6 +36,7 @@ steps:
   inputs:
     command: 'pack'
     packagesToPack: '**/*.nuspec'
+    versioningScheme: 'byBuildNumber'
     
 - task: PublishBuildArtifacts@1
   inputs:
