@@ -1,11 +1,10 @@
 ﻿using System.Collections.Generic;
 using Tuxboard.Core.Domain.Entities;
 
-namespace Tuxboard.Core.Infrastructure.ViewModels
+namespace Tuxboard.Core.Infrastructure.ViewModels;
+
+public class DashboardViewModel
 {
-    public class DashboardViewModel
-    {
-        public Dashboard Dashboard { get; set; }
-        public IEnumerable<string> SearchPaths { get; set; }
-    }
+    public Dashboard Dashboard { get; set; }
+    public IEnumerable<string> SearchPaths { get; set; }
 }

@@ -1,8 +1,7 @@
-﻿namespace Tuxboard.Core.Domain.Entities
+﻿namespace Tuxboard.Core.Domain.Entities;
+
+public class Column
 {
-    public class Column
-    {
-        public int Index { get; set; }
-        public string ColumnClass { get; set; }
-    }
+    public int Index { get; set; }
+    public string ColumnClass { get; set; }
 }

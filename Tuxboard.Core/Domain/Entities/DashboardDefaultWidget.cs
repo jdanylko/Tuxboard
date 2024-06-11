@@ -1,16 +1,17 @@
-﻿namespace Tuxboard.Core.Domain.Entities
-{
-    public partial class DashboardDefaultWidget
-    {
-        public string DefaultWidgetId { get; set; }
-        public string DashboardDefaultId { get; set; }
-        public string LayoutRowId { get; set; }
-        public string WidgetId { get; set; }
-        public int ColumnIndex { get; set; }
-        public int WidgetIndex { get; set; }
+﻿using System;
 
-        public virtual DashboardDefault DashboardDefault { get; set; }
-        public virtual LayoutRow LayoutRow { get; set; }
-        public virtual Widget Widget { get; set; }
-    }
+namespace Tuxboard.Core.Domain.Entities;
+
+public partial class DashboardDefaultWidget
+{
+    public Guid DefaultWidgetId { get; set; }
+    public Guid DashboardDefaultId { get; set; }
+    public Guid LayoutRowId { get; set; }
+    public Guid WidgetId { get; set; }
+    public int ColumnIndex { get; set; }
+    public int WidgetIndex { get; set; }
+
+    public virtual DashboardDefault DashboardDefault { get; set; }
+    public virtual LayoutRow LayoutRow { get; set; }
+    public virtual Widget Widget { get; set; }
 }

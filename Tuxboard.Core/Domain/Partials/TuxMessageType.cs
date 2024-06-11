@@ -1,10 +1,9 @@
-﻿namespace Tuxboard.Core.Domain.Entities
+﻿namespace Tuxboard.Core.Domain.Entities;
+
+public enum TuxMessageType
 {
-    public enum TuxMessageType
-    {
-        Success,
-        Warning,
-        Danger,
-        Information
-    }
+    Success,
+    Warning,
+    Danger,
+    Information
 }

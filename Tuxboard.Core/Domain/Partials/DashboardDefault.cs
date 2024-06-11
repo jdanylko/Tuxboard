@@ -1,6 +1,5 @@
-﻿namespace Tuxboard.Core.Domain.Entities
+﻿namespace Tuxboard.Core.Domain.Entities;
+
+public partial class DashboardDefault
 {
-    public partial class DashboardDefault
-    {
-    }
 }

@@ -5,27 +5,26 @@ using Microsoft.EntityFrameworkCore.ChangeTracking;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Tuxboard.Core.Domain.Entities;
 
-namespace Tuxboard.Core.Data.Context
+namespace Tuxboard.Core.Data.Context;
+
+public interface ITuxDbContext
 {
-    public interface ITuxDbContext
-    {
-        DbSet<Dashboard> Dashboard { get; set; }
-        DbSet<DashboardDefault> DashboardDefault { get; set; }
-        DbSet<DashboardDefaultWidget> DashboardDefaultWidget { get; set; }
-        DbSet<DashboardTab> DashboardTab { get; set; }
-        DbSet<Layout> Layout { get; set; }
-        DbSet<LayoutRow> LayoutRow { get; set; }
-        DbSet<LayoutType> LayoutType { get; set; }
-        DbSet<Widget> Widget { get; set; }
-        DbSet<WidgetDefault> WidgetDefault { get; set; }
-        DbSet<WidgetDefaultOption> WidgetDefaultOption { get; set; }
-        DbSet<WidgetPlacement> WidgetPlacement { get; set; }
-        DbSet<WidgetSetting> WidgetSetting { get; set; }
-        DatabaseFacade Database { get; }
-        ChangeTracker ChangeTracker { get; }
-        int SaveChanges();
-        int SaveChanges(bool acceptAllChangesOnSuccess);
-        Task<int> SaveChangesAsync(CancellationToken cancellationToken);
-        Task<int> SaveChangesAsync(bool acceptAllChangesOnSuccess, CancellationToken cancellationToken);
-    }
+    DbSet<Dashboard> Dashboards { get; set; }
+    DbSet<DashboardDefault> DashboardDefaults { get; set; }
+    DbSet<DashboardDefaultWidget> DashboardDefaultWidgets { get; set; }
+    DbSet<DashboardTab> DashboardTabs { get; set; }
+    DbSet<Layout> Layouts { get; set; }
+    DbSet<LayoutRow> LayoutRows { get; set; }
+    DbSet<LayoutType> LayoutTypes { get; set; }
+    DbSet<Widget> Widgets { get; set; }
+    DbSet<WidgetDefault> WidgetDefaults { get; set; }
+    DbSet<WidgetDefaultOption> WidgetDefaultOptions { get; set; }
+    DbSet<WidgetPlacement> WidgetPlacements { get; set; }
+    DbSet<WidgetSetting> WidgetSettings { get; set; }
+    DatabaseFacade Database { get; }
+    ChangeTracker ChangeTracker { get; }
+    int SaveChanges();
+    int SaveChanges(bool acceptAllChangesOnSuccess);
+    Task<int> SaveChangesAsync(CancellationToken cancellationToken);
+    Task<int> SaveChangesAsync(bool acceptAllChangesOnSuccess, CancellationToken cancellationToken);
 }

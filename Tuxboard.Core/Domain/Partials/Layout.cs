@@ -1,13 +1,14 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using Tuxboard.Core.Domain.Dto;
 
-namespace Tuxboard.Core.Domain.Entities
+namespace Tuxboard.Core.Domain.Entities;
+
+public partial class Layout
 {
-    public partial class Layout
+    public void AddLayoutRow(int layoutTypeId)
     {
-        public void AddLayoutRow(string layoutTypeId)
-        {
             LayoutRows.Add(new LayoutRow
             {
                 LayoutId = LayoutId,
@@ -16,8 +17,8 @@ namespace Tuxboard.Core.Domain.Entities
             });
         }
 
-        public static List<Layout> CreateDefaultLayouts(string tabId, DashboardDefault defaultDashboard)
-        {
+    public static List<Layout> CreateDefaultLayouts(Guid tabId, DashboardDefault defaultDashboard)
+    {
             // No default dashboard exists.
             if (defaultDashboard == null)
             {
@@ -56,8 +57,8 @@ namespace Tuxboard.Core.Domain.Entities
             };
         }
 
-        public LayoutDto ToDto()
-        {
+    public LayoutDto ToDto()
+    {
             return new()
             {
                 LayoutId = LayoutId,
@@ -68,18 +69,18 @@ namespace Tuxboard.Core.Domain.Entities
             };
         }
 
-        public bool ContainsOneRow()
-        {
+    public bool ContainsOneRow()
+    {
             return LayoutRows.Count == 1;
         }
 
-        public bool RowsContainWidgets(LayoutRow row)
-        {
+    public bool RowsContainWidgets(LayoutRow row)
+    {
             return row.WidgetPlacements.Any();
         }
 
-        public bool RowContainsWidgets(string layoutRowId)
-        {
+    public bool RowContainsWidgets(Guid layoutRowId)
+    {
             var row = LayoutRows.FirstOrDefault(t => t.LayoutRowId == layoutRowId);
             if (row != null)
             {
@@ -89,14 +90,14 @@ namespace Tuxboard.Core.Domain.Entities
             return false;
         }
 
-        public List<WidgetPlacement> GetWidgetPlacements()
-        {
+    public List<WidgetPlacement> GetWidgetPlacements()
+    {
             return LayoutRows.SelectMany<LayoutRow, WidgetPlacement>(y => y.WidgetPlacements)
                 .ToList();
         }
 
-        public List<Widget> GetWidgetsUsed()
-        {
+    public List<Widget> GetWidgetsUsed()
+    {
             var widgets = LayoutRows.SelectMany<LayoutRow, WidgetPlacement>(y => y.WidgetPlacements)
                 .Select<WidgetPlacement, Widget>(e => e.Widget)
                 .ToList();
@@ -110,10 +111,9 @@ namespace Tuxboard.Core.Domain.Entities
                 .ToList();
         }
 
-        public WidgetPlacement GetWidgetPlacement(string placementId)
-        {
+    public WidgetPlacement GetWidgetPlacement(Guid placementId)
+    {
             return LayoutRows.SelectMany(e => e.WidgetPlacements)
                 .FirstOrDefault(e => e.WidgetPlacementId == placementId);
         }
-    }
 }

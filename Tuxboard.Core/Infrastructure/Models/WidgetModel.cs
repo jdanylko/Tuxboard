@@ -1,9 +1,8 @@
 ﻿using Tuxboard.Core.Domain.Entities;
 
-namespace Tuxboard.Core.Infrastructure.Models
+namespace Tuxboard.Core.Infrastructure.Models;
+
+public class WidgetModel
 {
-    public class WidgetModel
-    {
-        public WidgetPlacement Placement { get; set; }
-    }
+    public WidgetPlacement Placement { get; set; }
 }
