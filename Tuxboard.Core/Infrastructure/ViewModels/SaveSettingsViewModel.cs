@@ -1,10 +1,9 @@
 ﻿using System.Collections.Generic;
 using Tuxboard.Core.Domain.Entities;
 
-namespace Tuxboard.Core.Infrastructure.ViewModels
+namespace Tuxboard.Core.Infrastructure.ViewModels;
+
+public class SaveSettingsViewModel
 {
-    public class SaveSettingsViewModel
-    {
-        public List<WidgetSetting> Settings { get; set; }
-    }
+    public List<WidgetSetting> Settings { get; set; }
 }

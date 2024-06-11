@@ -1,67 +1,73 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
+using System.Threading;
 using System.Threading.Tasks;
 using Tuxboard.Core.Configuration;
 using Tuxboard.Core.Domain.Dto;
 using Tuxboard.Core.Domain.Entities;
 using Tuxboard.Core.Infrastructure.Models;
 
-namespace Tuxboard.Core.Infrastructure.Interfaces
+namespace Tuxboard.Core.Infrastructure.Interfaces;
+
+public interface IDashboardService
 {
-    public interface IDashboardService
-    {
-        Dashboard GetDashboardFor(ITuxboardConfig config, string userId);
-        Task<Dashboard> GetDashboardForAsync(ITuxboardConfig config, string userId);
+    Dashboard GetDashboardFor(ITuxboardConfig config, Guid userId);
+    Task<Dashboard> GetDashboardForAsync(ITuxboardConfig config, Guid userId, CancellationToken token = default);
 
-        Dashboard GetDashboard(ITuxboardConfig config);
-        Task<Dashboard> GetDashboardAsync(ITuxboardConfig config);
+    Dashboard GetDashboard(ITuxboardConfig config);
+    Task<Dashboard> GetDashboardAsync(ITuxboardConfig config, CancellationToken token = default);
         
-        Layout GetLayoutFromTab(string tabId);
-        Task<Layout> GetLayoutFromTabAsync(string tabId);
+    Layout GetLayoutFromTab(Guid tabId);
+    Task<Layout> GetLayoutFromTabAsync(Guid tabId, CancellationToken token = default);
 
-        List<WidgetPlacement> GetWidgetsForTab(DashboardTab tab);
-        Task<List<WidgetPlacement>> GetWidgetsForTabAsync(DashboardTab tab);
+    List<WidgetPlacement> GetWidgetsForTab(DashboardTab tab);
+    Task<List<WidgetPlacement>> GetWidgetsForTabAsync(DashboardTab tab, CancellationToken token = default);
 
-        Dashboard CreateDashboardFrom(DashboardDefault template, string userId = "");
-        Task<Dashboard> CreateDashboardFromAsync(DashboardDefault template, string userId = "");
+    Dashboard CreateDashboardFrom(DashboardDefault template, Guid? userId = null);
+    Task<Dashboard> CreateDashboardFromAsync(DashboardDefault template, Guid? userId = null,
+        CancellationToken token = default);
 
-        List<LayoutType> GetLayoutTypes();
-        Task<List<LayoutType>> GetLayoutTypesAsync();
+    List<LayoutType> GetLayoutTypes();
+    Task<List<LayoutType>> GetLayoutTypesAsync(CancellationToken token = default);
 
-        List<Widget> GetWidgetsFor(int planId=0);
-        Task<List<Widget>> GetWidgetsForAsync(int planId=0);
+    List<Widget> GetWidgetsFor(int planId=0);
+    Task<List<Widget>> GetWidgetsForAsync(int planId = 0, CancellationToken token = default);
 
-        Widget GetWidget(string id);
-        Task<Widget> GetWidgetAsync(string id);
+    Widget GetWidget(Guid id);
+    Task<Widget> GetWidgetAsync(Guid id, CancellationToken token = default);
 
-        List<Widget> GetWidgets();
-        Task<List<Widget>> GetWidgetsAsync();
+    List<Widget> GetWidgets();
+    Task<List<Widget>> GetWidgetsAsync(CancellationToken token = default);
 
-        WidgetPlacement GetWidgetPlacement(string id);
-        Task<WidgetPlacement> GetWidgetPlacementAsync(string id);
+    WidgetPlacement GetWidgetPlacement(Guid id);
+    Task<WidgetPlacement> GetWidgetPlacementAsync(Guid id, CancellationToken token = default);
 
-        bool RemoveLayoutRow(LayoutRow row);
-        Task<bool> RemoveLayoutRowAsync(LayoutRow row);
+    bool RemoveLayoutRow(LayoutRow row);
+    Task<bool> RemoveLayoutRowAsync(LayoutRow row, CancellationToken token = default);
 
-        bool SaveLayout(string tabId, List<LayoutOrder> layoutList);
-        Task<bool> SaveLayoutAsync(string tabId, List<LayoutOrder> layoutList);
+    bool SaveLayout(Guid tabId, List<LayoutOrder> layoutList);
+    Task<bool> SaveLayoutAsync(Guid tabId, List<LayoutOrder> layoutList, CancellationToken token = default);
 
-        bool AddLayoutRow(Layout layout, string layoutTypeId);
-        Task<bool> AddLayoutRowAsync(Layout layout, string layoutTypeId);
+    bool AddLayoutRow(Layout layout, int layoutTypeId);
+    Task<bool> AddLayoutRowAsync(Layout layout, int layoutTypeId, CancellationToken token = default);
 
-        AddWidgetResponse AddWidgetToTab(string tabId, string widgetId);
-        Task<AddWidgetResponse> AddWidgetToTabAsync(string tabId, string widgetId);
+    AddWidgetResponse AddWidgetToTab(Guid tabId, Guid widgetId);
+    Task<AddWidgetResponse> AddWidgetToTabAsync(Guid tabId, Guid widgetId, CancellationToken token = default);
 
-        bool RemoveWidget(string placementId);
-        Task<bool> RemoveWidgetAsync(string placementId);
+    bool RemoveWidget(Guid placementId);
+    Task<bool> RemoveWidgetAsync(Guid placementId, CancellationToken token = default);
 
-        WidgetPlacement SaveWidgetPlacement(PlacementParameter param);
-        Task<WidgetPlacement> SaveWidgetPlacementAsync(PlacementParameter param);
+    WidgetPlacement SaveWidgetPlacement(PlacementParameter param);
+    Task<WidgetPlacement> SaveWidgetPlacementAsync(PlacementParameter param, CancellationToken token = default);
 
-        WidgetPlacement UpdateCollapsed(string id, bool collapsed);
-        Task<WidgetPlacement> UpdateCollapsedAsync(string id, bool collapsed);
+    WidgetPlacement UpdateCollapsed(Guid id, bool collapsed);
+    Task<WidgetPlacement> UpdateCollapsedAsync(Guid id, bool collapsed, CancellationToken token = default);
 
-        List<WidgetSettingDto> SaveWidgetSettings(List<WidgetSetting> settings);
-        Task<List<WidgetSettingDto>> SaveWidgetSettingsAsync(List<WidgetSetting> settings);
+    List<WidgetSettingDto> SaveWidgetSettings(List<WidgetSetting> settings);
+    Task<List<WidgetSettingDto>> SaveWidgetSettingsAsync(List<WidgetSetting> settings,
+        CancellationToken token = default);
 
-    }
+    int ChangeLayoutRowTo(LayoutRow row, LayoutType layoutType);
+    Task<int> ChangeLayoutRowToAsync(LayoutRow row, LayoutType layoutType, CancellationToken token = default);
+
 }

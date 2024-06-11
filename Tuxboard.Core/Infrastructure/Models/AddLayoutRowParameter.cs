@@ -1,9 +1,8 @@
-﻿namespace Tuxboard.Core.Infrastructure.Models
-{
-    public class AddLayoutRowParameter
-    {
-        public string LayoutTypeId { get; set; }
+﻿namespace Tuxboard.Core.Infrastructure.Models;
 
-        public string TabId { get; set; }
-    }
+public class AddLayoutRowParameter
+{
+    public string LayoutTypeId { get; set; }
+
+    public string TabId { get; set; }
 }

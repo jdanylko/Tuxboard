@@ -1,20 +1,15 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 
-namespace Tuxboard.Core.Domain.Entities
+namespace Tuxboard.Core.Domain.Entities;
+
+public partial class DashboardTab
 {
-    public partial class DashboardTab
-    {
-        public DashboardTab()
-        {
-            Layouts = new HashSet<Layout>();
-        }
+    public Guid TabId { get; set; }
+    public Guid DashboardId { get; set; }
+    public string TabTitle { get; set; }
+    public int TabIndex { get; set; }
 
-        public string TabId { get; set; }
-        public string DashboardId { get; set; }
-        public string TabTitle { get; set; }
-        public int TabIndex { get; set; }
-
-        public virtual Dashboard Dashboard { get; set; }
-        public virtual ICollection<Layout> Layouts { get; set; }
-    }
+    public virtual Dashboard Dashboard { get; set; }
+    public virtual ICollection<Layout> Layouts { get; set; } = new HashSet<Layout>();
 }
