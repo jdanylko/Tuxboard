@@ -43,7 +43,7 @@ public class WidgetConfiguration : IEntityTypeConfiguration<Widget>
 
         builder.HasMany(d => d.Plans)
             .WithMany(p => p.Widgets)
-            .UsingEntity<Dictionary<Guid, object>>(
+            .UsingEntity<Dictionary<string, object>>(
                 "WidgetPlan",
                 l => l.HasOne<Plan>().WithMany().HasForeignKey("PlanId").OnDelete(DeleteBehavior.ClientSetNull).HasConstraintName("FK_WidgetPlan_Plan"),
                 r => r.HasOne<Widget>().WithMany().HasForeignKey("WidgetId").OnDelete(DeleteBehavior.ClientSetNull).HasConstraintName("FK_WidgetPlan_Widget"),
@@ -54,8 +54,6 @@ public class WidgetConfiguration : IEntityTypeConfiguration<Widget>
                     j.ToTable("WidgetPlan");
 
                     j.HasIndex(new[] { "PlanId" }, "IX_WidgetPlan_PlanId");
-
-                    j.IndexerProperty<Guid>("WidgetId").HasMaxLength(36).IsUnicode(false);
                 });
 
         builder.HasData(new List<Widget>

@@ -246,7 +246,7 @@ public class DashboardService : IDashboardService
             if (wp.WidgetPlacementId == param.PlacementId)
             {
                 wp.LayoutRowId = param.CurrentLayoutRowId;
-                wp.ColumnIndex = param.Column;
+                wp.ColumnIndex = param.CurrentColumn;
             }
             wp.WidgetIndex = plItem.Index;
         }
@@ -261,7 +261,7 @@ public class DashboardService : IDashboardService
         // update placements from previous layout.
         var placements = _context.GetPlacementsByLayout(param.PreviousLayoutRowId);
         var index = 0;
-        foreach (var wp in placements.Where(e => e.ColumnIndex == param.Column).OrderBy(e => e.WidgetIndex))
+        foreach (var wp in placements.Where(e => e.ColumnIndex == param.CurrentColumn).OrderBy(e => e.WidgetIndex))
         {
             wp.WidgetIndex = index++;
         }
@@ -486,7 +486,7 @@ public class DashboardService : IDashboardService
             if (wp.WidgetPlacementId == param.PlacementId)
             {
                 wp.LayoutRowId = param.CurrentLayoutRowId;
-                wp.ColumnIndex = param.Column;
+                wp.ColumnIndex = param.CurrentColumn;
             }
             wp.WidgetIndex = plItem.Index;
         }
@@ -501,7 +501,7 @@ public class DashboardService : IDashboardService
         // update placements from previous layout.
         var placements = await _context.GetPlacementsByLayoutAsync(param.PreviousLayoutRowId, token: token);
         var index = 0;
-        foreach (var wp in placements.Where(e => e.ColumnIndex == param.Column).OrderBy(e => e.WidgetIndex))
+        foreach (var wp in placements.Where(e => e.ColumnIndex == param.CurrentColumn).OrderBy(e => e.WidgetIndex))
         {
             wp.WidgetIndex = index++;
         }
