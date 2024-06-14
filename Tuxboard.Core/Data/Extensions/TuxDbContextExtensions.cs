@@ -26,6 +26,8 @@ public static class TuxDbContextExtensions
             return context.Layouts
                 .Include(e => e.LayoutRows)
                     .ThenInclude(e => e.LayoutType)
+                .Include(e => e.LayoutRows)
+                    .ThenInclude(e => e.WidgetPlacements)
                 .AsNoTracking()
                 .FirstOrDefault(r => r.TabId == tabId);
         }
@@ -63,7 +65,7 @@ public static class TuxDbContextExtensions
             // Assign the LayoutTypes to each row; get the settings for the WidgetPlacements.
             foreach (var tab in dashboard.Tabs)
             {
-                foreach (var row in tab.GetLayouts().SelectMany(layout => layout.LayoutRows))
+                foreach (var row in tab.GetLayouts().SelectMany(layout => layout.LayoutRows).OrderBy(t=> t.RowIndex))
                 {
                     row.LayoutType = layoutTypes.FirstOrDefault(e => e.LayoutTypeId == row.LayoutTypeId);
                     row.WidgetPlacements = context.GetPlacementsByLayoutRow(row.LayoutRowId);
@@ -268,7 +270,7 @@ public static class TuxDbContextExtensions
             // Assign the LayoutTypes to each row; get the settings for the WidgetPlacements.
             foreach (var tab in dashboard.Tabs)
             {
-                foreach (var row in tab.GetLayouts().SelectMany(layout => layout.LayoutRows))
+                foreach (var row in tab.GetLayouts().SelectMany(layout => layout.LayoutRows).OrderBy(t => t.RowIndex))
                 {
                     row.LayoutType = layoutTypes.FirstOrDefault(e => e.LayoutTypeId == row.LayoutTypeId);
                     row.WidgetPlacements = await context.GetPlacementsByLayoutRowAsync(row.LayoutRowId, token: token);
@@ -341,7 +343,9 @@ public static class TuxDbContextExtensions
     public static Task<Layout> GetLayoutForTabAsync(this ITuxDbContext context, Guid tabId, CancellationToken token = default) =>
         context.Layouts
             .Include(e => e.LayoutRows)
-            .ThenInclude(e => e.LayoutType)
+                .ThenInclude(e => e.LayoutType)
+            .Include(e => e.LayoutRows)
+                .ThenInclude(e => e.WidgetPlacements)
             .AsNoTracking()
             .FirstOrDefaultAsync(r => r.TabId == tabId, cancellationToken: token);
 
