@@ -332,6 +332,12 @@ public class DashboardService : IDashboardService
         return !row?.RowContainsWidgets() ?? result;
     }
 
+    public int AddWidgetPlacement(WidgetPlacement placement)
+    {
+        _context.WidgetPlacements.Add(placement);
+        return _context.SaveChanges();
+    }
+
     #endregion
 
     #region Async
@@ -654,6 +660,12 @@ public class DashboardService : IDashboardService
         var row = layout.LayoutRows.FirstOrDefault(e => e.LayoutRowId.Equals(layoutRowId));
 
         return !row?.RowContainsWidgets() ?? result;
+    }
+
+    public async Task<int> AddWidgetPlacementAsync(WidgetPlacement placement, CancellationToken token = default)
+    {
+        _context.WidgetPlacements.Add(placement);
+        return await _context.SaveChangesAsync(token);
     }
 
     #endregion

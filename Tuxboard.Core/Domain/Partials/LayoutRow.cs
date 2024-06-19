@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations.Schema;
 using System.Linq;
 using System.Text;
@@ -44,21 +45,34 @@ public partial class LayoutRow
         return columns;
     }
 
-    public LayoutRowDto ToDto()
-    {
-        return new LayoutRowDto
+    public LayoutRowDto ToDto() =>
+        new()
         {
             LayoutRowId = this.LayoutRowId,
             RowIndex = this.RowIndex,
             Columns = this.GetColumnLayout(),
             HtmlLayout = this.GetHtmlLayout()
         };
-    }
 
     public bool RowContainsWidgets()
     {
-        return Enumerable.Any<WidgetPlacement>(WidgetPlacements);
+        return WidgetPlacements.Any<WidgetPlacement>();
     }
+
+    public WidgetPlacement CreateFromWidget(Widget widget) =>
+        new()
+        {
+            WidgetPlacementId = Guid.NewGuid(),
+            LayoutRowId = LayoutRowId,
+            WidgetId = widget.WidgetId,
+            ColumnIndex = 0,
+            WidgetIndex = WidgetPlacements != null && WidgetPlacements.Any()
+                ? WidgetPlacements.Count + 1
+                : 0,
+            Collapsed = false,
+            UseSettings = true,
+            UseTemplate = true
+        };
 
     [NotMapped]
     public TuxViewMessage Message { get; set; }

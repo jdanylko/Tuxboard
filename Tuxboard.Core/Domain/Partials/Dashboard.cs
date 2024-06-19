@@ -94,15 +94,9 @@ public partial class Dashboard
         };
     }
 
-    //public void UpdatePlacements()
-    //{
-    //    var tab = GetCurrentTab();
-    //    var placements = tab.GetWidgetPlacements();
-    //    foreach (var placement in placements)
-    //    {
-    //        placement.Moveable = Settings.Moveable;
-    //        placement.CanDelete = Settings.DeleteWidgets;
-    //        placement.UseSettings = Settings.UseSettings;
-    //    }
-    //}
+    public LayoutRow GetFirstLayoutRow() => 
+        GetCurrentTab()?.GetLayouts()?.FirstOrDefault()?.LayoutRows?.FirstOrDefault();
+
+    public LayoutRow GetLayoutRowByIndex(int index) => 
+        GetCurrentTab()?.GetLayouts()?.FirstOrDefault()?.LayoutRows.ElementAt(index);
 }
