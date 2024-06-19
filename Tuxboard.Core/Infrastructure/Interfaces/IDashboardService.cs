@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Microsoft.EntityFrameworkCore;
+using System;
 using System.Collections.Generic;
 using System.Threading;
 using System.Threading.Tasks;
@@ -75,5 +76,8 @@ public interface IDashboardService
 
     bool CanDeleteLayoutRow(Guid tabId, Guid layoutRowId);
     Task<bool> CanDeleteLayoutRowAsync(Guid tabId, Guid layoutRowId);
+
+    int AddWidgetPlacement(WidgetPlacement placement);
+    Task<int> AddWidgetPlacementAsync(WidgetPlacement placement, CancellationToken token = default);
 
 }
