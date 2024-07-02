@@ -40,6 +40,5 @@ their own custom widgets and robust layouts.
 
 ## Getting Started
 
- * Please check the [Wiki](https://github.com/jdanylko/TuxBoard/wiki) for installation.
  * I'm writing a collection of [Tuxboard posts](https://www.danylkoweb.com/Tuxboard/) on DanylkoWeb.com
 
