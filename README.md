@@ -40,5 +40,6 @@ their own custom widgets and robust layouts.
 
 ## Getting Started
 
+ * Examples are in a separate repository [Tuxboard.Examples](https://github.com/jdanylko/Tuxboard.Examples)
  * I'm writing a collection of [Tuxboard posts](https://www.danylkoweb.com/Tuxboard/) on DanylkoWeb.com
 
