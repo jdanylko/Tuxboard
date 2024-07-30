@@ -80,4 +80,7 @@ public interface IDashboardService
     int AddWidgetPlacement(WidgetPlacement placement);
     Task<int> AddWidgetPlacementAsync(WidgetPlacement placement, CancellationToken token = default);
 
+    bool DashboardExistsFor(Guid id);
+    Task<bool> DashboardExistsForAsync(Guid id, CancellationToken token = default);
+
 }

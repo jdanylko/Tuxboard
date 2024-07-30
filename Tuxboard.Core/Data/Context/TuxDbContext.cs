@@ -1,20 +1,20 @@
 ﻿using Microsoft.EntityFrameworkCore;
-using Microsoft.Extensions.Configuration;
+using Microsoft.Extensions.Options;
 using Tuxboard.Core.Configuration;
 using Tuxboard.Core.Data.Configuration;
 using Tuxboard.Core.Domain.Entities;
 
 namespace Tuxboard.Core.Data.Context;
 
-public class TuxDbContext : DbContext, ITuxDbContext
+public partial class TuxDbContext : DbContext, ITuxDbContext
 {
-    private IConfiguration _config;
+    private TuxboardConfig _tuxboardConfig;
 
-    public TuxDbContext(DbContextOptions<TuxDbContext> options, IConfiguration config)
+    public TuxDbContext(DbContextOptions<TuxDbContext> options, IOptions<TuxboardConfig> config)
         : base(options)
     {
-            _config = config;
-        }
+        _tuxboardConfig = config.Value;
+    }
 
     public virtual DbSet<Dashboard> Dashboards { get; set; }
     public virtual DbSet<DashboardDefault> DashboardDefaults { get; set; }
@@ -30,32 +30,31 @@ public class TuxDbContext : DbContext, ITuxDbContext
     public virtual DbSet<WidgetPlacement> WidgetPlacements { get; set; }
     public virtual DbSet<WidgetSetting> WidgetSettings { get; set; }
 
+    
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
-            base.OnModelCreating(modelBuilder);
+        base.OnModelCreating(modelBuilder);
 
-            var tuxboardConfig = _config.GetSection(nameof(TuxboardConfig));
+        _tuxboardConfig.Schema =
+            string.IsNullOrEmpty(_tuxboardConfig.Schema)
+                ? "dbo"
+                : _tuxboardConfig.Schema;
 
-            if (tuxboardConfig.Exists())
-            {
-                var schema = string.IsNullOrEmpty(tuxboardConfig[nameof(TuxboardConfig.Schema)]) 
-                    ? "dbo" 
-                    : tuxboardConfig[nameof(TuxboardConfig.Schema)];
-                modelBuilder.HasDefaultSchema(schema);
-            }
+        modelBuilder.HasDefaultSchema(_tuxboardConfig.Schema);
 
-            modelBuilder.ApplyConfiguration(new DashboardConfiguration());
-            modelBuilder.ApplyConfiguration(new DashboardDefaultConfiguration());
-            modelBuilder.ApplyConfiguration(new DashboardDefaultWidgetConfiguration());
-            modelBuilder.ApplyConfiguration(new DashboardTabConfiguration());
-            modelBuilder.ApplyConfiguration(new LayoutConfiguration());
-            modelBuilder.ApplyConfiguration(new LayoutRowConfiguration());
-            modelBuilder.ApplyConfiguration(new LayoutTypeConfiguration());
-            modelBuilder.ApplyConfiguration(new PlanConfiguration());
-            modelBuilder.ApplyConfiguration(new WidgetConfiguration());
-            modelBuilder.ApplyConfiguration(new WidgetDefaultConfiguration());
-            modelBuilder.ApplyConfiguration(new WidgetDefaultOptionConfiguration());
-            modelBuilder.ApplyConfiguration(new WidgetPlacementConfiguration());
-            modelBuilder.ApplyConfiguration(new WidgetSettingConfiguration());
-        }
+        modelBuilder.ApplyConfiguration(new DashboardConfiguration(_tuxboardConfig));
+        modelBuilder.ApplyConfiguration(new DashboardDefaultConfiguration(_tuxboardConfig));
+        modelBuilder.ApplyConfiguration(new DashboardDefaultWidgetConfiguration(_tuxboardConfig));
+        modelBuilder.ApplyConfiguration(new DashboardTabConfiguration(_tuxboardConfig));
+        modelBuilder.ApplyConfiguration(new LayoutConfiguration(_tuxboardConfig));
+        modelBuilder.ApplyConfiguration(new LayoutRowConfiguration(_tuxboardConfig));
+        modelBuilder.ApplyConfiguration(new LayoutTypeConfiguration(_tuxboardConfig));
+        modelBuilder.ApplyConfiguration(new PlanConfiguration(_tuxboardConfig));
+        modelBuilder.ApplyConfiguration(new WidgetConfiguration(_tuxboardConfig));
+        modelBuilder.ApplyConfiguration(new WidgetDefaultConfiguration(_tuxboardConfig));
+        modelBuilder.ApplyConfiguration(new WidgetDefaultOptionConfiguration(_tuxboardConfig));
+        modelBuilder.ApplyConfiguration(new WidgetPlacementConfiguration(_tuxboardConfig));
+        modelBuilder.ApplyConfiguration(new WidgetSettingConfiguration(_tuxboardConfig));
+
+    }
 }

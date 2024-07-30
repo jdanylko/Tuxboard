@@ -2,12 +2,23 @@
 using System.Collections.Generic;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
+using Tuxboard.Core.Configuration;
 using Tuxboard.Core.Domain.Entities;
 
 namespace Tuxboard.Core.Data.Configuration;
 
 public class WidgetConfiguration : IEntityTypeConfiguration<Widget>
 {
+    private readonly TuxboardConfig _config;
+    private readonly Action<EntityTypeBuilder<Widget>> _seedAction;
+
+    public WidgetConfiguration(TuxboardConfig config,
+        Action<EntityTypeBuilder<Widget>> seedAction = null)
+    {
+        _config = config;
+        _seedAction = seedAction;
+    }
+
     public void Configure(EntityTypeBuilder<Widget> builder)
     {
         builder.ToTable("Widget");
@@ -55,6 +66,10 @@ public class WidgetConfiguration : IEntityTypeConfiguration<Widget>
 
                     j.HasIndex(new[] { "PlanId" }, "IX_WidgetPlan_PlanId");
                 });
+
+        if (_seedAction != null) _seedAction(builder);
+
+        if (!_config.CreateSeedData) return;
 
         builder.HasData(new List<Widget>
             {

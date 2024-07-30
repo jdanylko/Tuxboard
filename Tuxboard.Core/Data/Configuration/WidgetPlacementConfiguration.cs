@@ -1,11 +1,23 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
+using System;
+using Tuxboard.Core.Configuration;
 using Tuxboard.Core.Domain.Entities;
 
 namespace Tuxboard.Core.Data.Configuration;
 
 public class WidgetPlacementConfiguration : IEntityTypeConfiguration<WidgetPlacement>
 {
+    private readonly TuxboardConfig _config;
+    private readonly Action<EntityTypeBuilder<WidgetPlacement>> _seedAction;
+
+    public WidgetPlacementConfiguration(TuxboardConfig config,
+        Action<EntityTypeBuilder<WidgetPlacement>> seedAction = null)
+    {
+        _config = config;
+        _seedAction = seedAction;
+    }
+
     public void Configure(EntityTypeBuilder<WidgetPlacement> builder)
     {
         builder.ToTable("WidgetPlacement");
@@ -41,5 +53,6 @@ public class WidgetPlacementConfiguration : IEntityTypeConfiguration<WidgetPlace
             .OnDelete(DeleteBehavior.ClientSetNull)
             .HasConstraintName("FK_WidgetPlacement_Widget1");
 
+        if (_seedAction != null) _seedAction(builder);
     }
 }
