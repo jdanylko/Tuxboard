@@ -14,33 +14,40 @@ using Tuxboard.Core.Infrastructure.Models;
 
 namespace Tuxboard.Core.Infrastructure.Services;
 
-public class DashboardService(ITuxDbContext context) : IDashboardService
+public class DashboardService : IDashboardService
 {
+    private readonly ITuxDbContext _context;
+
+    public DashboardService(ITuxDbContext context)
+    {
+        _context = context;
+    }
+
     #region Sync
 
-    public Dashboard GetDashboard(ITuxboardConfig config) => context.GetDashboard(config);
-    public Layout GetLayoutFromTab(Guid tabId) => context.GetLayoutForTab(tabId);
+    public Dashboard GetDashboard(ITuxboardConfig config) => _context.GetDashboard(config);
+    public Layout GetLayoutFromTab(Guid tabId) => _context.GetLayoutForTab(tabId);
     public Dashboard CreateDashboardFrom(DashboardDefault template, Guid? userId) => CreateFromTemplate(template, userId);
-    public Widget GetWidget(Guid id) => context.Widgets.FirstOrDefault(e => e.WidgetId == id);
-    public WidgetPlacement GetWidgetPlacement(Guid widgetPlacementId) => context.GetWidgetPlacement(widgetPlacementId);
-    public List<WidgetPlacement> GetWidgetsForTab(DashboardTab tab) => context.GetWidgetsForTab(tab);
-    public List<LayoutType> GetLayoutTypes() => context.LayoutTypes.ToList();
-    public List<Widget> GetWidgets() => context.Widgets.ToList();
+    public Widget GetWidget(Guid id) => _context.Widgets.FirstOrDefault(e => e.WidgetId == id);
+    public WidgetPlacement GetWidgetPlacement(Guid widgetPlacementId) => _context.GetWidgetPlacement(widgetPlacementId);
+    public List<WidgetPlacement> GetWidgetsForTab(DashboardTab tab) => _context.GetWidgetsForTab(tab);
+    public List<LayoutType> GetLayoutTypes() => _context.LayoutTypes.ToList();
+    public List<Widget> GetWidgets() => _context.Widgets.ToList();
 
     public Dashboard GetDashboardFor(ITuxboardConfig config, Guid userId)
     {
-        if (!context.DashboardExistsFor(userId))
+        if (!_context.DashboardExistsFor(userId))
         {
             // Pass in a planid (int) to pull back specific dashboards.
             // If nothing passed, it'll grab the first Dashboard Template.
-            var template = context.GetDashboardTemplateFor();
+            var template = _context.GetDashboardTemplateFor();
 
             CreateDashboardFrom(template, userId);
 
-            context.SaveChanges();
+            _context.SaveChanges();
         }
 
-        var dashboard = context.GetDashboardFor(config, userId);
+        var dashboard = _context.GetDashboardFor(config, userId);
         dashboard.Settings = config;
 
         return dashboard;
@@ -48,12 +55,12 @@ public class DashboardService(ITuxDbContext context) : IDashboardService
 
     public bool RemoveLayoutRow(LayoutRow row)
     {
-        var item = context.LayoutRows.FirstOrDefault(t => t.LayoutRowId == row.LayoutRowId);
+        var item = _context.LayoutRows.FirstOrDefault(t => t.LayoutRowId == row.LayoutRowId);
         if (item != null)
         {
-            context.LayoutRows.Remove(item);
+            _context.LayoutRows.Remove(item);
         }
-        return context.SaveChanges() > 0;
+        return _context.SaveChanges() > 0;
     }
 
     public Dashboard CreateDashboardFrom(DashboardDefault template)
@@ -64,14 +71,14 @@ public class DashboardService(ITuxDbContext context) : IDashboardService
     public Dashboard CreateFromTemplate(DashboardDefault template, Guid? userId)
     {
         var dashboard = Dashboard.Create(userId);
-        context.Dashboards.Add(dashboard);
-        context.SaveChanges();
+        _context.Dashboards.Add(dashboard);
+        _context.SaveChanges();
 
         var currentTab = dashboard.GetCurrentTab();
         var tabId = currentTab.TabId;
 
         currentTab.Layouts = Layout.CreateDefaultLayouts(tabId, template);
-        context.SaveChanges();
+        _context.SaveChanges();
 
         return dashboard;
 
@@ -81,7 +88,7 @@ public class DashboardService(ITuxDbContext context) : IDashboardService
     {
         if (planId > 0)
         {
-            return context.Widgets.Where(u => u.Plans.Any(i => i.PlanId == planId))
+            return _context.Widgets.Where(u => u.Plans.Any(i => i.PlanId == planId))
                 .ToList();
         }
         return GetWidgets();
@@ -89,7 +96,7 @@ public class DashboardService(ITuxDbContext context) : IDashboardService
     
     public bool SaveLayout(Guid tabId, List<LayoutOrder> newList)
     {
-        var oldLayout = context.GetLayoutForTab(tabId);
+        var oldLayout = _context.GetLayoutForTab(tabId);
 
         var success = true;
 
@@ -98,7 +105,7 @@ public class DashboardService(ITuxDbContext context) : IDashboardService
                      e => e.LayoutRowId.ToString() == string.Empty
                           || e.LayoutRowId.Equals(Guid.Empty)))
         {
-            context.LayoutRows.Add(new LayoutRow
+            _context.LayoutRows.Add(new LayoutRow
             {
                 LayoutId = oldLayout.LayoutId,
                 LayoutTypeId = item.TypeId,
@@ -106,7 +113,7 @@ public class DashboardService(ITuxDbContext context) : IDashboardService
             });
             try
             {
-                context.SaveChanges();
+                _context.SaveChanges();
             }
             catch (Exception ex)
             {
@@ -118,16 +125,16 @@ public class DashboardService(ITuxDbContext context) : IDashboardService
         // Delete
         foreach (var layoutRow in oldLayout.LayoutRows.Where(e => newList.All(y => y.LayoutRowId != e.LayoutRowId)))
         {
-            var loadedRow = context.LayoutRows
+            var loadedRow = _context.LayoutRows
                 .Include(r=> r.WidgetPlacements)
                 .FirstOrDefault(e => e.LayoutRowId == layoutRow.LayoutRowId);
             if (loadedRow != null && !loadedRow.RowContainsWidgets())
             {
-                context.LayoutRows.Remove(loadedRow);
+                _context.LayoutRows.Remove(loadedRow);
             }
             try
             {
-                context.SaveChanges();
+                _context.SaveChanges();
             }
             catch (Exception ex)
             {
@@ -139,14 +146,14 @@ public class DashboardService(ITuxDbContext context) : IDashboardService
         // Update
         foreach (var item in newList)
         {
-            var row = context.LayoutRows.FirstOrDefault(y => y.LayoutRowId == item.LayoutRowId);
+            var row = _context.LayoutRows.FirstOrDefault(y => y.LayoutRowId == item.LayoutRowId);
             if (row != null)
             {
                 row.RowIndex = item.Index;
                 row.LayoutTypeId = item.TypeId;
                 try
                 {
-                    context.SaveChanges();
+                    _context.SaveChanges();
                 }
                 catch (Exception ex)
                 {
@@ -170,19 +177,19 @@ public class DashboardService(ITuxDbContext context) : IDashboardService
             LayoutId = layout.LayoutId,
             RowIndex = layout.LayoutRows.Count
         };
-        context.LayoutRows.Add(layoutRow);
-        return context.SaveChanges() > 0;
+        _context.LayoutRows.Add(layoutRow);
+        return _context.SaveChanges() > 0;
     }
 
     public AddWidgetResponse AddWidgetToTab(Guid tabId, Guid widgetId)
     {
         var result = new AddWidgetResponse { Success = false };
 
-        var layout = context.GetLayoutForTab(tabId);
+        var layout = _context.GetLayoutForTab(tabId);
         if (layout == null)
             return result;
 
-        var widget = context.GetWidget(widgetId);
+        var widget = _context.GetWidget(widgetId);
         var firstLayoutRow = layout.LayoutRows.OrderBy(e => e.RowIndex).FirstOrDefault();
         var placement = new WidgetPlacement
         {
@@ -202,9 +209,9 @@ public class DashboardService(ITuxDbContext context) : IDashboardService
             }).ToList()
         };
 
-        context.WidgetPlacements.Add(placement);
+        _context.WidgetPlacements.Add(placement);
 
-        result.Success = context.SaveChanges() > 0;
+        result.Success = _context.SaveChanges() > 0;
         result.PlacementId = placement.WidgetPlacementId;
 
         return result;
@@ -212,15 +219,15 @@ public class DashboardService(ITuxDbContext context) : IDashboardService
 
     public bool RemoveWidget(Guid placementId)
     {
-        var placement = context.GetWidgetPlacement(placementId);
+        var placement = _context.GetWidgetPlacement(placementId);
         foreach (var setting in placement.WidgetSettings)
         {
-            context.WidgetSettings.Remove(setting);
+            _context.WidgetSettings.Remove(setting);
         }
 
-        context.WidgetPlacements.Remove(placement);
+        _context.WidgetPlacements.Remove(placement);
 
-        return context.SaveChanges() > 0;
+        return _context.SaveChanges() > 0;
     }
 
     public WidgetPlacement SaveWidgetPlacement(PlacementParameter param)
@@ -236,7 +243,7 @@ public class DashboardService(ITuxDbContext context) : IDashboardService
     {
         foreach (var plItem in param.PlacementList)
         {
-            var wp = context.GetWidgetPlacement(plItem.PlacementId);
+            var wp = _context.GetWidgetPlacement(plItem.PlacementId);
             if (wp == null) continue;
 
             if (wp.WidgetPlacementId == param.PlacementId)
@@ -247,32 +254,32 @@ public class DashboardService(ITuxDbContext context) : IDashboardService
             wp.WidgetIndex = plItem.Index;
         }
 
-        context.SaveChanges();
+        _context.SaveChanges();
 
-        return context.GetWidgetPlacement(param.PlacementId);
+        return _context.GetWidgetPlacement(param.PlacementId);
     }
 
     private void UpdatePreviousLayoutOrder(PlacementParameter param)
     {
         // update placements from previous layout.
-        var placements = context.GetPlacementsByLayout(param.PreviousLayoutRowId);
+        var placements = _context.GetPlacementsByLayout(param.PreviousLayoutRowId);
         var index = 0;
         foreach (var wp in placements.Where(e => e.ColumnIndex == param.CurrentColumn).OrderBy(e => e.WidgetIndex))
         {
             wp.WidgetIndex = index++;
         }
 
-        context.SaveChanges();
+        _context.SaveChanges();
     }
 
     public WidgetPlacement UpdateCollapsed(Guid id, bool collapsed)
     {
-        var item = context.WidgetPlacements.FirstOrDefault(e => e.WidgetPlacementId == id);
+        var item = _context.WidgetPlacements.FirstOrDefault(e => e.WidgetPlacementId == id);
         if (item == null)
             return null;
 
         item.Collapsed = collapsed;
-        context.SaveChanges();
+        _context.SaveChanges();
 
         return item;
     }
@@ -283,19 +290,19 @@ public class DashboardService(ITuxDbContext context) : IDashboardService
 
         foreach (var widgetSetting in settings)
         {
-            var setting = context.WidgetSettings.FirstOrDefault(e =>
+            var setting = _context.WidgetSettings.FirstOrDefault(e =>
                 e.WidgetSettingId == widgetSetting.WidgetSettingId);
             if (setting == null) continue;
 
             setting.Value = widgetSetting.Value;
-            context.SaveChanges();
+            _context.SaveChanges();
             result.Add(setting);
         }
 
         if (!result.Any()) return new List<WidgetSettingDto>();
 
         var placementId = result.FirstOrDefault().WidgetPlacementId;
-        var placement = context.GetWidgetPlacement(placementId);
+        var placement = _context.GetWidgetPlacement(placementId);
 
         return placement.ToSettingsDto();
     }
@@ -305,14 +312,14 @@ public class DashboardService(ITuxDbContext context) : IDashboardService
 
     public int ChangeLayoutRowTo(LayoutRow row, int layoutTypeId)
     {
-        var layoutRow = context.LayoutRows
+        var layoutRow = _context.LayoutRows
             .FirstOrDefault(e => e.LayoutRowId.Equals(row.LayoutRowId));
         if (layoutRow != null)
         {
             layoutRow.LayoutTypeId = layoutTypeId;
         }
 
-        return context.SaveChanges();
+        return _context.SaveChanges();
     }
 
     public bool CanDeleteLayoutRow(Guid tabId, Guid layoutRowId)
@@ -328,76 +335,76 @@ public class DashboardService(ITuxDbContext context) : IDashboardService
 
     public int AddWidgetPlacement(WidgetPlacement placement)
     {
-        context.WidgetPlacements.Add(placement);
-        return context.SaveChanges();
+        _context.WidgetPlacements.Add(placement);
+        return _context.SaveChanges();
     }
 
-    public bool DashboardExistsFor(Guid id) => context.DashboardExistsFor(id);
+    public bool DashboardExistsFor(Guid id) => _context.DashboardExistsFor(id);
 
     #endregion
 
     #region Async
 
-    public async Task<Widget> GetWidgetAsync(Guid id, CancellationToken token = default) => await context.Widgets.FirstOrDefaultAsync(e => e.WidgetId == id, cancellationToken: token);
-    public async Task<WidgetPlacement> GetWidgetPlacementAsync(Guid id, CancellationToken token = default) => await context.GetWidgetPlacementAsync(id, token);
-    public async Task<Layout> GetLayoutFromTabAsync(Guid tabId, CancellationToken token = default) => await context.GetLayoutForTabAsync(tabId, token);
+    public async Task<Widget> GetWidgetAsync(Guid id, CancellationToken token = default) => await _context.Widgets.FirstOrDefaultAsync(e => e.WidgetId == id, cancellationToken: token);
+    public async Task<WidgetPlacement> GetWidgetPlacementAsync(Guid id, CancellationToken token = default) => await _context.GetWidgetPlacementAsync(id, token);
+    public async Task<Layout> GetLayoutFromTabAsync(Guid tabId, CancellationToken token = default) => await _context.GetLayoutForTabAsync(tabId, token);
     public async Task<Dashboard> CreateDashboardFromAsync(DashboardDefault template, Guid? userId, CancellationToken token = default) => await CreateFromTemplateAsync(template, userId, token);
     public async Task<Dashboard> CreateDashboardFromAsync(DashboardDefault template, CancellationToken token = default) => await CreateFromTemplateAsync(template, token: token);
-    public async Task<List<WidgetPlacement>> GetWidgetsForTabAsync(DashboardTab tab, CancellationToken token = default) => await context.GetWidgetsForTabAsync(tab, token: token);
-    public async Task<List<LayoutType>> GetLayoutTypesAsync(CancellationToken token = default) => await context.LayoutTypes.ToListAsync(cancellationToken: token);
-    public async Task<List<Widget>> GetWidgetsAsync(CancellationToken token = default) => await context.Widgets.ToListAsync(cancellationToken: token);
+    public async Task<List<WidgetPlacement>> GetWidgetsForTabAsync(DashboardTab tab, CancellationToken token = default) => await _context.GetWidgetsForTabAsync(tab, token: token);
+    public async Task<List<LayoutType>> GetLayoutTypesAsync(CancellationToken token = default) => await _context.LayoutTypes.ToListAsync(cancellationToken: token);
+    public async Task<List<Widget>> GetWidgetsAsync(CancellationToken token = default) => await _context.Widgets.ToListAsync(cancellationToken: token);
     public async Task<List<Widget>> GetWidgetsForAsync(int planId = 0, CancellationToken token = default) =>
         planId > 0
-            ? await context.Widgets.Where(u => u.Plans.Any(i => i.PlanId == planId))
+            ? await _context.Widgets.Where(u => u.Plans.Any(i => i.PlanId == planId))
                 .ToListAsync(cancellationToken: token)
             : await GetWidgetsAsync(token);
 
     public async Task<Dashboard> GetDashboardAsync(ITuxboardConfig config, CancellationToken token = default)
     {
-        if (!await context.DashboardExistsAsync(token: token))
+        if (!await _context.DashboardExistsAsync(token: token))
         {
             // Pass in a planid (int) to pull back specific dashboards.
             // If nothing passed, it'll grab the first Dashboard Template.
-            var template = await context.GetDashboardTemplateForAsync(token: token);
+            var template = await _context.GetDashboardTemplateForAsync(token: token);
 
             await CreateDashboardFromAsync(template, token);
 
-            await context.SaveChangesAsync(token);
+            await _context.SaveChangesAsync(token);
         }
 
-        return await context.GetDashboardAsync(config, token: token);
+        return await _context.GetDashboardAsync(config, token: token);
     }
 
     public async Task<Dashboard> GetDashboardForAsync(ITuxboardConfig config, Guid userId, CancellationToken token = default)
     {
-        if (!await context.DashboardExistsForAsync(userId, token: token))
+        if (!await _context.DashboardExistsForAsync(userId, token: token))
         {
             // Pass in a planid (int) to pull back specific dashboards.
             // If nothing passed, it'll grab the first Dashboard Template.
-            var template = await context.GetDashboardTemplateForAsync(token: token);
+            var template = await _context.GetDashboardTemplateForAsync(token: token);
 
             await CreateDashboardFromAsync(template, userId, token);
 
-            await context.SaveChangesAsync(token);
+            await _context.SaveChangesAsync(token);
         }
 
-        return await context.GetDashboardForAsync(config, userId, token: token);
+        return await _context.GetDashboardForAsync(config, userId, token: token);
     }
 
     public async Task<bool> RemoveLayoutRowAsync(LayoutRow row, CancellationToken token = default)
     {
-        var item = await context.LayoutRows.FirstOrDefaultAsync(
+        var item = await _context.LayoutRows.FirstOrDefaultAsync(
             t => t.LayoutRowId == row.LayoutRowId, cancellationToken: token);
         if (item != null)
         {
-            context.LayoutRows.Remove(item);
+            _context.LayoutRows.Remove(item);
         }
-        return await context.SaveChangesAsync(token) > 0;
+        return await _context.SaveChangesAsync(token) > 0;
     }
 
     public async Task<bool> SaveLayoutAsync(Guid tabId, List<LayoutOrder> newList, CancellationToken token = default)
     {
-        var oldLayout = await context.GetLayoutForTabAsync(tabId, token: token);
+        var oldLayout = await _context.GetLayoutForTabAsync(tabId, token: token);
 
         // poor man's synchronization
         var success = true;
@@ -408,7 +415,7 @@ public class DashboardService(ITuxDbContext context) : IDashboardService
                      e => e.LayoutRowId.ToString() == string.Empty
                           || e.LayoutRowId.Equals(Guid.Empty)))
         {
-            context.LayoutRows.Add(new LayoutRow
+            _context.LayoutRows.Add(new LayoutRow
             {
                 LayoutId = oldLayout.LayoutId,
                 LayoutTypeId = item.TypeId,
@@ -416,7 +423,7 @@ public class DashboardService(ITuxDbContext context) : IDashboardService
             });
             try
             {
-                await context.SaveChangesAsync(token);
+                await _context.SaveChangesAsync(token);
             }
             catch (Exception ex)
             {
@@ -428,16 +435,16 @@ public class DashboardService(ITuxDbContext context) : IDashboardService
         // Delete
         foreach (var layoutRow in oldLayout.LayoutRows.Where(e => newList.All(y => y.LayoutRowId != e.LayoutRowId)))
         {
-            var loadedRow = context.LayoutRows
+            var loadedRow = _context.LayoutRows
                 .Include(r => r.WidgetPlacements)
                 .FirstOrDefault(e => e.LayoutRowId == layoutRow.LayoutRowId);
             if (loadedRow != null && !loadedRow.RowContainsWidgets())
             {
-                context.LayoutRows.Remove(loadedRow);
+                _context.LayoutRows.Remove(loadedRow);
             }
             try
             {
-                await context.SaveChangesAsync(token);
+                await _context.SaveChangesAsync(token);
             }
             catch (Exception ex)
             {
@@ -449,7 +456,7 @@ public class DashboardService(ITuxDbContext context) : IDashboardService
         // Update
         foreach (var item in newList)
         {
-            var row = await context.LayoutRows.FirstOrDefaultAsync(y => y.LayoutRowId == item.LayoutRowId, cancellationToken: token);
+            var row = await _context.LayoutRows.FirstOrDefaultAsync(y => y.LayoutRowId == item.LayoutRowId, cancellationToken: token);
             if (row == null || row.RowIndex == item.Index)
                 continue;
 
@@ -457,7 +464,7 @@ public class DashboardService(ITuxDbContext context) : IDashboardService
             row.LayoutTypeId = item.TypeId;
             try
             {
-                await context.SaveChangesAsync(token);
+                await _context.SaveChangesAsync(token);
             }
             catch (Exception ex)
             {
@@ -473,14 +480,14 @@ public class DashboardService(ITuxDbContext context) : IDashboardService
     public async Task<Dashboard> CreateFromTemplateAsync(DashboardDefault template, Guid? userId = null, CancellationToken token = default)
     {
         var dashboard = Dashboard.Create(userId);
-        await context.Dashboards.AddAsync(dashboard, token);
-        await context.SaveChangesAsync(token);
+        await _context.Dashboards.AddAsync(dashboard, token);
+        await _context.SaveChangesAsync(token);
 
         var currentTab = dashboard.GetCurrentTab();
         var tabId = currentTab.TabId;
 
         currentTab.Layouts = Layout.CreateDefaultLayouts(tabId, template);
-        await context.SaveChangesAsync(token);
+        await _context.SaveChangesAsync(token);
 
         return dashboard;
 
@@ -499,7 +506,7 @@ public class DashboardService(ITuxDbContext context) : IDashboardService
     {
         foreach (var plItem in param.PlacementList)
         {
-            var wp = await context.GetWidgetPlacementAsync(plItem.PlacementId, token: token);
+            var wp = await _context.GetWidgetPlacementAsync(plItem.PlacementId, token: token);
             if (wp == null) continue;
 
             if (wp.WidgetPlacementId == param.PlacementId)
@@ -510,32 +517,32 @@ public class DashboardService(ITuxDbContext context) : IDashboardService
             wp.WidgetIndex = plItem.Index;
         }
 
-        await context.SaveChangesAsync(token);
+        await _context.SaveChangesAsync(token);
 
-        return await context.GetWidgetPlacementAsync(param.PlacementId, token: token);
+        return await _context.GetWidgetPlacementAsync(param.PlacementId, token: token);
     }
 
     private async Task UpdatePreviousLayoutOrderAsync(PlacementParameter param, CancellationToken token = default)
     {
         // update placements from previous layout.
-        var placements = await context.GetPlacementsByLayoutAsync(param.PreviousLayoutRowId, token: token);
+        var placements = await _context.GetPlacementsByLayoutAsync(param.PreviousLayoutRowId, token: token);
         var index = 0;
         foreach (var wp in placements.Where(e => e.ColumnIndex == param.CurrentColumn).OrderBy(e => e.WidgetIndex))
         {
             wp.WidgetIndex = index++;
         }
 
-        await context.SaveChangesAsync(token);
+        await _context.SaveChangesAsync(token);
     }
 
     public async Task<WidgetPlacement> UpdateCollapsedAsync(Guid id, bool collapsed, CancellationToken token = default)
     {
-        var item = context.WidgetPlacements.FirstOrDefault(e => e.WidgetPlacementId == id);
+        var item = _context.WidgetPlacements.FirstOrDefault(e => e.WidgetPlacementId == id);
         if (item == null)
             return null;
 
         item.Collapsed = collapsed;
-        await context.SaveChangesAsync(token);
+        await _context.SaveChangesAsync(token);
 
         return item;
     }
@@ -548,19 +555,19 @@ public class DashboardService(ITuxDbContext context) : IDashboardService
             LayoutId = layout.LayoutId,
             RowIndex = layout.LayoutRows.Count + 1
         };
-        context.LayoutRows.Add(layoutRow);
-        return await context.SaveChangesAsync(token) > 0;
+        _context.LayoutRows.Add(layoutRow);
+        return await _context.SaveChangesAsync(token) > 0;
     }
 
     public async Task<AddWidgetResponse> AddWidgetToTabAsync(Guid tabId, Guid widgetId, CancellationToken token = default)
     {
         var result = new AddWidgetResponse { Success = false };
 
-        var layout = await context.GetLayoutForTabAsync(tabId, token: token);
+        var layout = await _context.GetLayoutForTabAsync(tabId, token: token);
         if (layout == null)
             return result;
 
-        var fullWidget = await context.GetWidgetAsync(widgetId, token: token);
+        var fullWidget = await _context.GetWidgetAsync(widgetId, token: token);
         var firstLayoutRow = layout.LayoutRows.MinBy(e => e.RowIndex);
         var placement = new WidgetPlacement
         {
@@ -580,9 +587,9 @@ public class DashboardService(ITuxDbContext context) : IDashboardService
             }).ToList()
         };
 
-        await context.WidgetPlacements.AddAsync(placement, token);
+        await _context.WidgetPlacements.AddAsync(placement, token);
 
-        result.Success = await context.SaveChangesAsync(token) > 0;
+        result.Success = await _context.SaveChangesAsync(token) > 0;
         result.PlacementId = placement.WidgetPlacementId;
 
         return result;
@@ -590,18 +597,18 @@ public class DashboardService(ITuxDbContext context) : IDashboardService
 
     public async Task<bool> RemoveWidgetAsync(Guid placementId, CancellationToken token = default)
     {
-        var placement = await context.GetWidgetPlacementAsync(placementId, token);
+        var placement = await _context.GetWidgetPlacementAsync(placementId, token);
         foreach (var setting in placement.WidgetSettings)
         {
-            context.WidgetSettings.Remove(setting);
+            _context.WidgetSettings.Remove(setting);
             ;
         }
 
-        await context.SaveChangesAsync(new CancellationToken());
+        await _context.SaveChangesAsync(new CancellationToken());
 
-        context.WidgetPlacements.Remove(placement);
+        _context.WidgetPlacements.Remove(placement);
 
-        return await context.SaveChangesAsync(token) > 0;
+        return await _context.SaveChangesAsync(token) > 0;
     }
 
     public async Task<List<WidgetSettingDto>> SaveWidgetSettingsAsync(List<WidgetSetting> settings, CancellationToken token = default)
@@ -611,12 +618,12 @@ public class DashboardService(ITuxDbContext context) : IDashboardService
         foreach (var widgetSetting in settings)
         {
             var setting =
-                await context.WidgetSettings.FirstOrDefaultAsync(e =>
+                await _context.WidgetSettings.FirstOrDefaultAsync(e =>
                     e.WidgetSettingId == widgetSetting.WidgetSettingId, cancellationToken: token);
             if (setting == null) continue;
 
             setting.Value = widgetSetting.Value;
-            await context.SaveChangesAsync(token);
+            await _context.SaveChangesAsync(token);
             result.Add(setting);
         }
 
@@ -626,7 +633,7 @@ public class DashboardService(ITuxDbContext context) : IDashboardService
         }
 
         var placementId = result.FirstOrDefault().WidgetPlacementId;
-        var placement = await context.GetWidgetPlacementAsync(placementId, token: token);
+        var placement = await _context.GetWidgetPlacementAsync(placementId, token: token);
 
         return placement.ToSettingsDto();
     }
@@ -638,14 +645,14 @@ public class DashboardService(ITuxDbContext context) : IDashboardService
     public async Task<int> ChangeLayoutRowToAsync(LayoutRow row, int layoutTypeId,
         CancellationToken token = default)
     {
-        var layoutRow = await context.LayoutRows
+        var layoutRow = await _context.LayoutRows
             .FirstOrDefaultAsync(e => e.LayoutRowId.Equals(row.LayoutRowId), cancellationToken: token);
         if (layoutRow != null)
         {
             layoutRow.LayoutTypeId = layoutTypeId;
         }
 
-        return await context.SaveChangesAsync(token);
+        return await _context.SaveChangesAsync(token);
     }
 
     public async Task<bool> CanDeleteLayoutRowAsync(Guid tabId, Guid layoutRowId)
@@ -661,12 +668,12 @@ public class DashboardService(ITuxDbContext context) : IDashboardService
 
     public async Task<int> AddWidgetPlacementAsync(WidgetPlacement placement, CancellationToken token = default)
     {
-        context.WidgetPlacements.Add(placement);
-        return await context.SaveChangesAsync(token);
+        _context.WidgetPlacements.Add(placement);
+        return await _context.SaveChangesAsync(token);
     }
 
     public async Task<bool> DashboardExistsForAsync(Guid id, CancellationToken token = default) 
-        => await context.DashboardExistsForAsync(id, token);
+        => await _context.DashboardExistsForAsync(id, token);
 
     #endregion
 }
