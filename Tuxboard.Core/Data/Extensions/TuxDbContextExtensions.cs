@@ -53,10 +53,8 @@ public static class TuxDbContextExtensions
             .FirstOrDefault(e => e.DefaultId == id);
     }
 
-    public static bool DashboardExists(this ITuxDbContext context)
-    {
-        return context.Dashboards.FirstOrDefault() != null;
-    }
+    public static bool DashboardExists(this ITuxDbContext context) 
+        => context.Dashboards.FirstOrDefault() != null;
 
     public static Dashboard GetDashboard(this ITuxDbContext context, ITuxboardConfig config)
     {
@@ -125,6 +123,7 @@ public static class TuxDbContextExtensions
                 .ThenInclude(ddw => ddw.Widget)
             .Include(tab => tab.Layout)
                 .ThenInclude(lo => lo.LayoutRows)
+            .Where(y => !y.Layout.TabId.HasValue)
             .AsNoTracking();
 
         var result = planId > 0
@@ -341,6 +340,7 @@ public static class TuxDbContextExtensions
                 .ThenInclude(ddw => ddw.Widget)
             .Include(tab => tab.Layout)
                 .ThenInclude(lo => lo.LayoutRows)
+            .Where(y=> !y.Layout.TabId.HasValue)
             .AsNoTracking();
 
         var result = planId > 0
@@ -354,7 +354,6 @@ public static class TuxDbContextExtensions
         foreach (var row in layout.LayoutRows)
         {
             row.LayoutType = layoutTypes.FirstOrDefault(e => e.LayoutTypeId == row.LayoutTypeId);
-            // row.WidgetPlacements = await context.GetPlacementsByLayoutRowAsync(row.LayoutRowId);
         }
 
         return result;

@@ -79,7 +79,7 @@ public class WidgetConfiguration : IEntityTypeConfiguration<Widget>
                     Name = "generalinfo",
                     Title = "General Info",
                     Description = "Display General Information",
-                    ImageUrl = "", GroupName = "", Permission = 0, Moveable = false, CanDelete = false,
+                    ImageUrl = "", GroupName = "General", Permission = 0, Moveable = false, CanDelete = false,
                     UseSettings = false, UseTemplate = false
                 },
                 new()
@@ -88,7 +88,7 @@ public class WidgetConfiguration : IEntityTypeConfiguration<Widget>
                     Name = "helloworld",
                     Title = "Hello World",
                     Description = "A Simple Hello World Widget",
-                    ImageUrl = "", GroupName = "", Permission = 0, Moveable = true, CanDelete = true,
+                    ImageUrl = "", GroupName = "Example", Permission = 0, Moveable = true, CanDelete = true,
                     UseSettings = true, UseTemplate = true
                 },
                 new()
@@ -97,7 +97,7 @@ public class WidgetConfiguration : IEntityTypeConfiguration<Widget>
                     Name = "table",
                     Title = "Sample Table",
                     Description = "Demonstration of data table",
-                    ImageUrl = "", GroupName = "", Permission = 0, Moveable = true, CanDelete = true,
+                    ImageUrl = "", GroupName = "General", Permission = 0, Moveable = true, CanDelete = true,
                     UseSettings = true, UseTemplate = true
                 }
             }
