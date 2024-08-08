@@ -1,12 +1,24 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
+using Tuxboard.Core.Configuration;
 using Tuxboard.Core.Domain.Entities;
 
 namespace Tuxboard.Core.Data.Configuration;
 
 public class LayoutTypeConfiguration : IEntityTypeConfiguration<LayoutType>
 {
+    private readonly TuxboardConfig _config;
+    private readonly Action<EntityTypeBuilder<LayoutType>> _seedAction;
+
+    public LayoutTypeConfiguration(TuxboardConfig config,
+        Action<EntityTypeBuilder<LayoutType>> seedAction = null)
+    {
+        _config = config;
+        _seedAction = seedAction;
+    }
+
     public void Configure(EntityTypeBuilder<LayoutType> builder)
     {
         builder.ToTable("LayoutType");
@@ -19,6 +31,10 @@ public class LayoutTypeConfiguration : IEntityTypeConfiguration<LayoutType>
             .IsRequired()
             .HasMaxLength(30)
             .IsUnicode(false);
+
+        if (_seedAction != null) _seedAction(builder);
+
+        if (!_config.CreateSeedData) return;
 
         builder.HasData(
             new List<LayoutType>

@@ -2,12 +2,23 @@
 using System.Collections.Generic;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
+using Tuxboard.Core.Configuration;
 using Tuxboard.Core.Domain.Entities;
 
 namespace Tuxboard.Core.Data.Configuration;
 
 public class LayoutRowConfiguration : IEntityTypeConfiguration<LayoutRow>
 {
+    private readonly TuxboardConfig _config;
+    private readonly Action<EntityTypeBuilder<LayoutRow>> _seedAction;
+
+    public LayoutRowConfiguration(TuxboardConfig config,
+        Action<EntityTypeBuilder<LayoutRow>> seedAction = null)
+    {
+        _config = config;
+        _seedAction = seedAction;
+    }
+
     public void Configure(EntityTypeBuilder<LayoutRow> builder)
     {
         builder.ToTable("LayoutRow");
@@ -29,6 +40,10 @@ public class LayoutRowConfiguration : IEntityTypeConfiguration<LayoutRow>
             .WithMany(p => p.LayoutRows)
             .HasForeignKey(d => d.LayoutTypeId)
             .HasConstraintName("FK_LayoutRow_LayoutType");
+
+        if (_seedAction != null) _seedAction(builder);
+
+        if (!_config.CreateSeedData) return;
 
         builder.HasData(new List<LayoutRow>
             {

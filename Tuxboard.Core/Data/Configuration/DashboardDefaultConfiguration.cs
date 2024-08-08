@@ -2,12 +2,23 @@
 using System.Collections.Generic;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
+using Tuxboard.Core.Configuration;
 using Tuxboard.Core.Domain.Entities;
 
 namespace Tuxboard.Core.Data.Configuration;
 
 public class DashboardDefaultConfiguration : IEntityTypeConfiguration<DashboardDefault>
 {
+    private readonly TuxboardConfig _config;
+    private readonly Action<EntityTypeBuilder<DashboardDefault>> _seedAction;
+
+    public DashboardDefaultConfiguration(TuxboardConfig config, 
+        Action<EntityTypeBuilder<DashboardDefault>> seedAction = null)
+    {
+        _config = config;
+        _seedAction = seedAction;
+    }
+
     public void Configure(EntityTypeBuilder<DashboardDefault> builder)
     {
         builder.HasKey(e => e.DefaultId);
@@ -38,6 +49,10 @@ public class DashboardDefaultConfiguration : IEntityTypeConfiguration<DashboardD
             .WithMany(p => p.DashboardDefaults)
             .HasForeignKey(d => d.PlanId)
             .HasConstraintName("FK_DashboardDefault_Plan");
+
+        if (_seedAction != null) _seedAction(builder);
+
+        if (!_config.CreateSeedData) return;
 
         builder.HasData(new List<DashboardDefault>
             {

@@ -2,12 +2,23 @@
 using System.Collections.Generic;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
+using Tuxboard.Core.Configuration;
 using Tuxboard.Core.Domain.Entities;
 
 namespace Tuxboard.Core.Data.Configuration;
 
 public class DashboardDefaultWidgetConfiguration : IEntityTypeConfiguration<DashboardDefaultWidget>
 {
+    private readonly TuxboardConfig _config;
+    private readonly Action<EntityTypeBuilder<DashboardDefaultWidget>> _seedAction;
+
+    public DashboardDefaultWidgetConfiguration(TuxboardConfig config,
+        Action<EntityTypeBuilder<DashboardDefaultWidget>> seedAction = null)
+    {
+        _config = config;
+        _seedAction = seedAction;
+    }
+
     public void Configure(EntityTypeBuilder<DashboardDefaultWidget> builder)
     {
         builder.HasKey(e => e.DefaultWidgetId);
@@ -57,6 +68,10 @@ public class DashboardDefaultWidgetConfiguration : IEntityTypeConfiguration<Dash
             .HasForeignKey(d => d.WidgetId)
             .OnDelete(DeleteBehavior.ClientSetNull)
             .HasConstraintName("FK_DashboardDefaultWidget_Widget");
+
+        if (_seedAction != null) _seedAction(builder);
+
+        if (!_config.CreateSeedData) return;
 
         builder.HasData(new List<DashboardDefaultWidget>
             {

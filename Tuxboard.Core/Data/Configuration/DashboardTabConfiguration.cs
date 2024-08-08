@@ -1,11 +1,23 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
+using System;
+using Tuxboard.Core.Configuration;
 using Tuxboard.Core.Domain.Entities;
 
 namespace Tuxboard.Core.Data.Configuration;
 
 public class DashboardTabConfiguration : IEntityTypeConfiguration<DashboardTab>
 {
+    private readonly TuxboardConfig _config;
+    private readonly Action<EntityTypeBuilder<DashboardTab>> _seedAction;
+
+    public DashboardTabConfiguration(TuxboardConfig config,
+        Action<EntityTypeBuilder<DashboardTab>> seedAction = null)
+    {
+        _config = config;
+        _seedAction = seedAction;
+    }
+
     public void Configure(EntityTypeBuilder<DashboardTab> builder)
     {
         builder.HasKey(e => e.TabId);
@@ -35,5 +47,6 @@ public class DashboardTabConfiguration : IEntityTypeConfiguration<DashboardTab>
             .OnDelete(DeleteBehavior.ClientSetNull)
             .HasConstraintName("FK_DashboardTab_Dashboard");
 
+        if (_seedAction != null) _seedAction(builder);
     }
 }

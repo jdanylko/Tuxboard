@@ -2,12 +2,23 @@
 using System.Collections.Generic;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
+using Tuxboard.Core.Configuration;
 using Tuxboard.Core.Domain.Entities;
 
 namespace Tuxboard.Core.Data.Configuration;
 
 public class WidgetConfiguration : IEntityTypeConfiguration<Widget>
 {
+    private readonly TuxboardConfig _config;
+    private readonly Action<EntityTypeBuilder<Widget>> _seedAction;
+
+    public WidgetConfiguration(TuxboardConfig config,
+        Action<EntityTypeBuilder<Widget>> seedAction = null)
+    {
+        _config = config;
+        _seedAction = seedAction;
+    }
+
     public void Configure(EntityTypeBuilder<Widget> builder)
     {
         builder.ToTable("Widget");
@@ -56,6 +67,10 @@ public class WidgetConfiguration : IEntityTypeConfiguration<Widget>
                     j.HasIndex(new[] { "PlanId" }, "IX_WidgetPlan_PlanId");
                 });
 
+        if (_seedAction != null) _seedAction(builder);
+
+        if (!_config.CreateSeedData) return;
+
         builder.HasData(new List<Widget>
             {
                 new()
@@ -64,7 +79,7 @@ public class WidgetConfiguration : IEntityTypeConfiguration<Widget>
                     Name = "generalinfo",
                     Title = "General Info",
                     Description = "Display General Information",
-                    ImageUrl = "", GroupName = "", Permission = 0, Moveable = false, CanDelete = false,
+                    ImageUrl = "", GroupName = "General", Permission = 0, Moveable = false, CanDelete = false,
                     UseSettings = false, UseTemplate = false
                 },
                 new()
@@ -73,7 +88,7 @@ public class WidgetConfiguration : IEntityTypeConfiguration<Widget>
                     Name = "helloworld",
                     Title = "Hello World",
                     Description = "A Simple Hello World Widget",
-                    ImageUrl = "", GroupName = "", Permission = 0, Moveable = true, CanDelete = true,
+                    ImageUrl = "", GroupName = "Example", Permission = 0, Moveable = true, CanDelete = true,
                     UseSettings = true, UseTemplate = true
                 },
                 new()
@@ -82,7 +97,7 @@ public class WidgetConfiguration : IEntityTypeConfiguration<Widget>
                     Name = "table",
                     Title = "Sample Table",
                     Description = "Demonstration of data table",
-                    ImageUrl = "", GroupName = "", Permission = 0, Moveable = true, CanDelete = true,
+                    ImageUrl = "", GroupName = "General", Permission = 0, Moveable = true, CanDelete = true,
                     UseSettings = true, UseTemplate = true
                 }
             }

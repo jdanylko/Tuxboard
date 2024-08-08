@@ -2,12 +2,23 @@
 using System.Collections.Generic;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
+using Tuxboard.Core.Configuration;
 using Tuxboard.Core.Domain.Entities;
 
 namespace Tuxboard.Core.Data.Configuration;
 
 public class WidgetDefaultConfiguration : IEntityTypeConfiguration<WidgetDefault>
 {
+    private readonly TuxboardConfig _config;
+    private readonly Action<EntityTypeBuilder<WidgetDefault>> _seedAction;
+
+    public WidgetDefaultConfiguration(TuxboardConfig config,
+        Action<EntityTypeBuilder<WidgetDefault>> seedAction = null)
+    {
+        _config = config;
+        _seedAction = seedAction;
+    }
+
     public void Configure(EntityTypeBuilder<WidgetDefault> builder)
     {
         builder.ToTable("WidgetDefault");
@@ -43,6 +54,10 @@ public class WidgetDefaultConfiguration : IEntityTypeConfiguration<WidgetDefault
             .HasForeignKey(d => d.WidgetId)
             .OnDelete(DeleteBehavior.ClientSetNull)
             .HasConstraintName("FK_WidgetDefault_Widget");
+
+        if (_seedAction != null) _seedAction(builder);
+
+        if (!_config.CreateSeedData) return;
 
         builder.HasData(new List<WidgetDefault>
             {

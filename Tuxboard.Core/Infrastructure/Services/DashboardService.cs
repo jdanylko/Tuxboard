@@ -78,6 +78,7 @@ public class DashboardService : IDashboardService
         var tabId = currentTab.TabId;
 
         currentTab.Layouts = Layout.CreateDefaultLayouts(tabId, template);
+        _context.SaveChanges();
 
         return dashboard;
 
@@ -338,6 +339,8 @@ public class DashboardService : IDashboardService
         return _context.SaveChanges();
     }
 
+    public bool DashboardExistsFor(Guid id) => _context.DashboardExistsFor(id);
+
     #endregion
 
     #region Async
@@ -484,6 +487,7 @@ public class DashboardService : IDashboardService
         var tabId = currentTab.TabId;
 
         currentTab.Layouts = Layout.CreateDefaultLayouts(tabId, template);
+        await _context.SaveChangesAsync(token);
 
         return dashboard;
 
@@ -668,6 +672,8 @@ public class DashboardService : IDashboardService
         return await _context.SaveChangesAsync(token);
     }
 
-    #endregion
+    public async Task<bool> DashboardExistsForAsync(Guid id, CancellationToken token = default) 
+        => await _context.DashboardExistsForAsync(id, token);
 
+    #endregion
 }

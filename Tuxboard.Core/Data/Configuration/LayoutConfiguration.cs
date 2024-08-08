@@ -2,12 +2,23 @@
 using System.Collections.Generic;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
+using Tuxboard.Core.Configuration;
 using Tuxboard.Core.Domain.Entities;
 
 namespace Tuxboard.Core.Data.Configuration;
 
 public class LayoutConfiguration : IEntityTypeConfiguration<Layout>
 {
+    private readonly TuxboardConfig _config;
+    private readonly Action<EntityTypeBuilder<Layout>> _seedAction;
+
+    public LayoutConfiguration(TuxboardConfig config,
+        Action<EntityTypeBuilder<Layout>> seedAction = null)
+    {
+        _config = config;
+        _seedAction = seedAction;
+    }
+
     public void Configure(EntityTypeBuilder<Layout> builder)
     {
         builder.ToTable("Layout");
@@ -27,6 +38,10 @@ public class LayoutConfiguration : IEntityTypeConfiguration<Layout>
             .WithMany(p => p.Layouts)
             .HasForeignKey(d => d.TabId)
             .HasConstraintName("FK_DashboardLayout_DashboardTab");
+
+        if (_seedAction != null) _seedAction(builder);
+
+        if (!_config.CreateSeedData) return;
 
         builder.HasData(
             new List<Layout>
