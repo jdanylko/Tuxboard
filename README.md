@@ -14,7 +14,7 @@ a Lego-style way to build dashboards.
 
 #### Technology Stack
 
-  - ASP.NET Core 6.0 or higher (using C#)
+  - ASP.NET Core 8.0 or higher (using C#)
   - Entity Framework Core
   
 #### Features
@@ -43,3 +43,78 @@ their own custom widgets and robust layouts.
  * Examples are in a separate repository [Tuxboard.Examples](https://github.com/jdanylko/Tuxboard.Examples)
  * I'm writing a collection of [Tuxboard posts](https://www.danylkoweb.com/Tuxboard/) on DanylkoWeb.com
 
+
+## code sample help snippets on initialization
+
+Alternatively install it using the .NET CLI:
+
+Stp 1
+dotnet add package Tuxboard
+
+Step 2: Configure Tuxboard
+In your `Startup.cs` file, add the Tuxboard services to the `ConfigureServices` method:
+
+    public void ConfigureServices(IServiceCollection services)
+    {
+        services.AddTuxboard();
+    }
+
+Step 3: Create a Dashboard
+Create a new class that will serve as your dashboard. This class should inherit from `TuxboardDashboard`:
+
+
+    using Tuxboard;
+    
+    public class MyDashboard : TuxboardDashboard
+    {
+        public MyDashboard()
+        {
+            // Add widgets to the dashboard here
+        }
+    }
+
+Step 4: Add Widgets to the Dashboard
+Create widget classes that inherit from TuxboardWidget. For example:
+
+    using Tuxboard;
+    
+    public class MyWidget : TuxboardWidget
+    {
+        public MyWidget()
+        {
+            // Configure the widget here
+            Title = "My Widget";
+            Description = "This is my widget";
+        }
+    
+        public override void Render()
+        {
+            // Render the widget content here
+            Html.RenderPartial("MyWidgetPartial");
+        }
+    }
+
+Step 5: Add the Dashboard to the Tuxboard Configuration
+thaen in your Startup.cs file, add the dashboard to the Tuxboard configuration in the Configure method:
+
+    public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
+    {
+        // ...
+    
+        app.UseTuxboard(dashboard =>
+        {
+            dashboard.AddDashboard<MyDashboard>();
+        });
+    }
+
+Step 6: Create a View for the Dashboard
+Finally make ior create a new view that will render the dashboard. For example:
+
+    @using Tuxboard
+    
+    <div class="dashboard">
+        @Html.TuxboardDashboard()
+    </div>
+
+
+//TODO show how to wire up table data from front end
