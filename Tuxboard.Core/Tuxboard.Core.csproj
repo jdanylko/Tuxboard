@@ -14,6 +14,7 @@
     <RepositoryUrl>https://github.com/jdanylko/Tuxboard</RepositoryUrl>
     <RepositoryType>C#</RepositoryType>
     <PackageTags>CSharp C# Dashboard Library Widgets Layouts Bootstrap FontAwesome</PackageTags>
+	  <GenerateDocumentationFile>true</GenerateDocumentationFile>
   </PropertyGroup>
 
   <ItemGroup>
@@ -21,6 +22,10 @@
     <EmbeddedResource Remove="Properties\**" />
     <None Remove="Properties\**" />
   </ItemGroup>
+
+	<ItemGroup>
+		<FrameworkReference Include="Microsoft.AspNetCore.App" />
+	</ItemGroup>
 
   <ItemGroup Condition=" '$(TargetFramework)' == 'net6.0' ">
     <PackageReference Include="Microsoft.EntityFrameworkCore" Version="6.0.31" />
