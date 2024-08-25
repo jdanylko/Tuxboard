@@ -7,9 +7,6 @@ public class TuxboardConfig : ITuxboardConfig
     public string ConnectionString { get; set; } = string.Empty;
 
     /// <inheritdoc/>
-    public string MigrationAssembly { get; set; } = string.Empty;
-
-    /// <inheritdoc/>
     public string Schema { get; set; } = "dbo";
 
     /// <inheritdoc/>

@@ -13,12 +13,13 @@ public class ServiceCollectionExtensionsTests
     public void AddTuxboardDashboard_WithValidConfiguration_AddsServices()
     {
         // Arrange
-        const string jsonConfig = """
+        const string connectionString = "Server=MyServer;Database=Tuxboard;Trusted_Connection=True;MultipleActiveResultSets=true";
+        const string schema = "MySchema";
+        string jsonConfig = $$$"""
         {
             "TuxboardConfig": {
-                "ConnectionString": "Server=(localdb)\\mssqllocaldb;Database=Tuxboard;Trusted_Connection=True;MultipleActiveResultSets=true",
-                "MigrationAssembly": "Tuxboard.Core",
-                "Schema": "dbo"
+                "ConnectionString": "{{{connectionString}}}",
+                "Schema": "{{{schema}}}"
             }
         }
         """;
@@ -36,11 +37,15 @@ public class ServiceCollectionExtensionsTests
 
         // Act
         services.AddTuxboardDashboard(configuration);
+        ServiceProvider provider = services.BuildServiceProvider();
+        var config = provider.GetService<ITuxboardConfig>();
 
         // Assert
+        Assert.NotNull(config);
+        Assert.Equal(connectionString, config.ConnectionString);
+        Assert.Equal(schema, config.Schema);
         Assert.Contains(services, d => d.ServiceType == typeof(IDashboardService));
         Assert.Contains(services, d => d.ServiceType == typeof(ITuxDbContext));
-        Assert.Contains(services, d => d.ServiceType == typeof(ITuxboardConfig));
     }
 
     [Fact]
@@ -58,20 +63,25 @@ public class ServiceCollectionExtensionsTests
     public void AddTuxboardDashboard_WithSetupConfig_AddsServices()
     {
         // Arrange
-
+        const string connectionString = "SomeConnection";
+        const string schema = "some-schema";
         Action<TuxboardConfig> setupConfig = config =>
         {
-            config.ConnectionString = "SomeConnection";
-            config.MigrationAssembly = "SomeAssembly";
+            config.ConnectionString = connectionString;
+            config.Schema = schema;
         };
         ServiceCollection services = new();
         // Act
         services.AddTuxboardDashboard(setupConfig);
+        ServiceProvider provider = services.BuildServiceProvider();
+        var config = provider.GetService<ITuxboardConfig>();
 
         // Assert
+        Assert.NotNull(config);
+        Assert.Equal(connectionString, config.ConnectionString);
+        Assert.Equal(schema, config.Schema);
         Assert.Contains(services, d => d.ServiceType == typeof(IDashboardService));
         Assert.Contains(services, d => d.ServiceType == typeof(ITuxDbContext));
-        Assert.Contains(services, d => d.ServiceType == typeof(ITuxboardConfig));
     }
 
     [Fact]

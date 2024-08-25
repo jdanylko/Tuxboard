@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Reflection;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
@@ -30,10 +31,12 @@ public static class ServiceCollectionExtensions
         section.Bind(appConfig);
         services.AddSingleton<ITuxboardConfig>(appConfig);
 
+        string assemblyName = Assembly.GetCallingAssembly()!.GetName().Name;
+
         // Tuxboard DbContext
         services.AddDbContext<TuxDbContext>(options =>
         {
-            options.UseSqlServer(appConfig.ConnectionString, x => x.MigrationsAssembly(appConfig.MigrationAssembly));
+            options.UseSqlServer(appConfig.ConnectionString, x => x.MigrationsAssembly(assemblyName));
         });
 
         // For Dependency Injection
@@ -58,9 +61,11 @@ public static class ServiceCollectionExtensions
         setupConfig(appConfig);
         services.AddSingleton<ITuxboardConfig>(appConfig);
 
+        string assemblyName = Assembly.GetCallingAssembly()!.GetName().Name;
+
         services.AddDbContext<TuxDbContext>(options =>
         {
-            options.UseSqlServer(appConfig.ConnectionString, x => x.MigrationsAssembly(appConfig.MigrationAssembly));
+            options.UseSqlServer(appConfig.ConnectionString, x => x.MigrationsAssembly(assemblyName));
         });
 
         services.AddTransient<IDashboardService, DashboardService>();

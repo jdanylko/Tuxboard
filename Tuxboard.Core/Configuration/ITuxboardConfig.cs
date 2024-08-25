@@ -11,11 +11,6 @@ public interface ITuxboardConfig
     string ConnectionString { get; set; }
 
     /// <summary>
-    /// Gets or sets the migration assembly.
-    /// </summary>
-    string MigrationAssembly { get; set; }
-
-    /// <summary>
     /// Gets or sets the schema.
     /// </summary>
     string Schema { get; set; }
