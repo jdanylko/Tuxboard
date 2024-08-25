@@ -6,6 +6,7 @@
   <img src="https://jdanylko.vsrm.visualstudio.com/_apis/public/Release/badge/624b04d9-c444-4cb9-bd43-23d11c8291b0/1/2" />
   <img alt="GitHub" src="https://img.shields.io/github/license/jdanylko/Tuxboard">
   <img alt="NuGet" src="https://img.shields.io/nuget/v/Tuxboard.core">
+  <img alt="Contributors" src="https://img.shields.io/github/contributors/jdanylko/Tuxboard">
 </p>
 
 **UPDATE:** Version [1.7.0](https://github.com/jdanylko/Tuxboard/discussions/31) is now available on <a href="https://www.nuget.org/packages/Tuxboard.Core/" title="Go to Tuxboard.Core on NuGet.org">NuGet</a>.
@@ -43,4 +44,7 @@ their own custom widgets and robust layouts.
 
  * Examples are in a separate repository [Tuxboard.Examples](https://github.com/jdanylko/Tuxboard.Examples)
  * I'm writing a collection of [Tuxboard posts](https://www.danylkoweb.com/Tuxboard/) on DanylkoWeb.com
+
+## Contributors
+![GitHub Contributors Image](https://contrib.rocks/image?repo=jdanylko/Tuxboard)
 
