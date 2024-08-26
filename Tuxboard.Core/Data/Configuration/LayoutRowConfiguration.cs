@@ -21,7 +21,7 @@ public class LayoutRowConfiguration : IEntityTypeConfiguration<LayoutRow>
 
     public void Configure(EntityTypeBuilder<LayoutRow> builder)
     {
-        builder.ToTable("LayoutRow");
+        builder.ToTable("LayoutRow", _config.Schema);
 
         builder.HasIndex(e => e.LayoutId, "IX_LayoutRow_LayoutId");
 

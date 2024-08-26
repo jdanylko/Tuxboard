@@ -20,7 +20,7 @@ public class WidgetPlacementConfiguration : IEntityTypeConfiguration<WidgetPlace
 
     public void Configure(EntityTypeBuilder<WidgetPlacement> builder)
     {
-        builder.ToTable("WidgetPlacement");
+        builder.ToTable("WidgetPlacement", _config.Schema);
 
         builder.HasIndex(e => e.LayoutRowId, "IX_WidgetPlacement_LayoutRowId");
 

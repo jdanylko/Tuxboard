@@ -21,7 +21,7 @@ public class WidgetDefaultConfiguration : IEntityTypeConfiguration<WidgetDefault
 
     public void Configure(EntityTypeBuilder<WidgetDefault> builder)
     {
-        builder.ToTable("WidgetDefault");
+        builder.ToTable("WidgetDefault", _config.Schema);
 
         builder.HasIndex(e => e.WidgetId, "IX_WidgetDefault_WidgetId");
 

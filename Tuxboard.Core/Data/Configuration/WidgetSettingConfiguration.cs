@@ -20,7 +20,7 @@ public class WidgetSettingConfiguration : IEntityTypeConfiguration<WidgetSetting
 
     public void Configure(EntityTypeBuilder<WidgetSetting> builder)
     {
-        builder.ToTable("WidgetSetting");
+        builder.ToTable("WidgetSetting", _config.Schema);
 
         builder.HasIndex(e => e.WidgetDefaultId, "IX_WidgetSetting_WidgetDefaultId");
 

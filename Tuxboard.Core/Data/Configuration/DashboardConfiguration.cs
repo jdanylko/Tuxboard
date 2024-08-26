@@ -20,7 +20,7 @@ public class DashboardConfiguration : IEntityTypeConfiguration<Dashboard>
 
     public void Configure(EntityTypeBuilder<Dashboard> builder)
     {
-        builder.ToTable("Dashboard");
+        builder.ToTable("Dashboard", _config.Schema);
 
         builder.Property(e => e.DashboardId)
             .HasMaxLength(36)

@@ -21,7 +21,7 @@ public class WidgetConfiguration : IEntityTypeConfiguration<Widget>
 
     public void Configure(EntityTypeBuilder<Widget> builder)
     {
-        builder.ToTable("Widget");
+        builder.ToTable("Widget", _config.Schema);
 
         builder.Property(e => e.WidgetId)
             .HasMaxLength(36)

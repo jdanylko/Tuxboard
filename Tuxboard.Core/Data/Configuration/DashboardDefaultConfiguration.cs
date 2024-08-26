@@ -23,7 +23,7 @@ public class DashboardDefaultConfiguration : IEntityTypeConfiguration<DashboardD
     {
         builder.HasKey(e => e.DefaultId);
 
-        builder.ToTable("DashboardDefault");
+        builder.ToTable("DashboardDefault", _config.Schema);
 
         builder.HasIndex(e => e.LayoutId, "IX_DashboardDefault_LayoutId");
 

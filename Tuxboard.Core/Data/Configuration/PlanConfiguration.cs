@@ -20,7 +20,7 @@ public class PlanConfiguration : IEntityTypeConfiguration<Plan>
 
     public void Configure(EntityTypeBuilder<Plan> builder)
     {
-        builder.ToTable("Plan");
+        builder.ToTable("Plan", _config.Schema);
 
         builder.Property(e => e.Title)
             .IsRequired()
