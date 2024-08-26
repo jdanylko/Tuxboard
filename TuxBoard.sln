@@ -5,6 +5,8 @@ VisualStudioVersion = 17.10.34916.146
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Tuxboard.Core", "Tuxboard.Core\Tuxboard.Core.csproj", "{F4CE05B7-7777-45FD-B6EC-F35D3E351C63}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Tuxboard.Core.Tests", "Tuxboard.Core.Tests\Tuxboard.Core.Tests.csproj", "{2684B22C-0210-4B46-B5B8-91ACA692788D}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -15,6 +17,10 @@ Global
 		{F4CE05B7-7777-45FD-B6EC-F35D3E351C63}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{F4CE05B7-7777-45FD-B6EC-F35D3E351C63}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{F4CE05B7-7777-45FD-B6EC-F35D3E351C63}.Release|Any CPU.Build.0 = Release|Any CPU
+		{2684B22C-0210-4B46-B5B8-91ACA692788D}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{2684B22C-0210-4B46-B5B8-91ACA692788D}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{2684B22C-0210-4B46-B5B8-91ACA692788D}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{2684B22C-0210-4B46-B5B8-91ACA692788D}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

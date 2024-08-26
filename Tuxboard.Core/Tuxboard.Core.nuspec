@@ -1,41 +1,48 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <package xmlns="http://schemas.microsoft.com/packaging/2012/06/nuspec.xsd">
-  <metadata>
-    <id>Tuxboard.Core</id>
-    <version>1.7.0</version>
-    <authors>Jonathan "JD" Danylko</authors>
-    <owners>Jonathan "JD" Danylko</owners>
-    <requireLicenseAcceptance>false</requireLicenseAcceptance>
-    <projectUrl>https://github.com/jdanylko/Tuxboard</projectUrl>
-    <description>Tuxboard, an open-source dashboard library for ASP.NET Core</description>
-    <copyright>2019-2024</copyright>
-    <tags>CSharp C# Dashboard OpenSource</tags>
-    <repository type="C#" url="https://github.com/jdanylko/Tuxboard" />
-    <dependencies>
-      <group targetFramework="net6.0">
-        <dependency id="Microsoft.AspNetCore.Mvc.ViewFeatures" version="2.2.0" exclude="Compile,Build,Analyzers" />
-        <dependency id="Microsoft.AspNetCore.Mvc" version="2.2.0" exclude="Compile,Build,Analyzers" />
-        <dependency id="Microsoft.EntityFrameworkCore" version="6.0.31" exclude="Compile,Build,Analyzers" />
-        <dependency id="Microsoft.EntityFrameworkCore.SqlServer" version="6.0.31" exclude="Compile,Build,Analyzers" />
-        <dependency id="Microsoft.Extensions.DependencyInjection.Abstractions" version="6.0.0" exclude="Compile,Build,Analyzers" />
-      </group>
-      <group targetFramework="net7.0">
-        <dependency id="Microsoft.AspNetCore.Mvc.ViewFeatures" version="2.2.0" exclude="Compile,Build,Analyzers" />
-        <dependency id="Microsoft.AspNetCore.Mvc" version="2.2.0" exclude="Compile,Build,Analyzers" />
-        <dependency id="Microsoft.EntityFrameworkCore" version="7.0.20" exclude="Compile,Build,Analyzers" />
-        <dependency id="Microsoft.EntityFrameworkCore.SqlServer" version="7.0.20" exclude="Compile,Build,Analyzers" />
-        <dependency id="Microsoft.Extensions.DependencyInjection.Abstractions" version="7.0.0" exclude="Compile,Build,Analyzers" />
-      </group>
-      <group targetFramework="net8.0">
-        <dependency id="Microsoft.EntityFrameworkCore" version="8.0.7" exclude="Compile,Build,Analyzers" />
-        <dependency id="Microsoft.EntityFrameworkCore.SqlServer" version="8.0.7" exclude="Compile,Build,Analyzers" />
-        <dependency id="Microsoft.Extensions.DependencyInjection.Abstractions" version="8.0.0" exclude="Compile,Build,Analyzers" />
-      </group>
-    </dependencies>
-  </metadata>
-  <files>
-    <file src="bin\Release\net6.0\Tuxboard.Core.dll" target="lib\net6.0\Tuxboard.Core.dll" />
-    <file src="bin\Release\net7.0\Tuxboard.Core.dll" target="lib\net7.0\Tuxboard.Core.dll" />
-    <file src="bin\Release\net8.0\Tuxboard.Core.dll" target="lib\net8.0\Tuxboard.Core.dll" />
-  </files>
+	<metadata>
+		<id>Tuxboard.Core</id>
+		<version>1.7.1</version>
+		<authors>Jonathan "JD" Danylko</authors>
+		<owners>Jonathan "JD" Danylko</owners>
+		<requireLicenseAcceptance>false</requireLicenseAcceptance>
+		<projectUrl>https://github.com/jdanylko/Tuxboard</projectUrl>
+		<description>Tuxboard, an open-source dashboard library for ASP.NET Core</description>
+		<copyright>2019-2024</copyright>
+		<tags>CSharp C# Dashboard OpenSource</tags>
+		<repository type="C#" url="https://github.com/jdanylko/Tuxboard" />
+		<dependencies>
+			<group targetFramework="net6.0">
+				<dependency id="Microsoft.EntityFrameworkCore" version="6.0.31" exclude="Compile,Build,Analyzers" />
+				<dependency id="Microsoft.EntityFrameworkCore.SqlServer" version="6.0.31" exclude="Compile,Build,Analyzers" />
+				<dependency id="Microsoft.Extensions.DependencyInjection.Abstractions" version="6.0.0" exclude="Compile,Build,Analyzers" />
+			</group>
+			<group targetFramework="net7.0">
+				<dependency id="Microsoft.EntityFrameworkCore" version="7.0.20" exclude="Compile,Build,Analyzers" />
+				<dependency id="Microsoft.EntityFrameworkCore.SqlServer" version="7.0.20" exclude="Compile,Build,Analyzers" />
+				<dependency id="Microsoft.Extensions.DependencyInjection.Abstractions" version="7.0.0" exclude="Compile,Build,Analyzers" />
+			</group>
+			<group targetFramework="net8.0">
+				<dependency id="Microsoft.EntityFrameworkCore" version="8.0.7" exclude="Compile,Build,Analyzers" />
+				<dependency id="Microsoft.EntityFrameworkCore.SqlServer" version="8.0.7" exclude="Compile,Build,Analyzers" />
+				<dependency id="Microsoft.Extensions.DependencyInjection.Abstractions" version="8.0.0" exclude="Compile,Build,Analyzers" />
+			</group>
+		</dependencies>
+		<frameworkReferences>
+			<group targetFramework=".NET6.0">
+				<frameworkReference name="Microsoft.AspNetCore.App" />
+			</group>
+			<group targetFramework=".NET7.0">
+				<frameworkReference name="Microsoft.AspNetCore.App" />
+			</group>
+			<group targetFramework=".NET8.0">
+				<frameworkReference name="Microsoft.AspNetCore.App" />
+			</group>
+		</frameworkReferences>
+	</metadata>
+	<files>
+		<file src="bin\Release\net6.0\Tuxboard.Core.dll" target="lib\net6.0\Tuxboard.Core.dll" />
+		<file src="bin\Release\net7.0\Tuxboard.Core.dll" target="lib\net7.0\Tuxboard.Core.dll" />
+		<file src="bin\Release\net8.0\Tuxboard.Core.dll" target="lib\net8.0\Tuxboard.Core.dll" />
+	</files>
 </package>
