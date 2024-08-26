@@ -21,7 +21,7 @@ public class LayoutConfiguration : IEntityTypeConfiguration<Layout>
 
     public void Configure(EntityTypeBuilder<Layout> builder)
     {
-        builder.ToTable("Layout");
+        builder.ToTable("Layout", _config.Schema);
 
         builder.HasIndex(e => e.TabId, "IX_Layout_TabId");
 

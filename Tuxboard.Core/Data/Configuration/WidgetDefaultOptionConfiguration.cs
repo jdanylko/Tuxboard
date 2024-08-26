@@ -23,7 +23,7 @@ public class WidgetDefaultOptionConfiguration : IEntityTypeConfiguration<WidgetD
         builder.HasKey(e => e.WidgetOptionId)
             .HasName("PK_WidgetSettingOption");
 
-        builder.ToTable("WidgetDefaultOption");
+        builder.ToTable("WidgetDefaultOption", _config.Schema);
 
         builder.HasIndex(e => e.WidgetDefaultId, "IX_WidgetDefaultOption_WidgetDefaultId");
 

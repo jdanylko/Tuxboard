@@ -22,7 +22,7 @@ public class DashboardTabConfiguration : IEntityTypeConfiguration<DashboardTab>
     {
         builder.HasKey(e => e.TabId);
 
-        builder.ToTable("DashboardTab");
+        builder.ToTable("DashboardTab", _config.Schema);
 
         builder.HasIndex(e => e.DashboardId, "IX_DashboardTab_DashboardId");
 

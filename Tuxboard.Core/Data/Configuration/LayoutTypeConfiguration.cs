@@ -21,7 +21,7 @@ public class LayoutTypeConfiguration : IEntityTypeConfiguration<LayoutType>
 
     public void Configure(EntityTypeBuilder<LayoutType> builder)
     {
-        builder.ToTable("LayoutType");
+        builder.ToTable("LayoutType", _config.Schema);
 
         builder.Property(e => e.Layout)
             .IsRequired()
