@@ -2,6 +2,6 @@
 
 public class LayoutError
 {
-    public string LayoutRowId { get; set; }
-    public string Message { get; set; }
+    public string LayoutRowId { get; set; } = string.Empty;
+    public string Message { get; set; } = string.Empty;
 }
