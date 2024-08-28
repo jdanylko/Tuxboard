@@ -5,7 +5,7 @@ using Tuxboard.Core.Data.Context;
 using Tuxboard.Core.Infrastructure;
 using Tuxboard.Core.Infrastructure.Interfaces;
 
-namespace Tuxboard.Core.Tests;
+namespace Tuxboard.Core.Tests.Infrastructure.Extensions;
 
 public class ServiceCollectionExtensionsTests
 {

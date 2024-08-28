@@ -6,14 +6,15 @@ using Tuxboard.Core.Domain.Dto;
 namespace Tuxboard.Core.Domain.Entities;
 
 /// <summary>
-/// Layouts contain LayoutRows
+/// <see cref="Layout"/> contains a collection of <see cref="Layout.LayoutRows"/>.
+/// A <see cref="DashboardTab"/> always contains a single <see cref="Layout"/>. Multiple layouts are not supported.
 /// </summary>
 public partial class Layout
 {
     /// <summary>
-    /// Add a new LayoutRow based on a LayoutType
+    /// Add a new <see cref="LayoutRow"/> based on a <see cref="LayoutType"/>
     /// </summary>
-    /// <param name="layoutTypeId">Integer - LayoutTypeId from LayoutType table</param>
+    /// <param name="layoutTypeId">A layout type id referenced through the layout type table</param>
     public void AddLayoutRow(int layoutTypeId)
     {
         LayoutRows.Add(new LayoutRow
@@ -25,11 +26,11 @@ public partial class Layout
     }
 
     /// <summary>
-    /// Create a default layout for a user based on a default dashboard layout
+    /// Create a default <see cref="Layout"/> for a user based on a <see cref="DashboardDefault"/> layout
     /// </summary>
     /// <param name="tabId">An existing dashboard tab id</param>
-    /// <param name="defaultDashboard">Instance of a DashboardDefault</param>
-    /// <returns></returns>
+    /// <param name="defaultDashboard"><see cref="DashboardDefault"/></param>
+    /// <returns><see cref="List{Layout}"/></returns>
     public static List<Layout> CreateDefaultLayouts(Guid tabId, DashboardDefault defaultDashboard)
     {
         // No default dashboard exists.
@@ -71,12 +72,11 @@ public partial class Layout
     }
 
     /// <summary>
-    /// Creates a LayoutDto (Data Transfer Object)
+    /// Creates a <see cref="LayoutDto"/>(Data Transfer Object)
     /// </summary>
-    /// <returns>LayoutDto</returns>
-    public LayoutDto ToDto()
-    {
-        return new()
+    /// <returns><see cref="LayoutDto"/></returns>
+    public LayoutDto ToDto() =>
+        new()
         {
             LayoutId = LayoutId,
             LayoutIndex = LayoutIndex,
@@ -84,27 +84,26 @@ public partial class Layout
                 .OrderBy(y => y.RowIndex)
                 .ToList()
         };
-    }
 
     /// <summary>
-    /// Returns whether a single LayoutRow exists; Used for the Advanced Layout
-    /// example; a dashboard should ALWAYS have at least one LayoutRow.
+    /// Returns whether a single <see cref="LayoutRow"/> exists; Used for the Advanced Layout
+    /// example; a dashboard should ALWAYS have at least one <see cref="LayoutRow"/> contained in ONE <see cref="Layout"/>
     /// </summary>
     /// <returns>true if there is only one, false is not</returns>
     public bool ContainsOneRow() => LayoutRows.Count == 1;
 
     /// <summary>
-    /// Returns whether a LayoutRow contains widgets or not; Used for deleting a LayoutRow.
+    /// Returns whether a <see cref="LayoutRow"/> contains widgets or not; Used for deleting a <see cref="LayoutRow"/>.
     /// </summary>
-    /// <param name="row">Instance of LayoutRow to check</param>
-    /// <returns>true if widgets are in the LayoutRow, false if empty</returns>
+    /// <param name="row"><see cref="LayoutRow"/></param>
+    /// <returns>true if widgets are in the <see cref="LayoutRow"/>, false if empty</returns>
     public bool RowsContainWidgets(LayoutRow row) => row.WidgetPlacements.Any();
 
     /// <summary>
-    /// Returns whether a LayoutRow contains widgets or not by using the LayoutRowId; Used for deleting a LayoutRow.
+    /// Returns whether a <see cref="LayoutRow"/> contains widgets or not by using the layout row id; Used for deleting a <see cref="LayoutRow"/>.
     /// </summary>
-    /// <param name="layoutRowId">LayoutRowId</param>
-    /// <returns>true if widgets are in the LayoutRow, false if empty</returns>
+    /// <param name="layoutRowId">layout row id</param>
+    /// <returns>true if widgets are in the <see cref="LayoutRow"/>, false if empty</returns>
     public bool RowContainsWidgets(Guid layoutRowId)
     {
         var row = LayoutRows.FirstOrDefault(t => t.LayoutRowId == layoutRowId);
@@ -117,17 +116,18 @@ public partial class Layout
     }
 
     /// <summary>
-    /// Return a list of WidgetPlacements in all LayoutRows
+    /// Return a list of <see cref="WidgetPlacement"/>s in all <see cref="LayoutRow"/>s
     /// </summary>
-    /// <returns>List of WidgetPlacement</returns>
+    /// <returns><see cref="List{WIdgetPlacement}"/></returns>
     public List<WidgetPlacement> GetWidgetPlacements() =>
         LayoutRows.SelectMany(y => y.WidgetPlacements)
             .ToList();
 
     /// <summary>
-    /// Return a list of widgets used in every LayoutRow; Good for identifying widgets used by all.
+    /// Return a list of distinct widgets (<see cref="Widget"/>s, NOT <see cref="WidgetPlacement"/>s) used
+    /// in every <see cref="LayoutRow"/>; Good for identifying widgets used by all.
     /// </summary>
-    /// <returns>List of Widget types</returns>
+    /// <returns><see cref="List{Widget}"/></returns>
     public List<Widget> GetWidgetsUsed()
     {
         var widgets = LayoutRows.SelectMany(y => y.WidgetPlacements)
@@ -144,10 +144,10 @@ public partial class Layout
     }
 
     /// <summary>
-    /// Return a WidgetPlacement instance from LayoutRows
+    /// Return a <see cref="WidgetPlacement"/> instance from <see cref="LayoutRow"/>s
     /// </summary>
-    /// <param name="placementId">WidgetPlacementId to locate</param>
-    /// <returns>Instance of WidgetPlacement if found, null if not found.</returns>
+    /// <param name="placementId">Widget Placement Id</param>
+    /// <returns><see cref="WidgetPlacement"/> if found, null if not found.</returns>
     public WidgetPlacement GetWidgetPlacement(Guid placementId) =>
         GetWidgetPlacements().FirstOrDefault(e => e.WidgetPlacementId == placementId);
 }

@@ -12,9 +12,9 @@ namespace Tuxboard.Core.Domain.Entities;
 public partial class WidgetPlacement
 {
     /// <summary>
-    /// Creates a shallow DTO for a WidgetPlacement
+    /// Creates a shallow <see cref="WidgetPlacementDto"/>
     /// </summary>
-    /// <returns>WidgetPlacementDto</returns>
+    /// <returns><see cref="WidgetPlacementDto"/></returns>
     public WidgetPlacementDto ToDto()
     {
         return new WidgetPlacementDto
@@ -33,13 +33,13 @@ public partial class WidgetPlacement
     }
 
     /// <summary>
-    /// Returns a WidgetDefault based on a SettingName
+    /// Returns a <see cref="WidgetDefault"/> based on a SettingName
     /// </summary>
     /// <param name="settingName">
     /// The name of the setting. For example, to retrieve the widget's title,
     /// GetDefaultSettingFor("WidgetTitle") would return the title
     /// </param>
-    /// <returns>WidgetDefault if the setting is found, null if it's not found.</returns>
+    /// <returns><see cref="WidgetDefault"/> if the setting is found, null if it's not found.</returns>
     public WidgetDefault GetDefaultSettingFor(string settingName)
     {
         return Widget?.WidgetDefaults?.FirstOrDefault(e => e.SettingName.ToLower() == settingName.ToLower());
@@ -52,7 +52,7 @@ public partial class WidgetPlacement
     /// </summary>
     /// <param name="settingName">Setting Name (i.e. "WidgetTitle")</param>
     /// <param name="val">The setting's value (i.e. "My Projects")</param>
-    /// <returns>WidgetSetting if successfully set, null if not set or not found.</returns>
+    /// <returns><see cref="WidgetSetting"/> if successfully set, null if not set or not found.</returns>
     public WidgetSetting SetValue(string settingName, string val)
     {
         WidgetSetting current = null;
@@ -88,26 +88,26 @@ public partial class WidgetPlacement
     }
 
     /// <summary>
-    /// Returns whether a Widget Placement has any settings
+    /// Returns whether a <see cref="WidgetPlacement"/> has any settings
     /// </summary>
     public bool HasSettings => WidgetSettings.Count > 0;
 
     /// <summary>
-    /// Returns whether a Widget has any default settings.
+    /// Returns whether a <see cref="Widget"/> has any default settings.
     /// </summary>
     public bool DefaultSettingsExist => Widget.WidgetDefaults.Any();
 
     /// <summary>
-    /// Identifies whether a setting is missing; Compares the WidgetSettings.Count to the Widget.WidgetDefaults.Count.
-    /// Returns true if the WidgetPlacement is missing a setting, false if no settings are missing.
+    /// Identifies whether a setting is missing; Compares the <see cref="WidgetSetting"/>.Count to the <see cref="Widget"/>.<see cref="WidgetDefault"/>.Count.
+    /// Returns true if the <see cref="WidgetPlacement"/> is missing a setting, false if no settings are missing.
     /// </summary>
     public bool MissingSettings => WidgetSettings.Count != Widget.WidgetDefaults.Count;
 
     /// <summary>
-    /// Creates a WidgetSetting based on a WidgetDefault; Does NOT save, merely creates the entity.
+    /// Creates a <see cref="WidgetSetting"/> based on a <see cref="WidgetDefault"/>; Does NOT save, merely creates the entity.
     /// </summary>
-    /// <param name="widgetDefault">WidgetDefault to create a new WidgetSetting</param>
-    /// <returns>WidgetSetting</returns>
+    /// <param name="widgetDefault"><see cref="WidgetDefault"/> to create a new <see cref="WidgetSetting"/></param>
+    /// <returns><see cref="WidgetSetting"/></returns>
     public WidgetSetting CreateFrom(WidgetDefault widgetDefault) =>
         new()
         {
@@ -119,7 +119,7 @@ public partial class WidgetPlacement
 
 
     /// <summary>
-    /// Creates missing WidgetSettings based on a Widget's Default settings
+    /// Creates missing <see cref="WidgetSetting"/> based on a Widget's Default settings
     /// </summary>
     public void UpdateWidgetSettings()
     {
@@ -135,9 +135,9 @@ public partial class WidgetPlacement
     }
 
     /// <summary>
-    /// Creates WidgetSetting DTOs (Data Transfer Object) based on an existing WidgetSettings
+    /// Creates <see cref="WidgetSettingDto"/> (Data Transfer Object) based on an existing <see cref="WidgetSetting"/>s
     /// </summary>
-    /// <returns>List&lt;WidgetSettingDto&gt;</returns>
+    /// <returns><see cref="List{WidgetSettingDto}"/></returns>
     public List<WidgetSettingDto> ToSettingsDto()
     {
         return WidgetSettings.Select(setting => new

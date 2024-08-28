@@ -4,18 +4,6 @@ namespace Tuxboard.Core.Tests.Domain.Entities;
 
 public class WidgetPlacementTests
 {
-    // Dashboard
-    // +-- Dashboard Tab(s)
-    // |   +-- Layout(s)
-    // |       +-- LayoutRow(s)
-    // |           +-- LayoutType
-    // |           +-- WidgetPlacements
-    // |               +-- WidgetSetting
-    // |               +-- Widget
-    // |                   +-- WidgetDefault
-    // +-- Dashboard Default
-    //     +-- Dashboard Default Widgets
-
     private readonly Dashboard _dashboard = new Dashboard
     {
         SelectedTab = 1,

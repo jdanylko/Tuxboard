@@ -8,21 +8,33 @@ using Tuxboard.Core.Domain.Dto;
 namespace Tuxboard.Core.Domain.Entities;
 
 /// <summary>
-/// 
+/// Main instance of a Tuxboard dashboard
+///
+/// <see cref="Dashboard"/>
+/// +-- Dashboard Tab (<see cref="DashboardTab"/>)
+/// |   +-- Layout (<see cref="Layout"/>)
+/// |       +-- LayoutRow(s) (<see cref="LayoutRow"/>)
+/// |           +-- LayoutType (<see cref="LayoutType"/>)
+/// |           +-- WidgetPlacements (<see cref="WidgetPlacement"/>)
+/// |               +-- WidgetSetting (<see cref="WidgetSetting"/>)
+/// |               +-- Widget (<see cref="Widget"/>)
+/// |                   +-- WidgetDefault (<see cref="WidgetDefault"/>)
+/// +-- Dashboard Default (<see cref="DashboardDefault"/>)
+///     +-- Dashboard Default Widgets (<see cref="DashboardDefaultWidget"/>)
 /// </summary>
 public partial class Dashboard
 {
     /// <summary>
-    /// Configuration for a dashboard
+    /// Configuration for a dashboard through a <see cref="ITuxboardConfig"/>
     /// </summary>
     [NotMapped]
     public ITuxboardConfig Settings { get; set; }
 
     /// <summary>
-    /// Create a new dashboard for a new user
+    /// Create a default dashboard for a new user
     /// </summary>
-    /// <param name="userId">UserID</param>
-    /// <returns>Dashboard shell</returns>
+    /// <param name="userId"><see cref="Guid"/> - UserID</param>
+    /// <returns><see cref="Dashboard"/></returns>
     public static Dashboard Create(Guid? userId) =>
         new()
         {
@@ -42,18 +54,18 @@ public partial class Dashboard
     /// Return a list of layouts in a dashboard tab
     /// </summary>
     /// <param name="tabIndex">Index of the Dashboard Tab (should be 1)</param>
-    /// <returns>List of Layouts</returns>
+    /// <returns><see cref="List{Layout}"/></returns>
     public List<Layout> GetLayouts(int tabIndex)
     {
         var tab = GetTab(tabIndex);
         return tab?.GetLayouts();
     }
-        
+
     /// <summary>
-    /// Locate a LayoutRow based on a LayoutRowId
+    /// Locate a <see cref="LayoutRow"/> based on an id
     /// </summary>
     /// <param name="layoutRowId">LayoutRowId</param>
-    /// <returns>LayoutRow if found, null is not found</returns>
+    /// <returns><see cref="LayoutRow"/> if found, null is not found</returns>
     public LayoutRow GetLayoutRow(Guid layoutRowId)
     {
         var layouts = GetLayouts(GetCurrentTab().TabIndex);
@@ -62,10 +74,10 @@ public partial class Dashboard
     }
 
     /// <summary>
-    /// Return a Layout by a LayoutRowId
+    /// Return a <see cref="Layout"/> by an id
     /// </summary>
-    /// <param name="layoutRowId">LayoutRowId Guid</param>
-    /// <returns>Instance of a Layout if found, null if not found.</returns>
+    /// <param name="layoutRowId"><see cref="Guid"/> - LayoutRowId</param>
+    /// <returns><see cref="Layout"/> if found, null if not found.</returns>
     public Layout GetLayoutByLayoutRow(Guid layoutRowId)
     {
         var layouts = GetLayouts(GetCurrentTab().TabIndex);
@@ -73,17 +85,17 @@ public partial class Dashboard
     }
 
     /// <summary>
-    /// Identify whether a LayoutRow contains ANY widgets
+    /// Identify whether a <see cref="LayoutRow"/> contains ANY widgets
     /// </summary>
-    /// <param name="row"></param>
-    /// <returns></returns>
+    /// <param name="row"><see cref="LayoutRow"/></param>
+    /// <returns>true if widgets exist in this row, false if not</returns>
     public bool RowContainsWidgets(LayoutRow row) => row.RowContainsWidgets();
 
     /// <summary>
-    /// 
+    /// Returns whether a <see cref="LayoutRow"/> contains widgets
     /// </summary>
-    /// <param name="rowId"></param>
-    /// <returns></returns>
+    /// <param name="rowId"><see cref="Guid"/> - LayoutRowId</param>
+    /// <returns>true if widgets exist in this row, false if not</returns></returns>
     public bool RowContainsWidgets(Guid rowId)
     {
         var tab = GetCurrentTab();
@@ -91,9 +103,9 @@ public partial class Dashboard
     }
 
     /// <summary>
-    /// 
+    /// Returns whether a <see cref="DashboardTab"/> contains one layout row
     /// </summary>
-    /// <returns></returns>
+    /// <returns>true if a tab contains at least one row, false if not</returns>
     public bool ContainsOneRow()
     {
         var tab = GetCurrentTab();
@@ -103,19 +115,19 @@ public partial class Dashboard
     }
 
     /// <summary>
-    /// 
+    /// Returns the current tab; Only one tab is supported
     /// </summary>
-    /// <returns></returns>
+    /// <returns><see cref="DashboardTab"/></returns>
     public DashboardTab GetCurrentTab()
     {
         return GetTab(SelectedTab);
     }
 
     /// <summary>
-    /// 
+    /// Return a <see cref="DashboardTab"/> from an indexed collection of Tabs
     /// </summary>
-    /// <param name="tabIndex"></param>
-    /// <returns></returns>
+    /// <param name="tabIndex">zero-based index of a dashboard tab</param>
+    /// <returns><see cref="DashboardTab"/></returns>
     public DashboardTab GetTab(int tabIndex)
     {
         // Zero-Based!
@@ -123,9 +135,9 @@ public partial class Dashboard
     }
 
     /// <summary>
-    /// 
+    /// Returns a <see cref="DashboardDto"/> (Data Transfer Object)
     /// </summary>
-    /// <returns></returns>
+    /// <returns><see cref="DashboardDto"/></returns>
     public DashboardDto ToDto()
     {
         return new DashboardDto
@@ -137,17 +149,17 @@ public partial class Dashboard
     }
 
     /// <summary>
-    /// 
+    /// Returns the first Layout row on a tab.
     /// </summary>
-    /// <returns></returns>
+    /// <returns><see cref="LayoutRow"/></returns>
     public LayoutRow GetFirstLayoutRow() => 
         GetCurrentTab()?.GetLayouts()?.FirstOrDefault()?.LayoutRows?.FirstOrDefault();
 
     /// <summary>
-    /// 
+    /// Returns a <see cref="LayoutRow"/> based on a zero-based indexer
     /// </summary>
-    /// <param name="index"></param>
-    /// <returns></returns>
+    /// <param name="index">Integer</param>
+    /// <returns><see cref="LayoutRow"/></returns>
     public LayoutRow GetLayoutRowByIndex(int index) => 
         GetCurrentTab()?.GetLayouts()?.FirstOrDefault()?.LayoutRows.ElementAt(index);
 }
