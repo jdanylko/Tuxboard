@@ -6,31 +6,63 @@ using Tuxboard.Core.Domain.Entities;
 
 namespace Tuxboard.Core.Data.Context;
 
+/// <summary>
+/// <see cref="TuxDbContext"/> uses Entity Framework for storing and managing Tuxboard dashboards.
+/// </summary>
 public partial class TuxDbContext : DbContext, ITuxDbContext
 {
     private TuxboardConfig _tuxboardConfig;
 
+    /// <inheritdoc />
     public TuxDbContext(DbContextOptions<TuxDbContext> options, IOptions<TuxboardConfig> config)
         : base(options)
     {
         _tuxboardConfig = config.Value;
     }
 
+    /// <inheritdoc />
     public virtual DbSet<Dashboard> Dashboards { get; set; }
+
+    /// <inheritdoc />
     public virtual DbSet<DashboardDefault> DashboardDefaults { get; set; }
+
+    /// <inheritdoc />
     public virtual DbSet<DashboardDefaultWidget> DashboardDefaultWidgets { get; set; }
+
+    /// <inheritdoc />
     public virtual DbSet<DashboardTab> DashboardTabs { get; set; }
+
+    /// <inheritdoc />
     public virtual DbSet<Layout> Layouts { get; set; }
+
+    /// <inheritdoc />
     public virtual DbSet<LayoutRow> LayoutRows { get; set; }
+
+    /// <inheritdoc />
     public virtual DbSet<LayoutType> LayoutTypes { get; set; }
+
+    /// <summary>
+    /// <see cref="Plans"/> is an optional table containing an ID and Title. Refer to <see cref="Plan"/> for additional details.
+    /// </summary>
     public virtual DbSet<Plan> Plans { get; set; }
+
+    /// <inheritdoc />
     public virtual DbSet<Widget> Widgets { get; set; }
+
+    /// <inheritdoc />
     public virtual DbSet<WidgetDefault> WidgetDefaults { get; set; }
+
+    /// <inheritdoc />
     public virtual DbSet<WidgetDefaultOption> WidgetDefaultOptions { get; set; }
+
+    /// <inheritdoc />
     public virtual DbSet<WidgetPlacement> WidgetPlacements { get; set; }
+
+    /// <inheritdoc />
     public virtual DbSet<WidgetSetting> WidgetSettings { get; set; }
 
-    
+
+    /// <inheritdoc />
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
         base.OnModelCreating(modelBuilder);

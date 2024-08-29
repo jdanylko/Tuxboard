@@ -7,8 +7,11 @@ using Tuxboard.Core.Domain.Dto;
 using Tuxboard.Core.Domain.Entities;
 using Tuxboard.Core.Infrastructure.Models;
 
-namespace Tuxboard.Core.Infrastructure.Interfaces;
+namespace Tuxboard.Core.Infrastructure.Services;
 
+/// <summary>
+/// Primary service for retrieving and managing Tuxboard dashboards.
+/// </summary>
 public interface IDashboardService
 {
     Dashboard GetDashboardFor(ITuxboardConfig config, Guid userId);
