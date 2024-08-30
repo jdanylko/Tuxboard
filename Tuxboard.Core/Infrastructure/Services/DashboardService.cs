@@ -19,9 +19,9 @@ public class DashboardService : IDashboardService
     private readonly ITuxDbContext _context;
 
     /// <summary>
-    /// 
+    /// Constructor
     /// </summary>
-    /// <param name="context"></param>
+    /// <param name="context"><see cref="ITuxDbContext"/></param>
     public DashboardService(ITuxDbContext context)
     {
         _context = context;
