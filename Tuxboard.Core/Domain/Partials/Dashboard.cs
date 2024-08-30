@@ -95,7 +95,7 @@ public partial class Dashboard
     /// Returns whether a <see cref="LayoutRow"/> contains widgets
     /// </summary>
     /// <param name="rowId"><see cref="Guid"/> - LayoutRowId</param>
-    /// <returns>true if widgets exist in this row, false if not</returns></returns>
+    /// <returns>true if widgets exist in this row, false if not</returns>
     public bool RowContainsWidgets(Guid rowId)
     {
         var tab = GetCurrentTab();

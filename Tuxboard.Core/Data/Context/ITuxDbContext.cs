@@ -7,6 +7,9 @@ using Tuxboard.Core.Domain.Entities;
 
 namespace Tuxboard.Core.Data.Context;
 
+/// <summary>
+/// Interface for <see cref="TuxDbContext"/>
+/// </summary>
 public interface ITuxDbContext
 {
     /// <summary>
