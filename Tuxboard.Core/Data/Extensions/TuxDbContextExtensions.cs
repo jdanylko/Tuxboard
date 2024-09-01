@@ -11,18 +11,18 @@ using Tuxboard.Core.Domain.Entities;
 namespace Tuxboard.Core.Data.Extensions;
 
 /// <summary>
-/// 
+/// Extension methods for the Tuxboard DbContext
 /// </summary>
 public static class TuxDbContextExtensions
 {
     #region Synchronous
 
     /// <summary>
-    /// 
+    /// Get a widget by ID synchronously
     /// </summary>
-    /// <param name="context"></param>
-    /// <param name="widgetId"></param>
-    /// <returns></returns>
+    /// <param name="context"><see cref="ITuxDbContext"/></param>
+    /// <param name="widgetId">Widget ID</param>
+    /// <returns><see cref="Widget"/></returns>
     public static Widget GetWidget(this ITuxDbContext context, Guid widgetId)
     {
         return context.Widgets
@@ -31,11 +31,11 @@ public static class TuxDbContextExtensions
     }
 
     /// <summary>
-    /// 
+    /// Get a Layout by tab ID synchronously
     /// </summary>
-    /// <param name="context"></param>
-    /// <param name="tabId"></param>
-    /// <returns></returns>
+    /// <param name="context"><see cref="ITuxDbContext"/></param>
+    /// <param name="tabId">Dashboard Tab ID</param>
+    /// <returns><see cref="Layout"/></returns>
     public static Layout GetLayoutForTab(this ITuxDbContext context, Guid tabId)
     {
         return context.Layouts
@@ -48,11 +48,11 @@ public static class TuxDbContextExtensions
     }
 
     /// <summary>
-    /// 
+    /// Get Widget Placements by layout synchronously.
     /// </summary>
-    /// <param name="context"></param>
-    /// <param name="layoutId"></param>
-    /// <returns></returns>
+    /// <param name="context"><see cref="ITuxDbContext"/></param>
+    /// <param name="layoutId">Layout ID</param>
+    /// <returns><see cref="List{WidgetPlacement}"/></returns>
     public static List<WidgetPlacement> GetPlacementsByLayout(this ITuxDbContext context, Guid layoutId)
     {
         return context.WidgetPlacements.Where(r => r.LayoutRowId == layoutId)
@@ -60,22 +60,22 @@ public static class TuxDbContextExtensions
     }
 
     /// <summary>
-    /// 
+    /// Returns whether a dashboard for a user exists. This call is synchronous.
     /// </summary>
-    /// <param name="context"></param>
-    /// <param name="userId"></param>
-    /// <returns></returns>
+    /// <param name="context"><see cref="ITuxDbContext"/></param>
+    /// <param name="userId">User ID</param>
+    /// <returns>true if the dashboard exists, false if a user doesn't have one yet.</returns>
     public static bool DashboardExistsFor(this ITuxDbContext context, Guid userId)
     {
         return context.Dashboards.FirstOrDefault(e => e.UserId == userId) != null;
     }
 
     /// <summary>
-    /// 
+    /// Get a default dashboard by ID synchronously.
     /// </summary>
-    /// <param name="context"></param>
-    /// <param name="id"></param>
-    /// <returns></returns>
+    /// <param name="context"><see cref="ITuxDbContext"/></param>
+    /// <param name="id">Dashboard Default ID</param>
+    /// <returns><see cref="DashboardDefault"/></returns>
     public static DashboardDefault GetDashboardDefault(this ITuxDbContext context, Guid id)
     {
         return context.DashboardDefaults
@@ -87,19 +87,19 @@ public static class TuxDbContextExtensions
     }
 
     /// <summary>
-    /// 
+    /// Return whether a general dashboard exists synchronously.
     /// </summary>
-    /// <param name="context"></param>
-    /// <returns></returns>
+    /// <param name="context"><see cref="ITuxDbContext"/></param>
+    /// <returns>true if a general dashboard exists, false if not</returns>
     public static bool DashboardExists(this ITuxDbContext context) 
         => context.Dashboards.FirstOrDefault() != null;
 
     /// <summary>
-    /// 
+    /// Get a general dashboard synchronously
     /// </summary>
-    /// <param name="context"></param>
-    /// <param name="config"></param>
-    /// <returns></returns>
+    /// <param name="context"><see cref="ITuxDbContext"/></param>
+    /// <param name="config"><see cref="ITuxboardConfig"/></param>
+    /// <returns><see cref="Dashboard"/></returns>
     public static Dashboard GetDashboard(this ITuxDbContext context, ITuxboardConfig config)
     {
         var layoutTypes = context.LayoutTypes.ToList();
@@ -130,12 +130,12 @@ public static class TuxDbContextExtensions
     }
 
     /// <summary>
-    /// 
+    /// Returns a dashboard synchronously based on a User ID
     /// </summary>
-    /// <param name="context"></param>
-    /// <param name="config"></param>
-    /// <param name="userId"></param>
-    /// <returns></returns>
+    /// <param name="context"><see cref="ITuxDbContext"/></param>
+    /// <param name="config"><see cref="ITuxboardConfig"/></param>
+    /// <param name="userId">User ID</param>
+    /// <returns><see cref="Dashboard"/></returns>
     public static Dashboard GetDashboardFor(this ITuxDbContext context, ITuxboardConfig config, Guid userId)
     {
         var layoutTypes = context.LayoutTypes.ToList();
@@ -166,11 +166,11 @@ public static class TuxDbContextExtensions
     }
 
     /// <summary>
-    /// 
+    /// Get a default dashboard by plan ID synchronously.
     /// </summary>
-    /// <param name="context"></param>
-    /// <param name="planId"></param>
-    /// <returns></returns>
+    /// <param name="context"><see cref="ITuxDbContext"/></param>
+    /// <param name="planId">Plan ID</param>
+    /// <returns><see cref="DashboardDefault"/></returns>
     public static DashboardDefault GetDashboardTemplateFor(this ITuxDbContext context, int planId = 0)
     {
         var layoutTypes = context.LayoutTypes.ToList();
@@ -201,11 +201,11 @@ public static class TuxDbContextExtensions
     }
 
     /// <summary>
-    /// 
+    /// Get the Widget Placements by a LayoutRow ID synchronously.
     /// </summary>
-    /// <param name="context"></param>
-    /// <param name="layoutRowId"></param>
-    /// <returns></returns>
+    /// <param name="context"><see cref="ITuxDbContext"/></param>
+    /// <param name="layoutRowId">Layout Row ID</param>
+    /// <returns><see cref="List{WidgetPlacement}"/></returns>
     public static List<WidgetPlacement> GetPlacementsByLayoutRow(this ITuxDbContext context,
         Guid layoutRowId)
     {
@@ -220,31 +220,12 @@ public static class TuxDbContextExtensions
         return context.UpdateMissingSettings(placements);
     }
 
-    private static List<WidgetPlacement> UpdateMissingSettings(this ITuxDbContext context, List<WidgetPlacement> placements)
-    {
-        foreach (var placement in placements)
-        {
-            // Add the new settings if necessary.
-            placement.UpdateWidgetSettings();
-
-            // Save the missing settings to the table.
-            var settings = placement.WidgetSettings.Where(e => e.WidgetSettingId == Guid.Empty);
-            foreach (var setting in settings)
-            {
-                context.WidgetSettings.Add(setting);
-                context.SaveChanges();
-            }
-        }
-
-        return placements;
-    }
-
     /// <summary>
-    /// 
+    /// Return a Layout by ID synchronously
     /// </summary>
-    /// <param name="context"></param>
-    /// <param name="layoutId"></param>
-    /// <returns></returns>
+    /// <param name="context"><see cref="ITuxDbContext"/></param>
+    /// <param name="layoutId">Layout ID</param>
+    /// <returns><see cref="Layout"/></returns>
     public static Layout GetLayout(this ITuxDbContext context, Guid layoutId)
     {
         var layoutTypes = context.LayoutTypes.ToList();
@@ -267,22 +248,21 @@ public static class TuxDbContextExtensions
     }
 
     /// <summary>
-    /// 
+    /// Get all widget placements by a dashboard tab synchronously
     /// </summary>
-    /// <param name="context"></param>
-    /// <param name="tab"></param>
-    /// <returns></returns>
-    public static List<WidgetPlacement> GetWidgetsForTab(this ITuxDbContext context, DashboardTab tab)
-    {
-        return GetWidgetsForTab(context, tab.TabId);
-    }
+    /// <param name="context"><see cref="ITuxDbContext"/></param>
+    /// <param name="tab"><see cref="DashboardTab"/></param>
+    /// <returns><see cref="List{WidgetPlacement}"/></returns>
+    public static List<WidgetPlacement> GetWidgetsForTab(this ITuxDbContext context, 
+        DashboardTab tab) 
+        => GetWidgetsForTab(context, tab.TabId);
 
     /// <summary>
-    /// 
+    /// Get all widget placements by a dashboard tab ID synchronously
     /// </summary>
-    /// <param name="context"></param>
-    /// <param name="tabId"></param>
-    /// <returns></returns>
+    /// <param name="context"><see cref="ITuxDbContext"/></param>
+    /// <param name="tabId">Dashboard Tab ID</param>
+    /// <returns><see cref="List{WidgetPlacement}"/></returns>
     public static List<WidgetPlacement> GetWidgetsForTab(this ITuxDbContext context, Guid tabId)
     {
         var placements = context.WidgetPlacements
@@ -308,11 +288,11 @@ public static class TuxDbContextExtensions
     }
 
     /// <summary>
-    /// 
+    /// Get a Widget Placement by ID synchronously.
     /// </summary>
-    /// <param name="context"></param>
-    /// <param name="widgetPlacementId"></param>
-    /// <returns></returns>
+    /// <param name="context"><see cref="ITuxDbContext"/></param>
+    /// <param name="widgetPlacementId">Widget Placement ID</param>
+    /// <returns><see cref="WidgetPlacement"/></returns>
     public static WidgetPlacement GetWidgetPlacement(this ITuxDbContext context, Guid widgetPlacementId)
     {
         return context.WidgetPlacements
@@ -322,17 +302,36 @@ public static class TuxDbContextExtensions
             .FirstOrDefault(r => r.WidgetPlacementId == widgetPlacementId);
     }
 
+    private static List<WidgetPlacement> UpdateMissingSettings(this ITuxDbContext context, List<WidgetPlacement> placements)
+    {
+        foreach (var placement in placements)
+        {
+            // Add the new settings if necessary.
+            placement.UpdateWidgetSettings();
+
+            // Save the missing settings to the table.
+            var settings = placement.WidgetSettings.Where(e => e.WidgetSettingId == Guid.Empty);
+            foreach (var setting in settings)
+            {
+                context.WidgetSettings.Add(setting);
+                context.SaveChanges();
+            }
+        }
+
+        return placements;
+    }
+
     #endregion
 
     #region Asynchronous
 
     /// <summary>
-    /// 
+    /// Get a widget by ID asynchronously
     /// </summary>
-    /// <param name="context"></param>
-    /// <param name="widgetId"></param>
-    /// <param name="token"></param>
-    /// <returns></returns>
+    /// <param name="context"><see cref="ITuxDbContext"/></param>
+    /// <param name="widgetId">Widget ID</param>
+    /// <param name="token"><see cref="CancellationToken"/> (optional)</param>
+    /// <returns><see cref="Widget"/></returns>
     public static Task<Widget> GetWidgetAsync(this ITuxDbContext context, Guid widgetId, CancellationToken token = default) =>
         context.Widgets
             .Include(w => w.WidgetDefaults)
@@ -341,9 +340,9 @@ public static class TuxDbContextExtensions
     /// <summary>
     /// 
     /// </summary>
-    /// <param name="context"></param>
+    /// <param name="context"><see cref="ITuxDbContext"/></param>
     /// <param name="layoutId"></param>
-    /// <param name="token"></param>
+    /// <param name="token"><see cref="CancellationToken"/> (optional)</param>
     /// <returns></returns>
     public static Task<List<WidgetPlacement>> GetPlacementsByLayoutAsync(this ITuxDbContext context,
         Guid layoutId, CancellationToken token = default) =>
@@ -351,12 +350,12 @@ public static class TuxDbContextExtensions
             .ToListAsync(cancellationToken: token);
 
     /// <summary>
-    /// 
+    /// Returns whether a dashboard for a user exists. This call is asynchronous.
     /// </summary>
-    /// <param name="context"></param>
-    /// <param name="userId"></param>
-    /// <param name="token"></param>
-    /// <returns></returns>
+    /// <param name="context"><see cref="ITuxDbContext"/></param>
+    /// <param name="userId">User ID</param>
+    /// <param name="token"><see cref="CancellationToken"/> (optional)</param>
+    /// <returns>true if the dashboard exists, false if a user doesn't have one yet.</returns>
     public static async Task<bool> DashboardExistsForAsync(this ITuxDbContext context, Guid userId, CancellationToken token = default)
     {
         var item = await context.Dashboards.FirstOrDefaultAsync(t => t.UserId == userId, cancellationToken: token);
@@ -364,11 +363,11 @@ public static class TuxDbContextExtensions
     }
 
     /// <summary>
-    /// 
+    /// Return whether a general dashboard exists synchronously.
     /// </summary>
-    /// <param name="context"></param>
-    /// <param name="token"></param>
-    /// <returns></returns>
+    /// <param name="context"><see cref="ITuxDbContext"/></param>
+    /// <param name="token"><see cref="CancellationToken"/> (optional)</param>
+    /// <returns>true if a general dashboard exists, false if it doesn't exist.</returns>
     public static async Task<bool> DashboardExistsAsync(this ITuxDbContext context, CancellationToken token = default)
     {
         var item = await context.Dashboards.FirstOrDefaultAsync(cancellationToken: token);
@@ -376,29 +375,30 @@ public static class TuxDbContextExtensions
     }
 
     /// <summary>
-    /// 
+    /// Get a default dashboard by ID asynchronously.
     /// </summary>
-    /// <param name="context"></param>
-    /// <param name="id"></param>
-    /// <returns></returns>
-    public static async Task<DashboardDefault> GetDashboardDefaultAsync(this ITuxDbContext context, Guid id)
+    /// <param name="context"><see cref="ITuxDbContext"/></param>
+    /// <param name="id">Dashboard Default ID</param>
+    /// <param name="token"><see cref="CancellationToken"/> (optional)</param>
+    /// <returns><see cref="DashboardDefault"/></returns>
+    public static async Task<DashboardDefault> GetDashboardDefaultAsync(this ITuxDbContext context, Guid id,
+        CancellationToken token = default)
     {
         return await context.DashboardDefaults
             .Include(e => e.DashboardDefaultWidgets)
                 .ThenInclude(e => e.Widget)
             .Include(e => e.Layout)
                 .ThenInclude(f => f.LayoutRows)
-            .FirstOrDefaultAsync(e => e.DefaultId == id);
+            .FirstOrDefaultAsync(e => e.DefaultId == id, cancellationToken: token);
     }
 
-
     /// <summary>
-    /// 
+    /// Get a general dashboard asynchronously
     /// </summary>
-    /// <param name="context"></param>
-    /// <param name="config"></param>
-    /// <param name="token"></param>
-    /// <returns></returns>
+    /// <param name="context"><see cref="ITuxDbContext"/></param>
+    /// <param name="config"><see cref="ITuxboardConfig"/></param>
+    /// <param name="token"><see cref="CancellationToken"/> (optional)</param>
+    /// <returns><see cref="Dashboard"/></returns>
     public static async Task<Dashboard> GetDashboardAsync(this ITuxDbContext context, ITuxboardConfig config, CancellationToken token = default)
     {
         var layoutTypes = await context.LayoutTypes.ToListAsync(cancellationToken: token);
@@ -429,13 +429,13 @@ public static class TuxDbContextExtensions
     }
 
     /// <summary>
-    /// 
+    /// Returns a dashboard asynchronously based on a User ID
     /// </summary>
-    /// <param name="context"></param>
-    /// <param name="config"></param>
-    /// <param name="userId"></param>
-    /// <param name="token"></param>
-    /// <returns></returns>
+    /// <param name="context"><see cref="ITuxDbContext"/></param>
+    /// <param name="config"><see cref="ITuxboardConfig"/></param>
+    /// <param name="userId">User ID</param>
+    /// <param name="token"><see cref="CancellationToken"/> (optional)</param>
+    /// <returns><see cref="Dashboard"/></returns>
     public static async Task<Dashboard> GetDashboardForAsync(this ITuxDbContext context,
         ITuxboardConfig config, Guid userId, CancellationToken token = default)
     {
@@ -466,12 +466,12 @@ public static class TuxDbContextExtensions
     }
 
     /// <summary>
-    /// 
+    /// Get a default dashboard by plan ID asynchronously.
     /// </summary>
-    /// <param name="context"></param>
-    /// <param name="planId"></param>
-    /// <param name="token"></param>
-    /// <returns></returns>
+    /// <param name="context"><see cref="ITuxDbContext"/></param>
+    /// <param name="planId">Plan ID</param>
+    /// <param name="token"><see cref="CancellationToken"/> (optional)</param>
+    /// <returns><see cref="DashboardDefault"/></returns>
     public static async Task<DashboardDefault> GetDashboardTemplateForAsync(this ITuxDbContext context,
         int planId = 0, CancellationToken token = default)
     {
@@ -502,12 +502,12 @@ public static class TuxDbContextExtensions
     }
 
     /// <summary>
-    /// 
+    /// Get a Layout by tab ID asynchronously
     /// </summary>
-    /// <param name="context"></param>
-    /// <param name="tabId"></param>
-    /// <param name="token"></param>
-    /// <returns></returns>
+    /// <param name="context"><see cref="ITuxDbContext"/></param>
+    /// <param name="tabId">Dashboard Tab ID</param>
+    /// <param name="token"><see cref="CancellationToken"/> (optional)</param>
+    /// <returns><see cref="Layout"/></returns>
     public static Task<Layout> GetLayoutForTabAsync(this ITuxDbContext context, Guid tabId, CancellationToken token = default) =>
         context.Layouts
             .Include(e => e.LayoutRows)
@@ -518,12 +518,12 @@ public static class TuxDbContextExtensions
             .FirstOrDefaultAsync(r => r.TabId == tabId, cancellationToken: token);
 
     /// <summary>
-    /// 
+    /// Get the Widget Placements by a LayoutRow ID asynchronously.
     /// </summary>
-    /// <param name="context"></param>
-    /// <param name="layoutRowId"></param>
-    /// <param name="token"></param>
-    /// <returns></returns>
+    /// <param name="context"><see cref="ITuxDbContext"/></param>
+    /// <param name="layoutRowId">Layout Row ID</param>
+    /// <param name="token"><see cref="CancellationToken"/> (optional)</param>
+    /// <returns><see cref="List{WidgetPlacement}"/></returns>
     public static async Task<List<WidgetPlacement>> GetPlacementsByLayoutRowAsync(this ITuxDbContext context,
         Guid layoutRowId, CancellationToken token = default)
     {
@@ -539,12 +539,12 @@ public static class TuxDbContextExtensions
     }
 
     /// <summary>
-    /// 
+    /// Return a Layout by ID asynchronously
     /// </summary>
-    /// <param name="context"></param>
-    /// <param name="layoutId"></param>
-    /// <param name="token"></param>
-    /// <returns></returns>
+    /// <param name="context"><see cref="ITuxDbContext"/></param>
+    /// <param name="layoutId">Layout ID</param>
+    /// <param name="token"><see cref="CancellationToken"/> (optional)</param>
+    /// <returns><see cref="Layout"/></returns>
     public static async Task<Layout> GetLayoutAsync(this ITuxDbContext context, Guid layoutId, CancellationToken token = default)
     {
         var layoutTypes = await context.LayoutTypes.ToListAsync(cancellationToken: token);
@@ -566,22 +566,22 @@ public static class TuxDbContextExtensions
     }
 
     /// <summary>
-    /// 
+    /// Get all widget placements for a dashboard tab asynchronously
     /// </summary>
-    /// <param name="context"></param>
-    /// <param name="tab"></param>
-    /// <param name="token"></param>
-    /// <returns></returns>
+    /// <param name="context"><see cref="ITuxDbContext"/></param>
+    /// <param name="tab"><see cref="DashboardTab"/></param>
+    /// <param name="token"><see cref="CancellationToken"/> (optional)</param>
+    /// <returns><see cref="List{WidgetPlacement}"/></returns>
     public static Task<List<WidgetPlacement>> GetWidgetsForTabAsync(this ITuxDbContext context, DashboardTab tab, CancellationToken token = default) =>
         GetWidgetsForTabAsync(context, tab.TabId, token);
 
     /// <summary>
-    /// 
+    /// Get all widget placements by a dashboard tab ID asynchronously
     /// </summary>
-    /// <param name="context"></param>
-    /// <param name="tabId"></param>
-    /// <param name="token"></param>
-    /// <returns></returns>
+    /// <param name="context"><see cref="ITuxDbContext"/></param>
+    /// <param name="tabId">Dashboard Tab ID</param>
+    /// <param name="token"><see cref="CancellationToken"/> (optional)</param>
+    /// <returns><see cref="List{WidgetPlacement}"/></returns>
     public static async Task<List<WidgetPlacement>> GetWidgetsForTabAsync(this ITuxDbContext context, Guid tabId, CancellationToken token = default)
     {
         var placements = await context.WidgetPlacements
@@ -593,6 +593,22 @@ public static class TuxDbContextExtensions
 
         return await context.UpdateMissingSettingsAsync(placements, token: token);
     }
+
+    /// <summary>
+    /// Get a Widget Placement by ID asynchronously.
+    /// </summary>
+    /// <param name="context"><see cref="ITuxDbContext"/></param>
+    /// <param name="widgetPlacementId">Widget Placement ID</param>
+    /// <param name="token"><see cref="CancellationToken"/> (optional)</param>
+    /// <returns><see cref="WidgetPlacement"/></returns>
+    public static Task<WidgetPlacement> GetWidgetPlacementAsync(this ITuxDbContext context,
+        Guid widgetPlacementId, CancellationToken token = default) =>
+
+        context.WidgetPlacements
+            .Include(e => e.WidgetSettings)
+            .Include(e => e.Widget)
+            .ThenInclude(w => w.WidgetDefaults)
+            .FirstOrDefaultAsync(r => r.WidgetPlacementId == widgetPlacementId, cancellationToken: token);
 
     private static async Task<List<WidgetPlacement>> UpdateMissingSettingsAsync(this ITuxDbContext context,
         List<WidgetPlacement> placements, CancellationToken token = default)
@@ -614,22 +630,6 @@ public static class TuxDbContextExtensions
 
         return placements;
     }
-
-    /// <summary>
-    /// 
-    /// </summary>
-    /// <param name="context"></param>
-    /// <param name="widgetPlacementId"></param>
-    /// <param name="token"></param>
-    /// <returns></returns>
-    public static Task<WidgetPlacement> GetWidgetPlacementAsync(this ITuxDbContext context,
-        Guid widgetPlacementId, CancellationToken token = default) =>
-
-        context.WidgetPlacements
-            .Include(e => e.WidgetSettings)
-            .Include(e => e.Widget)
-            .ThenInclude(w => w.WidgetDefaults)
-            .FirstOrDefaultAsync(r => r.WidgetPlacementId == widgetPlacementId, cancellationToken: token);
 
     #endregion
 }

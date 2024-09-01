@@ -18,8 +18,11 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <Compile Remove="Infrastructure\Interfaces\**" />
     <Compile Remove="Properties\**" />
+    <EmbeddedResource Remove="Infrastructure\Interfaces\**" />
     <EmbeddedResource Remove="Properties\**" />
+    <None Remove="Infrastructure\Interfaces\**" />
     <None Remove="Properties\**" />
   </ItemGroup>
 
@@ -44,10 +47,6 @@
 
   <ItemGroup>
     <Service Include="{508349b6-6b84-4df5-91f0-309beebad82d}" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <Folder Include="Infrastructure\Interfaces\" />
   </ItemGroup>
 
 </Project>

@@ -9,18 +9,20 @@ namespace Tuxboard.Core.Domain.Entities;
 
 /// <summary>
 /// Main instance of a Tuxboard dashboard
-///
-/// <see cref="Dashboard"/>
-/// +-- Dashboard Tab (<see cref="DashboardTab"/>)
-/// |   +-- Layout (<see cref="Layout"/>)
-/// |       +-- LayoutRow(s) (<see cref="LayoutRow"/>)
-/// |           +-- LayoutType (<see cref="LayoutType"/>)
-/// |           +-- WidgetPlacements (<see cref="WidgetPlacement"/>)
-/// |               +-- WidgetSetting (<see cref="WidgetSetting"/>)
-/// |               +-- Widget (<see cref="Widget"/>)
-/// |                   +-- WidgetDefault (<see cref="WidgetDefault"/>)
-/// +-- Dashboard Default (<see cref="DashboardDefault"/>)
+/// <code>
+/// <para>Dashboard (<see cref="Dashboard"/>)<br/>
+/// +-- Dashboard Tab (<see cref="DashboardTab"/>)<br/>
+/// |   +-- Layout (<see cref="Layout"/>)<br/>
+/// |       +-- LayoutRow(s) (<see cref="LayoutRow"/>)<br/>
+/// |           +-- LayoutType (<see cref="LayoutType"/>)<br/>
+/// |           +-- WidgetPlacements (<see cref="WidgetPlacement"/>)<br/>
+/// |               +-- WidgetSetting (<see cref="WidgetSetting"/>)<br/>
+/// |               +-- Widget (<see cref="Widget"/>)<br/>
+/// |                   +-- WidgetDefault (<see cref="WidgetDefault"/>)<br/>
+/// +-- Dashboard Default (<see cref="DashboardDefault"/>)<br/>
 ///     +-- Dashboard Default Widgets (<see cref="DashboardDefaultWidget"/>)
+/// </para>
+/// </code>
 /// </summary>
 public partial class Dashboard
 {
