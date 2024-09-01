@@ -7,11 +7,19 @@ using Tuxboard.Core.Domain.Entities;
 
 namespace Tuxboard.Core.Data.Configuration;
 
+/// <summary>
+/// Entity Framework Configuration for <see cref="LayoutType"/> for entity properties and relationships
+/// </summary>
 public class LayoutTypeConfiguration : IEntityTypeConfiguration<LayoutType>
 {
     private readonly TuxboardConfig _config;
     private readonly Action<EntityTypeBuilder<LayoutType>> _seedAction;
 
+    /// <summary>
+    /// 
+    /// </summary>
+    /// <param name="config"></param>
+    /// <param name="seedAction"></param>
     public LayoutTypeConfiguration(TuxboardConfig config,
         Action<EntityTypeBuilder<LayoutType>> seedAction = null)
     {
@@ -19,6 +27,7 @@ public class LayoutTypeConfiguration : IEntityTypeConfiguration<LayoutType>
         _seedAction = seedAction;
     }
 
+    /// <inheritdoc />
     public void Configure(EntityTypeBuilder<LayoutType> builder)
     {
         builder.ToTable("LayoutType", _config.Schema);

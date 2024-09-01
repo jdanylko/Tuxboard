@@ -3,9 +3,9 @@ using Microsoft.Extensions.DependencyInjection;
 using Tuxboard.Core.Configuration;
 using Tuxboard.Core.Data.Context;
 using Tuxboard.Core.Infrastructure;
-using Tuxboard.Core.Infrastructure.Interfaces;
+using Tuxboard.Core.Infrastructure.Services;
 
-namespace Tuxboard.Core.Tests;
+namespace Tuxboard.Core.Tests.Infrastructure.Extensions;
 
 public class ServiceCollectionExtensionsTests
 {

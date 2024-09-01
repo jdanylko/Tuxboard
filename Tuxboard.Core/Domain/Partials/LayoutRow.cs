@@ -4,12 +4,25 @@ using System.ComponentModel.DataAnnotations.Schema;
 using System.Linq;
 using System.Text;
 using Tuxboard.Core.Domain.Dto;
-using Tuxboard.Core.Domain.Entities;
 
 namespace Tuxboard.Core.Domain.Entities;
 
+/// <summary>
+/// <see cref="LayoutRow"/> contains a definition of a structured container for widgets.
+///
+/// Each layout row is defined by a single <see cref="LayoutType"/> which contains a column definition.
+/// Column definitions are stored in the layout type table and can have an unlimited number of layout types.
+///
+/// A layout row also contains a list of one or more <see cref="WidgetPlacement"/>.
+///
+/// In a <see cref="Layout"/>, the list of LayoutRows are stored in the <see cref="Entities.Layout.LayoutRows"/>.
+/// </summary>
 public partial class LayoutRow
 {
+    /// <summary>
+    /// Creates an HTML Layout based on a <see cref="LayoutType"/>.
+    /// </summary>
+    /// <returns>String</returns>
     public string GetHtmlLayout()
     {
         var rowTemplate = $"<div class=\"row-template border\" data-id=\"{LayoutRowId}\">";
@@ -26,25 +39,23 @@ public partial class LayoutRow
         return sb.ToString();
     }
 
-    public List<Column> GetColumnLayout()
-    {
-        var columns = new List<Column>();
-
-        var widths = this.LayoutType.Layout.Split('/');
-        var index = 0;
-        foreach (var width in widths)
-        {
-            columns.Add(new Column
+    /// <summary>
+    /// Creates a list of columns based on a layout type defined in the table.
+    /// </summary>
+    /// <returns><see cref="List{Column}"/></returns>
+    public List<Column> GetColumnLayout() =>
+        this.LayoutType.Layout.Split('/')
+            .Select((item, index) => new Column
             {
                 Index = index,
-                ColumnClass = width
-            });
-            index++;
-        }
+                ColumnClass = item
+            })
+            .ToList();
 
-        return columns;
-    }
-
+    /// <summary>
+    /// Return a <see cref="LayoutRowDto"/> from the existing <see cref="LayoutRow"/>.
+    /// </summary>
+    /// <returns><see cref="LayoutRowDto"/></returns>
     public LayoutRowDto ToDto() =>
         new()
         {
@@ -54,11 +65,18 @@ public partial class LayoutRow
             HtmlLayout = this.GetHtmlLayout()
         };
 
-    public bool RowContainsWidgets()
-    {
-        return WidgetPlacements.Any<WidgetPlacement>();
-    }
+    /// <summary>
+    /// Returns whether this row contains any widgets
+    /// </summary>
+    /// <returns>true if widgets exist on this row, false if not</returns>
+    public bool RowContainsWidgets() => WidgetPlacements.Any();
 
+    /// <summary>
+    /// Create a <see cref="WidgetPlacement"/> instance from a <see cref="Widget"/> (template)
+    /// By default, any new widget will be placed at the bottom of the first column of the first layout row.
+    /// </summary>
+    /// <param name="widget"><see cref="Widget"/></param>
+    /// <returns><see cref="WidgetPlacement"/></returns>
     public WidgetPlacement CreateFromWidget(Widget widget) =>
         new()
         {
@@ -74,6 +92,9 @@ public partial class LayoutRow
             UseTemplate = true
         };
 
+    /// <summary>
+    /// Message specific for a <see cref="LayoutRow"/>.
+    /// </summary>
     [NotMapped]
     public TuxViewMessage Message { get; set; }
 }

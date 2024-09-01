@@ -7,11 +7,19 @@ using Tuxboard.Core.Domain.Entities;
 
 namespace Tuxboard.Core.Data.Configuration;
 
+/// <summary>
+/// Entity Framework Configuration for <see cref="DashboardDefaultWidget"/> for entity properties and relationships
+/// </summary>
 public class DashboardDefaultWidgetConfiguration : IEntityTypeConfiguration<DashboardDefaultWidget>
 {
     private readonly TuxboardConfig _config;
     private readonly Action<EntityTypeBuilder<DashboardDefaultWidget>> _seedAction;
 
+    /// <summary>
+    /// 
+    /// </summary>
+    /// <param name="config"></param>
+    /// <param name="seedAction"></param>
     public DashboardDefaultWidgetConfiguration(TuxboardConfig config,
         Action<EntityTypeBuilder<DashboardDefaultWidget>> seedAction = null)
     {
@@ -19,6 +27,7 @@ public class DashboardDefaultWidgetConfiguration : IEntityTypeConfiguration<Dash
         _seedAction = seedAction;
     }
 
+    /// <inheritdoc />
     public void Configure(EntityTypeBuilder<DashboardDefaultWidget> builder)
     {
         builder.HasKey(e => e.DefaultWidgetId);

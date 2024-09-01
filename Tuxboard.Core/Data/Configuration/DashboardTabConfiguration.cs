@@ -6,11 +6,19 @@ using Tuxboard.Core.Domain.Entities;
 
 namespace Tuxboard.Core.Data.Configuration;
 
+/// <summary>
+/// Entity Framework Configuration for <see cref="DashboardTab"/> for entity properties and relationships
+/// </summary>
 public class DashboardTabConfiguration : IEntityTypeConfiguration<DashboardTab>
 {
     private readonly TuxboardConfig _config;
     private readonly Action<EntityTypeBuilder<DashboardTab>> _seedAction;
 
+    /// <summary>
+    /// 
+    /// </summary>
+    /// <param name="config"></param>
+    /// <param name="seedAction"></param>
     public DashboardTabConfiguration(TuxboardConfig config,
         Action<EntityTypeBuilder<DashboardTab>> seedAction = null)
     {
@@ -18,6 +26,7 @@ public class DashboardTabConfiguration : IEntityTypeConfiguration<DashboardTab>
         _seedAction = seedAction;
     }
 
+    /// <inheritdoc />
     public void Configure(EntityTypeBuilder<DashboardTab> builder)
     {
         builder.HasKey(e => e.TabId);

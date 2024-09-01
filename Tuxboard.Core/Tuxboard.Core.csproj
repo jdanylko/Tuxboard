@@ -18,8 +18,11 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <Compile Remove="Infrastructure\Interfaces\**" />
     <Compile Remove="Properties\**" />
+    <EmbeddedResource Remove="Infrastructure\Interfaces\**" />
     <EmbeddedResource Remove="Properties\**" />
+    <None Remove="Infrastructure\Interfaces\**" />
     <None Remove="Properties\**" />
   </ItemGroup>
 

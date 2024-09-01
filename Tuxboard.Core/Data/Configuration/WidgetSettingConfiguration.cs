@@ -6,11 +6,19 @@ using Tuxboard.Core.Domain.Entities;
 
 namespace Tuxboard.Core.Data.Configuration;
 
+/// <summary>
+/// Entity Framework Configuration for <see cref="WidgetSetting"/> for entity properties and relationships
+/// </summary>
 public class WidgetSettingConfiguration : IEntityTypeConfiguration<WidgetSetting>
 {
     private readonly TuxboardConfig _config;
     private readonly Action<EntityTypeBuilder<WidgetSetting>> _seedAction;
 
+    /// <summary>
+    /// 
+    /// </summary>
+    /// <param name="config"></param>
+    /// <param name="seedAction"></param>
     public WidgetSettingConfiguration(TuxboardConfig config,
         Action<EntityTypeBuilder<WidgetSetting>> seedAction = null)
     {
@@ -18,6 +26,7 @@ public class WidgetSettingConfiguration : IEntityTypeConfiguration<WidgetSetting
         _seedAction = seedAction;
     }
 
+    /// <inheritdoc />
     public void Configure(EntityTypeBuilder<WidgetSetting> builder)
     {
         builder.ToTable("WidgetSetting", _config.Schema);

@@ -2,12 +2,19 @@
 using System.Collections.Generic;
 using System.Linq;
 using Tuxboard.Core.Domain.Dto;
-using Tuxboard.Core.Domain.Entities;
 
 namespace Tuxboard.Core.Domain.Entities;
 
+/// <summary>
+/// Creates a template of a widget for a dashboard.
+/// In programming terms, a Widget is an abstract class where a WidgetPlacement implements a Widget.
+/// </summary>
 public partial class WidgetPlacement
 {
+    /// <summary>
+    /// Creates a shallow <see cref="WidgetPlacementDto"/>
+    /// </summary>
+    /// <returns><see cref="WidgetPlacementDto"/></returns>
     public WidgetPlacementDto ToDto()
     {
         return new WidgetPlacementDto
@@ -25,41 +32,82 @@ public partial class WidgetPlacement
         };
     }
 
-    private WidgetSetting GetSettingById(Guid settingId)
+    /// <summary>
+    /// Returns a <see cref="WidgetDefault"/> based on a SettingName
+    /// </summary>
+    /// <param name="settingName">
+    /// The name of the setting. For example, to retrieve the widget's title,
+    /// GetDefaultSettingFor("WidgetTitle") would return the title
+    /// </param>
+    /// <returns><see cref="WidgetDefault"/> if the setting is found, null if it's not found.</returns>
+    public WidgetDefault GetDefaultSettingFor(string settingName)
     {
-        return WidgetSettings.FirstOrDefault(e => e.WidgetSettingId == settingId);
+        return Widget?.WidgetDefaults?.FirstOrDefault(e => e.SettingName.ToLower() == settingName.ToLower());
     }
 
-    private WidgetSetting GetSettingByName(string settingName)
+    /// <summary>
+    /// Sets the value of a WidgetSetting based on a WidgetDefault.
+    /// Locates a Widget Setting based on a widget default when initially created.
+    /// When found, the widget setting's Value is assigned.
+    /// </summary>
+    /// <param name="settingName">Setting Name (i.e. "WidgetTitle")</param>
+    /// <param name="val">The setting's value (i.e. "My Projects")</param>
+    /// <returns><see cref="WidgetSetting"/> if successfully set, null if not set or not found.</returns>
+    public WidgetSetting SetValue(string settingName, string val)
     {
-        var widgetDefault= Widget.WidgetDefaults.FirstOrDefault(e => e.SettingName.ToLower() == settingName.ToLower());
-        return WidgetSettings.FirstOrDefault(t => t.WidgetDefaultId == widgetDefault.WidgetDefaultId);
+        WidgetSetting current = null;
+        var defaultSetting = GetDefaultSettingFor(settingName);
+        if (defaultSetting == null)
+            return current;
+
+        current = WidgetSettings.FirstOrDefault(e => e.WidgetDefaultId == defaultSetting.WidgetDefaultId);
+        if (current != null)
+        {
+            current.Value = val;
+        }
+
+        return current;
     }
 
-    public string GetSettingValueById(Guid settingId)
+    /// <summary>
+    /// Return the value of a widget placement's setting by name.
+    /// If not found, the default value of the widget's setting is returned.
+    /// </summary>
+    /// <param name="settingName">The widget's setting name (i.e. "widgetTitle")</param>
+    /// <returns>string</returns>
+    public string GetSettingOrDefault(string settingName)
     {
-        var setting = GetSettingById(settingId);
-        return setting != null ? setting.Value : string.Empty;
+        var defaultSetting = GetDefaultSettingFor(settingName);
+        if (defaultSetting == null) 
+            return string.Empty;
+
+        var current = WidgetSettings.FirstOrDefault(e => e.WidgetDefaultId == defaultSetting.WidgetDefaultId);
+        return current != null 
+            ? current.Value 
+            : defaultSetting.DefaultValue;
     }
 
-    public string GetSettingValueByName(string settingName)
-    {
-        var setting = GetSettingByName(settingName);
-        return setting != null ? setting.Value : string.Empty;
-    }
-
-    public string GetSettingTitleById(Guid settingId)
-    {
-        var setting = GetSettingById(settingId);
-        var defaultSetting =
-            Widget.WidgetDefaults.FirstOrDefault(e => e.WidgetDefaultId == setting.WidgetDefaultId);
-        return defaultSetting != null ? defaultSetting.SettingTitle : string.Empty;
-    }
-
+    /// <summary>
+    /// Returns whether a <see cref="WidgetPlacement"/> has any settings
+    /// </summary>
     public bool HasSettings => WidgetSettings.Count > 0;
-    
-    public bool SettingDefaultsExist => Widget.WidgetDefaults.Any();
+
+    /// <summary>
+    /// Returns whether a <see cref="Widget"/> has any default settings.
+    /// </summary>
+    public bool DefaultSettingsExist => Widget.WidgetDefaults.Any();
+
+    /// <summary>
+    /// Identifies whether a setting is missing; Compares the <see cref="WidgetSetting"/>.Count to the <see cref="Widget"/>.<see cref="WidgetDefault"/>.Count.
+    /// Returns true if the <see cref="WidgetPlacement"/> is missing a setting, false if no settings are missing.
+    /// </summary>
     public bool MissingSettings => WidgetSettings.Count != Widget.WidgetDefaults.Count;
+
+    /// <summary>
+    /// Creates a <see cref="WidgetSetting"/> based on a <see cref="WidgetDefault"/>; Does NOT save, merely creates the entity.
+    /// </summary>
+    /// <param name="widgetDefault"><see cref="WidgetDefault"/> to create a new <see cref="WidgetSetting"/></param>
+    /// <returns><see cref="WidgetSetting"/></returns>
     public WidgetSetting CreateFrom(WidgetDefault widgetDefault) =>
         new()
         {
@@ -70,6 +118,9 @@ public partial class WidgetPlacement
         };
 
 
+    /// <summary>
+    /// Creates missing <see cref="WidgetSetting"/> based on a Widget's Default settings
+    /// </summary>
     public void UpdateWidgetSettings()
     {
         foreach (var widgetDefault in Widget.WidgetDefaults)
@@ -83,6 +134,10 @@ public partial class WidgetPlacement
         }
     }
 
+    /// <summary>
+    /// Creates <see cref="WidgetSettingDto"/> (Data Transfer Object) based on an existing <see cref="WidgetSetting"/>s
+    /// </summary>
+    /// <returns><see cref="List{WidgetSettingDto}"/></returns>
     public List<WidgetSettingDto> ToSettingsDto()
     {
         return WidgetSettings.Select(setting => new
