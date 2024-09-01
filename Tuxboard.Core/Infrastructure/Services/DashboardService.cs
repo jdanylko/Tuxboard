@@ -84,11 +84,13 @@ public class DashboardService : IDashboardService
         return _context.SaveChanges() > 0;
     }
 
+    /// <inheritdoc />
     public Dashboard CreateDashboardFrom(DashboardDefault template)
     {
         return CreateFromTemplate(template, null);
     }
 
+    /// <inheritdoc />
     public Dashboard CreateFromTemplate(DashboardDefault template, Guid? userId)
     {
         var dashboard = Dashboard.Create(userId);
@@ -390,7 +392,12 @@ public class DashboardService : IDashboardService
 
     /// <inheritdoc />
     public async Task<Dashboard> CreateDashboardFromAsync(DashboardDefault template, Guid? userId, CancellationToken token = default) => await CreateFromTemplateAsync(template, userId, token);
-    public async Task<Dashboard> CreateDashboardFromAsync(DashboardDefault template, CancellationToken token = default) => await CreateFromTemplateAsync(template, token: token);
+
+    /// <inheritdoc />
+    public async Task<Dashboard> CreateDashboardFromAsync(DashboardDefault template, CancellationToken token = default) 
+        => await CreateFromTemplateAsync(template, token: token);
+
+    /// <inheritdoc />
     public async Task<Dashboard> CreateFromTemplateAsync(DashboardDefault template, Guid? userId = null, CancellationToken token = default)
     {
         var dashboard = Dashboard.Create(userId);

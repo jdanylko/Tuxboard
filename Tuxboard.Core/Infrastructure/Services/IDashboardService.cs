@@ -15,6 +15,40 @@ namespace Tuxboard.Core.Infrastructure.Services;
 public interface IDashboardService
 {
     /// <summary>
+    /// Create a dashboard from a default dashboard synchronously.
+    /// </summary>
+    /// <param name="template"><see cref="DashboardDefault"/></param>
+    /// <returns><see cref="Dashboard"/></returns>
+    Dashboard CreateDashboardFrom(DashboardDefault template);
+    /// <summary>
+    /// Create a dashboard from a default dashboard asynchronously.
+    /// </summary>
+    /// <param name="template"><see cref="DashboardDefault"/></param>
+    /// <param name="token"><see cref="CancellationToken"/> (optional)</param>
+    /// <returns><see cref="Dashboard"/></returns>
+    Task<Dashboard> CreateDashboardFromAsync(DashboardDefault template, 
+        CancellationToken token = default);
+
+    /// <summary>
+    /// Create a dashboard from a default dashboard and, optionally,
+    /// assign a user id to the dashboard synchronously.
+    /// </summary>
+    /// <param name="template"><see cref="DashboardDefault"/></param>
+    /// <param name="userId">User ID (optional)</param>
+    /// <returns><see cref="Dashboard"/></returns>
+    Dashboard CreateFromTemplate(DashboardDefault template, Guid? userId = null);
+    /// <summary>
+    /// Create a dashboard from a default dashboard and, optionally,
+    /// assign a user id to the dashboard asynchronously.
+    /// </summary>
+    /// <param name="template"><see cref="DashboardDefault"/></param>
+    /// <param name="userId">User ID (optional)</param>
+    /// <param name="token"><see cref="CancellationToken"/> (optional)</param>
+    /// <returns><see cref="Dashboard"/></returns>
+    Task<Dashboard> CreateFromTemplateAsync(DashboardDefault template, Guid? userId = null,
+        CancellationToken token = default);
+
+    /// <summary>
     /// Retrieve a <see cref="Dashboard"/> for a user synchronously.
     /// If a dashboard doesn't exist for the user, it'll create one based on a default dashboard.
     /// </summary>

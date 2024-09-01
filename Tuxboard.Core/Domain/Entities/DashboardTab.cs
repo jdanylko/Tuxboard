@@ -22,6 +22,12 @@ public partial class DashboardTab
     /// </summary>
     public int TabIndex { get; set; }
 
+    /// <summary>
+    /// 
+    /// </summary>
     public virtual Dashboard Dashboard { get; set; }
+    /// <summary>
+    /// 
+    /// </summary>
     public virtual ICollection<Layout> Layouts { get; set; } = new HashSet<Layout>();
 }

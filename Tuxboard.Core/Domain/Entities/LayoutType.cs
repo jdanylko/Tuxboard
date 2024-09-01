@@ -2,6 +2,9 @@
 
 namespace Tuxboard.Core.Domain.Entities;
 
+/// <summary>
+/// 
+/// </summary>
 public partial class LayoutType
 {
     /// <summary>

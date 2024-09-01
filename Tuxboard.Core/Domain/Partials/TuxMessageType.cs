@@ -5,8 +5,20 @@
 /// </summary>
 public enum TuxMessageType
 {
+    /// <summary>
+    /// Success
+    /// </summary>
     Success,
+    /// <summary>
+    /// Warning
+    /// </summary>
     Warning,
+    /// <summary>
+    /// Danger
+    /// </summary>
     Danger,
+    /// <summary>
+    /// Information
+    /// </summary>
     Information
 }

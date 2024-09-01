@@ -39,7 +39,16 @@ public partial class DashboardDefaultWidget
     /// </summary>
     public int WidgetIndex { get; set; }
 
+    /// <summary>
+    /// 
+    /// </summary>
     public virtual DashboardDefault DashboardDefault { get; set; }
+    /// <summary>
+    /// 
+    /// </summary>
     public virtual LayoutRow LayoutRow { get; set; }
+    /// <summary>
+    /// 
+    /// </summary>
     public virtual Widget Widget { get; set; }
 }
