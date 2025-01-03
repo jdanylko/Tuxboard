@@ -28,22 +28,20 @@ a Lego-style way to build dashboards.
  * While Tuxboard uses Bootstrap, it can easily conform to any CSS Framework.
 
 #### Why build a Dashboard library
-In my career, I've built a number of dashboards from scratch. 
+In my career, I've built a number of dashboards from scratch.
+
 As with all projects, each dashboard had pluses and minuses as each project completed.
 
 Even with existing libraries, there really wasn't anything out there for the ASP.NET platform.
 
 So the initiative was set to write one.
 
-The developer could start with a simple structure where
-ANY type of dashboard could be generated quickly and 
-provide an easy front-end with
-their own custom widgets and robust layouts.
+The developer could start with a simple structure where ANY type of dashboard could be generated quickly and provide an easy front-end with their own custom widgets and robust layouts.
 
 ## Getting Started
 
  * Examples are in a separate repository [Tuxboard.Examples](https://github.com/jdanylko/Tuxboard.Examples)
- * I'm writing a collection of [Tuxboard posts](https://www.danylkoweb.com/Tuxboard/) on DanylkoWeb.com
+ * A collection of [Tuxboard posts](https://www.danylkoweb.com/Tuxboard/) are available on DanylkoWeb.com
 
 ## Contributors
 ![GitHub Contributors Image](https://contrib.rocks/image?repo=jdanylko/Tuxboard)
