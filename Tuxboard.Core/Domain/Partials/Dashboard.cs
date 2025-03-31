@@ -10,7 +10,7 @@ namespace Tuxboard.Core.Domain.Entities;
 /// <summary>
 /// Main instance of a Tuxboard dashboard
 /// <code>
-/// <para>Dashboard (<see cref="Dashboard"/>)<br/>
+/// <para>Dashboard (<see cref="Dashboard{T}"/>)<br/>
 /// +-- Dashboard Tab (<see cref="DashboardTab"/>)<br/>
 /// |   +-- Layout (<see cref="Layout"/>)<br/>
 /// |       +-- LayoutRow(s) (<see cref="LayoutRow"/>)<br/>
@@ -36,7 +36,7 @@ public partial class Dashboard<T>
     /// Create a default dashboard for a new user
     /// </summary>
     /// <param name="userId"><see cref="Guid"/> - UserID</param>
-    /// <returns><see cref="Dashboard"/></returns>
+    /// <returns><see cref="Dashboard{T}"/></returns>
     public static Dashboard<T> Create(T? userId) =>
         new()
         {

@@ -9,7 +9,7 @@ namespace Tuxboard.Core.Data.Context;
 
 
 /// <summary>
-/// Interface for <see cref="TuxDbContext"/>
+/// Interface for <see cref="TuxDbContext{TUserId}"/>
 /// </summary>
 public interface ITuxDbContext<TUserId> : ITuxDbContext where TUserId : struct
 {
@@ -25,6 +25,11 @@ public interface ITuxDbContext<TUserId> : ITuxDbContext where TUserId : struct
 public interface ITuxDbContext
 {
     /// <summary>
+    /// <see cref="DashboardTabs"/> contains tabs for every <see cref="Dashboard{T}"/>. Currently, only one tab should exist per dashboard.
+    /// </summary>
+    DbSet<DashboardTab> DashboardTabs { get; set; }
+
+    /// <summary>
     /// <see cref="DashboardDefaults"/> is where pre-made dashboards are created for when users log into a system;
     /// One of two tables storing default dashboard information.
     /// The second table is <see cref="DashboardDefaultWidgets"/>.
@@ -37,11 +42,6 @@ public interface ITuxDbContext
     /// The first table uses <see cref="DashboardDefaults"/> as the header.
     /// </summary>
     DbSet<DashboardDefaultWidget> DashboardDefaultWidgets { get; set; }
-
-    /// <summary>
-    /// <see cref="DashboardTabs"/> contains tabs for every <see cref="Dashboard"/>. Currently, only one tab should exist per dashboard.
-    /// </summary>
-    DbSet<DashboardTab> DashboardTabs { get; set; }
 
     /// <summary>
     /// <see cref="Layouts"/> contains a single <see cref="Layout"/> for a single tab; Only one <see cref="Layout"/> should exist for one <see cref="DashboardTab"/>.

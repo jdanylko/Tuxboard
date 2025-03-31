@@ -44,7 +44,7 @@ public class ServiceCollectionExtensionsTests
         Assert.NotNull(config);
         Assert.Equal(connectionString, config.ConnectionString);
         Assert.Equal(schema, config.Schema);
-        Assert.Contains(services, d => d.ServiceType == typeof(IDashboardService));
+        Assert.Contains(services, d => d.ServiceType == typeof(IDashboardService<int>));
         Assert.Contains(services, d => d.ServiceType == typeof(ITuxDbContext));
     }
 
@@ -80,7 +80,7 @@ public class ServiceCollectionExtensionsTests
         Assert.NotNull(config);
         Assert.Equal(connectionString, config.ConnectionString);
         Assert.Equal(schema, config.Schema);
-        Assert.Contains(services, d => d.ServiceType == typeof(IDashboardService));
+        Assert.Contains(services, d => d.ServiceType == typeof(IDashboardService<int>));
         Assert.Contains(services, d => d.ServiceType == typeof(ITuxDbContext));
     }
 

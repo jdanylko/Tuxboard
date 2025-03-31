@@ -10,7 +10,7 @@ public partial class DashboardTab
     /// </summary>
     public Guid TabId { get; set; }
     /// <summary>
-    /// Reference Id to a <see cref="Dashboard"/>
+    /// Reference Id to a <see cref="Dashboard{T}"/>
     /// </summary>
     public Guid DashboardId { get; set; }
     /// <summary>
@@ -22,10 +22,8 @@ public partial class DashboardTab
     /// </summary>
     public int TabIndex { get; set; }
 
-    /// <summary>
-    /// 
-    /// </summary>
-    public virtual Dashboard Dashboard { get; set; }
+    // public virtual Dashboard Dashboard { get; set; }
+
     /// <summary>
     /// 
     /// </summary>

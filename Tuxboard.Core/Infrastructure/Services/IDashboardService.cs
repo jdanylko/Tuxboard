@@ -15,6 +15,44 @@ namespace Tuxboard.Core.Infrastructure.Services;
 public interface IDashboardService<TUserId> where TUserId: struct
 {
     /// <summary>
+    /// Create a dashboard from a default dashboard and, optionally,
+    /// assign a user id to the dashboard synchronously.
+    /// </summary>
+    /// <param name="template"></param>
+    /// <param name="userId"></param>
+    /// <returns></returns>
+    Dashboard<TUserId> CreateFromTemplate(DashboardDefault template, TUserId? userId);
+    /// <summary>
+    /// Create a dashboard from a default dashboard and, optionally,
+    /// assign a user id to the dashboard asynchronously.
+    /// </summary>
+    /// <param name="template"></param>
+    /// <param name="userId"></param>
+    /// <param name="token"></param>
+    /// <returns></returns>
+    Task<Dashboard<TUserId>> CreateFromTemplateAsync(DashboardDefault template, TUserId? userId,
+        CancellationToken token = default);
+
+    /// <summary>
+    /// Retrieve a <see cref="Dashboard{T}"/> for a user synchronously.
+    /// If a dashboard doesn't exist for the user, it'll create one based on a default dashboard.
+    /// </summary>
+    /// <param name="config"></param>
+    /// <param name="userId"></param>
+    /// <returns></returns>
+    Dashboard<TUserId> GetDashboardFor(ITuxboardConfig config, TUserId? userId);
+    /// <summary>
+    /// Retrieve a <see cref="Dashboard{T}"/> for a user asynchronously.
+    /// If a dashboard doesn't exist for the user, it'll create one based on a default dashboard.
+    /// </summary>
+    /// <param name="config"></param>
+    /// <param name="userId"></param>
+    /// <param name="token"></param>
+    /// <returns></returns>
+    Task<Dashboard<TUserId>> GetDashboardForAsync(ITuxboardConfig config, TUserId userId,
+        CancellationToken token = default);
+
+    /// <summary>
     /// Create a dashboard from a default dashboard synchronously.
     /// </summary>
     /// <param name="template"></param>
@@ -30,57 +68,19 @@ public interface IDashboardService<TUserId> where TUserId: struct
         CancellationToken token = default);
 
     /// <summary>
-    /// Create a dashboard from a default dashboard and, optionally,
-    /// assign a user id to the dashboard synchronously.
-    /// </summary>
-    /// <param name="template"></param>
-    /// <param name="userId"></param>
-    /// <returns></returns>
-    Dashboard<TUserId> CreateFromTemplate(DashboardDefault template, TUserId? userId = null);
-    /// <summary>
-    /// Create a dashboard from a default dashboard and, optionally,
-    /// assign a user id to the dashboard asynchronously.
-    /// </summary>
-    /// <param name="template"></param>
-    /// <param name="userId"></param>
-    /// <param name="token"></param>
-    /// <returns></returns>
-    Task<Dashboard<TUserId>> CreateFromTemplateAsync(DashboardDefault template, TUserId? userId = null,
-        CancellationToken token = default);
-
-    /// <summary>
-    /// Retrieve a <see cref="Dashboard"/> for a user synchronously.
-    /// If a dashboard doesn't exist for the user, it'll create one based on a default dashboard.
-    /// </summary>
-    /// <param name="config"></param>
-    /// <param name="userId"></param>
-    /// <returns></returns>
-    Dashboard<TUserId> GetDashboardFor(ITuxboardConfig config, TUserId userId);
-    /// <summary>
-    /// Retrieve a <see cref="Dashboard"/> for a user asynchronously.
-    /// If a dashboard doesn't exist for the user, it'll create one based on a default dashboard.
-    /// </summary>
-    /// <param name="config"></param>
-    /// <param name="userId"></param>
-    /// <param name="token"></param>
-    /// <returns></returns>
-    Task<Dashboard<TUserId>> GetDashboardForAsync(ITuxboardConfig config, TUserId userId, 
-        CancellationToken token = default);
-    
-    /// <summary>
-    /// Retrieve a static <see cref="Dashboard"/> synchronously
+    /// Retrieve a static <see cref="Dashboard{T}"/> synchronously
     /// If a dashboard doesn't exist, it'll create one based on an existing default dashboard.
     /// </summary>
     /// <param name="config"><see cref="ITuxboardConfig"/></param>
-    /// <returns><see cref="Dashboard"/></returns>
+    /// <returns><see cref="Dashboard{T}"/></returns>
     Dashboard<TUserId> GetDashboard(ITuxboardConfig config);
     /// <summary>
-    /// Retrieve a static <see cref="Dashboard"/> asynchronously
+    /// Retrieve a static <see cref="Dashboard{T}"/> asynchronously
     /// If a dashboard doesn't exist, it'll create one based on an existing default dashboard.
     /// </summary>
     /// <param name="config"><see cref="ITuxboardConfig"/></param>
     /// <param name="token"><see cref="CancellationToken"/> (optional)</param>
-    /// <returns><see cref="Dashboard"/></returns>
+    /// <returns><see cref="Dashboard{T}"/></returns>
     Task<Dashboard<TUserId>> GetDashboardAsync(ITuxboardConfig config, CancellationToken token = default);
 
     /// <summary>
@@ -114,19 +114,19 @@ public interface IDashboardService<TUserId> where TUserId: struct
     Task<List<WidgetPlacement>> GetWidgetsForTabAsync(DashboardTab tab, CancellationToken token = default);
 
     /// <summary>
-    /// Create a <see cref="Dashboard"/> from a <see cref="DashboardDefault"/>. There is an option to assign a user ID to the dashboard as well. This is a synchronous call.
+    /// Create a <see cref="Dashboard{T}"/> from a <see cref="DashboardDefault"/>. There is an option to assign a user ID to the dashboard as well. This is a synchronous call.
     /// </summary>
     /// <param name="template"><see cref="DashboardDefault"/></param>
     /// <param name="userId">UserID - <see cref="Guid"/></param>
-    /// <returns><see cref="Dashboard"/></returns>
+    /// <returns><see cref="Dashboard{T}"/></returns>
     Dashboard<TUserId> CreateDashboardFrom(DashboardDefault template, TUserId? userId);
     /// <summary>
-    /// Create a <see cref="Dashboard"/> from a <see cref="DashboardDefault"/>. There is an option to assign a user ID to the dashboard as well. This is an asynchronous call.
+    /// Create a <see cref="Dashboard{T}"/> from a <see cref="DashboardDefault"/>. There is an option to assign a user ID to the dashboard as well. This is an asynchronous call.
     /// </summary>
     /// <param name="template"><see cref="DashboardDefault"/></param>
     /// <param name="userId">UserID - <see cref="Guid"/></param>
     /// <param name="token"><see cref="CancellationToken"/> (optional)</param>
-    /// <returns><see cref="Dashboard"/></returns>
+    /// <returns><see cref="Dashboard{T}"/></returns>
     Task<Dashboard<TUserId>> CreateDashboardFromAsync(DashboardDefault template, TUserId? userId,
         CancellationToken token = default);
 
@@ -397,17 +397,28 @@ public interface IDashboardService<TUserId> where TUserId: struct
     Task<int> AddWidgetPlacementAsync(WidgetPlacement placement, CancellationToken token = default);
 
     /// <summary>
-    /// Determine whether a <see cref="Dashboard"/> exists for a user by their UserID (Guid). This is a synchronous call.
+    /// Determine whether a <see cref="Dashboard{T}"/> exists for a user by their UserID (Guid). This is a synchronous call.
     /// </summary>
     /// <param name="id">User ID</param>
     /// <returns>true if a dashboard does exist for a user, false if the dashboard doesn't exist.</returns>
-    bool DashboardExistsFor(Guid id);
+    bool DashboardExistsFor(TUserId id);
     /// <summary>
-    /// Determine whether a <see cref="Dashboard"/> exists for a user by their UserID (Guid). This is an asynchronous call.
+    /// Determine whether a <see cref="Dashboard{T}"/> exists for a user by their UserID (Guid). This is an asynchronous call.
     /// </summary>
     /// <param name="id">User ID</param>
     /// <param name="token"><see cref="CancellationToken"/> (optional)</param>
     /// <returns>true if a dashboard does exist for a user, false if the dashboard doesn't exist.</returns>
-    Task<bool> DashboardExistsForAsync(Guid id, CancellationToken token = default);
+    Task<bool> DashboardExistsForAsync(TUserId id, CancellationToken token = default);
 
+    /// <summary>
+    /// Determine whether a <see cref="Dashboard{T}"/> exists. This is an asynchronous call.
+    /// </summary>
+    /// <param name="token"><see cref="CancellationToken"/> (optional)</param>
+    /// <returns>true if any dashboard is available, false if no dashboards exist</returns>
+    Task<bool> DashboardExistsAsync(CancellationToken token);
+    /// <summary>
+    /// Determine whether a <see cref="Dashboard{T}"/> exists. This is an asynchronous call.
+    /// </summary>
+    /// <returns>true if any dashboard is available, false if no dashboards exist</returns>
+    bool DashboardExists();
 }
