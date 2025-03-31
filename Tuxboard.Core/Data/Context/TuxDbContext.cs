@@ -9,7 +9,7 @@ namespace Tuxboard.Core.Data.Context;
 /// <summary>
 /// <see cref="TuxDbContext"/> uses Entity Framework for storing and managing Tuxboard dashboards.
 /// </summary>
-public partial class TuxDbContext : DbContext, ITuxDbContext
+public partial class TuxDbContext : DbContext, ITuxDbContext<int>
 {
     private TuxboardConfig _tuxboardConfig;
 
@@ -21,7 +21,7 @@ public partial class TuxDbContext : DbContext, ITuxDbContext
     }
 
     /// <inheritdoc />
-    public virtual DbSet<Dashboard> Dashboards { get; set; }
+    public virtual DbSet<Dashboard<int>> Dashboards { get; set; }
 
     /// <inheritdoc />
     public virtual DbSet<DashboardDefault> DashboardDefaults { get; set; }

@@ -12,68 +12,68 @@ namespace Tuxboard.Core.Infrastructure.Services;
 /// <summary>
 /// Primary service for retrieving and managing Tuxboard dashboards.
 /// </summary>
-public interface IDashboardService
+public interface IDashboardService<TUserId> where TUserId: struct
 {
     /// <summary>
     /// Create a dashboard from a default dashboard synchronously.
     /// </summary>
-    /// <param name="template"><see cref="DashboardDefault"/></param>
-    /// <returns><see cref="Dashboard"/></returns>
-    Dashboard CreateDashboardFrom(DashboardDefault template);
+    /// <param name="template"></param>
+    /// <returns></returns>
+    Dashboard<TUserId> CreateDashboardFrom(DashboardDefault template);
     /// <summary>
     /// Create a dashboard from a default dashboard asynchronously.
     /// </summary>
-    /// <param name="template"><see cref="DashboardDefault"/></param>
-    /// <param name="token"><see cref="CancellationToken"/> (optional)</param>
-    /// <returns><see cref="Dashboard"/></returns>
-    Task<Dashboard> CreateDashboardFromAsync(DashboardDefault template, 
+    /// <param name="template"></param>
+    /// <param name="token"></param>
+    /// <returns></returns>
+    Task<Dashboard<TUserId>> CreateDashboardFromAsync(DashboardDefault template, 
         CancellationToken token = default);
 
     /// <summary>
     /// Create a dashboard from a default dashboard and, optionally,
     /// assign a user id to the dashboard synchronously.
     /// </summary>
-    /// <param name="template"><see cref="DashboardDefault"/></param>
-    /// <param name="userId">User ID (optional)</param>
-    /// <returns><see cref="Dashboard"/></returns>
-    Dashboard CreateFromTemplate(DashboardDefault template, Guid? userId = null);
+    /// <param name="template"></param>
+    /// <param name="userId"></param>
+    /// <returns></returns>
+    Dashboard<TUserId> CreateFromTemplate(DashboardDefault template, TUserId? userId = null);
     /// <summary>
     /// Create a dashboard from a default dashboard and, optionally,
     /// assign a user id to the dashboard asynchronously.
     /// </summary>
-    /// <param name="template"><see cref="DashboardDefault"/></param>
-    /// <param name="userId">User ID (optional)</param>
-    /// <param name="token"><see cref="CancellationToken"/> (optional)</param>
-    /// <returns><see cref="Dashboard"/></returns>
-    Task<Dashboard> CreateFromTemplateAsync(DashboardDefault template, Guid? userId = null,
+    /// <param name="template"></param>
+    /// <param name="userId"></param>
+    /// <param name="token"></param>
+    /// <returns></returns>
+    Task<Dashboard<TUserId>> CreateFromTemplateAsync(DashboardDefault template, TUserId? userId = null,
         CancellationToken token = default);
 
     /// <summary>
     /// Retrieve a <see cref="Dashboard"/> for a user synchronously.
     /// If a dashboard doesn't exist for the user, it'll create one based on a default dashboard.
     /// </summary>
-    /// <param name="config"><see cref="ITuxboardConfig"/></param>
-    /// <param name="userId">UserID - <see cref="Guid"/></param>
-    /// <returns><see cref="Dashboard"/></returns>
-    Dashboard GetDashboardFor(ITuxboardConfig config, Guid userId);
-
+    /// <param name="config"></param>
+    /// <param name="userId"></param>
+    /// <returns></returns>
+    Dashboard<TUserId> GetDashboardFor(ITuxboardConfig config, TUserId userId);
     /// <summary>
     /// Retrieve a <see cref="Dashboard"/> for a user asynchronously.
     /// If a dashboard doesn't exist for the user, it'll create one based on a default dashboard.
     /// </summary>
-    /// <param name="config"><see cref="ITuxboardConfig"/></param>
-    /// <param name="userId">UserID - <see cref="Guid"/></param>
-    /// <param name="token"><see cref="CancellationToken"/> (optional)</param>
-    /// <returns><see cref="Dashboard"/></returns>
-    Task<Dashboard> GetDashboardForAsync(ITuxboardConfig config, Guid userId, CancellationToken token = default);
-
+    /// <param name="config"></param>
+    /// <param name="userId"></param>
+    /// <param name="token"></param>
+    /// <returns></returns>
+    Task<Dashboard<TUserId>> GetDashboardForAsync(ITuxboardConfig config, TUserId userId, 
+        CancellationToken token = default);
+    
     /// <summary>
     /// Retrieve a static <see cref="Dashboard"/> synchronously
     /// If a dashboard doesn't exist, it'll create one based on an existing default dashboard.
     /// </summary>
     /// <param name="config"><see cref="ITuxboardConfig"/></param>
     /// <returns><see cref="Dashboard"/></returns>
-    Dashboard GetDashboard(ITuxboardConfig config);
+    Dashboard<TUserId> GetDashboard(ITuxboardConfig config);
     /// <summary>
     /// Retrieve a static <see cref="Dashboard"/> asynchronously
     /// If a dashboard doesn't exist, it'll create one based on an existing default dashboard.
@@ -81,14 +81,14 @@ public interface IDashboardService
     /// <param name="config"><see cref="ITuxboardConfig"/></param>
     /// <param name="token"><see cref="CancellationToken"/> (optional)</param>
     /// <returns><see cref="Dashboard"/></returns>
-    Task<Dashboard> GetDashboardAsync(ITuxboardConfig config, CancellationToken token = default);
+    Task<Dashboard<TUserId>> GetDashboardAsync(ITuxboardConfig config, CancellationToken token = default);
 
     /// <summary>
     /// Retrieve a <see cref="Layout"/> from a <see cref="DashboardTab"/> Id synchronously.
     /// If a dashboard doesn't exist, it'll create one based on an existing default dashboard.
     /// </summary>
     /// <param name="tabId">Tab Id</param>
-    /// <returns><see cref="Dashboard"/></returns>
+    /// <returns><see cref="Layout"/></returns>
     Layout GetLayoutFromTab(Guid tabId);
     /// <summary>
     /// Retrieve a <see cref="Layout"/> from a <see cref="DashboardTab"/> Id asynchronously.
@@ -96,7 +96,7 @@ public interface IDashboardService
     /// </summary>
     /// <param name="tabId">Tab Id</param>
     /// <param name="token"><see cref="CancellationToken"/> (optional)</param>
-    /// <returns><see cref="Dashboard"/></returns>
+    /// <returns><see cref="Layout"/></returns>
     Task<Layout> GetLayoutFromTabAsync(Guid tabId, CancellationToken token = default);
 
     /// <summary>
@@ -119,7 +119,7 @@ public interface IDashboardService
     /// <param name="template"><see cref="DashboardDefault"/></param>
     /// <param name="userId">UserID - <see cref="Guid"/></param>
     /// <returns><see cref="Dashboard"/></returns>
-    Dashboard CreateDashboardFrom(DashboardDefault template, Guid? userId = null);
+    Dashboard<TUserId> CreateDashboardFrom(DashboardDefault template, TUserId? userId);
     /// <summary>
     /// Create a <see cref="Dashboard"/> from a <see cref="DashboardDefault"/>. There is an option to assign a user ID to the dashboard as well. This is an asynchronous call.
     /// </summary>
@@ -127,7 +127,7 @@ public interface IDashboardService
     /// <param name="userId">UserID - <see cref="Guid"/></param>
     /// <param name="token"><see cref="CancellationToken"/> (optional)</param>
     /// <returns><see cref="Dashboard"/></returns>
-    Task<Dashboard> CreateDashboardFromAsync(DashboardDefault template, Guid? userId = null,
+    Task<Dashboard<TUserId>> CreateDashboardFromAsync(DashboardDefault template, TUserId? userId,
         CancellationToken token = default);
 
     /// <summary>

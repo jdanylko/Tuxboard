@@ -24,7 +24,7 @@ namespace Tuxboard.Core.Domain.Entities;
 /// </para>
 /// </code>
 /// </summary>
-public partial class Dashboard
+public partial class Dashboard<T>
 {
     /// <summary>
     /// Configuration for a dashboard through a <see cref="ITuxboardConfig"/>
@@ -37,7 +37,7 @@ public partial class Dashboard
     /// </summary>
     /// <param name="userId"><see cref="Guid"/> - UserID</param>
     /// <returns><see cref="Dashboard"/></returns>
-    public static Dashboard Create(Guid? userId) =>
+    public static Dashboard<T> Create(T? userId) =>
         new()
         {
             SelectedTab = 1,

@@ -7,16 +7,23 @@ using Tuxboard.Core.Domain.Entities;
 
 namespace Tuxboard.Core.Data.Context;
 
+
 /// <summary>
 /// Interface for <see cref="TuxDbContext"/>
 /// </summary>
-public interface ITuxDbContext
+public interface ITuxDbContext<TUserId> : ITuxDbContext where TUserId : struct
 {
     /// <summary>
     /// <see cref="Dashboards"/> is the table storing all dashboards associated with a user.
     /// </summary>
-    DbSet<Dashboard> Dashboards { get; set; }
+    DbSet<Dashboard<TUserId>> Dashboards { get; set; }
+}
 
+/// <summary>
+/// 
+/// </summary>
+public interface ITuxDbContext
+{
     /// <summary>
     /// <see cref="DashboardDefaults"/> is where pre-made dashboards are created for when users log into a system;
     /// One of two tables storing default dashboard information.
@@ -119,5 +126,4 @@ public interface ITuxDbContext
     /// <param name="cancellationToken"></param>
     /// <returns></returns>
     Task<int> SaveChangesAsync(bool acceptAllChangesOnSuccess, CancellationToken cancellationToken);
-
 }
