@@ -5,7 +5,7 @@
     <GeneratePackageOnBuild>False</GeneratePackageOnBuild>
     <Description>Tuxboard, an open-source dashboard library for ASP.NET Core</Description>
     <PackageId>Tuxboard.Core</PackageId>
-    <Version>1.9.1</Version>
+    <Version>1.9.2</Version>
     <Authors>Jonathan "JD" Danylko</Authors>
     <Product>Tuxboard</Product>
     <Copyright>2019-2025</Copyright>
@@ -41,8 +41,8 @@
   </ItemGroup>
 
   <ItemGroup Condition=" '$(TargetFramework)' == 'net8.0' ">
-    <PackageReference Include="Microsoft.EntityFrameworkCore" Version="8.0.6" />
-    <PackageReference Include="Microsoft.EntityFrameworkCore.SqlServer" Version="8.0.6" />
+    <PackageReference Include="Microsoft.EntityFrameworkCore" Version="8.0.14" />
+    <PackageReference Include="Microsoft.EntityFrameworkCore.SqlServer" Version="8.0.14" />
   </ItemGroup>
 
   <ItemGroup Condition=" '$(TargetFramework)' == 'net9.0' ">
