@@ -4,27 +4,27 @@ namespace Tuxboard.Core.Tests.Domain.Entities;
 
 public class WidgetPlacementTests
 {
-    private readonly Dashboard _dashboard = new Dashboard
+    private readonly Dashboard<int> _dashboard = new()
     {
         SelectedTab = 1,
         Tabs = new List<DashboardTab>
         {
-            new DashboardTab
+            new()
             {
                 Layouts = new List<Layout>
                 {
-                    new Layout
+                    new()
                     {
                         LayoutRows = new List<LayoutRow>
                         {
-                            new LayoutRow
+                            new()
                             {
                                 LayoutRowId = new Guid("3368B1B7-4DDF-4FBF-8016-8A5CBBDACA88"),
                                 LayoutTypeId = 1, // 3 columns, equal
                                 LayoutType = new LayoutType { LayoutTypeId = 1, Layout = "col-4/col-4/col-4" },
                                 WidgetPlacements = new List<WidgetPlacement>
                                 {
-                                    new WidgetPlacement
+                                    new()
                                     {
                                         WidgetPlacementId = new Guid("C85C0DAA-88FD-4E87-88B3-65A9ADB9B384"),
                                         WidgetId = new Guid("8689039B-6513-4D51-8415-174F1FB01695"),
@@ -36,7 +36,7 @@ public class WidgetPlacementTests
                                         UseTemplate = true,
                                         WidgetSettings = new List<WidgetSetting>()
                                         {
-                                            new WidgetSetting()
+                                            new()
                                             {
                                                 WidgetSettingId = new Guid("103F7561-D42B-436A-A688-4E04DC194AE5"),
                                                 Value = "Test Title",
@@ -57,7 +57,7 @@ public class WidgetPlacementTests
                                             Moveable = true,
                                             WidgetDefaults = new List<WidgetDefault>
                                             {
-                                                new WidgetDefault
+                                                new()
                                                 {
                                                     WidgetDefaultId = new Guid("E4D987B7-4087-4A8A-AC7F-8A5F3D33BF8D"),
                                                     WidgetId = new Guid("8689039B-6513-4D51-8415-174F1FB01695"),

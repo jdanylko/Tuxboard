@@ -14,15 +14,15 @@ using Tuxboard.Core.Infrastructure.Models;
 namespace Tuxboard.Core.Infrastructure.Services;
 
 /// <inheritdoc />
-public class DashboardService : IDashboardService
+public class DashboardService<T> : IDashboardService<T> where T: struct
 {
-    private readonly ITuxDbContext _context;
+    private readonly ITuxDbContext<T> _context;
 
     /// <summary>
     /// Constructor
     /// </summary>
     /// <param name="context"><see cref="ITuxDbContext"/></param>
-    public DashboardService(ITuxDbContext context)
+    public DashboardService(ITuxDbContext<T> context)
     {
         _context = context;
     }
@@ -30,13 +30,111 @@ public class DashboardService : IDashboardService
     #region Sync
 
     /// <inheritdoc />
-    public Dashboard GetDashboard(ITuxboardConfig config) => _context.GetDashboard(config);
+    public bool DashboardExistsFor(T id) =>
+        _context.Dashboards.FirstOrDefault(e => e.UserId.Equals(id)) != null;
+
+    /// <inheritdoc />
+    public Dashboard<T> GetDashboardFor(ITuxboardConfig config, T? userId)
+    {
+        if (userId.HasValue && !DashboardExistsFor(userId.Value))
+        {
+            // Pass in a planid (int) to pull back specific dashboards.
+            // If nothing passed, it'll grab the first Dashboard Template.
+            var template = _context.GetDashboardTemplateFor();
+
+            CreateDashboardFrom(template, userId);
+
+            _context.SaveChanges();
+        }
+
+        var dashboard = _context.Dashboards
+            .Include(db => db.Tabs)
+                .ThenInclude(tab => tab.Layouts)
+                    .ThenInclude(layout => layout.LayoutRows)
+            .AsNoTracking()
+            .FirstOrDefault(t => t.UserId.HasValue && t.UserId.Equals(userId));
+
+        if (dashboard == null)
+            return null;
+
+        var layoutTypes = _context.LayoutTypes.ToList();
+
+        // Assign the LayoutTypes to each row; get the settings for the WidgetPlacements.
+        foreach (var tab in dashboard.Tabs)
+        {
+            foreach (var row in tab.GetLayouts().SelectMany(layout => layout.LayoutRows))
+            {
+                row.LayoutType = layoutTypes.FirstOrDefault(e => e.LayoutTypeId == row.LayoutTypeId);
+                row.WidgetPlacements = _context.GetPlacementsByLayoutRow(row.LayoutRowId);
+            }
+        }
+
+        dashboard.Settings = config;
+
+        return dashboard;
+    }
+
+    /// <inheritdoc />
+    public bool DashboardExists() => _context.Dashboards.FirstOrDefault() != null;
+
+    /// <inheritdoc />
+    public Dashboard<T> GetDashboard(ITuxboardConfig config)
+    {
+        var layoutTypes = _context.LayoutTypes.ToList();
+
+        var dashboard = _context.Dashboards
+            .Include(db => db.Tabs)
+                .ThenInclude(tab => tab.Layouts)
+                    .ThenInclude(layout => layout.LayoutRows)
+            .AsNoTracking()
+            .FirstOrDefault();
+
+        if (dashboard == null)
+            return null;
+
+        // Assign the LayoutTypes to each row; get the settings for the WidgetPlacements.
+        foreach (var tab in dashboard.Tabs)
+        {
+            foreach (var row in tab.GetLayouts().SelectMany(layout => layout.LayoutRows).OrderBy(t => t.RowIndex))
+            {
+                row.LayoutType = layoutTypes.FirstOrDefault(e => e.LayoutTypeId == row.LayoutTypeId);
+                row.WidgetPlacements = _context.GetPlacementsByLayoutRow(row.LayoutRowId);
+            }
+        }
+
+        dashboard.Settings = config;
+
+        return dashboard;
+    }
+
+    /// <inheritdoc />
+    public Dashboard<T> CreateDashboardFrom(DashboardDefault template, T? userId) => 
+        CreateFromTemplate(template, userId);
+
+    /// <inheritdoc />
+    public Dashboard<T> CreateDashboardFrom(DashboardDefault template)
+    {
+        return CreateFromTemplate(template, null);
+    }
+
+    /// <inheritdoc />
+    public Dashboard<T> CreateFromTemplate(DashboardDefault template, T? userId)
+    {
+        var dashboard = Dashboard<T>.Create(userId);
+        _context.Dashboards.Add(dashboard);
+        _context.SaveChanges();
+
+        var currentTab = dashboard.GetCurrentTab();
+        var tabId = currentTab.TabId;
+
+        currentTab.Layouts = Layout.CreateDefaultLayouts(tabId, template);
+        _context.SaveChanges();
+
+        return dashboard;
+    }
 
     /// <inheritdoc />
     public Layout GetLayoutFromTab(Guid tabId) => _context.GetLayoutForTab(tabId);
-
-    /// <inheritdoc />
-    public Dashboard CreateDashboardFrom(DashboardDefault template, Guid? userId) => CreateFromTemplate(template, userId);
 
     /// <inheritdoc />
     public Widget GetWidget(Guid id) => _context.Widgets.FirstOrDefault(e => e.WidgetId == id);
@@ -54,26 +152,6 @@ public class DashboardService : IDashboardService
     public List<Widget> GetWidgets() => _context.Widgets.ToList();
 
     /// <inheritdoc />
-    public Dashboard GetDashboardFor(ITuxboardConfig config, Guid userId)
-    {
-        if (!_context.DashboardExistsFor(userId))
-        {
-            // Pass in a planid (int) to pull back specific dashboards.
-            // If nothing passed, it'll grab the first Dashboard Template.
-            var template = _context.GetDashboardTemplateFor();
-
-            CreateDashboardFrom(template, userId);
-
-            _context.SaveChanges();
-        }
-
-        var dashboard = _context.GetDashboardFor(config, userId);
-        dashboard.Settings = config;
-
-        return dashboard;
-    }
-
-    /// <inheritdoc />
     public bool RemoveLayoutRow(LayoutRow row)
     {
         var item = _context.LayoutRows.FirstOrDefault(t => t.LayoutRowId == row.LayoutRowId);
@@ -82,29 +160,6 @@ public class DashboardService : IDashboardService
             _context.LayoutRows.Remove(item);
         }
         return _context.SaveChanges() > 0;
-    }
-
-    /// <inheritdoc />
-    public Dashboard CreateDashboardFrom(DashboardDefault template)
-    {
-        return CreateFromTemplate(template, null);
-    }
-
-    /// <inheritdoc />
-    public Dashboard CreateFromTemplate(DashboardDefault template, Guid? userId)
-    {
-        var dashboard = Dashboard.Create(userId);
-        _context.Dashboards.Add(dashboard);
-        _context.SaveChanges();
-
-        var currentTab = dashboard.GetCurrentTab();
-        var tabId = currentTab.TabId;
-
-        currentTab.Layouts = Layout.CreateDefaultLayouts(tabId, template);
-        _context.SaveChanges();
-
-        return dashboard;
-
     }
 
     /// <inheritdoc />
@@ -374,33 +429,68 @@ public class DashboardService : IDashboardService
         return _context.SaveChanges();
     }
 
-    /// <inheritdoc />
-    public bool DashboardExistsFor(Guid id) => _context.DashboardExistsFor(id);
-
     #endregion
 
     #region Async
 
     /// <inheritdoc />
-    public async Task<Widget> GetWidgetAsync(Guid id, CancellationToken token = default) => await _context.Widgets.FirstOrDefaultAsync(e => e.WidgetId == id, cancellationToken: token);
+    public async Task<Dashboard<T>> GetDashboardForAsync(ITuxboardConfig config,
+        T userId, CancellationToken token = default)
+    {
+        if (!await DashboardExistsForAsync(userId, token: token))
+        {
+            // Pass in a planid (int) to pull back specific dashboards.
+            // If nothing passed, it'll grab the first Dashboard Template.
+            var template = await _context.GetDashboardTemplateForAsync(token: token);
+
+            await CreateDashboardFromAsync(template, userId, token);
+
+            await _context.SaveChangesAsync(token);
+        }
+
+        var layoutTypes = await _context.LayoutTypes.ToListAsync(cancellationToken: token);
+
+        var dashboard = await _context.Dashboards
+            .Include(db => db.Tabs)
+                .ThenInclude(tab => tab.Layouts)
+                    .ThenInclude(layout => layout.LayoutRows)
+            .AsNoTracking()
+            .FirstOrDefaultAsync(e => e.UserId.Equals(userId), cancellationToken: token);
+
+        if (dashboard == null)
+            return null;
+
+        foreach (var tab in dashboard.Tabs)
+        {
+            foreach (var row in tab.GetLayouts().SelectMany(layout => layout.LayoutRows))
+            {
+                row.LayoutType = layoutTypes.FirstOrDefault(e => e.LayoutTypeId == row.LayoutTypeId);
+                row.WidgetPlacements = await _context.GetPlacementsByLayoutRowAsync(row.LayoutRowId, token: token);
+            }
+        }
+
+        dashboard.Settings = config;
+
+        return dashboard;
+    }
 
     /// <inheritdoc />
-    public async Task<WidgetPlacement> GetWidgetPlacementAsync(Guid id, CancellationToken token = default) => await _context.GetWidgetPlacementAsync(id, token);
+    public async Task<bool> DashboardExistsForAsync(T id, CancellationToken token = default)
+        => await _context.Dashboards.FirstOrDefaultAsync(e => e.UserId.Equals(id), cancellationToken: token) != null;
 
     /// <inheritdoc />
-    public async Task<Layout> GetLayoutFromTabAsync(Guid tabId, CancellationToken token = default) => await _context.GetLayoutForTabAsync(tabId, token);
+    public async Task<Dashboard<T>> CreateDashboardFromAsync(DashboardDefault template, 
+        T? userId, CancellationToken token = default) => 
+        await CreateFromTemplateAsync(template, userId, token);
 
     /// <inheritdoc />
-    public async Task<Dashboard> CreateDashboardFromAsync(DashboardDefault template, Guid? userId, CancellationToken token = default) => await CreateFromTemplateAsync(template, userId, token);
-
-    /// <inheritdoc />
-    public async Task<Dashboard> CreateDashboardFromAsync(DashboardDefault template, CancellationToken token = default) 
+    public async Task<Dashboard<T>> CreateDashboardFromAsync(DashboardDefault template, CancellationToken token = default)
         => await CreateFromTemplateAsync(template, token: token);
 
     /// <inheritdoc />
-    public async Task<Dashboard> CreateFromTemplateAsync(DashboardDefault template, Guid? userId = null, CancellationToken token = default)
+    public async Task<Dashboard<T>> CreateFromTemplateAsync(DashboardDefault template, T? userId = null, CancellationToken token = default)
     {
-        var dashboard = Dashboard.Create(userId);
+        var dashboard = Dashboard<T>.Create(userId);
         await _context.Dashboards.AddAsync(dashboard, token);
         await _context.SaveChangesAsync(token);
 
@@ -413,6 +503,64 @@ public class DashboardService : IDashboardService
         return dashboard;
 
     }
+
+    /// <inheritdoc />
+    public async Task<Dashboard<T>> GetDashboardAsync(ITuxboardConfig config, 
+        CancellationToken token = default)
+    {
+        if (!await DashboardExistsAsync(token))
+        {
+            // Pass in a planid (int) to pull back specific dashboards.
+            // If nothing passed, it'll grab the first Dashboard Template.
+            var template = await _context.GetDashboardTemplateForAsync(token: token);
+
+            await CreateDashboardFromAsync(template, token);
+
+            await _context.SaveChangesAsync(token);
+        }
+
+        var layoutTypes = await _context.LayoutTypes.ToListAsync(cancellationToken: token);
+
+        var dashboard = await _context.Dashboards
+            .Include(db => db.Tabs)
+                .ThenInclude(tab => tab.Layouts)
+                    .ThenInclude(layout => layout.LayoutRows)
+            .AsNoTracking()
+            .FirstOrDefaultAsync(cancellationToken: token);
+
+        if (dashboard == null)
+            return null;
+
+        // Assign the LayoutTypes to each row; get the settings for the WidgetPlacements.
+        foreach (var tab in dashboard.Tabs)
+        {
+            foreach (var row in tab.GetLayouts().SelectMany(layout => layout.LayoutRows).OrderBy(t => t.RowIndex))
+            {
+                row.LayoutType = layoutTypes.FirstOrDefault(e => e.LayoutTypeId == row.LayoutTypeId);
+                row.WidgetPlacements = await _context.GetPlacementsByLayoutRowAsync(row.LayoutRowId, token: token);
+            }
+        }
+
+        dashboard.Settings = config;
+
+        return dashboard;
+    }
+
+    /// <inheritdoc />
+    public async Task<bool> DashboardExistsAsync(CancellationToken token)
+    {
+        var item = await _context.Dashboards.FirstOrDefaultAsync(cancellationToken: token);
+        return item != null;
+    }
+
+    /// <inheritdoc />
+    public async Task<Widget> GetWidgetAsync(Guid id, CancellationToken token = default) => await _context.Widgets.FirstOrDefaultAsync(e => e.WidgetId == id, cancellationToken: token);
+
+    /// <inheritdoc />
+    public async Task<WidgetPlacement> GetWidgetPlacementAsync(Guid id, CancellationToken token = default) => await _context.GetWidgetPlacementAsync(id, token);
+
+    /// <inheritdoc />
+    public async Task<Layout> GetLayoutFromTabAsync(Guid tabId, CancellationToken token = default) => await _context.GetLayoutForTabAsync(tabId, token);
 
     /// <inheritdoc />
     public async Task<List<WidgetPlacement>> GetWidgetsForTabAsync(DashboardTab tab, CancellationToken token = default) => await _context.GetWidgetsForTabAsync(tab, token: token);
@@ -429,40 +577,6 @@ public class DashboardService : IDashboardService
             ? await _context.Widgets.Where(u => u.Plans.Any(i => i.PlanId == planId))
                 .ToListAsync(cancellationToken: token)
             : await GetWidgetsAsync(token);
-
-    /// <inheritdoc />
-    public async Task<Dashboard> GetDashboardAsync(ITuxboardConfig config, CancellationToken token = default)
-    {
-        if (!await _context.DashboardExistsAsync(token: token))
-        {
-            // Pass in a planid (int) to pull back specific dashboards.
-            // If nothing passed, it'll grab the first Dashboard Template.
-            var template = await _context.GetDashboardTemplateForAsync(token: token);
-
-            await CreateDashboardFromAsync(template, token);
-
-            await _context.SaveChangesAsync(token);
-        }
-
-        return await _context.GetDashboardAsync(config, token: token);
-    }
-
-    /// <inheritdoc />
-    public async Task<Dashboard> GetDashboardForAsync(ITuxboardConfig config, Guid userId, CancellationToken token = default)
-    {
-        if (!await _context.DashboardExistsForAsync(userId, token: token))
-        {
-            // Pass in a planid (int) to pull back specific dashboards.
-            // If nothing passed, it'll grab the first Dashboard Template.
-            var template = await _context.GetDashboardTemplateForAsync(token: token);
-
-            await CreateDashboardFromAsync(template, userId, token);
-
-            await _context.SaveChangesAsync(token);
-        }
-
-        return await _context.GetDashboardForAsync(config, userId, token: token);
-    }
 
     /// <inheritdoc />
     public async Task<bool> RemoveLayoutRowAsync(LayoutRow row, CancellationToken token = default)
@@ -740,10 +854,6 @@ public class DashboardService : IDashboardService
         _context.WidgetPlacements.Add(placement);
         return await _context.SaveChangesAsync(token);
     }
-
-    /// <inheritdoc />
-    public async Task<bool> DashboardExistsForAsync(Guid id, CancellationToken token = default) 
-        => await _context.DashboardExistsForAsync(id, token);
 
     #endregion
 }

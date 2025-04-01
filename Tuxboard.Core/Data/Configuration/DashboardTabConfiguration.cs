@@ -9,7 +9,7 @@ namespace Tuxboard.Core.Data.Configuration;
 /// <summary>
 /// Entity Framework Configuration for <see cref="DashboardTab"/> for entity properties and relationships
 /// </summary>
-public class DashboardTabConfiguration : IEntityTypeConfiguration<DashboardTab>
+public class DashboardTabConfiguration<T> : IEntityTypeConfiguration<DashboardTab> where T: struct
 {
     private readonly TuxboardConfig _config;
     private readonly Action<EntityTypeBuilder<DashboardTab>> _seedAction;
@@ -50,11 +50,11 @@ public class DashboardTabConfiguration : IEntityTypeConfiguration<DashboardTab>
             .HasMaxLength(30)
             .IsUnicode(false);
 
-        builder.HasOne(d => d.Dashboard)
-            .WithMany(p => p.Tabs)
-            .HasForeignKey(d => d.DashboardId)
-            .OnDelete(DeleteBehavior.ClientSetNull)
-            .HasConstraintName("FK_DashboardTab_Dashboard");
+        //builder.HasOne(d => d.Dashboard)
+        //    .WithMany(p => p.Tabs)
+        //    .HasForeignKey(d => d.DashboardId)
+        //    .OnDelete(DeleteBehavior.ClientSetNull)
+        //    .HasConstraintName("FK_DashboardTab_Dashboard");
 
         if (_seedAction != null) _seedAction(builder);
     }

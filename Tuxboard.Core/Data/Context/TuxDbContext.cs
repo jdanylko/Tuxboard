@@ -7,21 +7,21 @@ using Tuxboard.Core.Domain.Entities;
 namespace Tuxboard.Core.Data.Context;
 
 /// <summary>
-/// <see cref="TuxDbContext"/> uses Entity Framework for storing and managing Tuxboard dashboards.
+/// <see cref="TuxDbContext{T}"/> uses Entity Framework for storing and managing Tuxboard dashboards.
 /// </summary>
-public partial class TuxDbContext : DbContext, ITuxDbContext
+public partial class TuxDbContext<T> : DbContext, ITuxDbContext<T> where T: struct
 {
     private TuxboardConfig _tuxboardConfig;
 
     /// <inheritdoc />
-    public TuxDbContext(DbContextOptions<TuxDbContext> options, IOptions<TuxboardConfig> config)
+    public TuxDbContext(DbContextOptions<TuxDbContext<T>> options, IOptions<TuxboardConfig> config)
         : base(options)
     {
         _tuxboardConfig = config.Value;
     }
 
     /// <inheritdoc />
-    public virtual DbSet<Dashboard> Dashboards { get; set; }
+    public virtual DbSet<Dashboard<T>> Dashboards { get; set; }
 
     /// <inheritdoc />
     public virtual DbSet<DashboardDefault> DashboardDefaults { get; set; }
@@ -74,10 +74,10 @@ public partial class TuxDbContext : DbContext, ITuxDbContext
 
         modelBuilder.HasDefaultSchema(_tuxboardConfig.Schema);
 
-        modelBuilder.ApplyConfiguration(new DashboardConfiguration(_tuxboardConfig));
+        modelBuilder.ApplyConfiguration(new DashboardConfiguration<T>(_tuxboardConfig));
         modelBuilder.ApplyConfiguration(new DashboardDefaultConfiguration(_tuxboardConfig));
         modelBuilder.ApplyConfiguration(new DashboardDefaultWidgetConfiguration(_tuxboardConfig));
-        modelBuilder.ApplyConfiguration(new DashboardTabConfiguration(_tuxboardConfig));
+        modelBuilder.ApplyConfiguration(new DashboardTabConfiguration<T>(_tuxboardConfig));
         modelBuilder.ApplyConfiguration(new LayoutConfiguration(_tuxboardConfig));
         modelBuilder.ApplyConfiguration(new LayoutRowConfiguration(_tuxboardConfig));
         modelBuilder.ApplyConfiguration(new LayoutTypeConfiguration(_tuxboardConfig));

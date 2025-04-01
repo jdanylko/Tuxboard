@@ -4,7 +4,6 @@ using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 using Microsoft.EntityFrameworkCore;
-using Tuxboard.Core.Configuration;
 using Tuxboard.Core.Data.Context;
 using Tuxboard.Core.Domain.Entities;
 
@@ -60,17 +59,6 @@ public static class TuxDbContextExtensions
     }
 
     /// <summary>
-    /// Returns whether a dashboard for a user exists. This call is synchronous.
-    /// </summary>
-    /// <param name="context"><see cref="ITuxDbContext"/></param>
-    /// <param name="userId">User ID</param>
-    /// <returns>true if the dashboard exists, false if a user doesn't have one yet.</returns>
-    public static bool DashboardExistsFor(this ITuxDbContext context, Guid userId)
-    {
-        return context.Dashboards.FirstOrDefault(e => e.UserId == userId) != null;
-    }
-
-    /// <summary>
     /// Get a default dashboard by ID synchronously.
     /// </summary>
     /// <param name="context"><see cref="ITuxDbContext"/></param>
@@ -84,85 +72,6 @@ public static class TuxDbContextExtensions
             .Include(e => e.Layout)
                 .ThenInclude(f => f.LayoutRows)
             .FirstOrDefault(e => e.DefaultId == id);
-    }
-
-    /// <summary>
-    /// Return whether a general dashboard exists synchronously.
-    /// </summary>
-    /// <param name="context"><see cref="ITuxDbContext"/></param>
-    /// <returns>true if a general dashboard exists, false if not</returns>
-    public static bool DashboardExists(this ITuxDbContext context) 
-        => context.Dashboards.FirstOrDefault() != null;
-
-    /// <summary>
-    /// Get a general dashboard synchronously
-    /// </summary>
-    /// <param name="context"><see cref="ITuxDbContext"/></param>
-    /// <param name="config"><see cref="ITuxboardConfig"/></param>
-    /// <returns><see cref="Dashboard"/></returns>
-    public static Dashboard GetDashboard(this ITuxDbContext context, ITuxboardConfig config)
-    {
-        var layoutTypes = context.LayoutTypes.ToList();
-
-        var dashboard = context.Dashboards
-            .Include(db => db.Tabs)
-                .ThenInclude(tab => tab.Layouts)
-                    .ThenInclude(layout => layout.LayoutRows)
-            .AsNoTracking()
-            .FirstOrDefault();
-
-        if (dashboard == null)
-            return null;
-
-        // Assign the LayoutTypes to each row; get the settings for the WidgetPlacements.
-        foreach (var tab in dashboard.Tabs)
-        {
-            foreach (var row in tab.GetLayouts().SelectMany(layout => layout.LayoutRows).OrderBy(t => t.RowIndex))
-            {
-                row.LayoutType = layoutTypes.FirstOrDefault(e => e.LayoutTypeId == row.LayoutTypeId);
-                row.WidgetPlacements = context.GetPlacementsByLayoutRow(row.LayoutRowId);
-            }
-        }
-
-        dashboard.Settings = config;
-
-        return dashboard;
-    }
-
-    /// <summary>
-    /// Returns a dashboard synchronously based on a User ID
-    /// </summary>
-    /// <param name="context"><see cref="ITuxDbContext"/></param>
-    /// <param name="config"><see cref="ITuxboardConfig"/></param>
-    /// <param name="userId">User ID</param>
-    /// <returns><see cref="Dashboard"/></returns>
-    public static Dashboard GetDashboardFor(this ITuxDbContext context, ITuxboardConfig config, Guid userId)
-    {
-        var layoutTypes = context.LayoutTypes.ToList();
-
-        var dashboard = context.Dashboards
-            .Include(db => db.Tabs)
-                .ThenInclude(tab => tab.Layouts)
-                    .ThenInclude(layout => layout.LayoutRows)
-            .AsNoTracking()
-            .FirstOrDefault(t => t.UserId == userId);
-
-        if (dashboard == null)
-            return null;
-
-        // Assign the LayoutTypes to each row; get the settings for the WidgetPlacements.
-        foreach (var tab in dashboard.Tabs)
-        {
-            foreach (var row in tab.GetLayouts().SelectMany(layout => layout.LayoutRows))
-            {
-                row.LayoutType = layoutTypes.FirstOrDefault(e => e.LayoutTypeId == row.LayoutTypeId);
-                row.WidgetPlacements = context.GetPlacementsByLayoutRow(row.LayoutRowId);
-            }
-        }
-
-        dashboard.Settings = config;
-
-        return dashboard;
     }
 
     /// <summary>
@@ -350,31 +259,6 @@ public static class TuxDbContextExtensions
             .ToListAsync(cancellationToken: token);
 
     /// <summary>
-    /// Returns whether a dashboard for a user exists. This call is asynchronous.
-    /// </summary>
-    /// <param name="context"><see cref="ITuxDbContext"/></param>
-    /// <param name="userId">User ID</param>
-    /// <param name="token"><see cref="CancellationToken"/> (optional)</param>
-    /// <returns>true if the dashboard exists, false if a user doesn't have one yet.</returns>
-    public static async Task<bool> DashboardExistsForAsync(this ITuxDbContext context, Guid userId, CancellationToken token = default)
-    {
-        var item = await context.Dashboards.FirstOrDefaultAsync(t => t.UserId == userId, cancellationToken: token);
-        return item != null;
-    }
-
-    /// <summary>
-    /// Return whether a general dashboard exists synchronously.
-    /// </summary>
-    /// <param name="context"><see cref="ITuxDbContext"/></param>
-    /// <param name="token"><see cref="CancellationToken"/> (optional)</param>
-    /// <returns>true if a general dashboard exists, false if it doesn't exist.</returns>
-    public static async Task<bool> DashboardExistsAsync(this ITuxDbContext context, CancellationToken token = default)
-    {
-        var item = await context.Dashboards.FirstOrDefaultAsync(cancellationToken: token);
-        return item != null;
-    }
-
-    /// <summary>
     /// Get a default dashboard by ID asynchronously.
     /// </summary>
     /// <param name="context"><see cref="ITuxDbContext"/></param>
@@ -390,79 +274,6 @@ public static class TuxDbContextExtensions
             .Include(e => e.Layout)
                 .ThenInclude(f => f.LayoutRows)
             .FirstOrDefaultAsync(e => e.DefaultId == id, cancellationToken: token);
-    }
-
-    /// <summary>
-    /// Get a general dashboard asynchronously
-    /// </summary>
-    /// <param name="context"><see cref="ITuxDbContext"/></param>
-    /// <param name="config"><see cref="ITuxboardConfig"/></param>
-    /// <param name="token"><see cref="CancellationToken"/> (optional)</param>
-    /// <returns><see cref="Dashboard"/></returns>
-    public static async Task<Dashboard> GetDashboardAsync(this ITuxDbContext context, ITuxboardConfig config, CancellationToken token = default)
-    {
-        var layoutTypes = await context.LayoutTypes.ToListAsync(cancellationToken: token);
-
-        var dashboard = await context.Dashboards
-            .Include(db => db.Tabs)
-                .ThenInclude(tab => tab.Layouts)
-                    .ThenInclude(layout => layout.LayoutRows)
-            .AsNoTracking()
-            .FirstOrDefaultAsync(cancellationToken: token);
-
-        if (dashboard == null)
-            return null;
-
-        // Assign the LayoutTypes to each row; get the settings for the WidgetPlacements.
-        foreach (var tab in dashboard.Tabs)
-        {
-            foreach (var row in tab.GetLayouts().SelectMany(layout => layout.LayoutRows).OrderBy(t => t.RowIndex))
-            {
-                row.LayoutType = layoutTypes.FirstOrDefault(e => e.LayoutTypeId == row.LayoutTypeId);
-                row.WidgetPlacements = await context.GetPlacementsByLayoutRowAsync(row.LayoutRowId, token: token);
-            }
-        }
-
-        dashboard.Settings = config;
-
-        return dashboard;
-    }
-
-    /// <summary>
-    /// Returns a dashboard asynchronously based on a User ID
-    /// </summary>
-    /// <param name="context"><see cref="ITuxDbContext"/></param>
-    /// <param name="config"><see cref="ITuxboardConfig"/></param>
-    /// <param name="userId">User ID</param>
-    /// <param name="token"><see cref="CancellationToken"/> (optional)</param>
-    /// <returns><see cref="Dashboard"/></returns>
-    public static async Task<Dashboard> GetDashboardForAsync(this ITuxDbContext context,
-        ITuxboardConfig config, Guid userId, CancellationToken token = default)
-    {
-        var layoutTypes = await context.LayoutTypes.ToListAsync(cancellationToken: token);
-
-        var dashboard = await context.Dashboards
-            .Include(db => db.Tabs)
-                .ThenInclude(tab => tab.Layouts)
-                    .ThenInclude(layout => layout.LayoutRows)
-            .AsNoTracking()
-            .FirstOrDefaultAsync(e => e.UserId == userId, cancellationToken: token);
-
-        if (dashboard == null)
-            return null;
-
-        foreach (var tab in dashboard.Tabs)
-        {
-            foreach (var row in tab.GetLayouts().SelectMany(layout => layout.LayoutRows))
-            {
-                row.LayoutType = layoutTypes.FirstOrDefault(e => e.LayoutTypeId == row.LayoutTypeId);
-                row.WidgetPlacements = await context.GetPlacementsByLayoutRowAsync(row.LayoutRowId, token: token);
-            }
-        }
-
-        dashboard.Settings = config;
-
-        return dashboard;
     }
 
     /// <summary>

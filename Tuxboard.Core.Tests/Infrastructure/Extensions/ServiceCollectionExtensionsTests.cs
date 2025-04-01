@@ -36,7 +36,7 @@ public class ServiceCollectionExtensionsTests
         ServiceCollection services = new();
 
         // Act
-        services.AddTuxboardDashboard(configuration);
+        services.AddTuxboardDashboard<int>(configuration);
         ServiceProvider provider = services.BuildServiceProvider();
         var config = provider.GetService<ITuxboardConfig>();
 
@@ -44,8 +44,8 @@ public class ServiceCollectionExtensionsTests
         Assert.NotNull(config);
         Assert.Equal(connectionString, config.ConnectionString);
         Assert.Equal(schema, config.Schema);
-        Assert.Contains(services, d => d.ServiceType == typeof(IDashboardService));
-        Assert.Contains(services, d => d.ServiceType == typeof(ITuxDbContext));
+        Assert.Contains(services, d => d.ServiceType == typeof(IDashboardService<int>));
+        Assert.Contains(services, d => d.ServiceType == typeof(ITuxDbContext<int>));
     }
 
     [Fact]
@@ -56,7 +56,7 @@ public class ServiceCollectionExtensionsTests
         IConfiguration? configuration = null;
 
         // Act & Assert
-        Assert.Throws<ArgumentNullException>(() => services.AddTuxboardDashboard(configuration));
+        Assert.Throws<ArgumentNullException>(() => services.AddTuxboardDashboard<int>(configuration));
     }
 
     [Fact]
@@ -72,7 +72,7 @@ public class ServiceCollectionExtensionsTests
         };
         ServiceCollection services = new();
         // Act
-        services.AddTuxboardDashboard(setupConfig);
+        services.AddTuxboardDashboard<int>(setupConfig);
         ServiceProvider provider = services.BuildServiceProvider();
         var config = provider.GetService<ITuxboardConfig>();
 
@@ -80,8 +80,8 @@ public class ServiceCollectionExtensionsTests
         Assert.NotNull(config);
         Assert.Equal(connectionString, config.ConnectionString);
         Assert.Equal(schema, config.Schema);
-        Assert.Contains(services, d => d.ServiceType == typeof(IDashboardService));
-        Assert.Contains(services, d => d.ServiceType == typeof(ITuxDbContext));
+        Assert.Contains(services, d => d.ServiceType == typeof(IDashboardService<int>));
+        Assert.Contains(services, d => d.ServiceType == typeof(ITuxDbContext<int>));
     }
 
     [Fact]
@@ -92,6 +92,6 @@ public class ServiceCollectionExtensionsTests
         Action<TuxboardConfig>? setupConfig = null;
 
         // Act & Assert
-        Assert.Throws<ArgumentNullException>(() => services.AddTuxboardDashboard(setupConfig));
+        Assert.Throws<ArgumentNullException>(() => services.AddTuxboardDashboard<int>(setupConfig));
     }
 }
