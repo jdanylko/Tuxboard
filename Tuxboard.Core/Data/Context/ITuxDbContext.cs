@@ -7,15 +7,27 @@ using Tuxboard.Core.Domain.Entities;
 
 namespace Tuxboard.Core.Data.Context;
 
+
 /// <summary>
-/// Interface for <see cref="TuxDbContext"/>
+/// Interface for <see cref="TuxDbContext{TUserId}"/>
 /// </summary>
-public interface ITuxDbContext
+public interface ITuxDbContext<TUserId> : ITuxDbContext where TUserId : struct
 {
     /// <summary>
     /// <see cref="Dashboards"/> is the table storing all dashboards associated with a user.
     /// </summary>
-    DbSet<Dashboard> Dashboards { get; set; }
+    DbSet<Dashboard<TUserId>> Dashboards { get; set; }
+}
+
+/// <summary>
+/// 
+/// </summary>
+public interface ITuxDbContext
+{
+    /// <summary>
+    /// <see cref="DashboardTabs"/> contains tabs for every <see cref="Dashboard{T}"/>. Currently, only one tab should exist per dashboard.
+    /// </summary>
+    DbSet<DashboardTab> DashboardTabs { get; set; }
 
     /// <summary>
     /// <see cref="DashboardDefaults"/> is where pre-made dashboards are created for when users log into a system;
@@ -30,11 +42,6 @@ public interface ITuxDbContext
     /// The first table uses <see cref="DashboardDefaults"/> as the header.
     /// </summary>
     DbSet<DashboardDefaultWidget> DashboardDefaultWidgets { get; set; }
-
-    /// <summary>
-    /// <see cref="DashboardTabs"/> contains tabs for every <see cref="Dashboard"/>. Currently, only one tab should exist per dashboard.
-    /// </summary>
-    DbSet<DashboardTab> DashboardTabs { get; set; }
 
     /// <summary>
     /// <see cref="Layouts"/> contains a single <see cref="Layout"/> for a single tab; Only one <see cref="Layout"/> should exist for one <see cref="DashboardTab"/>.
@@ -119,5 +126,4 @@ public interface ITuxDbContext
     /// <param name="cancellationToken"></param>
     /// <returns></returns>
     Task<int> SaveChangesAsync(bool acceptAllChangesOnSuccess, CancellationToken cancellationToken);
-
 }

@@ -21,26 +21,26 @@ public static class ServiceCollectionExtensions
     /// <param name="configuration">The <see cref="IConfiguration"/> instance.</param>
     /// <returns>The modified <see cref="IServiceCollection"/>.</returns>
     /// <exception cref="ArgumentNullException">Thrown when <paramref name="configuration"/> is null.</exception>
-    public static IServiceCollection AddTuxboardDashboard(this IServiceCollection services, IConfiguration configuration)
+    public static IServiceCollection AddTuxboardDashboard<T>(this IServiceCollection services, IConfiguration configuration) where T: struct
     {
         ArgumentNullException.ThrowIfNull(configuration);
 
-        IConfigurationSection section = configuration.GetSection(nameof(TuxboardConfig));
+        var section = configuration.GetSection(nameof(TuxboardConfig));
         TuxboardConfig appConfig = new();
         section.Bind(appConfig);
         services.AddSingleton<ITuxboardConfig>(appConfig);
 
-        string assemblyName = Assembly.GetCallingAssembly()!.GetName().Name;
+        var assemblyName = Assembly.GetCallingAssembly()!.GetName().Name;
 
         // Tuxboard DbContext
-        services.AddDbContext<TuxDbContext>(options =>
+        services.AddDbContext<TuxDbContext<T>>(options =>
         {
             options.UseSqlServer(appConfig.ConnectionString, x => x.MigrationsAssembly(assemblyName));
         });
 
         // For Dependency Injection
-        services.AddTransient<IDashboardService, DashboardService>();
-        services.AddTransient<ITuxDbContext, TuxDbContext>();
+        services.AddTransient<IDashboardService<T>, DashboardService<T>>();
+        services.AddTransient<ITuxDbContext<T>, TuxDbContext<T>>();
 
         return services;
     }
@@ -52,7 +52,7 @@ public static class ServiceCollectionExtensions
     /// <param name="setupConfig">An <see cref="Action{TuxboardConfig}"/> to configure the TuxboardConfig.</param>
     /// <returns>The modified <see cref="IServiceCollection"/>.</returns>
     /// <exception cref="ArgumentNullException">Thrown when <paramref name="setupConfig"/> is null.</exception>
-    public static IServiceCollection AddTuxboardDashboard(this IServiceCollection services, Action<TuxboardConfig> setupConfig)
+    public static IServiceCollection AddTuxboardDashboard<T>(this IServiceCollection services, Action<TuxboardConfig> setupConfig) where T: struct
     {
         ArgumentNullException.ThrowIfNull(setupConfig);
 
@@ -60,15 +60,15 @@ public static class ServiceCollectionExtensions
         setupConfig(appConfig);
         services.AddSingleton<ITuxboardConfig>(appConfig);
 
-        string assemblyName = Assembly.GetCallingAssembly()!.GetName().Name;
+        var assemblyName = Assembly.GetCallingAssembly()!.GetName().Name;
 
-        services.AddDbContext<TuxDbContext>(options =>
+        services.AddDbContext<TuxDbContext<T>>(options =>
         {
             options.UseSqlServer(appConfig.ConnectionString, x => x.MigrationsAssembly(assemblyName));
         });
 
-        services.AddTransient<IDashboardService, DashboardService>();
-        services.AddTransient<ITuxDbContext, TuxDbContext>();
+        services.AddTransient<IDashboardService<T>, DashboardService<T>>();
+        services.AddTransient<ITuxDbContext<T>, TuxDbContext<T>>();
 
         return services;
     }

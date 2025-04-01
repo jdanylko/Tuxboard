@@ -1,25 +1,21 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 
 namespace Tuxboard.Core.Domain.Entities;
 
-public partial class Dashboard
+/// <summary>
+/// 
+/// </summary>
+/// <typeparam name="T"></typeparam>
+public partial class Dashboard<T> : DashboardBase where T : struct
 {
     /// <summary>
     /// 
     /// </summary>
-    public Guid DashboardId { get; set; }
-    /// <summary>
-    /// 
-    /// </summary>
-    public int SelectedTab { get; set; }
-    /// <summary>
-    /// 
-    /// </summary>
-    public Guid? UserId { get; set; }
+    public T? UserId { get; set; }
 
     /// <summary>
     /// 
     /// </summary>
     public virtual ICollection<DashboardTab> Tabs { get; set; } = new HashSet<DashboardTab>();
+
 }

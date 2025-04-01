@@ -6,7 +6,7 @@ using Tuxboard.Core.Domain.Dto;
 namespace Tuxboard.Core.Domain.Entities;
 
 /// <summary>
-/// <see cref="DashboardTab"/> is a child to a <see cref="Dashboard"/>.
+/// <see cref="DashboardTab"/> is a child to a <see cref="Dashboard{T}"/>.
 /// </summary>
 /// <remarks>Should contain only one <see cref="Layout"/>.</remarks>
 public partial class DashboardTab

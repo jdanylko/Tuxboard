@@ -7,12 +7,12 @@ using Tuxboard.Core.Domain.Entities;
 namespace Tuxboard.Core.Data.Configuration;
 
 /// <summary>
-/// Entity Framework Configuration for <see cref="Dashboard"/> for entity properties and relationships
+/// Entity Framework Configuration for <see cref="Dashboard{T}"/> for entity properties and relationships
 /// </summary>
-public class DashboardConfiguration : IEntityTypeConfiguration<Dashboard>
+public class DashboardConfiguration<T> : IEntityTypeConfiguration<Dashboard<T>> where T : struct
 {
     private readonly TuxboardConfig _config;
-    private readonly Action<EntityTypeBuilder<Dashboard>> _seedAction;
+    private readonly Action<EntityTypeBuilder<Dashboard<T>>> _seedAction;
 
     /// <summary>
     /// 
@@ -20,27 +20,21 @@ public class DashboardConfiguration : IEntityTypeConfiguration<Dashboard>
     /// <param name="config"></param>
     /// <param name="seedAction"></param>
     public DashboardConfiguration(TuxboardConfig config,
-        Action<EntityTypeBuilder<Dashboard>> seedAction = null)
+        Action<EntityTypeBuilder<Dashboard<T>>> seedAction = null)
     {
         _config = config;
         _seedAction = seedAction;
     }
 
     /// <inheritdoc />
-    public void Configure(EntityTypeBuilder<Dashboard> builder)
+    public void Configure(EntityTypeBuilder<Dashboard<T>> builder)
     {
         builder.ToTable("Dashboard", _config.Schema);
 
         builder.Property(e => e.DashboardId)
-            .HasMaxLength(36)
             .IsUnicode(false)
             .HasDefaultValueSql("(newid())");
 
-        builder.Property(e => e.UserId)
-            .HasMaxLength(36)
-            .IsUnicode(false);
-
         if (_seedAction != null) _seedAction(builder);
-
     }
 }
