@@ -18,8 +18,8 @@
         <dependency id="Microsoft.Extensions.DependencyInjection.Abstractions" version="10.0.0" exclude="Compile,Build,Analyzers" />
       </group>
       <group targetFramework="net9.0">
-        <dependency id="Microsoft.EntityFrameworkCore" version="9.0.10" exclude="Compile,Build,Analyzers" />
-        <dependency id="Microsoft.EntityFrameworkCore.SqlServer" version="9.0.10" exclude="Compile,Build,Analyzers" />
+        <dependency id="Microsoft.EntityFrameworkCore" version="9.0.11" exclude="Compile,Build,Analyzers" />
+        <dependency id="Microsoft.EntityFrameworkCore.SqlServer" version="9.0.11" exclude="Compile,Build,Analyzers" />
         <dependency id="Microsoft.Extensions.DependencyInjection.Abstractions" version="9.0.0" exclude="Compile,Build,Analyzers" />
       </group>
       <group targetFramework="net8.0">
