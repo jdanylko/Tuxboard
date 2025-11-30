@@ -18,7 +18,8 @@ steps:
 - task: NuGetToolInstaller@1
   displayName: 'Use latest NuGet'
   inputs:
-    versionSpec: 'latest'
+    versionSpec: 
+    checkLatest: true
     
 - task: DotNetCoreCLI@2
   displayName: 'Restore Dependencies'
