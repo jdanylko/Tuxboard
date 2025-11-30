@@ -9,14 +9,14 @@
   <img alt="Contributors" src="https://img.shields.io/github/contributors/jdanylko/Tuxboard">
 </p>
 
-**UPDATE:** Version [1.9.6](https://github.com/jdanylko/Tuxboard/pull/48) is now available on <a href="https://www.nuget.org/packages/Tuxboard.Core/" title="Go to Tuxboard.Core on NuGet.org">NuGet</a>.
+**UPDATE:** Version [10.0.0](https://github.com/jdanylko/Tuxboard/pull/48) is now available on <a href="https://www.nuget.org/packages/Tuxboard.Core/" title="Go to Tuxboard.Core on NuGet.org">NuGet</a>.
 
 Tuxboard is a lightweight, open-source dashboard library specifically for the ASP.NET Core platform. It was meant to be
 a Lego-style way to build dashboards.
 
 #### Technology Stack
 
-  - ASP.NET Core 6.0 or higher (using C#)
+  - ASP.NET Core 8.0 or higher (using C#)
   - Entity Framework Core
   
 #### Features

@@ -2,7 +2,7 @@
 <package xmlns="http://schemas.microsoft.com/packaging/2012/06/nuspec.xsd">
 	<metadata>
 		<id>Tuxboard.Core</id>
-		<version>1.9.6</version>
+		<version>10.0.0</version>
 		<authors>Jonathan "JD" Danylko</authors>
 		<owners>Jonathan "JD" Danylko</owners>
 		<requireLicenseAcceptance>false</requireLicenseAcceptance>
@@ -12,6 +12,11 @@
 		<tags>CSharp C# Dashboard OpenSource</tags>
 		<repository type="C#" url="https://github.com/jdanylko/Tuxboard" />
 		<dependencies>
+      <group targetFramework="net10.0">
+        <dependency id="Microsoft.EntityFrameworkCore" version="10.0.0" exclude="Compile,Build,Analyzers" />
+        <dependency id="Microsoft.EntityFrameworkCore.SqlServer" version="10.0.0" exclude="Compile,Build,Analyzers" />
+        <dependency id="Microsoft.Extensions.DependencyInjection.Abstractions" version="10.0.0" exclude="Compile,Build,Analyzers" />
+      </group>
       <group targetFramework="net9.0">
         <dependency id="Microsoft.EntityFrameworkCore" version="9.0.10" exclude="Compile,Build,Analyzers" />
         <dependency id="Microsoft.EntityFrameworkCore.SqlServer" version="9.0.10" exclude="Compile,Build,Analyzers" />
@@ -24,6 +29,9 @@
       </group>
 		</dependencies>
 		<frameworkReferences>
+      <group targetFramework=".NET10.0">
+        <frameworkReference name="Microsoft.AspNetCore.App" />
+      </group>
       <group targetFramework=".NET9.0">
         <frameworkReference name="Microsoft.AspNetCore.App" />
       </group>
@@ -33,6 +41,7 @@
 		</frameworkReferences>
 	</metadata>
 	<files>
+    <file src="bin\Release\net10.0\Tuxboard.Core.dll" target="lib\net10.0\Tuxboard.Core.dll" />
     <file src="bin\Release\net9.0\Tuxboard.Core.dll" target="lib\net9.0\Tuxboard.Core.dll" />
     <file src="bin\Release\net8.0\Tuxboard.Core.dll" target="lib\net8.0\Tuxboard.Core.dll" />
   </files>
