@@ -22,11 +22,6 @@
         <dependency id="Microsoft.EntityFrameworkCore.SqlServer" version="9.0.11" exclude="Compile,Build,Analyzers" />
         <dependency id="Microsoft.Extensions.DependencyInjection.Abstractions" version="9.0.0" exclude="Compile,Build,Analyzers" />
       </group>
-      <group targetFramework="net8.0">
-        <dependency id="Microsoft.EntityFrameworkCore" version="8.0.21" exclude="Compile,Build,Analyzers" />
-        <dependency id="Microsoft.EntityFrameworkCore.SqlServer" version="8.0.21" exclude="Compile,Build,Analyzers" />
-        <dependency id="Microsoft.Extensions.DependencyInjection.Abstractions" version="8.0.0" exclude="Compile,Build,Analyzers" />
-      </group>
 		</dependencies>
 		<frameworkReferences>
       <group targetFramework=".NET10.0">
@@ -35,14 +30,10 @@
       <group targetFramework=".NET9.0">
         <frameworkReference name="Microsoft.AspNetCore.App" />
       </group>
-      <group targetFramework=".NET8.0">
-        <frameworkReference name="Microsoft.AspNetCore.App" />
-      </group>
 		</frameworkReferences>
 	</metadata>
 	<files>
     <file src="bin\Release\net10.0\Tuxboard.Core.dll" target="lib\net10.0\Tuxboard.Core.dll" />
     <file src="bin\Release\net9.0\Tuxboard.Core.dll" target="lib\net9.0\Tuxboard.Core.dll" />
-    <file src="bin\Release\net8.0\Tuxboard.Core.dll" target="lib\net8.0\Tuxboard.Core.dll" />
   </files>
 </package>
