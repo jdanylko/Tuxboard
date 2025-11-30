@@ -16,9 +16,17 @@ variables:
 
 steps:
 - task: NuGetToolInstaller@1
+  displayName: 'Use latest NuGet'
   inputs:
-    versionSpec: 
-    checkLatest: true
+    versionSpec: 'latest'
+    
+- task: DotNetCoreCLI@2
+  displayName: 'Restore Dependencies'
+  inputs:
+    command: 'restore'
+    projects: '**/*.csproj'
+    feedsToUse: 'select'
+    
 - task: VSBuild@1
   inputs:
     solution: '$(solution)'
