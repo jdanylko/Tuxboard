@@ -17,7 +17,7 @@ variables:
 steps:
 - task: NuGetToolInstaller@1
   inputs:
-    versionSpec: '10.0.0'
+    versionSpec: '7.0.0'
 
 - task: NuGetCommand@2
   inputs:
