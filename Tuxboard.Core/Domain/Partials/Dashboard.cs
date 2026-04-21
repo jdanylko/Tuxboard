@@ -72,7 +72,7 @@ public partial class Dashboard<T>
     {
         var layouts = GetLayouts(GetCurrentTab().TabIndex);
         var layout = layouts.FirstOrDefault(e => e.LayoutRows.Any(t => t.LayoutRowId == layoutRowId));
-        return layout.LayoutRows.FirstOrDefault(y => y.LayoutRowId == layoutRowId);
+        return layout?.LayoutRows.FirstOrDefault(y => y.LayoutRowId == layoutRowId);
     }
 
     /// <summary>
@@ -111,9 +111,10 @@ public partial class Dashboard<T>
     public bool ContainsOneRow()
     {
         var tab = GetCurrentTab();
+        if (tab == null) return false;
         // Should ALWAYS be one layout...for now.
         var layout = tab.Layouts.FirstOrDefault();
-        return layout.ContainsOneRow();
+        return layout?.ContainsOneRow() ?? false;
     }
 
     /// <summary>

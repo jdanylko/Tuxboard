@@ -30,7 +30,7 @@ public static class ServiceCollectionExtensions
         section.Bind(appConfig);
         services.AddSingleton<ITuxboardConfig>(appConfig);
 
-        var assemblyName = Assembly.GetCallingAssembly()!.GetName().Name;
+        var assemblyName = Assembly.GetCallingAssembly().GetName().Name;
 
         // Tuxboard DbContext
         services.AddDbContext<TuxDbContext<T>>(options =>
@@ -60,7 +60,7 @@ public static class ServiceCollectionExtensions
         setupConfig(appConfig);
         services.AddSingleton<ITuxboardConfig>(appConfig);
 
-        var assemblyName = Assembly.GetCallingAssembly()!.GetName().Name;
+        var assemblyName = Assembly.GetCallingAssembly().GetName().Name;
 
         services.AddDbContext<TuxDbContext<T>>(options =>
         {

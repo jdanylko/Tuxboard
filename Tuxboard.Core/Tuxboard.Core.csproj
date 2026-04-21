@@ -5,7 +5,7 @@
     <GeneratePackageOnBuild>False</GeneratePackageOnBuild>
     <Description>Tuxboard, an open-source dashboard library for ASP.NET Core</Description>
     <PackageId>Tuxboard.Core</PackageId>
-    <Version>10.0.0</Version>
+    <Version>10.0.6</Version>
     <Authors>Jonathan "JD" Danylko</Authors>
     <Product>Tuxboard</Product>
     <Copyright>2019-2025</Copyright>

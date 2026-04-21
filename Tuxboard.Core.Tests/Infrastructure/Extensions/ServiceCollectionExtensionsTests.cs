@@ -15,14 +15,14 @@ public class ServiceCollectionExtensionsTests
         // Arrange
         const string connectionString = "Server=MyServer;Database=Tuxboard;Trusted_Connection=True;MultipleActiveResultSets=true";
         const string schema = "MySchema";
-        string jsonConfig = $$$"""
-        {
-            "TuxboardConfig": {
-                "ConnectionString": "{{{connectionString}}}",
-                "Schema": "{{{schema}}}"
-            }
-        }
-        """;
+        var jsonConfig = $$$"""
+                            {
+                                "TuxboardConfig": {
+                                    "ConnectionString": "{{{connectionString}}}",
+                                    "Schema": "{{{schema}}}"
+                                }
+                            }
+                            """;
 
         // Load the JSON string into a stream
         using MemoryStream stream = new();
@@ -37,7 +37,7 @@ public class ServiceCollectionExtensionsTests
 
         // Act
         services.AddTuxboardDashboard<int>(configuration);
-        ServiceProvider provider = services.BuildServiceProvider();
+        var provider = services.BuildServiceProvider();
         var config = provider.GetService<ITuxboardConfig>();
 
         // Assert
@@ -70,10 +70,10 @@ public class ServiceCollectionExtensionsTests
             config.ConnectionString = connectionString;
             config.Schema = schema;
         };
-        ServiceCollection services = new();
+        ServiceCollection services = [];
         // Act
         services.AddTuxboardDashboard<int>(setupConfig);
-        ServiceProvider provider = services.BuildServiceProvider();
+        var provider = services.BuildServiceProvider();
         var config = provider.GetService<ITuxboardConfig>();
 
         // Assert

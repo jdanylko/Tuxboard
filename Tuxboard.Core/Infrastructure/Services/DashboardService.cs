@@ -186,9 +186,7 @@ public class DashboardService<T> : IDashboardService<T> where T: struct
         var success = true;
 
         // Add
-        foreach (var item in newList.Where(
-                     e => e.LayoutRowId.ToString() == string.Empty
-                          || e.LayoutRowId.Equals(Guid.Empty)))
+        foreach (var item in newList.Where(e => e.LayoutRowId.Equals(Guid.Empty)))
         {
             _context.LayoutRows.Add(new LayoutRow
             {
@@ -200,7 +198,7 @@ public class DashboardService<T> : IDashboardService<T> where T: struct
             {
                 _context.SaveChanges();
             }
-            catch (Exception ex)
+            catch (DbUpdateException ex)
             {
                 _logger.LogError(ex, "An error occurred saving layout changes.");
                 success = false;
@@ -221,7 +219,7 @@ public class DashboardService<T> : IDashboardService<T> where T: struct
             {
                 _context.SaveChanges();
             }
-            catch (Exception ex)
+            catch (DbUpdateException ex)
             {
                 _logger.LogError(ex, "An error occurred saving layout changes.");
                 success = false;
@@ -240,7 +238,7 @@ public class DashboardService<T> : IDashboardService<T> where T: struct
                 {
                     _context.SaveChanges();
                 }
-                catch (Exception ex)
+                catch (DbUpdateException ex)
                 {
                     _logger.LogError(ex, "An error occurred saving layout changes.");
                     success = false;
@@ -277,7 +275,13 @@ public class DashboardService<T> : IDashboardService<T> where T: struct
             return result;
 
         var widget = _context.GetWidget(widgetId);
+        if (widget == null)
+            return result;
+
         var firstLayoutRow = layout.LayoutRows.OrderBy(e => e.RowIndex).FirstOrDefault();
+        if (firstLayoutRow == null)
+            return result;
+
         var placement = new WidgetPlacement
         {
             Collapsed = false,
@@ -380,22 +384,22 @@ public class DashboardService<T> : IDashboardService<T> where T: struct
     /// <inheritdoc />
     public List<WidgetSettingDto> SaveWidgetSettings(List<WidgetSetting> settings)
     {
-        var result = new List<WidgetSetting>();
+        var ids = settings.Select(s => s.WidgetSettingId).ToList();
+        var stored = _context.WidgetSettings
+            .Where(e => ids.Contains(e.WidgetSettingId))
+            .ToList();
 
-        foreach (var widgetSetting in settings)
+        foreach (var setting in stored)
         {
-            var setting = _context.WidgetSettings.FirstOrDefault(e =>
-                e.WidgetSettingId == widgetSetting.WidgetSettingId);
-            if (setting == null) continue;
-
-            setting.Value = widgetSetting.Value;
-            _context.SaveChanges();
-            result.Add(setting);
+            var incoming = settings.First(s => s.WidgetSettingId == setting.WidgetSettingId);
+            setting.Value = incoming.Value;
         }
 
-        if (!result.Any()) return new List<WidgetSettingDto>();
+        if (!stored.Any()) return new List<WidgetSettingDto>();
 
-        var placementId = result.FirstOrDefault().WidgetPlacementId;
+        _context.SaveChanges();
+
+        var placementId = stored.First().WidgetPlacementId;
         var placement = _context.GetWidgetPlacement(placementId);
 
         return placement.ToSettingsDto();
@@ -609,9 +613,7 @@ public class DashboardService<T> : IDashboardService<T> where T: struct
 
         // Perform the "adds" first so we have a complete list of LayoutRows
         // Add
-        foreach (var item in newList.Where(
-                     e => e.LayoutRowId.ToString() == string.Empty
-                          || e.LayoutRowId.Equals(Guid.Empty)))
+        foreach (var item in newList.Where(e => e.LayoutRowId.Equals(Guid.Empty)))
         {
             _context.LayoutRows.Add(new LayoutRow
             {
@@ -623,7 +625,7 @@ public class DashboardService<T> : IDashboardService<T> where T: struct
             {
                 await _context.SaveChangesAsync(token);
             }
-            catch (Exception ex)
+            catch (DbUpdateException ex)
             {
                 _logger.LogError(ex, "An error occurred saving layout changes.");
                 success = false;
@@ -644,7 +646,7 @@ public class DashboardService<T> : IDashboardService<T> where T: struct
             {
                 await _context.SaveChangesAsync(token);
             }
-            catch (Exception ex)
+            catch (DbUpdateException ex)
             {
                 _logger.LogError(ex, "An error occurred saving layout changes.");
                 success = false;
@@ -664,7 +666,7 @@ public class DashboardService<T> : IDashboardService<T> where T: struct
             {
                 await _context.SaveChangesAsync(token);
             }
-            catch (Exception ex)
+            catch (DbUpdateException ex)
             {
                 _logger.LogError(ex, "An error occurred saving layout changes.");
                 success = false;
@@ -754,7 +756,13 @@ public class DashboardService<T> : IDashboardService<T> where T: struct
             return result;
 
         var fullWidget = await _context.GetWidgetAsync(widgetId, token: token);
+        if (fullWidget == null)
+            return result;
+
         var firstLayoutRow = layout.LayoutRows.MinBy(e => e.RowIndex);
+        if (firstLayoutRow == null)
+            return result;
+
         var placement = new WidgetPlacement
         {
             Collapsed = false,
@@ -801,26 +809,22 @@ public class DashboardService<T> : IDashboardService<T> where T: struct
     /// <inheritdoc />
     public async Task<List<WidgetSettingDto>> SaveWidgetSettingsAsync(List<WidgetSetting> settings, CancellationToken token = default)
     {
-        var result = new List<WidgetSetting>();
+        var ids = settings.Select(s => s.WidgetSettingId).ToList();
+        var stored = await _context.WidgetSettings
+            .Where(e => ids.Contains(e.WidgetSettingId))
+            .ToListAsync(cancellationToken: token);
 
-        foreach (var widgetSetting in settings)
+        foreach (var setting in stored)
         {
-            var setting =
-                await _context.WidgetSettings.FirstOrDefaultAsync(e =>
-                    e.WidgetSettingId == widgetSetting.WidgetSettingId, cancellationToken: token);
-            if (setting == null) continue;
-
-            setting.Value = widgetSetting.Value;
-            await _context.SaveChangesAsync(token);
-            result.Add(setting);
+            var incoming = settings.First(s => s.WidgetSettingId == setting.WidgetSettingId);
+            setting.Value = incoming.Value;
         }
 
-        if (!result.Any())
-        {
-            return new List<WidgetSettingDto>();
-        }
+        if (!stored.Any()) return new List<WidgetSettingDto>();
 
-        var placementId = result.FirstOrDefault().WidgetPlacementId;
+        await _context.SaveChangesAsync(token);
+
+        var placementId = stored.First().WidgetPlacementId;
         var placement = await _context.GetWidgetPlacementAsync(placementId, token: token);
 
         return placement.ToSettingsDto();

@@ -103,7 +103,6 @@ public static class TuxDbContextExtensions
         foreach (var row in layout.LayoutRows)
         {
             row.LayoutType = layoutTypes.FirstOrDefault(e => e.LayoutTypeId == row.LayoutTypeId);
-            //row.WidgetPlacements = context.GetPlacementsByLayoutRow(row.LayoutRowId);
         }
 
         return result;
@@ -180,7 +179,7 @@ public static class TuxDbContextExtensions
             .Include(e => e.WidgetSettings)
             .Include(e => e.Widget)
                 .ThenInclude(w => w.WidgetDefaults)
-            .AsNoTracking().Where(r => r.LayoutRow.Layout!.TabId == tabId)
+            .AsNoTracking().Where(r => r.LayoutRow.Layout != null && r.LayoutRow.Layout.TabId == tabId)
             .ToList();
 
         foreach (var placement in placements)

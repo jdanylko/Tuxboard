@@ -90,7 +90,7 @@ public partial class WidgetPlacement
     /// <summary>
     /// Returns whether a <see cref="WidgetPlacement"/> has any settings
     /// </summary>
-    public bool HasSettings => WidgetSettings.Count > 0;
+    public bool HasSettings => WidgetSettings.Any();
 
     /// <summary>
     /// Returns whether a <see cref="Widget"/> has any default settings.
