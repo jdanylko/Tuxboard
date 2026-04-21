@@ -137,20 +137,22 @@ public static class TuxDbContextExtensions
     /// <returns><see cref="Layout"/></returns>
     public static Layout GetLayout(this ITuxDbContext context, Guid layoutId)
     {
-        var layoutTypes = context.LayoutTypes.ToList();
-
         var layout = context.Layouts
             .Include(lo => lo.LayoutRows)
                 .ThenInclude(row => row.WidgetPlacements)
                     .ThenInclude(wp => wp.Widget)
                         .ThenInclude(w => w.WidgetDefaults)
-
             .AsNoTracking()
             .FirstOrDefault(e => e.LayoutId == layoutId);
 
+        if (layout == null)
+            return null;
+
+        var layoutTypes = context.LayoutTypes.ToDictionary(e => e.LayoutTypeId);
         foreach (var row in layout.LayoutRows)
         {
-            row.LayoutType = layoutTypes.FirstOrDefault(e => e.LayoutTypeId == row.LayoutTypeId);
+            if (layoutTypes.TryGetValue(row.LayoutTypeId, out var lt))
+                row.LayoutType = lt;
         }
 
         return layout;
@@ -178,20 +180,17 @@ public static class TuxDbContextExtensions
             .Include(e => e.WidgetSettings)
             .Include(e => e.Widget)
                 .ThenInclude(w => w.WidgetDefaults)
-            .AsNoTracking().Where(r => r.LayoutRow.Layout.TabId == tabId)
+            .AsNoTracking().Where(r => r.LayoutRow.Layout!.TabId == tabId)
             .ToList();
 
         foreach (var placement in placements)
         {
             placement.UpdateWidgetSettings();
-            var settings = placement.WidgetSettings.Where(e => e.WidgetSettingId == Guid.Empty);
-            foreach (var setting in settings)
-            {
-                setting.WidgetSettingId = new Guid();
+            foreach (var setting in placement.WidgetSettings.Where(e => e.WidgetSettingId == Guid.Empty))
                 context.WidgetSettings.Add(setting);
-                context.SaveChanges();
-            }
         }
+
+        context.SaveChanges();
 
         return placements;
     }
@@ -215,17 +214,12 @@ public static class TuxDbContextExtensions
     {
         foreach (var placement in placements)
         {
-            // Add the new settings if necessary.
             placement.UpdateWidgetSettings();
-
-            // Save the missing settings to the table.
-            var settings = placement.WidgetSettings.Where(e => e.WidgetSettingId == Guid.Empty);
-            foreach (var setting in settings)
-            {
+            foreach (var setting in placement.WidgetSettings.Where(e => e.WidgetSettingId == Guid.Empty))
                 context.WidgetSettings.Add(setting);
-                context.SaveChanges();
-            }
         }
+
+        context.SaveChanges();
 
         return placements;
     }
@@ -358,8 +352,6 @@ public static class TuxDbContextExtensions
     /// <returns><see cref="Layout"/></returns>
     public static async Task<Layout> GetLayoutAsync(this ITuxDbContext context, Guid layoutId, CancellationToken token = default)
     {
-        var layoutTypes = await context.LayoutTypes.ToListAsync(cancellationToken: token);
-
         var layout = await context.Layouts
                 .Include(lo => lo.LayoutRows)
                     .ThenInclude(row => row.WidgetPlacements)
@@ -368,9 +360,15 @@ public static class TuxDbContextExtensions
                 .AsNoTracking()
                 .FirstOrDefaultAsync(e => e.LayoutId == layoutId, cancellationToken: token);
 
+        if (layout == null)
+            return null;
+
+        var layoutTypes = (await context.LayoutTypes.ToListAsync(cancellationToken: token))
+            .ToDictionary(e => e.LayoutTypeId);
         foreach (var row in layout.LayoutRows)
         {
-            row.LayoutType = layoutTypes.FirstOrDefault(e => e.LayoutTypeId == row.LayoutTypeId);
+            if (layoutTypes.TryGetValue(row.LayoutTypeId, out var lt))
+                row.LayoutType = lt;
         }
 
         return layout;
@@ -426,18 +424,12 @@ public static class TuxDbContextExtensions
     {
         foreach (var placement in placements)
         {
-            // Add the new settings if necessary.
             placement.UpdateWidgetSettings();
-
-            // Save the missing settings to the table.
-            var settings = placement.WidgetSettings.Where(e => e.WidgetSettingId == Guid.Empty);
-            foreach (var setting in settings)
-            {
-                setting.WidgetSettingId = new Guid();
+            foreach (var setting in placement.WidgetSettings.Where(e => e.WidgetSettingId == Guid.Empty))
                 await context.WidgetSettings.AddAsync(setting, token);
-                await context.SaveChangesAsync(new CancellationToken());
-            }
         }
+
+        await context.SaveChangesAsync(token);
 
         return placements;
     }

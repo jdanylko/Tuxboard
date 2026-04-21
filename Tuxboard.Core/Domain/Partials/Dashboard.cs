@@ -101,7 +101,7 @@ public partial class Dashboard<T>
     public bool RowContainsWidgets(Guid rowId)
     {
         var tab = GetCurrentTab();
-        return tab == null && tab.RowContainsWidgets(rowId);
+        return tab != null && tab.RowContainsWidgets(rowId);
     }
 
     /// <summary>
