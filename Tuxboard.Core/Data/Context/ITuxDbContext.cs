@@ -20,7 +20,7 @@ public interface ITuxDbContext<TUserId> : ITuxDbContext where TUserId : struct
 }
 
 /// <summary>
-/// 
+/// Non-generic base interface for <see cref="TuxDbContext{TUserId}"/>, exposing all DbSets except the user-typed <c>Dashboards</c> set.
 /// </summary>
 public interface ITuxDbContext
 {

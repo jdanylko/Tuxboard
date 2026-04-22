@@ -532,4 +532,199 @@ public class DashboardServiceTests : IDisposable
 
         Assert.Equal(1, context.SaveChangesAsyncCallCount);
     }
+
+    // -------------------------------------------------------------------------
+    // AddLayoutRow (sync) and AddLayoutRowAsync — RowIndex = Count + 1,
+    // exactly one row inserted, single SaveChanges call.
+    // Bug fix: sync used Count (0-based) instead of Count + 1 (1-based).
+    // -------------------------------------------------------------------------
+
+    /// <summary>
+    /// Seeds a Layout with <paramref name="existingRowCount"/> rows using a unique
+    /// <paramref name="layoutTypeId"/>.  Returns the Layout with LayoutRows populated
+    /// (AsNoTracking so it can be passed freely to a different context).
+    /// </summary>
+    private Layout SeedLayoutWithRows(TestTuxDbContext<int> context, int layoutTypeId, int existingRowCount)
+    {
+        var layoutId = Guid.NewGuid();
+        context.LayoutTypes.Add(new LayoutType { LayoutTypeId = layoutTypeId, Title = $"LRT{layoutTypeId}", Layout = "col-12" });
+        context.Layouts.Add(new Layout { LayoutId = layoutId, LayoutIndex = 1 });
+        context.SaveChanges();
+
+        for (var i = 1; i <= existingRowCount; i++)
+        {
+            context.LayoutRows.Add(new LayoutRow
+            {
+                LayoutRowId  = Guid.NewGuid(),
+                LayoutId     = layoutId,
+                LayoutTypeId = layoutTypeId,
+                RowIndex     = i
+            });
+        }
+
+        if (existingRowCount > 0)
+            context.SaveChanges();
+
+        return context.Layouts
+            .Include(l => l.LayoutRows)
+            .AsNoTracking()
+            .First(l => l.LayoutId == layoutId);
+    }
+
+    /// <summary>
+    /// Bug fix: sync AddLayoutRow previously set RowIndex = Count (0 when no rows exist).
+    /// It now sets RowIndex = Count + 1, so the first row on an empty layout gets index 1.
+    /// </summary>
+    [Fact]
+    public void AddLayoutRow_WithEmptyLayout_SetsRowIndexToOne()
+    {
+        using var seedCtx = CreateContext();
+        var layout = SeedLayoutWithRows(seedCtx, layoutTypeId: 1, existingRowCount: 0);
+
+        using var context = CreateContext();
+        var service = CreateService(context);
+
+        service.AddLayoutRow(layout, 1);
+
+        using var verifyCtx = CreateContext();
+        var newRow = verifyCtx.LayoutRows.Single(r => r.LayoutId == layout.LayoutId);
+        Assert.Equal(1, newRow.RowIndex);
+    }
+
+    /// <summary>
+    /// AddLayoutRow on a layout with N existing rows must assign RowIndex = N + 1.
+    /// </summary>
+    [Fact]
+    public void AddLayoutRow_WithExistingRows_SetsRowIndexToCountPlusOne()
+    {
+        using var seedCtx = CreateContext();
+        var layout = SeedLayoutWithRows(seedCtx, layoutTypeId: 2, existingRowCount: 2);
+
+        using var context = CreateContext();
+        var service = CreateService(context);
+
+        service.AddLayoutRow(layout, 2);
+
+        using var verifyCtx = CreateContext();
+        var newRow = verifyCtx.LayoutRows
+            .Where(r => r.LayoutId == layout.LayoutId)
+            .OrderByDescending(r => r.RowIndex)
+            .First();
+        Assert.Equal(3, newRow.RowIndex); // 2 existing + 1 = 3
+    }
+
+    /// <summary>
+    /// AddLayoutRow must insert exactly one new row — no accidental duplicates.
+    /// </summary>
+    [Fact]
+    public void AddLayoutRow_InsertsExactlyOneNewRow()
+    {
+        using var seedCtx = CreateContext();
+        var layout = SeedLayoutWithRows(seedCtx, layoutTypeId: 3, existingRowCount: 1);
+        var countBefore = seedCtx.LayoutRows.Count(r => r.LayoutId == layout.LayoutId);
+
+        using var context = CreateContext();
+        var service = CreateService(context);
+
+        service.AddLayoutRow(layout, 3);
+
+        using var verifyCtx = CreateContext();
+        var countAfter = verifyCtx.LayoutRows.Count(r => r.LayoutId == layout.LayoutId);
+        Assert.Equal(countBefore + 1, countAfter);
+    }
+
+    /// <summary>
+    /// AddLayoutRow must call SaveChanges exactly once (single round-trip).
+    /// </summary>
+    [Fact]
+    public void AddLayoutRow_CallsSaveChangesExactlyOnce()
+    {
+        using var seedCtx = CreateContext();
+        var layout = SeedLayoutWithRows(seedCtx, layoutTypeId: 4, existingRowCount: 0);
+
+        using var context = CreateContext();
+        var service = CreateService(context);
+
+        service.AddLayoutRow(layout, 4);
+
+        Assert.Equal(1, context.SaveChangesCallCount);
+    }
+
+    /// <summary>
+    /// Async: first row on an empty layout must get RowIndex = 1 (Count + 1).
+    /// </summary>
+    [Fact]
+    public async Task AddLayoutRowAsync_WithEmptyLayout_SetsRowIndexToOne()
+    {
+        await using var seedCtx = CreateContext();
+        var layout = SeedLayoutWithRows(seedCtx, layoutTypeId: 5, existingRowCount: 0);
+
+        await using var context = CreateContext();
+        var service = CreateService(context);
+
+        await service.AddLayoutRowAsync(layout, 5, CancellationToken.None);
+
+        await using var verifyCtx = CreateContext();
+        var newRow = verifyCtx.LayoutRows.Single(r => r.LayoutId == layout.LayoutId);
+        Assert.Equal(1, newRow.RowIndex);
+    }
+
+    /// <summary>
+    /// Async: RowIndex must be N + 1 when N rows already exist.
+    /// </summary>
+    [Fact]
+    public async Task AddLayoutRowAsync_WithExistingRows_SetsRowIndexToCountPlusOne()
+    {
+        await using var seedCtx = CreateContext();
+        var layout = SeedLayoutWithRows(seedCtx, layoutTypeId: 6, existingRowCount: 2);
+
+        await using var context = CreateContext();
+        var service = CreateService(context);
+
+        await service.AddLayoutRowAsync(layout, 6, CancellationToken.None);
+
+        await using var verifyCtx = CreateContext();
+        var newRow = verifyCtx.LayoutRows
+            .Where(r => r.LayoutId == layout.LayoutId)
+            .OrderByDescending(r => r.RowIndex)
+            .First();
+        Assert.Equal(3, newRow.RowIndex); // 2 existing + 1 = 3
+    }
+
+    /// <summary>
+    /// Async: AddLayoutRowAsync must insert exactly one new row — no accidental duplicates.
+    /// </summary>
+    [Fact]
+    public async Task AddLayoutRowAsync_InsertsExactlyOneNewRow()
+    {
+        await using var seedCtx = CreateContext();
+        var layout = SeedLayoutWithRows(seedCtx, layoutTypeId: 7, existingRowCount: 1);
+        var countBefore = seedCtx.LayoutRows.Count(r => r.LayoutId == layout.LayoutId);
+
+        await using var context = CreateContext();
+        var service = CreateService(context);
+
+        await service.AddLayoutRowAsync(layout, 7, CancellationToken.None);
+
+        await using var verifyCtx = CreateContext();
+        var countAfter = verifyCtx.LayoutRows.Count(r => r.LayoutId == layout.LayoutId);
+        Assert.Equal(countBefore + 1, countAfter);
+    }
+
+    /// <summary>
+    /// Async: AddLayoutRowAsync must call SaveChangesAsync exactly once (single round-trip).
+    /// </summary>
+    [Fact]
+    public async Task AddLayoutRowAsync_CallsSaveChangesAsyncExactlyOnce()
+    {
+        await using var seedCtx = CreateContext();
+        var layout = SeedLayoutWithRows(seedCtx, layoutTypeId: 8, existingRowCount: 0);
+
+        await using var context = CreateContext();
+        var service = CreateService(context);
+
+        await service.AddLayoutRowAsync(layout, 8, CancellationToken.None);
+
+        Assert.Equal(1, context.SaveChangesAsyncCallCount);
+    }
 }

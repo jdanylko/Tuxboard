@@ -30,7 +30,7 @@ public partial class LayoutRow
         var index = 1;
         foreach (var column in GetColumnLayout())
         {
-            sb.AppendFormat("<div class=\"column {0}\" data-column=\"{1}\"></div>", column.ColumnClass, index);
+            sb.Append($"<div class=\"column {column.ColumnClass}\" data-column=\"{index}\"></div>");
             index++;
         }
         sb.Append("<div class=\"clearfix\"></div>");
@@ -84,7 +84,7 @@ public partial class LayoutRow
             LayoutRowId = LayoutRowId,
             WidgetId = widget.WidgetId,
             ColumnIndex = 0,
-            WidgetIndex = WidgetPlacements != null && WidgetPlacements.Any()
+            WidgetIndex = WidgetPlacements.Any()
                 ? WidgetPlacements.Count + 1
                 : 0,
             Collapsed = false,

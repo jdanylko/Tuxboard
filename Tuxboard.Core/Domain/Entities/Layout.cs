@@ -6,9 +6,9 @@ namespace Tuxboard.Core.Domain.Entities;
 public partial class Layout
 {
     /// <summary>
-    /// AUto-gen Id
+    /// Auto-generated ID (Guid)
     /// </summary>
-    public Guid LayoutId { get; set; }
+    public Guid LayoutId { get; set; } = Guid.NewGuid();
 
     /// <summary>
     /// The <see cref="DashboardTab"/> Id (parent)
@@ -23,7 +23,7 @@ public partial class Layout
     /// <summary>
     /// The <see cref="DashboardTab"/>
     /// </summary>
-    public virtual DashboardTab Tab { get; set; }
+    public virtual DashboardTab Tab { get; set; } = null!;
 
     /// <summary>
     /// Returns a collection of <see cref="DashboardDefault"/>.

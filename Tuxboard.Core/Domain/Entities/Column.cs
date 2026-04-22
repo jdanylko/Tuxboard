@@ -13,5 +13,5 @@ public class Column
     /// <summary>
     /// Returns a CSS class defined in the layout type table delimited by slashes ('/')
     /// </summary>
-    public string ColumnClass { get; set; }
+    public string ColumnClass { get; set; } = string.Empty;
 }

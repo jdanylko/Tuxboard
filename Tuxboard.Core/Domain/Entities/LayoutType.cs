@@ -3,7 +3,7 @@
 namespace Tuxboard.Core.Domain.Entities;
 
 /// <summary>
-/// 
+/// Defines the column structure of a <see cref="LayoutRow"/> using a CSS grid/column class string.
 /// </summary>
 public partial class LayoutType
 {
@@ -15,7 +15,7 @@ public partial class LayoutType
     /// <summary>
     /// Gets or sets the Title
     /// </summary>
-    public string Title { get; set; }
+    public string Title { get; set; } = string.Empty;
 
     /// <summary>
     /// Gets or sets the Layout.
@@ -25,7 +25,7 @@ public partial class LayoutType
     /// If you wanted a single layout type to use one large column, you could add a new layout type titled "One Column" with a layout of "col-12".
     /// Adjust these layout types based on the grid/column system for your preferred CSS frameworks.
     /// </summary>
-    public string Layout { get; set; }
+    public string Layout { get; set; } = string.Empty;
 
     /// <summary>
     /// Collection of LayoutRows using this Layout Type

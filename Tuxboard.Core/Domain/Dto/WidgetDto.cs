@@ -14,23 +14,23 @@ public class WidgetDto
     /// <summary>
     /// Get or set the name of a widget.
     /// </summary>
-    public string Name { get; set; }
+    public string Name { get; set; } = string.Empty;
     /// <summary>
     /// Get or set the title of a widget.
     /// </summary>
-    public string Title { get; set; }
+    public string Title { get; set; } = string.Empty;
     /// <summary>
     /// Get or set the description of a widget.
     /// </summary>
-    public string Description { get; set; }
+    public string Description { get; set; } = string.Empty;
     /// <summary>
     /// Get or set the url of an image for a widget.
     /// </summary>
-    public string ImageUrl { get; set; }
+    public string ImageUrl { get; set; } = string.Empty;
     /// <summary>
     /// Get or set the group name of a widget.
     /// </summary>
-    public string GroupName { get; set; }
+    public string GroupName { get; set; } = string.Empty;
     /// <summary>
     /// Get or set the permission of a widget.
     /// </summary>

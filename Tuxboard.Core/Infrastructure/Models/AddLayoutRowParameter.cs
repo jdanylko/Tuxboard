@@ -8,10 +8,10 @@ public class AddLayoutRowParameter
     /// <summary>
     /// Get or set the Layout Type
     /// </summary>
-    public string LayoutTypeId { get; set; }
+    public string LayoutTypeId { get; set; } = string.Empty;
 
     /// <summary>
     /// Get or set the Tab ID of where to add the new layout row
     /// </summary>
-    public string TabId { get; set; }
+    public string TabId { get; set; } = string.Empty;
 }

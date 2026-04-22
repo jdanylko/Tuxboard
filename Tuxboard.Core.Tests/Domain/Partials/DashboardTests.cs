@@ -68,13 +68,11 @@ public class DashboardTests
     }
 
     /// <summary>
-    /// When SelectedTab points to a non-existent tab (GetCurrentTab returns null),
-    /// RowContainsWidgets must return false without throwing.
-    /// Bug: original code had "tab == null &amp;&amp;" which caused a NullReferenceException
-    /// when tab was null and returned false for all valid tabs.
+    /// When SelectedTab points to a non-existent tab, GetCurrentTab throws an
+    /// InvalidOperationException — the invariant requires every dashboard to have a valid tab.
     /// </summary>
     [Fact]
-    public void RowContainsWidgets_WithNoMatchingTab_ReturnsFalse()
+    public void RowContainsWidgets_WithInvalidSelectedTab_Throws()
     {
         var dashboard = new Dashboard<int>
         {
@@ -82,7 +80,7 @@ public class DashboardTests
             Tabs = _dashboard.Tabs
         };
 
-        Assert.False(dashboard.RowContainsWidgets(RowWithWidgetsId));
+        Assert.Throws<InvalidOperationException>(() => dashboard.RowContainsWidgets(RowWithWidgetsId));
     }
 
     // -------------------------------------------------------------------------
@@ -150,12 +148,11 @@ public class DashboardTests
     }
 
     /// <summary>
-    /// Bug fix: both tab and layout were dereferenced without null checks.
-    /// When SelectedTab points to a non-existent tab, ContainsOneRow must
-    /// return false instead of throwing a NullReferenceException.
+    /// When SelectedTab points to a non-existent tab, ContainsOneRow throws an
+    /// InvalidOperationException — the invariant requires a valid selected tab.
     /// </summary>
     [Fact]
-    public void ContainsOneRow_WithNoMatchingTab_ReturnsFalse()
+    public void ContainsOneRow_WithInvalidSelectedTab_Throws()
     {
         var dashboard = new Dashboard<int>
         {
@@ -163,15 +160,14 @@ public class DashboardTests
             Tabs = _dashboard.Tabs
         };
 
-        Assert.False(dashboard.ContainsOneRow());
+        Assert.Throws<InvalidOperationException>(() => dashboard.ContainsOneRow());
     }
 
     /// <summary>
-    /// When the tab exists but has no layouts, ContainsOneRow returns false
-    /// without throwing.
+    /// When the tab has no layouts, GetCurrentLayout throws, so ContainsOneRow throws too.
     /// </summary>
     [Fact]
-    public void ContainsOneRow_WithNoLayouts_ReturnsFalse()
+    public void ContainsOneRow_WithNoLayouts_Throws()
     {
         var dashboard = new Dashboard<int>
         {
@@ -182,6 +178,165 @@ public class DashboardTests
             }
         };
 
-        Assert.False(dashboard.ContainsOneRow());
+        Assert.Throws<InvalidOperationException>(() => dashboard.ContainsOneRow());
+    }
+
+    // -------------------------------------------------------------------------
+    // GetCurrentTab invariant
+    // -------------------------------------------------------------------------
+
+    /// <summary>
+    /// A valid dashboard with one tab returns that tab from GetCurrentTab without throwing.
+    /// </summary>
+    [Fact]
+    public void GetCurrentTab_WithSingleTab_ReturnsNonNull()
+    {
+        var tab = _dashboard.GetCurrentTab();
+
+        Assert.NotNull(tab);
+        Assert.Equal(1, tab.TabIndex);
+    }
+
+    /// <summary>
+    /// A dashboard with no tabs throws InvalidOperationException from GetCurrentTab.
+    /// </summary>
+    [Fact]
+    public void GetCurrentTab_WithNoTabs_Throws()
+    {
+        var dashboard = new Dashboard<int>
+        {
+            SelectedTab = 1,
+            Tabs = new List<DashboardTab>()
+        };
+
+        Assert.Throws<InvalidOperationException>(() => dashboard.GetCurrentTab());
+    }
+
+    /// <summary>
+    /// A dashboard whose SelectedTab index does not map to any tab throws
+    /// InvalidOperationException from GetCurrentTab.
+    /// </summary>
+    [Fact]
+    public void GetCurrentTab_WithInvalidSelectedTab_Throws()
+    {
+        var dashboard = new Dashboard<int>
+        {
+            SelectedTab = 5, // only one tab exists at index 1
+            Tabs = _dashboard.Tabs
+        };
+
+        Assert.Throws<InvalidOperationException>(() => dashboard.GetCurrentTab());
+    }
+
+    // -------------------------------------------------------------------------
+    // Dashboard.Create invariant
+    // -------------------------------------------------------------------------
+
+    /// <summary>
+    /// Dashboard.Create always produces exactly one tab, satisfying the current invariant.
+    /// </summary>
+    [Fact]
+    public void Dashboard_Create_HasExactlyOneTab()
+    {
+        var dashboard = Dashboard<int>.Create(42);
+
+        Assert.Single(dashboard.Tabs);
+    }
+
+    /// <summary>
+    /// The tab created by Dashboard.Create is immediately retrievable via GetCurrentTab.
+    /// </summary>
+    [Fact]
+    public void Dashboard_Create_GetCurrentTab_DoesNotThrow()
+    {
+        var dashboard = Dashboard<int>.Create(42);
+
+        var tab = dashboard.GetCurrentTab();
+
+        Assert.NotNull(tab);
+    }
+
+    // -------------------------------------------------------------------------
+    // DashboardTab.GetCurrentLayout invariant
+    // -------------------------------------------------------------------------
+
+    /// <summary>
+    /// A tab with exactly one layout returns it from GetCurrentLayout without throwing.
+    /// </summary>
+    [Fact]
+    public void GetCurrentLayout_WithSingleLayout_ReturnsNonNull()
+    {
+        var tab = _dashboard.GetCurrentTab();
+
+        var layout = tab.GetCurrentLayout();
+
+        Assert.NotNull(layout);
+    }
+
+    /// <summary>
+    /// A tab with no layouts throws InvalidOperationException from GetCurrentLayout.
+    /// </summary>
+    [Fact]
+    public void GetCurrentLayout_WithNoLayouts_Throws()
+    {
+        var tab = new DashboardTab { TabIndex = 1, Layouts = new List<Layout>() };
+
+        Assert.Throws<InvalidOperationException>(() => tab.GetCurrentLayout());
+    }
+
+    /// <summary>
+    /// A tab with more than one layout throws InvalidOperationException from GetCurrentLayout;
+    /// multiple layouts per tab are not yet supported.
+    /// </summary>
+    [Fact]
+    public void GetCurrentLayout_WithMultipleLayouts_Throws()
+    {
+        var tab = new DashboardTab
+        {
+            TabIndex = 1,
+            Layouts = new List<Layout> { new(), new() }
+        };
+
+        Assert.Throws<InvalidOperationException>(() => tab.GetCurrentLayout());
+    }
+
+    // -------------------------------------------------------------------------
+    // Layout.LayoutRows — at least one row invariant
+    // -------------------------------------------------------------------------
+
+    /// <summary>
+    /// GetFirstLayoutRow returns the row when the layout has at least one.
+    /// </summary>
+    [Fact]
+    public void GetFirstLayoutRow_WithLayoutRow_ReturnsNonNull()
+    {
+        var result = _dashboard.GetFirstLayoutRow();
+
+        Assert.NotNull(result);
+    }
+
+    /// <summary>
+    /// GetFirstLayoutRow returns null when the single layout has no rows, signalling
+    /// an invariant violation in the persisted data.
+    /// </summary>
+    [Fact]
+    public void GetFirstLayoutRow_WithNoLayoutRows_ReturnsNull()
+    {
+        var dashboard = new Dashboard<int>
+        {
+            SelectedTab = 1,
+            Tabs = new List<DashboardTab>
+            {
+                new()
+                {
+                    TabIndex = 1,
+                    Layouts = new List<Layout> { new() { LayoutRows = new List<LayoutRow>() } }
+                }
+            }
+        };
+
+        var result = dashboard.GetFirstLayoutRow();
+
+        Assert.Null(result);
     }
 }

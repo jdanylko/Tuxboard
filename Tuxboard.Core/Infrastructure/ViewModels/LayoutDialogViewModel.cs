@@ -11,10 +11,10 @@ public class LayoutDialogViewModel
     /// <summary>
     /// Get or set a collection of layout types
     /// </summary>
-    public List<LayoutType> LayoutTypes { get; set; }
+    public List<LayoutType> LayoutTypes { get; set; } = new();
 
     /// <summary>
     /// Get or set the current layout
     /// </summary>
-    public Layout CurrentLayout { get; set; }
+    public Layout CurrentLayout { get; set; } = null!;
 }

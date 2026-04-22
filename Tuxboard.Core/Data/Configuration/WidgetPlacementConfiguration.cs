@@ -12,15 +12,15 @@ namespace Tuxboard.Core.Data.Configuration;
 public class WidgetPlacementConfiguration : IEntityTypeConfiguration<WidgetPlacement>
 {
     private readonly TuxboardConfig _config;
-    private readonly Action<EntityTypeBuilder<WidgetPlacement>> _seedAction;
+    private readonly Action<EntityTypeBuilder<WidgetPlacement>>? _seedAction;
 
     /// <summary>
-    /// 
+    /// Initializes the EF Core configuration for <see cref="WidgetPlacement"/> with the provided options and optional seed action.
     /// </summary>
-    /// <param name="config"></param>
-    /// <param name="seedAction"></param>
+    /// <param name="config">Tuxboard configuration options, including schema name and seed data settings.</param>
+    /// <param name="seedAction">Optional action to apply additional seed data for <see cref="WidgetPlacement"/>.</param>
     public WidgetPlacementConfiguration(TuxboardConfig config,
-        Action<EntityTypeBuilder<WidgetPlacement>> seedAction = null)
+        Action<EntityTypeBuilder<WidgetPlacement>>? seedAction = null)
     {
         _config = config;
         _seedAction = seedAction;
@@ -37,8 +37,7 @@ public class WidgetPlacementConfiguration : IEntityTypeConfiguration<WidgetPlace
 
         builder.Property(e => e.WidgetPlacementId)
             .HasMaxLength(36)
-            .IsUnicode(false)
-            .HasDefaultValueSql("(newid())");
+            .IsUnicode(false);
 
         builder.Property(e => e.LayoutRowId)
             .IsRequired()

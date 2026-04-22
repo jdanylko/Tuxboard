@@ -13,15 +13,15 @@ namespace Tuxboard.Core.Data.Configuration;
 public class LayoutTypeConfiguration : IEntityTypeConfiguration<LayoutType>
 {
     private readonly TuxboardConfig _config;
-    private readonly Action<EntityTypeBuilder<LayoutType>> _seedAction;
+    private readonly Action<EntityTypeBuilder<LayoutType>>? _seedAction;
 
     /// <summary>
-    /// 
+    /// Initializes the EF Core configuration for <see cref="LayoutType"/> with the provided options and optional seed action.
     /// </summary>
-    /// <param name="config"></param>
-    /// <param name="seedAction"></param>
+    /// <param name="config">Tuxboard configuration options, including schema name and seed data settings.</param>
+    /// <param name="seedAction">Optional action to apply additional seed data for <see cref="LayoutType"/>.</param>
     public LayoutTypeConfiguration(TuxboardConfig config,
-        Action<EntityTypeBuilder<LayoutType>> seedAction = null)
+        Action<EntityTypeBuilder<LayoutType>>? seedAction = null)
     {
         _config = config;
         _seedAction = seedAction;

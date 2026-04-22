@@ -13,15 +13,15 @@ namespace Tuxboard.Core.Data.Configuration;
 public class LayoutRowConfiguration : IEntityTypeConfiguration<LayoutRow>
 {
     private readonly TuxboardConfig _config;
-    private readonly Action<EntityTypeBuilder<LayoutRow>> _seedAction;
+    private readonly Action<EntityTypeBuilder<LayoutRow>>? _seedAction;
 
     /// <summary>
-    /// 
+    /// Initializes the EF Core configuration for <see cref="LayoutRow"/> with the provided options and optional seed action.
     /// </summary>
-    /// <param name="config"></param>
-    /// <param name="seedAction"></param>
+    /// <param name="config">Tuxboard configuration options, including schema name and seed data settings.</param>
+    /// <param name="seedAction">Optional action to apply additional seed data for <see cref="LayoutRow"/>.</param>
     public LayoutRowConfiguration(TuxboardConfig config,
-        Action<EntityTypeBuilder<LayoutRow>> seedAction = null)
+        Action<EntityTypeBuilder<LayoutRow>>? seedAction = null)
     {
         _config = config;
         _seedAction = seedAction;
@@ -38,8 +38,7 @@ public class LayoutRowConfiguration : IEntityTypeConfiguration<LayoutRow>
 
         builder.Property(e => e.LayoutRowId)
             .HasMaxLength(36)
-            .IsUnicode(false)
-            .HasDefaultValueSql("(newid())");
+            .IsUnicode(false);
 
         builder.Property(e => e.LayoutId)
             .HasMaxLength(36)

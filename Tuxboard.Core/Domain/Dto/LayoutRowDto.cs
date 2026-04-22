@@ -20,9 +20,9 @@ public class LayoutRowDto
     /// <summary>
     /// Get or set a list of columns
     /// </summary>
-    public List<Column> Columns { get; set; }
+    public List<Column> Columns { get; set; } = new();
     /// <summary>
     /// Get or set the HtmlLayout
     /// </summary>
-    public string HtmlLayout { get; internal set; }
+    public string HtmlLayout { get; internal set; } = string.Empty;
 }
