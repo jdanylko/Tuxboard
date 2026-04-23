@@ -31,7 +31,7 @@ public class PlacementParameter
     /// <summary>
     /// Get or set a list of PlacementItems.
     /// </summary>
-    public List<PlacementItem> PlacementList { get; set; }
+    public List<PlacementItem> PlacementList { get; set; } = new();
 }
 
 /// <summary>

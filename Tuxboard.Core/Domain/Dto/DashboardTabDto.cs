@@ -16,7 +16,7 @@ public class DashboardTabDto
     /// <summary>
     /// Get or set the dashboard tab title
     /// </summary>
-    public string TabTitle { get; set; }
+    public string TabTitle { get; set; } = string.Empty;
     /// <summary>
     /// Get or set the dashboard tab index
     /// </summary>

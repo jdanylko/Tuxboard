@@ -11,10 +11,10 @@ public class WidgetDialogViewModel
     /// <summary>
     /// List of widgets available to users
     /// </summary>
-    public IEnumerable<Widget> Widgets { get; set; }
+    public IEnumerable<Widget> Widgets { get; set; } = new List<Widget>();
 
     /// <summary>
     /// Distinct list of widget groups
     /// </summary>
-    public List<string> Groups { get; set; }
+    public List<string> Groups { get; set; } = new();
 }

@@ -20,5 +20,5 @@ public class LayoutDto
     /// <summary>
     /// Get or set a List of Layout Rows.
     /// </summary>
-    public List<LayoutRowDto> LayoutRows { get; set; }
+    public List<LayoutRowDto> LayoutRows { get; set; } = new();
 }

@@ -12,7 +12,7 @@ public partial class DashboardDefaultWidget
     /// <summary>
     /// Guid identifier
     /// </summary>
-    public Guid DefaultWidgetId { get; set; }
+    public Guid DefaultWidgetId { get; set; } = Guid.NewGuid();
 
     /// <summary>
     /// <see cref="DashboardDefault"/> ID
@@ -40,15 +40,15 @@ public partial class DashboardDefaultWidget
     public int WidgetIndex { get; set; }
 
     /// <summary>
-    /// 
+    /// The parent <see cref="DashboardDefault"/> template this widget belongs to
     /// </summary>
-    public virtual DashboardDefault DashboardDefault { get; set; }
+    public virtual DashboardDefault DashboardDefault { get; set; } = null!;
     /// <summary>
-    /// 
+    /// The <see cref="LayoutRow"/> in the template where this widget is placed
     /// </summary>
-    public virtual LayoutRow LayoutRow { get; set; }
+    public virtual LayoutRow LayoutRow { get; set; } = null!;
     /// <summary>
-    /// 
+    /// The <see cref="Widget"/> that will be placed on the dashboard when the template is applied
     /// </summary>
-    public virtual Widget Widget { get; set; }
+    public virtual Widget Widget { get; set; } = null!;
 }

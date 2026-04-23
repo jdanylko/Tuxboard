@@ -30,7 +30,24 @@ public partial class DashboardTab
         };
 
     /// <summary>
-    /// Return a list of Layouts; Should only EVER be 1 <see cref="Layout"/> in the list; Only 1 <see cref="Layout"/> should be contained in 1 <see cref="DashboardTab"/>
+    /// Returns the single <see cref="Layout"/> for this tab. Currently only one layout per tab is
+    /// supported; multiple layouts are planned for a future release.
+    /// </summary>
+    /// <returns><see cref="Layout"/></returns>
+    /// <exception cref="InvalidOperationException">
+    /// Thrown when the tab has no layout, or has more than one layout.
+    /// </exception>
+    public Layout GetCurrentLayout() =>
+        Layouts.Count switch
+        {
+            0 => throw new InvalidOperationException("DashboardTab has no layout."),
+            1 => Layouts.First(),
+            _ => throw new InvalidOperationException("DashboardTab has more than one layout.")
+        };
+
+    /// <summary>
+    /// Return a list of Layouts; Only 1 <see cref="Layout"/> should be contained in 1 <see cref="DashboardTab"/>;
+    /// multiple layouts are planned for a future release.
     /// </summary>
     /// <returns><see cref="List{Layout}"/></returns>
     public List<Layout> GetLayouts() => Layouts.ToList();
@@ -55,11 +72,6 @@ public partial class DashboardTab
     /// Returns all of the <see cref="WidgetPlacement"/>s in a <see cref="Layout"/>
     /// </summary>
     /// <returns><see cref="List{WidgetPlacement}"/></returns>
-    public List<WidgetPlacement> GetWidgetPlacements()
-    {
-        var layout = Layouts.FirstOrDefault();
-        return layout != null 
-            ? layout.GetWidgetPlacements() 
-            : new List<WidgetPlacement>();
-    }
+    public List<WidgetPlacement> GetWidgetPlacements() =>
+        GetCurrentLayout().GetWidgetPlacements();
 }

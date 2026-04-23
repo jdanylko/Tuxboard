@@ -13,10 +13,10 @@ public class SaveLayoutViewModel
     /// <summary>
     /// The list of layout rows, their order, and their types
     /// </summary>
-    public List<LayoutOrder> LayoutList { get; set; }
+    public List<LayoutOrder> LayoutList { get; set; } = new();
 
     /// <summary>
     /// a <see cref="DashboardTab"/> Id
     /// </summary>
-    public string TabId { get; set; }
+    public string TabId { get; set; } = string.Empty;
 }

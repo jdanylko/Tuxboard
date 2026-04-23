@@ -7,13 +7,13 @@ public partial class WidgetSetting
     /// <summary>
     /// Get or set the Widget Setting ID
     /// </summary>
-    public Guid WidgetSettingId { get; set; }
+    public Guid WidgetSettingId { get; set; } = Guid.NewGuid();
     /// <summary>
     /// Get or set the Widget Placement ID
     /// </summary>
     public Guid WidgetPlacementId { get; set; }
     /// <summary>
-    /// Get or set the WIdget Default ID
+    /// Get or set the Widget Default ID
     /// </summary>
     public Guid WidgetDefaultId { get; set; }
 
@@ -25,10 +25,10 @@ public partial class WidgetSetting
     /// <summary>
     /// Get or set the Widget Default
     /// </summary>
-    public virtual WidgetDefault WidgetDefault { get; set; }
+    public virtual WidgetDefault WidgetDefault { get; set; } = null!;
     
     /// <summary>
     /// Get or set the Widget Placement
     /// </summary>
-    public virtual WidgetPlacement WidgetPlacement { get; set; }
+    public virtual WidgetPlacement WidgetPlacement { get; set; } = null!;
 }

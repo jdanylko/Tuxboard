@@ -30,7 +30,7 @@ public partial class Dashboard<T>
     /// Configuration for a dashboard through a <see cref="ITuxboardConfig"/>
     /// </summary>
     [NotMapped]
-    public ITuxboardConfig Settings { get; set; }
+    public ITuxboardConfig Settings { get; set; } = null!;
 
     /// <summary>
     /// Create a default dashboard for a new user
@@ -57,7 +57,7 @@ public partial class Dashboard<T>
     /// </summary>
     /// <param name="tabIndex">Index of the Dashboard Tab (should be 1)</param>
     /// <returns><see cref="List{Layout}"/></returns>
-    public List<Layout> GetLayouts(int tabIndex)
+    public List<Layout>? GetLayouts(int tabIndex)
     {
         var tab = GetTab(tabIndex);
         return tab?.GetLayouts();
@@ -68,11 +68,10 @@ public partial class Dashboard<T>
     /// </summary>
     /// <param name="layoutRowId">LayoutRowId</param>
     /// <returns><see cref="LayoutRow"/> if found, null is not found</returns>
-    public LayoutRow GetLayoutRow(Guid layoutRowId)
+    public LayoutRow? GetLayoutRow(Guid layoutRowId)
     {
-        var layouts = GetLayouts(GetCurrentTab().TabIndex);
-        var layout = layouts.FirstOrDefault(e => e.LayoutRows.Any(t => t.LayoutRowId == layoutRowId));
-        return layout.LayoutRows.FirstOrDefault(y => y.LayoutRowId == layoutRowId);
+        var layout = GetCurrentTab().GetCurrentLayout();
+        return layout.LayoutRows.FirstOrDefault(r => r.LayoutRowId == layoutRowId);
     }
 
     /// <summary>
@@ -80,10 +79,10 @@ public partial class Dashboard<T>
     /// </summary>
     /// <param name="layoutRowId"><see cref="Guid"/> - LayoutRowId</param>
     /// <returns><see cref="Layout"/> if found, null if not found.</returns>
-    public Layout GetLayoutByLayoutRow(Guid layoutRowId)
+    public Layout? GetLayoutByLayoutRow(Guid layoutRowId)
     {
-        var layouts = GetLayouts(GetCurrentTab().TabIndex);
-        return layouts.FirstOrDefault(e => e.LayoutRows.Any(t => t.LayoutRowId == layoutRowId));
+        var layout = GetCurrentTab().GetCurrentLayout();
+        return layout.LayoutRows.Any(r => r.LayoutRowId == layoutRowId) ? layout : null;
     }
 
     /// <summary>
@@ -98,11 +97,7 @@ public partial class Dashboard<T>
     /// </summary>
     /// <param name="rowId"><see cref="Guid"/> - LayoutRowId</param>
     /// <returns>true if widgets exist in this row, false if not</returns>
-    public bool RowContainsWidgets(Guid rowId)
-    {
-        var tab = GetCurrentTab();
-        return tab == null && tab.RowContainsWidgets(rowId);
-    }
+    public bool RowContainsWidgets(Guid rowId) => GetCurrentTab().RowContainsWidgets(rowId);
 
     /// <summary>
     /// Returns whether a <see cref="DashboardTab"/> contains one layout row
@@ -110,30 +105,37 @@ public partial class Dashboard<T>
     /// <returns>true if a tab contains at least one row, false if not</returns>
     public bool ContainsOneRow()
     {
-        var tab = GetCurrentTab();
         // Should ALWAYS be one layout...for now.
-        var layout = tab.Layouts.FirstOrDefault();
-        return layout.ContainsOneRow();
+        return GetCurrentTab().GetCurrentLayout().ContainsOneRow();
     }
 
     /// <summary>
-    /// Returns the current tab; Only one tab is supported
+    /// Returns the currently selected tab. Currently only one tab is supported per dashboard;
+    /// multiple tabs are planned for a future release.
     /// </summary>
     /// <returns><see cref="DashboardTab"/></returns>
+    /// <exception cref="InvalidOperationException">
+    /// Thrown when the dashboard has no tabs, or <see cref="DashboardBase.SelectedTab"/> does not
+    /// correspond to an existing tab.
+    /// </exception>
     public DashboardTab GetCurrentTab()
     {
-        return GetTab(SelectedTab);
+        return GetTab(SelectedTab)
+            ?? throw new InvalidOperationException(
+                Tabs.Count == 0
+                    ? "Dashboard has no tabs."
+                    : $"Dashboard has no tab at selected index {SelectedTab}.");
     }
 
     /// <summary>
     /// Return a <see cref="DashboardTab"/> from an indexed collection of Tabs
     /// </summary>
-    /// <param name="tabIndex">zero-based index of a dashboard tab</param>
+    /// <param name="tabIndex">1-based index of a dashboard tab</param>
     /// <returns><see cref="DashboardTab"/></returns>
-    public DashboardTab GetTab(int tabIndex)
+    public DashboardTab? GetTab(int tabIndex)
     {
-        // Zero-Based!
-        return Tabs.ElementAtOrDefault(tabIndex-1);
+        // Convert 1-based tab index to 0-based collection index
+        return Tabs.ElementAtOrDefault(tabIndex - 1);
     }
 
     /// <summary>
@@ -154,14 +156,14 @@ public partial class Dashboard<T>
     /// Returns the first Layout row on a tab.
     /// </summary>
     /// <returns><see cref="LayoutRow"/></returns>
-    public LayoutRow GetFirstLayoutRow() => 
-        GetCurrentTab()?.GetLayouts()?.FirstOrDefault()?.LayoutRows?.FirstOrDefault();
+    public LayoutRow? GetFirstLayoutRow() => 
+        GetCurrentTab().GetCurrentLayout().LayoutRows.FirstOrDefault();
 
     /// <summary>
     /// Returns a <see cref="LayoutRow"/> based on a zero-based indexer
     /// </summary>
     /// <param name="index">Integer</param>
     /// <returns><see cref="LayoutRow"/></returns>
-    public LayoutRow GetLayoutRowByIndex(int index) => 
-        GetCurrentTab()?.GetLayouts()?.FirstOrDefault()?.LayoutRows.ElementAt(index);
+    public LayoutRow? GetLayoutRowByIndex(int index) => 
+        GetCurrentTab().GetCurrentLayout().LayoutRows.ElementAtOrDefault(index);
 }

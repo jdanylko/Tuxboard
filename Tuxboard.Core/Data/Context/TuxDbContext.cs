@@ -68,9 +68,9 @@ public partial class TuxDbContext<T> : DbContext, ITuxDbContext<T> where T: stru
         base.OnModelCreating(modelBuilder);
 
         _tuxboardConfig.Schema =
-            string.IsNullOrEmpty(_tuxboardConfig.Schema)
+            string.IsNullOrWhiteSpace(_tuxboardConfig.Schema)
                 ? "dbo"
-                : _tuxboardConfig.Schema;
+                : _tuxboardConfig.Schema.Trim();
 
         modelBuilder.HasDefaultSchema(_tuxboardConfig.Schema);
 

@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading;
@@ -22,7 +22,7 @@ public static class TuxDbContextExtensions
     /// <param name="context"><see cref="ITuxDbContext"/></param>
     /// <param name="widgetId">Widget ID</param>
     /// <returns><see cref="Widget"/></returns>
-    public static Widget GetWidget(this ITuxDbContext context, Guid widgetId)
+    public static Widget? GetWidget(this ITuxDbContext context, Guid widgetId)
     {
         return context.Widgets
             .Include(w => w.WidgetDefaults)
@@ -35,7 +35,7 @@ public static class TuxDbContextExtensions
     /// <param name="context"><see cref="ITuxDbContext"/></param>
     /// <param name="tabId">Dashboard Tab ID</param>
     /// <returns><see cref="Layout"/></returns>
-    public static Layout GetLayoutForTab(this ITuxDbContext context, Guid tabId)
+    public static Layout? GetLayoutForTab(this ITuxDbContext context, Guid tabId)
     {
         return context.Layouts
             .Include(e => e.LayoutRows)
@@ -64,7 +64,7 @@ public static class TuxDbContextExtensions
     /// <param name="context"><see cref="ITuxDbContext"/></param>
     /// <param name="id">Dashboard Default ID</param>
     /// <returns><see cref="DashboardDefault"/></returns>
-    public static DashboardDefault GetDashboardDefault(this ITuxDbContext context, Guid id)
+    public static DashboardDefault? GetDashboardDefault(this ITuxDbContext context, Guid id)
     {
         return context.DashboardDefaults
             .Include(e => e.DashboardDefaultWidgets)
@@ -80,9 +80,9 @@ public static class TuxDbContextExtensions
     /// <param name="context"><see cref="ITuxDbContext"/></param>
     /// <param name="planId">Plan ID</param>
     /// <returns><see cref="DashboardDefault"/></returns>
-    public static DashboardDefault GetDashboardTemplateFor(this ITuxDbContext context, int planId = 0)
+    public static DashboardDefault? GetDashboardTemplateFor(this ITuxDbContext context, int planId = 0)
     {
-        var layoutTypes = context.LayoutTypes.ToList();
+        var layoutTypes = context.LayoutTypes.ToDictionary(e => e.LayoutTypeId);
 
         var query = context.DashboardDefaults
             .Include(dt => dt.DashboardDefaultWidgets)
@@ -96,14 +96,14 @@ public static class TuxDbContextExtensions
             ? query.FirstOrDefault(e => e.PlanId == planId)
             : query.FirstOrDefault();
 
-        if (result == null)
+        if (result is null)
             return null;
 
         var layout = result.Layout;
         foreach (var row in layout.LayoutRows)
         {
-            row.LayoutType = layoutTypes.FirstOrDefault(e => e.LayoutTypeId == row.LayoutTypeId);
-            //row.WidgetPlacements = context.GetPlacementsByLayoutRow(row.LayoutRowId);
+            if (layoutTypes.TryGetValue(row.LayoutTypeId, out var lt))
+                row.LayoutType = lt;
         }
 
         return result;
@@ -135,22 +135,24 @@ public static class TuxDbContextExtensions
     /// <param name="context"><see cref="ITuxDbContext"/></param>
     /// <param name="layoutId">Layout ID</param>
     /// <returns><see cref="Layout"/></returns>
-    public static Layout GetLayout(this ITuxDbContext context, Guid layoutId)
+    public static Layout? GetLayout(this ITuxDbContext context, Guid layoutId)
     {
-        var layoutTypes = context.LayoutTypes.ToList();
-
         var layout = context.Layouts
             .Include(lo => lo.LayoutRows)
                 .ThenInclude(row => row.WidgetPlacements)
                     .ThenInclude(wp => wp.Widget)
                         .ThenInclude(w => w.WidgetDefaults)
-
             .AsNoTracking()
             .FirstOrDefault(e => e.LayoutId == layoutId);
 
+        if (layout is null)
+            return null;
+
+        var layoutTypes = context.LayoutTypes.ToDictionary(e => e.LayoutTypeId);
         foreach (var row in layout.LayoutRows)
         {
-            row.LayoutType = layoutTypes.FirstOrDefault(e => e.LayoutTypeId == row.LayoutTypeId);
+            if (layoutTypes.TryGetValue(row.LayoutTypeId, out var lt))
+                row.LayoutType = lt;
         }
 
         return layout;
@@ -178,20 +180,17 @@ public static class TuxDbContextExtensions
             .Include(e => e.WidgetSettings)
             .Include(e => e.Widget)
                 .ThenInclude(w => w.WidgetDefaults)
-            .AsNoTracking().Where(r => r.LayoutRow.Layout.TabId == tabId)
+            .AsNoTracking().Where(r => r.LayoutRow.Layout != null && r.LayoutRow.Layout.TabId == tabId)
             .ToList();
 
         foreach (var placement in placements)
         {
             placement.UpdateWidgetSettings();
-            var settings = placement.WidgetSettings.Where(e => e.WidgetSettingId == Guid.Empty);
-            foreach (var setting in settings)
-            {
-                setting.WidgetSettingId = new Guid();
+            foreach (var setting in placement.WidgetSettings.Where(e => e.WidgetSettingId == Guid.Empty))
                 context.WidgetSettings.Add(setting);
-                context.SaveChanges();
-            }
         }
+
+        context.SaveChanges();
 
         return placements;
     }
@@ -202,7 +201,7 @@ public static class TuxDbContextExtensions
     /// <param name="context"><see cref="ITuxDbContext"/></param>
     /// <param name="widgetPlacementId">Widget Placement ID</param>
     /// <returns><see cref="WidgetPlacement"/></returns>
-    public static WidgetPlacement GetWidgetPlacement(this ITuxDbContext context, Guid widgetPlacementId)
+    public static WidgetPlacement? GetWidgetPlacement(this ITuxDbContext context, Guid widgetPlacementId)
     {
         return context.WidgetPlacements
             .Include(e => e.WidgetSettings)
@@ -215,17 +214,12 @@ public static class TuxDbContextExtensions
     {
         foreach (var placement in placements)
         {
-            // Add the new settings if necessary.
             placement.UpdateWidgetSettings();
-
-            // Save the missing settings to the table.
-            var settings = placement.WidgetSettings.Where(e => e.WidgetSettingId == Guid.Empty);
-            foreach (var setting in settings)
-            {
+            foreach (var setting in placement.WidgetSettings.Where(e => e.WidgetSettingId == Guid.Empty))
                 context.WidgetSettings.Add(setting);
-                context.SaveChanges();
-            }
         }
+
+        context.SaveChanges();
 
         return placements;
     }
@@ -241,18 +235,18 @@ public static class TuxDbContextExtensions
     /// <param name="widgetId">Widget ID</param>
     /// <param name="token"><see cref="CancellationToken"/> (optional)</param>
     /// <returns><see cref="Widget"/></returns>
-    public static Task<Widget> GetWidgetAsync(this ITuxDbContext context, Guid widgetId, CancellationToken token = default) =>
+    public static Task<Widget?> GetWidgetAsync(this ITuxDbContext context, Guid widgetId, CancellationToken token = default) =>
         context.Widgets
             .Include(w => w.WidgetDefaults)
             .FirstOrDefaultAsync(r => r.WidgetId == widgetId, cancellationToken: token);
 
     /// <summary>
-    /// 
+    /// Get Widget Placements by layout asynchronously.
     /// </summary>
     /// <param name="context"><see cref="ITuxDbContext"/></param>
-    /// <param name="layoutId"></param>
+    /// <param name="layoutId">Layout ID</param>
     /// <param name="token"><see cref="CancellationToken"/> (optional)</param>
-    /// <returns></returns>
+    /// <returns><see cref="List{WidgetPlacement}"/></returns>
     public static Task<List<WidgetPlacement>> GetPlacementsByLayoutAsync(this ITuxDbContext context,
         Guid layoutId, CancellationToken token = default) =>
         context.WidgetPlacements.Where(r => r.LayoutRowId == layoutId)
@@ -265,7 +259,7 @@ public static class TuxDbContextExtensions
     /// <param name="id">Dashboard Default ID</param>
     /// <param name="token"><see cref="CancellationToken"/> (optional)</param>
     /// <returns><see cref="DashboardDefault"/></returns>
-    public static async Task<DashboardDefault> GetDashboardDefaultAsync(this ITuxDbContext context, Guid id,
+    public static async Task<DashboardDefault?> GetDashboardDefaultAsync(this ITuxDbContext context, Guid id,
         CancellationToken token = default)
     {
         return await context.DashboardDefaults
@@ -283,10 +277,10 @@ public static class TuxDbContextExtensions
     /// <param name="planId">Plan ID</param>
     /// <param name="token"><see cref="CancellationToken"/> (optional)</param>
     /// <returns><see cref="DashboardDefault"/></returns>
-    public static async Task<DashboardDefault> GetDashboardTemplateForAsync(this ITuxDbContext context,
+    public static async Task<DashboardDefault?> GetDashboardTemplateForAsync(this ITuxDbContext context,
         int planId = 0, CancellationToken token = default)
     {
-        var layoutTypes = await context.LayoutTypes.ToListAsync(cancellationToken: token);
+        var layoutTypes = await context.LayoutTypes.ToDictionaryAsync(e => e.LayoutTypeId, cancellationToken: token);
 
         var query = context.DashboardDefaults
             .Include(dt => dt.DashboardDefaultWidgets)
@@ -300,13 +294,14 @@ public static class TuxDbContextExtensions
             ? await query.FirstOrDefaultAsync(e => e.PlanId == planId, cancellationToken: token)
             : await query.FirstOrDefaultAsync(cancellationToken: token);
 
-        if (result == null)
+        if (result is null)
             return null;
 
         var layout = result.Layout;
         foreach (var row in layout.LayoutRows)
         {
-            row.LayoutType = layoutTypes.FirstOrDefault(e => e.LayoutTypeId == row.LayoutTypeId);
+            if (layoutTypes.TryGetValue(row.LayoutTypeId, out var lt))
+                row.LayoutType = lt;
         }
 
         return result;
@@ -319,7 +314,7 @@ public static class TuxDbContextExtensions
     /// <param name="tabId">Dashboard Tab ID</param>
     /// <param name="token"><see cref="CancellationToken"/> (optional)</param>
     /// <returns><see cref="Layout"/></returns>
-    public static Task<Layout> GetLayoutForTabAsync(this ITuxDbContext context, Guid tabId, CancellationToken token = default) =>
+    public static Task<Layout?> GetLayoutForTabAsync(this ITuxDbContext context, Guid tabId, CancellationToken token = default) =>
         context.Layouts
             .Include(e => e.LayoutRows)
                 .ThenInclude(e => e.LayoutType)
@@ -356,10 +351,8 @@ public static class TuxDbContextExtensions
     /// <param name="layoutId">Layout ID</param>
     /// <param name="token"><see cref="CancellationToken"/> (optional)</param>
     /// <returns><see cref="Layout"/></returns>
-    public static async Task<Layout> GetLayoutAsync(this ITuxDbContext context, Guid layoutId, CancellationToken token = default)
+    public static async Task<Layout?> GetLayoutAsync(this ITuxDbContext context, Guid layoutId, CancellationToken token = default)
     {
-        var layoutTypes = await context.LayoutTypes.ToListAsync(cancellationToken: token);
-
         var layout = await context.Layouts
                 .Include(lo => lo.LayoutRows)
                     .ThenInclude(row => row.WidgetPlacements)
@@ -368,9 +361,15 @@ public static class TuxDbContextExtensions
                 .AsNoTracking()
                 .FirstOrDefaultAsync(e => e.LayoutId == layoutId, cancellationToken: token);
 
+        if (layout is null)
+            return null;
+
+        var layoutTypes = (await context.LayoutTypes.ToListAsync(cancellationToken: token))
+            .ToDictionary(e => e.LayoutTypeId);
         foreach (var row in layout.LayoutRows)
         {
-            row.LayoutType = layoutTypes.FirstOrDefault(e => e.LayoutTypeId == row.LayoutTypeId);
+            if (layoutTypes.TryGetValue(row.LayoutTypeId, out var lt))
+                row.LayoutType = lt;
         }
 
         return layout;
@@ -412,7 +411,7 @@ public static class TuxDbContextExtensions
     /// <param name="widgetPlacementId">Widget Placement ID</param>
     /// <param name="token"><see cref="CancellationToken"/> (optional)</param>
     /// <returns><see cref="WidgetPlacement"/></returns>
-    public static Task<WidgetPlacement> GetWidgetPlacementAsync(this ITuxDbContext context,
+    public static Task<WidgetPlacement?> GetWidgetPlacementAsync(this ITuxDbContext context,
         Guid widgetPlacementId, CancellationToken token = default) =>
 
         context.WidgetPlacements
@@ -426,18 +425,12 @@ public static class TuxDbContextExtensions
     {
         foreach (var placement in placements)
         {
-            // Add the new settings if necessary.
             placement.UpdateWidgetSettings();
-
-            // Save the missing settings to the table.
-            var settings = placement.WidgetSettings.Where(e => e.WidgetSettingId == Guid.Empty);
-            foreach (var setting in settings)
-            {
-                setting.WidgetSettingId = new Guid();
+            foreach (var setting in placement.WidgetSettings.Where(e => e.WidgetSettingId == Guid.Empty))
                 await context.WidgetSettings.AddAsync(setting, token);
-                await context.SaveChangesAsync(new CancellationToken());
-            }
         }
+
+        await context.SaveChangesAsync(token);
 
         return placements;
     }

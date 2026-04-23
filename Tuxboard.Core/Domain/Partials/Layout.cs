@@ -31,17 +31,25 @@ public partial class Layout
     /// <param name="tabId">An existing dashboard tab id</param>
     /// <param name="defaultDashboard"><see cref="DashboardDefault"/></param>
     /// <returns><see cref="List{Layout}"/></returns>
-    public static List<Layout> CreateDefaultLayouts(Guid tabId, DashboardDefault defaultDashboard)
+    public static List<Layout> CreateDefaultLayouts(Guid tabId, DashboardDefault? defaultDashboard)
     {
-        // No default dashboard exists.
-        if (defaultDashboard == null)
+        // No default dashboard exists — create a layout with one default row.
+        if (defaultDashboard is null)
         {
             return new List<Layout>
                 {
                     new()
                     {
                         LayoutIndex = 1,
-                        TabId = tabId
+                        TabId = tabId,
+                        LayoutRows = new List<LayoutRow>
+                        {
+                            new()
+                            {
+                                RowIndex = 1,
+                                LayoutTypeId = 1  // Three Columns, Equal (col-4/col-4/col-4)
+                            }
+                        }
                     }
                 };
         }
@@ -107,12 +115,7 @@ public partial class Layout
     public bool RowContainsWidgets(Guid layoutRowId)
     {
         var row = LayoutRows.FirstOrDefault(t => t.LayoutRowId == layoutRowId);
-        if (row != null)
-        {
-            return row.RowContainsWidgets();
-        }
-
-        return false;
+        return row is not null && row.RowContainsWidgets();
     }
 
     /// <summary>
@@ -130,16 +133,9 @@ public partial class Layout
     /// <returns><see cref="List{Widget}"/></returns>
     public List<Widget> GetWidgetsUsed()
     {
-        var widgets = LayoutRows.SelectMany(y => y.WidgetPlacements)
+        return LayoutRows.SelectMany(y => y.WidgetPlacements)
             .Select(e => e.Widget)
-            .ToList();
-
-        var widgetIds = widgets.Select(y => y.WidgetId)
-            .Distinct()
-            .ToList();
-
-        return widgetIds
-            .Select(r => widgets.FirstOrDefault(y => y.WidgetId == r))
+            .DistinctBy(w => w.WidgetId)
             .ToList();
     }
 
@@ -148,6 +144,6 @@ public partial class Layout
     /// </summary>
     /// <param name="placementId">Widget Placement Id</param>
     /// <returns><see cref="WidgetPlacement"/> if found, null if not found.</returns>
-    public WidgetPlacement GetWidgetPlacement(Guid placementId) =>
+    public WidgetPlacement? GetWidgetPlacement(Guid placementId) =>
         GetWidgetPlacements().FirstOrDefault(e => e.WidgetPlacementId == placementId);
 }

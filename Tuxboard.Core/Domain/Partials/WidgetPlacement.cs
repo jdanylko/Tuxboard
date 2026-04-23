@@ -40,9 +40,10 @@ public partial class WidgetPlacement
     /// GetDefaultSettingFor("WidgetTitle") would return the title
     /// </param>
     /// <returns><see cref="WidgetDefault"/> if the setting is found, null if it's not found.</returns>
-    public WidgetDefault GetDefaultSettingFor(string settingName)
+    public WidgetDefault? GetDefaultSettingFor(string settingName)
     {
-        return Widget?.WidgetDefaults?.FirstOrDefault(e => e.SettingName.ToLower() == settingName.ToLower());
+        return Widget?.WidgetDefaults?.FirstOrDefault(e =>
+            string.Equals(e.SettingName, settingName, StringComparison.OrdinalIgnoreCase));
     }
 
     /// <summary>
@@ -53,15 +54,14 @@ public partial class WidgetPlacement
     /// <param name="settingName">Setting Name (i.e. "WidgetTitle")</param>
     /// <param name="val">The setting's value (i.e. "My Projects")</param>
     /// <returns><see cref="WidgetSetting"/> if successfully set, null if not set or not found.</returns>
-    public WidgetSetting SetValue(string settingName, string val)
+    public WidgetSetting? SetValue(string settingName, string val)
     {
-        WidgetSetting current = null;
         var defaultSetting = GetDefaultSettingFor(settingName);
-        if (defaultSetting == null)
-            return current;
+        if (defaultSetting is null)
+            return null;
 
-        current = WidgetSettings.FirstOrDefault(e => e.WidgetDefaultId == defaultSetting.WidgetDefaultId);
-        if (current != null)
+        var current = WidgetSettings.FirstOrDefault(e => e.WidgetDefaultId == defaultSetting.WidgetDefaultId);
+        if (current is not null)
         {
             current.Value = val;
         }
@@ -78,11 +78,11 @@ public partial class WidgetPlacement
     public string GetSettingOrDefault(string settingName)
     {
         var defaultSetting = GetDefaultSettingFor(settingName);
-        if (defaultSetting == null) 
+        if (defaultSetting is null) 
             return string.Empty;
 
         var current = WidgetSettings.FirstOrDefault(e => e.WidgetDefaultId == defaultSetting.WidgetDefaultId);
-        return current != null 
+        return current is not null 
             ? current.Value 
             : defaultSetting.DefaultValue;
     }
@@ -90,7 +90,7 @@ public partial class WidgetPlacement
     /// <summary>
     /// Returns whether a <see cref="WidgetPlacement"/> has any settings
     /// </summary>
-    public bool HasSettings => WidgetSettings.Count > 0;
+    public bool HasSettings => WidgetSettings.Any();
 
     /// <summary>
     /// Returns whether a <see cref="Widget"/> has any default settings.
@@ -127,7 +127,7 @@ public partial class WidgetPlacement
         {
             var setting =
                 WidgetSettings.FirstOrDefault(e => e.WidgetDefaultId == widgetDefault.WidgetDefaultId);
-            if (setting == null)
+            if (setting is null)
             {
                 WidgetSettings.Add(CreateFrom(widgetDefault));
             }
@@ -151,7 +151,7 @@ public partial class WidgetPlacement
             {
                 Id = WidgetPlacementId, 
                 Value = t.setting.Value, 
-                Name = t.defaultSetting.SettingName
+                Name = t.defaultSetting!.SettingName
             })
             .ToList();
     }

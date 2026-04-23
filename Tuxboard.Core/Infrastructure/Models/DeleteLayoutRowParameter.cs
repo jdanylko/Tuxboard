@@ -10,10 +10,10 @@ public class DeleteLayoutRowParameter
     /// <summary>
     /// Get or set the layout row id to remove
     /// </summary>
-    public string LayoutRowId { get; set; }
+    public string LayoutRowId { get; set; } = string.Empty;
 
     /// <summary>
     /// Get or set the Tab Id containing the LayoutRowId; Used to confirm deleting a LayoutRow from a tab actually exists.
     /// </summary>
-    public string TabId { get; set; }
+    public string TabId { get; set; } = string.Empty;
 }

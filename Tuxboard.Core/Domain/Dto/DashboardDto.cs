@@ -12,7 +12,7 @@ public class DashboardDto
     /// <summary>
     /// TuxboardConfigDto
     /// </summary>
-    public TuxboardConfigDto Settings { get; set; }
+    public TuxboardConfigDto Settings { get; set; } = null!;
     /// <summary>
     /// Index of the currently selected <see cref="DashboardTab" /> (defaulted to 1).
     /// </summary>
@@ -20,5 +20,5 @@ public class DashboardDto
     /// <summary>
     /// DashboardTabDto for DashboardTabs
     /// </summary>
-    public List<DashboardTabDto> Tabs { get; set; }
+    public List<DashboardTabDto> Tabs { get; set; } = new();
 }

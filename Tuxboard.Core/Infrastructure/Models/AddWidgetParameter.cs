@@ -8,13 +8,13 @@ public class AddWidgetParameter
     /// <summary>
     /// Get or Set the UserID
     /// </summary>
-    public string UserId { get; set; }
+    public string UserId { get; set; } = string.Empty;
     /// <summary>
     /// Get or set the tab id
     /// </summary>
-    public string TabId { get; set; }
+    public string TabId { get; set; } = string.Empty;
     /// <summary>
     /// Get or set the Widget Id to add to their dashboard
     /// </summary>
-    public string WidgetId { get; set; }
+    public string WidgetId { get; set; } = string.Empty;
 }

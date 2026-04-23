@@ -83,10 +83,13 @@ public class WidgetPlacementTests
     public void ReturnWidgetSettingByName()
     {
         // Arrange
-        var placement = _dashboard.GetFirstLayoutRow().WidgetPlacements.FirstOrDefault();        
+        var row = _dashboard.GetFirstLayoutRow();
+        Assert.NotNull(row);
+        var placement = row.WidgetPlacements.FirstOrDefault();
+        Assert.NotNull(placement);
 
         // Act
-        var result = placement?.GetSettingOrDefault("WidgetTitle");
+        var result = placement.GetSettingOrDefault("WidgetTitle");
 
         // Assert
         Assert.Equal("Test Title", result);
@@ -96,11 +99,14 @@ public class WidgetPlacementTests
     public void ReturnWidgetSettingByNameWithMissingSetting()
     {
         // Arrange
-        var placement = _dashboard.GetFirstLayoutRow().WidgetPlacements.FirstOrDefault();
-        placement?.WidgetSettings.Clear();
+        var row = _dashboard.GetFirstLayoutRow();
+        Assert.NotNull(row);
+        var placement = row.WidgetPlacements.FirstOrDefault();
+        Assert.NotNull(placement);
+        placement.WidgetSettings.Clear();
 
         // Act
-        var result = placement?.GetSettingOrDefault("WidgetTitle");
+        var result = placement.GetSettingOrDefault("WidgetTitle");
 
         // Assert
         Assert.Equal("My Title", result);
@@ -110,10 +116,13 @@ public class WidgetPlacementTests
     public void ReturnWidgetSettingAfterSettingTitle()
     {
         // Arrange
-        var placement = _dashboard.GetFirstLayoutRow().WidgetPlacements.FirstOrDefault();        
+        var row = _dashboard.GetFirstLayoutRow();
+        Assert.NotNull(row);
+        var placement = row.WidgetPlacements.FirstOrDefault();
+        Assert.NotNull(placement);
 
         // Act
-        var result = placement?.SetValue("WidgetTitle", "My Test Title");
+        var result = placement.SetValue("WidgetTitle", "My Test Title");
 
         // Assert
         Assert.Equal("My Test Title", result?.Value);
@@ -123,10 +132,13 @@ public class WidgetPlacementTests
     public void ValidHasSettingsTest()
     {
         // Arrange
-        var placement = _dashboard.GetFirstLayoutRow().WidgetPlacements.FirstOrDefault();        
+        var row = _dashboard.GetFirstLayoutRow();
+        Assert.NotNull(row);
+        var placement = row.WidgetPlacements.FirstOrDefault();
+        Assert.NotNull(placement);
 
         // Act
-        var result = placement?.HasSettings;
+        var result = placement.HasSettings;
 
         // Assert
         Assert.True(result);
@@ -136,11 +148,14 @@ public class WidgetPlacementTests
     public void InvalidHasSettingsTest()
     {
         // Arrange
-        var placement = _dashboard.GetFirstLayoutRow().WidgetPlacements.FirstOrDefault();
-        placement?.WidgetSettings.Clear();
+        var row = _dashboard.GetFirstLayoutRow();
+        Assert.NotNull(row);
+        var placement = row.WidgetPlacements.FirstOrDefault();
+        Assert.NotNull(placement);
+        placement.WidgetSettings.Clear();
 
         // Act
-        var result = placement?.HasSettings;
+        var result = placement.HasSettings;
 
         // Assert
         Assert.False(result);
@@ -150,10 +165,13 @@ public class WidgetPlacementTests
     public void ValidDefaultSettingsExistTest()
     {
         // Arrange
-        var placement = _dashboard.GetFirstLayoutRow().WidgetPlacements.FirstOrDefault();
+        var row = _dashboard.GetFirstLayoutRow();
+        Assert.NotNull(row);
+        var placement = row.WidgetPlacements.FirstOrDefault();
+        Assert.NotNull(placement);
 
         // Act
-        var result = placement?.DefaultSettingsExist;
+        var result = placement.DefaultSettingsExist;
 
         // Assert
         Assert.True(result);
@@ -163,11 +181,14 @@ public class WidgetPlacementTests
     public void DefaultSettingsDontExistTest()
     {
         // Arrange
-        var placement = _dashboard.GetFirstLayoutRow().WidgetPlacements.FirstOrDefault();
-        placement?.Widget.WidgetDefaults.Clear();
+        var row = _dashboard.GetFirstLayoutRow();
+        Assert.NotNull(row);
+        var placement = row.WidgetPlacements.FirstOrDefault();
+        Assert.NotNull(placement);
+        placement.Widget.WidgetDefaults.Clear();
 
         // Act
-        var result = placement?.DefaultSettingsExist;
+        var result = placement.DefaultSettingsExist;
 
         // Assert
         Assert.False(result);
@@ -177,10 +198,13 @@ public class WidgetPlacementTests
     public void MissingSettingsTest()
     {
         // Arrange
-        var placement = _dashboard.GetFirstLayoutRow().WidgetPlacements.FirstOrDefault();
+        var row = _dashboard.GetFirstLayoutRow();
+        Assert.NotNull(row);
+        var placement = row.WidgetPlacements.FirstOrDefault();
+        Assert.NotNull(placement);
 
         // Act
-        var result = placement?.MissingSettings;
+        var result = placement.MissingSettings;
 
         // Assert
         // WidgetDefaults count should equal the WidgetSettings count.
@@ -191,11 +215,15 @@ public class WidgetPlacementTests
     public void CreateSingleWidgetSettingFromWidgetDefault()
     {
         // Arrange
-        var placement = _dashboard.GetFirstLayoutRow().WidgetPlacements.FirstOrDefault();
-        var defaultSetting = placement?.GetDefaultSettingFor("widgettitle");
+        var row = _dashboard.GetFirstLayoutRow();
+        Assert.NotNull(row);
+        var placement = row.WidgetPlacements.FirstOrDefault();
+        Assert.NotNull(placement);
+        var defaultSetting = placement.GetDefaultSettingFor("widgettitle");
+        Assert.NotNull(defaultSetting);
 
         // Act
-        var expected = placement?.CreateFrom(defaultSetting);
+        var expected = placement.CreateFrom(defaultSetting);
 
         // Assert
         Assert.NotNull(expected);
@@ -207,16 +235,19 @@ public class WidgetPlacementTests
     public void CreateWidgetSettingsBasedOnWidgetDefaults()
     {
         // Arrange
-        var placement = _dashboard.GetFirstLayoutRow().WidgetPlacements.FirstOrDefault();
-        placement?.WidgetSettings.Clear();
+        var row = _dashboard.GetFirstLayoutRow();
+        Assert.NotNull(row);
+        var placement = row.WidgetPlacements.FirstOrDefault();
+        Assert.NotNull(placement);
+        placement.WidgetSettings.Clear();
 
         // Act
-        placement?.UpdateWidgetSettings();
-        var result = placement?.WidgetSettings.FirstOrDefault();
+        placement.UpdateWidgetSettings();
+        var result = placement.WidgetSettings.FirstOrDefault();
 
         // Assert
         Assert.NotNull(result);
-        Assert.Equal(placement?.WidgetSettings.Count, placement?.Widget.WidgetDefaults.Count);
+        Assert.Equal(placement.WidgetSettings.Count, placement.Widget.WidgetDefaults.Count);
         Assert.Equal("My Title", result.Value);
     }
 

@@ -4,6 +4,8 @@ using Tuxboard.Core.Configuration;
 using Tuxboard.Core.Data.Context;
 using Tuxboard.Core.Infrastructure;
 using Tuxboard.Core.Infrastructure.Services;
+using System.Reflection;
+using System.Linq;
 
 namespace Tuxboard.Core.Tests.Infrastructure.Extensions;
 
@@ -15,14 +17,14 @@ public class ServiceCollectionExtensionsTests
         // Arrange
         const string connectionString = "Server=MyServer;Database=Tuxboard;Trusted_Connection=True;MultipleActiveResultSets=true";
         const string schema = "MySchema";
-        string jsonConfig = $$$"""
-        {
-            "TuxboardConfig": {
-                "ConnectionString": "{{{connectionString}}}",
-                "Schema": "{{{schema}}}"
-            }
-        }
-        """;
+        var jsonConfig = $$$"""
+                            {
+                                "TuxboardConfig": {
+                                    "ConnectionString": "{{{connectionString}}}",
+                                    "Schema": "{{{schema}}}"
+                                }
+                            }
+                            """;
 
         // Load the JSON string into a stream
         using MemoryStream stream = new();
@@ -37,7 +39,7 @@ public class ServiceCollectionExtensionsTests
 
         // Act
         services.AddTuxboardDashboard<int>(configuration);
-        ServiceProvider provider = services.BuildServiceProvider();
+        var provider = services.BuildServiceProvider();
         var config = provider.GetService<ITuxboardConfig>();
 
         // Assert
@@ -53,10 +55,13 @@ public class ServiceCollectionExtensionsTests
     {
         // Arrange
         var services = new ServiceCollection();
-        IConfiguration? configuration = null;
+        var method = typeof(ServiceCollectionExtensions).GetMethods().First(m => m.Name == "AddTuxboardDashboard" && m.GetParameters().Length == 2 && m.GetParameters()[1].ParameterType == typeof(IConfiguration));
+        object? nullArg = null;
+        object?[] args = [services, nullArg];
 
         // Act & Assert
-        Assert.Throws<ArgumentNullException>(() => services.AddTuxboardDashboard<int>(configuration));
+        var ex = Assert.Throws<TargetInvocationException>(() => method.Invoke(null, args));
+        Assert.IsType<ArgumentNullException>(ex.InnerException);
     }
 
     [Fact]
@@ -73,7 +78,7 @@ public class ServiceCollectionExtensionsTests
         ServiceCollection services = new();
         // Act
         services.AddTuxboardDashboard<int>(setupConfig);
-        ServiceProvider provider = services.BuildServiceProvider();
+        var provider = services.BuildServiceProvider();
         var config = provider.GetService<ITuxboardConfig>();
 
         // Assert
@@ -89,9 +94,12 @@ public class ServiceCollectionExtensionsTests
     {
         // Arrange
         var services = new ServiceCollection();
-        Action<TuxboardConfig>? setupConfig = null;
 
         // Act & Assert
-        Assert.Throws<ArgumentNullException>(() => services.AddTuxboardDashboard<int>(setupConfig));
+        var method = typeof(ServiceCollectionExtensions).GetMethods().First(m => m.Name == "AddTuxboardDashboard" && m.GetParameters().Length == 2 && m.GetParameters()[1].ParameterType == typeof(Action<TuxboardConfig>));
+        object? nullArg = null;
+        object?[] args = [services, nullArg];
+        var ex = Assert.Throws<TargetInvocationException>(() => method.Invoke(null, args));
+        Assert.IsType<ArgumentNullException>(ex.InnerException);
     }
 }

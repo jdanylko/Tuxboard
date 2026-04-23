@@ -10,15 +10,15 @@ public class DeleteWidgetParameter
     /// <summary>
     /// Get or set the user requesting the deletion
     /// </summary>
-    public string UserId { get; set; }
+    public string UserId { get; set; } = string.Empty;
     
     /// <summary>
     /// Get or set the tab id
     /// </summary>
-    public string TabId { get; set; }
+    public string TabId { get; set; } = string.Empty;
     
     /// <summary>
     /// Get or set the Widget Placement Id to remove
     /// </summary>
-    public string PlacementId { get; set; }
+    public string PlacementId { get; set; } = string.Empty;
 }

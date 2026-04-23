@@ -13,15 +13,15 @@ namespace Tuxboard.Core.Data.Configuration;
 public class DashboardDefaultWidgetConfiguration : IEntityTypeConfiguration<DashboardDefaultWidget>
 {
     private readonly TuxboardConfig _config;
-    private readonly Action<EntityTypeBuilder<DashboardDefaultWidget>> _seedAction;
+    private readonly Action<EntityTypeBuilder<DashboardDefaultWidget>>? _seedAction;
 
     /// <summary>
-    /// 
+    /// Initializes the EF Core configuration for <see cref="DashboardDefaultWidget"/> with the provided options and optional seed action.
     /// </summary>
-    /// <param name="config"></param>
-    /// <param name="seedAction"></param>
+    /// <param name="config">Tuxboard configuration options, including schema name and seed data settings.</param>
+    /// <param name="seedAction">Optional action to apply additional seed data for <see cref="DashboardDefaultWidget"/>.</param>
     public DashboardDefaultWidgetConfiguration(TuxboardConfig config,
-        Action<EntityTypeBuilder<DashboardDefaultWidget>> seedAction = null)
+        Action<EntityTypeBuilder<DashboardDefaultWidget>>? seedAction = null)
     {
         _config = config;
         _seedAction = seedAction;
@@ -42,8 +42,7 @@ public class DashboardDefaultWidgetConfiguration : IEntityTypeConfiguration<Dash
 
         builder.Property(e => e.DefaultWidgetId)
             .HasMaxLength(36)
-            .IsUnicode(false)
-            .HasDefaultValueSql("(newid())");
+            .IsUnicode(false);
 
         builder.Property(e => e.DashboardDefaultId)
             .IsRequired()

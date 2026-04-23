@@ -41,7 +41,7 @@ public partial class Plan
     /// <summary>
     /// Get or set the plan title
     /// </summary>
-    public string Title { get; set; }
+    public string Title { get; set; } = string.Empty;
 
     /// <summary>
     /// Get or set a collection of default dashboards related to a Plan

@@ -13,15 +13,15 @@ namespace Tuxboard.Core.Data.Configuration;
 public class WidgetConfiguration : IEntityTypeConfiguration<Widget>
 {
     private readonly TuxboardConfig _config;
-    private readonly Action<EntityTypeBuilder<Widget>> _seedAction;
+    private readonly Action<EntityTypeBuilder<Widget>>? _seedAction;
 
     /// <summary>
-    /// 
+    /// Initializes the EF Core configuration for <see cref="Widget"/> with the provided options and optional seed action.
     /// </summary>
-    /// <param name="config"></param>
-    /// <param name="seedAction"></param>
+    /// <param name="config">Tuxboard configuration options, including schema name and seed data settings.</param>
+    /// <param name="seedAction">Optional action to apply additional seed data for <see cref="Widget"/>.</param>
     public WidgetConfiguration(TuxboardConfig config,
-        Action<EntityTypeBuilder<Widget>> seedAction = null)
+        Action<EntityTypeBuilder<Widget>>? seedAction = null)
     {
         _config = config;
         _seedAction = seedAction;
@@ -34,8 +34,7 @@ public class WidgetConfiguration : IEntityTypeConfiguration<Widget>
 
         builder.Property(e => e.WidgetId)
             .HasMaxLength(36)
-            .IsUnicode(false)
-            .HasDefaultValueSql("(newid())");
+            .IsUnicode(false);
 
         builder.Property(e => e.Description)
             .IsRequired()

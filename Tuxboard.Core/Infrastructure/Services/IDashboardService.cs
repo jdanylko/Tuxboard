@@ -30,7 +30,7 @@ public interface IDashboardService<TUserId> where TUserId: struct
     /// <param name="userId"></param>
     /// <param name="token"></param>
     /// <returns></returns>
-    Task<Dashboard<TUserId>> CreateFromTemplateAsync(DashboardDefault template, TUserId? userId,
+    Task<Dashboard<TUserId>> CreateFromTemplateAsync(DashboardDefault? template, TUserId? userId,
         CancellationToken token = default);
 
     /// <summary>
@@ -40,7 +40,7 @@ public interface IDashboardService<TUserId> where TUserId: struct
     /// <param name="config"></param>
     /// <param name="userId"></param>
     /// <returns></returns>
-    Dashboard<TUserId> GetDashboardFor(ITuxboardConfig config, TUserId? userId);
+    Dashboard<TUserId>? GetDashboardFor(ITuxboardConfig config, TUserId? userId);
     /// <summary>
     /// Retrieve a <see cref="Dashboard{T}"/> for a user asynchronously.
     /// If a dashboard doesn't exist for the user, it'll create one based on a default dashboard.
@@ -49,7 +49,7 @@ public interface IDashboardService<TUserId> where TUserId: struct
     /// <param name="userId"></param>
     /// <param name="token"></param>
     /// <returns></returns>
-    Task<Dashboard<TUserId>> GetDashboardForAsync(ITuxboardConfig config, TUserId userId,
+    Task<Dashboard<TUserId>?> GetDashboardForAsync(ITuxboardConfig config, TUserId userId,
         CancellationToken token = default);
 
     /// <summary>
@@ -57,14 +57,14 @@ public interface IDashboardService<TUserId> where TUserId: struct
     /// </summary>
     /// <param name="template"></param>
     /// <returns></returns>
-    Dashboard<TUserId> CreateDashboardFrom(DashboardDefault template);
+    Dashboard<TUserId> CreateDashboardFrom(DashboardDefault? template);
     /// <summary>
     /// Create a dashboard from a default dashboard asynchronously.
     /// </summary>
     /// <param name="template"></param>
     /// <param name="token"></param>
     /// <returns></returns>
-    Task<Dashboard<TUserId>> CreateDashboardFromAsync(DashboardDefault template, 
+    Task<Dashboard<TUserId>> CreateDashboardFromAsync(DashboardDefault? template, 
         CancellationToken token = default);
 
     /// <summary>
@@ -73,7 +73,7 @@ public interface IDashboardService<TUserId> where TUserId: struct
     /// </summary>
     /// <param name="config"><see cref="ITuxboardConfig"/></param>
     /// <returns><see cref="Dashboard{T}"/></returns>
-    Dashboard<TUserId> GetDashboard(ITuxboardConfig config);
+    Dashboard<TUserId>? GetDashboard(ITuxboardConfig config);
     /// <summary>
     /// Retrieve a static <see cref="Dashboard{T}"/> asynchronously
     /// If a dashboard doesn't exist, it'll create one based on an existing default dashboard.
@@ -81,7 +81,7 @@ public interface IDashboardService<TUserId> where TUserId: struct
     /// <param name="config"><see cref="ITuxboardConfig"/></param>
     /// <param name="token"><see cref="CancellationToken"/> (optional)</param>
     /// <returns><see cref="Dashboard{T}"/></returns>
-    Task<Dashboard<TUserId>> GetDashboardAsync(ITuxboardConfig config, CancellationToken token = default);
+    Task<Dashboard<TUserId>?> GetDashboardAsync(ITuxboardConfig config, CancellationToken token = default);
 
     /// <summary>
     /// Retrieve a <see cref="Layout"/> from a <see cref="DashboardTab"/> Id synchronously.
@@ -89,7 +89,7 @@ public interface IDashboardService<TUserId> where TUserId: struct
     /// </summary>
     /// <param name="tabId">Tab Id</param>
     /// <returns><see cref="Layout"/></returns>
-    Layout GetLayoutFromTab(Guid tabId);
+    Layout? GetLayoutFromTab(Guid tabId);
     /// <summary>
     /// Retrieve a <see cref="Layout"/> from a <see cref="DashboardTab"/> Id asynchronously.
     /// If a dashboard doesn't exist, it'll create one based on an existing default dashboard.
@@ -97,7 +97,7 @@ public interface IDashboardService<TUserId> where TUserId: struct
     /// <param name="tabId">Tab Id</param>
     /// <param name="token"><see cref="CancellationToken"/> (optional)</param>
     /// <returns><see cref="Layout"/></returns>
-    Task<Layout> GetLayoutFromTabAsync(Guid tabId, CancellationToken token = default);
+    Task<Layout?> GetLayoutFromTabAsync(Guid tabId, CancellationToken token = default);
 
     /// <summary>
     /// Retrieve a <see cref="List{WidgetPlacement}"/> from a <see cref="DashboardTab"/> synchronously.
@@ -119,7 +119,7 @@ public interface IDashboardService<TUserId> where TUserId: struct
     /// <param name="template"><see cref="DashboardDefault"/></param>
     /// <param name="userId">UserID - <see cref="Guid"/></param>
     /// <returns><see cref="Dashboard{T}"/></returns>
-    Dashboard<TUserId> CreateDashboardFrom(DashboardDefault template, TUserId? userId);
+    Dashboard<TUserId> CreateDashboardFrom(DashboardDefault? template, TUserId? userId);
     /// <summary>
     /// Create a <see cref="Dashboard{T}"/> from a <see cref="DashboardDefault"/>. There is an option to assign a user ID to the dashboard as well. This is an asynchronous call.
     /// </summary>
@@ -127,7 +127,7 @@ public interface IDashboardService<TUserId> where TUserId: struct
     /// <param name="userId">UserID - <see cref="Guid"/></param>
     /// <param name="token"><see cref="CancellationToken"/> (optional)</param>
     /// <returns><see cref="Dashboard{T}"/></returns>
-    Task<Dashboard<TUserId>> CreateDashboardFromAsync(DashboardDefault template, TUserId? userId,
+    Task<Dashboard<TUserId>> CreateDashboardFromAsync(DashboardDefault? template, TUserId? userId,
         CancellationToken token = default);
 
     /// <summary>
@@ -161,14 +161,14 @@ public interface IDashboardService<TUserId> where TUserId: struct
     /// </summary>
     /// <param name="id">Widget ID</param>
     /// <returns><see cref="Widget"/></returns>
-    Widget GetWidget(Guid id);
+    Widget? GetWidget(Guid id);
     /// <summary>
     /// Return a <see cref="Widget"/> by ID asynchronously.
     /// </summary>
     /// <param name="id">Widget ID</param>
     /// <param name="token"><see cref="CancellationToken"/> (optional)</param>
     /// <returns><see cref="Widget"/></returns>
-    Task<Widget> GetWidgetAsync(Guid id, CancellationToken token = default);
+    Task<Widget?> GetWidgetAsync(Guid id, CancellationToken token = default);
 
     /// <summary>
     /// Return a <see cref="List{Widget}"/> synchronously.
@@ -187,14 +187,14 @@ public interface IDashboardService<TUserId> where TUserId: struct
     /// </summary>
     /// <param name="id">Widget Placement ID</param>
     /// <returns><see cref="WidgetPlacement"/></returns>
-    WidgetPlacement GetWidgetPlacement(Guid id);
+    WidgetPlacement? GetWidgetPlacement(Guid id);
     /// <summary>
     /// Retrieve a <see cref="WidgetPlacement"/> by ID asynchronously.
     /// </summary>
     /// <param name="id">Widget Placement ID</param>
     /// <param name="token"><see cref="CancellationToken"/> (optional)</param>
     /// <returns><see cref="WidgetPlacement"/></returns>
-    Task<WidgetPlacement> GetWidgetPlacementAsync(Guid id, CancellationToken token = default);
+    Task<WidgetPlacement?> GetWidgetPlacementAsync(Guid id, CancellationToken token = default);
 
     /// <summary>
     /// Remove a <see cref="LayoutRow"/> by ID synchronously. If a <see cref="LayoutRow"/> contains widgets, the layout row will NOT be removed and fail every time.
@@ -287,7 +287,7 @@ public interface IDashboardService<TUserId> where TUserId: struct
     /// </summary>
     /// <param name="param"><see cref="PlacementParameter"/></param>
     /// <returns><see cref="WidgetPlacement"/></returns>
-    WidgetPlacement SaveWidgetPlacement(PlacementParameter param);
+    WidgetPlacement? SaveWidgetPlacement(PlacementParameter param);
     /// <summary>
     /// When a <see cref="WidgetPlacement"/> is moved on a dashboard from one <see cref="LayoutRow"/> to another,
     /// location data is required to persist the data.
@@ -298,7 +298,7 @@ public interface IDashboardService<TUserId> where TUserId: struct
     /// <param name="param"><see cref="PlacementParameter"/></param>
     /// <param name="token"><see cref="CancellationToken"/> (optional)</param>
     /// <returns><see cref="WidgetPlacement"/></returns>
-    Task<WidgetPlacement> SaveWidgetPlacementAsync(PlacementParameter param, CancellationToken token = default);
+    Task<WidgetPlacement?> SaveWidgetPlacementAsync(PlacementParameter param, CancellationToken token = default);
 
     /// <summary>
     /// Updates the <see cref="WidgetPlacement.Collapsed"/> synchronously.
@@ -306,7 +306,7 @@ public interface IDashboardService<TUserId> where TUserId: struct
     /// <param name="id"><see cref="WidgetPlacement"/> ID</param>
     /// <param name="collapsed">Get or set to collapse the body. True to collapse the body and only display the header, false to expand and display the body of the widget.</param>
     /// <returns><see cref="WidgetPlacement"/></returns>
-    WidgetPlacement UpdateCollapsed(Guid id, bool collapsed);
+    WidgetPlacement? UpdateCollapsed(Guid id, bool collapsed);
     /// <summary>
     /// Updates the <see cref="WidgetPlacement.Collapsed"/> asynchronously.
     /// </summary>
@@ -314,7 +314,7 @@ public interface IDashboardService<TUserId> where TUserId: struct
     /// <param name="collapsed">Get or set to collapse the body. True to collapse the body and only display the header, false to expand and display the body of the widget.</param>
     /// <param name="token"><see cref="CancellationToken"/> (optional)</param>
     /// <returns><see cref="WidgetPlacement"/></returns>
-    Task<WidgetPlacement> UpdateCollapsedAsync(Guid id, bool collapsed, CancellationToken token = default);
+    Task<WidgetPlacement?> UpdateCollapsedAsync(Guid id, bool collapsed, CancellationToken token = default);
 
     /// <summary>
     /// Saves a widget's settings synchronously.
@@ -379,8 +379,9 @@ public interface IDashboardService<TUserId> where TUserId: struct
     /// </summary>
     /// <param name="tabId"><see cref="DashboardTab"/> ID</param>
     /// <param name="layoutRowId"><see cref="LayoutRow"/> ID</param>
+    /// <param name="token"><see cref="CancellationToken"/> (optional)</param>
     /// <returns>true if the layout row can be deleted, false if it can't be deleted.</returns>
-    Task<bool> CanDeleteLayoutRowAsync(Guid tabId, Guid layoutRowId);
+    Task<bool> CanDeleteLayoutRowAsync(Guid tabId, Guid layoutRowId, CancellationToken token = default);
 
     /// <summary>
     /// Adds a new <see cref="WidgetPlacement"/> synchronously. 
