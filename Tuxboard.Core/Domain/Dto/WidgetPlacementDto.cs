@@ -1,4 +1,4 @@
-﻿using System;
+﻿using Tuxboard.Core.Domain.Entities;
 
 namespace Tuxboard.Core.Domain.Dto;
 
