@@ -20,11 +20,13 @@ The domain is structured as a strict containment hierarchy. Explain it top-down:
 
 ```
 Dashboard<T>           (generic on user ID type: Guid, int, etc.)
-  └── DashboardTab     (one or more tabs per dashboard)
-        └── Layout     (one layout per tab)
-              └── LayoutRow             (one or more rows, each with a LayoutType)
-                    └── WidgetPlacement (one widget instance per cell)
-                          └── WidgetSetting  (per-placement key/value settings)
+  ├── DashboardTab     (one or more tabs per dashboard)
+  |     └── Layout     (one layout per tab)
+  │           └── LayoutRow             (one or more rows, each with a LayoutType)
+  │                 └── WidgetPlacement (one widget instance per cell)
+  │                       └── WidgetSetting  (per-placement key/value settings)
+  └── DashboardDefault       (template for creating new dashboards)
+      └── DashboardDefaultWidget (pre-placed widgets in a template)
 ```
 
 ### Key Entities
