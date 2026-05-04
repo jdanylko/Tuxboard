@@ -210,6 +210,9 @@ IF NOT EXISTS (SELECT 1 FROM sys.objects WHERE object_id = OBJECT_ID(N'[${input:
 BEGIN
     CREATE TABLE [${input:schema}].[Layout] (
         [LayoutId]    varchar(36) NOT NULL DEFAULT (newid()),
+        -- NULL TabId means this is a template layout, not assigned to any DashboardTab.
+        -- Template layouts are referenced by the DashboardDefault table via the LayoutId field
+        -- and are used as the default layout applied when a new dashboard is provisioned for a user.
         [TabId]       varchar(36) NULL,
         [LayoutIndex] int         NOT NULL DEFAULT 1,
         CONSTRAINT [PK_Layout]                        PRIMARY KEY ([LayoutId]),
