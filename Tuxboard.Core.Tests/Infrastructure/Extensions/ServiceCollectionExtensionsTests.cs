@@ -55,7 +55,7 @@ public class ServiceCollectionExtensionsTests
     {
         // Arrange
         var services = new ServiceCollection();
-        var method = typeof(ServiceCollectionExtensions).GetMethods().First(m => m.Name == "AddTuxboardDashboard" && m.GetParameters().Length == 2 && m.GetParameters()[1].ParameterType == typeof(IConfiguration));
+        var method = typeof(ServiceCollectionExtensions).GetMethods().First(m => m.Name == "AddTuxboardDashboard" && m.GetParameters().Length == 2 && m.GetParameters()[1].ParameterType == typeof(IConfiguration)).MakeGenericMethod(typeof(int));
         object? nullArg = null;
         object?[] args = [services, nullArg];
 
@@ -96,7 +96,7 @@ public class ServiceCollectionExtensionsTests
         var services = new ServiceCollection();
 
         // Act & Assert
-        var method = typeof(ServiceCollectionExtensions).GetMethods().First(m => m.Name == "AddTuxboardDashboard" && m.GetParameters().Length == 2 && m.GetParameters()[1].ParameterType == typeof(Action<TuxboardConfig>));
+        var method = typeof(ServiceCollectionExtensions).GetMethods().First(m => m.Name == "AddTuxboardDashboard" && m.GetParameters().Length == 2 && m.GetParameters()[1].ParameterType == typeof(Action<TuxboardConfig>)).MakeGenericMethod(typeof(int));
         object? nullArg = null;
         object?[] args = [services, nullArg];
         var ex = Assert.Throws<TargetInvocationException>(() => method.Invoke(null, args));

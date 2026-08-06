@@ -260,9 +260,9 @@ public class DashboardServiceTests : IDisposable
         Assert.True(result);
 
         await using var verifyCtx = CreateContext();
-        Assert.Null(await verifyCtx.WidgetPlacements.FindAsync([placementId], TestContext.Current.CancellationToken));
-        Assert.Null(await verifyCtx.WidgetSettings.FindAsync([settingId1], TestContext.Current.CancellationToken));
-        Assert.Null(await verifyCtx.WidgetSettings.FindAsync([settingId2], TestContext.Current.CancellationToken));
+        Assert.Null(await verifyCtx.WidgetPlacements.FindAsync(new object[] { placementId }, CancellationToken.None));
+        Assert.Null(await verifyCtx.WidgetSettings.FindAsync(new object[] { settingId1 }, CancellationToken.None));
+        Assert.Null(await verifyCtx.WidgetSettings.FindAsync(new object[] { settingId2 }, CancellationToken.None));
     }
 
     [Fact]
@@ -279,7 +279,7 @@ public class DashboardServiceTests : IDisposable
         Assert.True(result);
 
         await using var verifyCtx = CreateContext();
-        Assert.Null(await verifyCtx.WidgetPlacements.FindAsync([placementId], TestContext.Current.CancellationToken));
+        Assert.Null(await verifyCtx.WidgetPlacements.FindAsync(new object[] { placementId }, CancellationToken.None));
     }
 
     /// <summary>

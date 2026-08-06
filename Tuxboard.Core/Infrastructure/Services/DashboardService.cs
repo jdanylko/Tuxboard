@@ -128,7 +128,10 @@ public class DashboardService<T> : IDashboardService<T> where T: struct
         var currentTab = dashboard.GetCurrentTab();
         var tabId = currentTab.TabId;
 
-        currentTab.Layouts = Layout.CreateDefaultLayouts(tabId, template);
+        var layouts = Layout.CreateDefaultLayouts(tabId, template);
+        _context.Layouts.AddRange(layouts);
+        currentTab.Layouts = layouts;
+
         _context.SaveChanges();
 
         return dashboard;
@@ -191,66 +194,71 @@ public class DashboardService<T> : IDashboardService<T> where T: struct
         if (newList.Count == 0) return false;
 
         var success = true;
-
-        // Add - batch all new rows then save once
-        foreach (var item in newList.Where(e => e.LayoutRowId == Guid.Empty))
+        
+        // Add
+        foreach (var item in newList.Where(
+                     e => e.LayoutRowId.ToString() == string.Empty
+                          || e.LayoutRowId.Equals(Guid.Empty)))
         {
             _context.LayoutRows.Add(new LayoutRow
             {
-                LayoutRowId  = Guid.NewGuid(),
-                LayoutId     = oldLayout.LayoutId,
+                LayoutId = oldLayout.LayoutId,
                 LayoutTypeId = item.TypeId,
-                RowIndex     = item.Index
+                RowIndex = item.Index
             });
-        }
-        try
-        {
-            _context.SaveChanges();
-        }
-        catch (DbUpdateException ex)
-        {
-            _logger.LogError(ex, "An error occurred saving layout changes.");
-            return false;
+            try
+            {
+                _context.SaveChanges();
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError(ex, "An error occurred saving layout changes.");
+                success = false;
+            }
         }
 
-        // Delete - stage all removals then save once
+        // Delete
         foreach (var layoutRow in oldLayout.LayoutRows.Where(e => newList.All(y => y.LayoutRowId != e.LayoutRowId)))
         {
             var loadedRow = _context.LayoutRows
                 .Include(r => r.WidgetPlacements)
                 .FirstOrDefault(e => e.LayoutRowId == layoutRow.LayoutRowId);
-            if (loadedRow is not null && !loadedRow.RowContainsWidgets())
+            if (loadedRow != null && !loadedRow.RowContainsWidgets())
             {
                 _context.LayoutRows.Remove(loadedRow);
             }
-        }
-        try
-        {
-            _context.SaveChanges();
-        }
-        catch (DbUpdateException ex)
-        {
-            _logger.LogError(ex, "An error occurred saving layout changes.");
-            return false;
+            try
+            {
+                _context.SaveChanges();
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError(ex, "An error occurred saving layout changes.");
+                success = false;
+            }
         }
 
-        // Update - stage all index/type changes then save once
+        // Update
         foreach (var item in newList)
         {
             var row = _context.LayoutRows.FirstOrDefault(y => y.LayoutRowId == item.LayoutRowId);
-            if (row is null) continue;
+            if (row != null)
+            {
+                row.RowIndex = item.Index;
+                row.LayoutTypeId = item.TypeId;
+                try
+                {
+                    _context.SaveChanges();
+                }
+                catch (Exception ex)
+                {
+                    _logger.LogError(ex, "An error occurred saving layout changes.");
+                    success = false;
+                }
+            }
 
-            row.RowIndex = item.Index;
-            row.LayoutTypeId = item.TypeId;
-        }
-        try
-        {
-            _context.SaveChanges();
-        }
-        catch (DbUpdateException ex)
-        {
-            _logger.LogError(ex, "An error occurred saving layout changes.");
-            return false;
+            if (!success)
+                break;
         }
 
         return success;
@@ -515,11 +523,13 @@ public class DashboardService<T> : IDashboardService<T> where T: struct
         var currentTab = dashboard.GetCurrentTab();
         var tabId = currentTab.TabId;
 
-        currentTab.Layouts = Layout.CreateDefaultLayouts(tabId, template);
+        var layouts = Layout.CreateDefaultLayouts(tabId, template);
+        await _context.Layouts.AddRangeAsync(layouts, token);
+        currentTab.Layouts = layouts;
+
         await _context.SaveChangesAsync(token);
 
         return dashboard;
-
     }
 
     /// <inheritdoc />
@@ -629,66 +639,67 @@ public class DashboardService<T> : IDashboardService<T> where T: struct
 
         var success = true;
 
-        // Add - batch all new rows then save once
-        foreach (var item in newList.Where(e => e.LayoutRowId == Guid.Empty))
+        // Add
+        foreach (var item in newList.Where(
+                     e => e.LayoutRowId.ToString() == string.Empty
+                          || e.LayoutRowId.Equals(Guid.Empty)))
         {
             _context.LayoutRows.Add(new LayoutRow
             {
-                LayoutRowId  = Guid.NewGuid(),
-                LayoutId     = oldLayout.LayoutId,
+                LayoutId = oldLayout.LayoutId,
                 LayoutTypeId = item.TypeId,
-                RowIndex     = item.Index
+                RowIndex = item.Index
             });
-        }
-        try
-        {
-            await _context.SaveChangesAsync(token);
-        }
-        catch (DbUpdateException ex)
-        {
-            _logger.LogError(ex, "An error occurred saving layout changes.");
-            return false;
+            try
+            {
+                await _context.SaveChangesAsync(token);
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError(ex, "An error occurred saving layout changes.");
+                success = false;
+            }
         }
 
-        // Delete - stage all removals then save once
+        // Delete
         foreach (var layoutRow in oldLayout.LayoutRows.Where(e => newList.All(y => y.LayoutRowId != e.LayoutRowId)))
         {
-            var loadedRow = await _context.LayoutRows
+            var loadedRow = _context.LayoutRows
                 .Include(r => r.WidgetPlacements)
-                .FirstOrDefaultAsync(e => e.LayoutRowId == layoutRow.LayoutRowId, cancellationToken: token);
-            if (loadedRow is not null && !loadedRow.RowContainsWidgets())
+                .FirstOrDefault(e => e.LayoutRowId == layoutRow.LayoutRowId);
+            if (loadedRow != null && !loadedRow.RowContainsWidgets())
             {
                 _context.LayoutRows.Remove(loadedRow);
             }
-        }
-        try
-        {
-            await _context.SaveChangesAsync(token);
-        }
-        catch (DbUpdateException ex)
-        {
-            _logger.LogError(ex, "An error occurred saving layout changes.");
-            return false;
+            try
+            {
+                await _context.SaveChangesAsync(token);
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError(ex, "An error occurred saving layout changes.");
+                success = false;
+            }
         }
 
-        // Update - stage all index/type changes then save once
+        // Update
         foreach (var item in newList)
         {
             var row = await _context.LayoutRows.FirstOrDefaultAsync(y => y.LayoutRowId == item.LayoutRowId, cancellationToken: token);
-            if (row is null || row.RowIndex == item.Index)
+            if (row == null || row.RowIndex == item.Index)
                 continue;
 
             row.RowIndex = item.Index;
             row.LayoutTypeId = item.TypeId;
-        }
-        try
-        {
-            await _context.SaveChangesAsync(token);
-        }
-        catch (DbUpdateException ex)
-        {
-            _logger.LogError(ex, "An error occurred saving layout changes.");
-            return false;
+            try
+            {
+                await _context.SaveChangesAsync(token);
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError(ex, "An error occurred saving layout changes.");
+                success = false;
+            }
         }
 
         return success;

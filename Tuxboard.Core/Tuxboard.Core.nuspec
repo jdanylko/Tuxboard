@@ -1,8 +1,8 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
-<package xmlns="http://schemas.microsoft.com/packaging/2012/06/nuspec.xsd">
+<package xmlns="http://schemas.microsoft.com/packaging/2013/05/nuspec.xsd">
 	<metadata>
 		<id>Tuxboard.Core</id>
-		<version>10.0.7</version>
+		<version>10.0.10</version>
 		<authors>Jonathan "JD" Danylko</authors>
 		<owners>Jonathan "JD" Danylko</owners>
 		<requireLicenseAcceptance>false</requireLicenseAcceptance>
@@ -11,10 +11,14 @@
 		<copyright>2019-2026</copyright>
 		<tags>CSharp C# Dashboard OpenSource</tags>
 		<repository type="C#" url="https://github.com/jdanylko/Tuxboard" />
-		<dependencies>
+    <readme>docs\README.md</readme>
+    <releaseNotes>
+      - SaveLayout/SaveLayoutAsync is reverted back to save as each section is being updated.
+    </releaseNotes>
+    <dependencies>
 			<group targetFramework="net10.0">
-				<dependency id="Microsoft.EntityFrameworkCore" version="10.0.5" exclude="Compile,Build,Analyzers" />
-				<dependency id="Microsoft.EntityFrameworkCore.SqlServer" version="10.0.5" exclude="Compile,Build,Analyzers" />
+				<dependency id="Microsoft.EntityFrameworkCore" version="10.0.7" exclude="Compile,Build,Analyzers" />
+				<dependency id="Microsoft.EntityFrameworkCore.SqlServer" version="10.0.7" exclude="Compile,Build,Analyzers" />
 				<dependency id="Microsoft.Extensions.DependencyInjection.Abstractions" version="10.0.0" exclude="Compile,Build,Analyzers" />
 			</group>
 		</dependencies>
