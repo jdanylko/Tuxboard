@@ -1,3 +1,20 @@
+v.10.0.10
+==========
+
+Release summary:
+
+- Bumped package and project versions to 10.0.10 (EF Core, test packages, and NuGet metadata).
+- Reliability and stability fixes across TuxDbContextExtensions and DashboardService (null guards,
+  proper CancellationToken propagation, removed double SaveChangesAsync, and safer exception handling).
+- Performance improvements: reduced N+1 database operations, batched SaveChanges outside loops,
+  replaced linear lookups with dictionary-based lookups, and switched existence checks to Any()/AnyAsync().
+- Tests and documentation updated (README, docs, and added AI prompts for architecture and DB setup).
+
+Notes:
+
+- This branch focuses on performance and stability refinements: fewer DB round-trips, clearer
+  nullable contracts, and improved test coverage. See commits in feature/performance-and-stability-issues for details.
+
 v.10.0.7.1
 ==========
 
@@ -23,7 +40,7 @@ General Fixes:
 - Domain/Partials: nullable returns in Dashboard.cs, Layout.cs, WidgetPlacement.cs
 - Infrastructure/Models (7 files): string = string.Empty, PlacementList = new()
 - ViewModels: LayoutDialogViewModel, SaveLayoutViewModel nullable fixes
-- ServiceCollectionExtensions: IConfiguration?, Action<TuxboardConfig>? params
+- ServiceCollectionExtensions: IConfiguration?, Action<TuxboardConfig}? params
 - Test files: null-forgiving where required by nullable context
 
 Critical bugs:
@@ -70,3 +87,4 @@ Bug fixes:
 
 - Added AI prompts for architecture
 - Added AI Prompt for generating a Tuxboard database
+
