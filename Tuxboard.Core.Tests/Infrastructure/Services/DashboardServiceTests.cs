@@ -733,8 +733,12 @@ public class DashboardServiceTests : IDisposable
     // -------------------------------------------------------------------------
 
     [Fact]
-    public void CreateFromTemplate_WhenTemplateNull_CreatesDashboardAndDefaultLayoutAndCallsSaveChangesTwice()
+    public void CreateFromTemplate_WhenTemplateNull_CreatesDashboardAndDefaultLayoutAndCallsSaveChanges()
     {
+        using var seedCtx = CreateContext();
+        seedCtx.LayoutTypes.Add(new LayoutType { LayoutTypeId = 1, Title = "Default", Layout = "col-12" });
+        seedCtx.SaveChanges();
+
         using var context = CreateContext();
         var service = CreateService(context);
         var userId = 123;
@@ -759,6 +763,10 @@ public class DashboardServiceTests : IDisposable
     [Fact]
     public async Task CreateFromTemplateAsync_WhenTemplateNull_CreatesDashboardAndDefaultLayoutAndPassesToken()
     {
+        await using var seedCtx = CreateContext();
+        seedCtx.LayoutTypes.Add(new LayoutType { LayoutTypeId = 1, Title = "Default", Layout = "col-12" });
+        await seedCtx.SaveChangesAsync(CancellationToken.None);
+
         await using var context = CreateContext();
         var service = CreateService(context);
         var userId = 456;
