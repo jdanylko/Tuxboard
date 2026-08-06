@@ -29,6 +29,15 @@
     <None Remove="Properties\**" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Content Include="docs\ReleaseNotes.txt">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="docs\README.md">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+  </ItemGroup>
+
 <ItemGroup>
 <FrameworkReference Include="Microsoft.AspNetCore.App" />
 </ItemGroup>
@@ -39,14 +48,14 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Service Include="{508349b6-6b84-4df5-91f0-309beebad82d}" />
+    <Page Include="docs\README.md">
+      <Pack>True</Pack>
+      <PackagePath>\</PackagePath>
+    </Page>
   </ItemGroup>
 
   <ItemGroup>
-    <None Update="docs\README.md">
-      <Pack>True</Pack>
-      <PackagePath>\</PackagePath>
-    </None>
+    <Service Include="{508349b6-6b84-4df5-91f0-309beebad82d}" />
   </ItemGroup>
 
 </Project>
