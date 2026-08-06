@@ -1,23 +1,22 @@
 # Tu><board 
 
-![Tuxboard Example](images/TuxboardExample.png)
+## Latest Builds
 
-<p>
-  <img src="https://jdanylko.vsrm.visualstudio.com/_apis/public/Release/badge/624b04d9-c444-4cb9-bd43-23d11c8291b0/1/2" />
-  <img alt="GitHub" src="https://img.shields.io/github/license/jdanylko/Tuxboard">
-  <img alt="NuGet" src="https://img.shields.io/nuget/v/Tuxboard.core">
-  <img alt="Contributors" src="https://img.shields.io/github/contributors/jdanylko/Tuxboard">
-</p>
+| |    Latest stable     | Build status      | Contributors
+|----------------- | ----------------- | ------------
+| `Tuxboard.Core`                  | [![](https://img.shields.io/nuget/v/Tuxboard.Core.svg?logo=nuget)](https://www.nuget.org/packages/Tuxboard.Core)                                   | [![Build Status](https://img.shields.io/azure-devops/build/jdanylko/624b04d9-c444-4cb9-bd43-23d11c8291b0/3)](https://img.shields.io/azure-devops/build/jdanylko/624b04d9-c444-4cb9-bd43-23d11c8291b0/3) | [![GitHub contributors](https://img.shields.io/github/contributors/jdanylko/Tuxboard)](https://img.shields.io/github/contributors/jdanylko/Tuxboard)
 
-**UPDATE:** Version 10.0.10 is now available on <a href="https://www.nuget.org/packages/Tuxboard.Core/" title="Go to Tuxboard.Core on NuGet.org">NuGet</a>.
+
+**UPDATE:** Version 10.0.10 is now available on [NuGet](https://www.nuget.org/packages/Tuxboard.Core/).
 
 Tuxboard is a lightweight, open-source dashboard library specifically for the ASP.NET Core platform. It was meant to be
 a Lego-style way to build dashboards.
 
 #### Technology Stack
 
-  - ASP.NET 10.0 or higher (using C#)
+  - ASP.NET Core 10.0 or higher (using C#)
   - Entity Framework Core
+  - SQL Server
   
 #### Features
 
@@ -43,6 +42,5 @@ The developer could start with a simple structure where ANY type of dashboard co
  * Examples are in a separate repository [Tuxboard.Examples](https://github.com/jdanylko/Tuxboard.Examples)
  * A collection of [Tuxboard posts](https://www.danylkoweb.com/Tuxboard/) are available on DanylkoWeb.com
 
-## Contributors
-![GitHub Contributors Image](https://contrib.rocks/image?repo=jdanylko/Tuxboard)
+
 

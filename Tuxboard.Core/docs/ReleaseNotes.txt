@@ -1,0 +1,90 @@
+v.10.0.10
+==========
+
+Release summary:
+
+- Bumped package and project versions to 10.0.10 (EF Core, test packages, and NuGet metadata).
+- Reliability and stability fixes across TuxDbContextExtensions and DashboardService (null guards,
+  proper CancellationToken propagation, removed double SaveChangesAsync, and safer exception handling).
+- Performance improvements: reduced N+1 database operations, batched SaveChanges outside loops,
+  replaced linear lookups with dictionary-based lookups, and switched existence checks to Any()/AnyAsync().
+- Tests and documentation updated (README, docs, and added AI prompts for architecture and DB setup).
+
+Notes:
+
+- This branch focuses on performance and stability refinements: fewer DB round-trips, clearer
+  nullable contracts, and improved test coverage. See commits in feature/performance-and-stability-issues for details.
+
+v.10.0.7.1
+==========
+
+Critical Bugs:
+
+- SaveLayout/SaveLayoutAsync is reverted back to save as each section is being updated.
+
+v.10.0.7
+=========
+
+General Fixes: 
+
+- Fixed all 13 EF configuration files: _seedAction field + param made nullable (CS8625)
+- Fixed DTOs: DashboardDto, DashboardTabDto, LayoutDto, LayoutRowDto, WidgetDto,
+  WidgetPlacementDto, WidgetSettingDto -- string properties = string.Empty, collections = new()
+- Fixed Column.ColumnClass, WidgetDialogViewModel collections
+- TuxDbContextExtensions: nullable return types (Widget?, Layout?, DashboardDefault?,
+  WidgetPlacement?), GetLayout/GetLayoutAsync null guards, First() for LayoutType
+- IDashboardService: nullable return types on 14 method signatures
+- DashboardService: matched all interface nullable changes, First() for LayoutType (4 places),
+  placement?.ToSettingsDto() ?? new List<>() guard in SaveWidgetSettings
+- All entity navigation properties: required navs = null!, optional navs = ?, string props = string.Empty
+- Domain/Partials: nullable returns in Dashboard.cs, Layout.cs, WidgetPlacement.cs
+- Infrastructure/Models (7 files): string = string.Empty, PlacementList = new()
+- ViewModels: LayoutDialogViewModel, SaveLayoutViewModel nullable fixes
+- ServiceCollectionExtensions: IConfiguration?, Action<TuxboardConfig}? params
+- Test files: null-forgiving where required by nullable context
+
+Critical bugs:
+
+- Dashboard.cs RowContainsWidgets: tab == null inverted to tab != null (was guaranteed NRE)
+- TuxDbContextExtensions GetLayout/GetLayoutAsync: null guard after FirstOrDefault prevents NRE
+- DashboardService RemoveWidget (sync): null guard for placement before dereference
+- DashboardService RemoveWidgetAsync: null guard + removed double SaveChangesAsync that
+  created partial-delete window; single SaveChangesAsync(token) at end
+- TuxDbContextExtensions: new CancellationToken() replaced with token parameter (2 sites)
+
+Performance:
+
+- DashboardExists/For, DashboardExistsAsync/ForAsync: FirstOrDefault()!=null -> Any()/AnyAsync()
+- GetDashboard/GetDashboardFor/GetDashboardAsync/GetDashboardForAsync: layoutTypes.ToList()
+  + FirstOrDefault loop replaced with ToDictionary + TryGetValue (O(n) -> O(1))
+- UpdateMissingSettings/Async: batched SaveChanges outside loop (was per-item)
+- GetWidgetsForTab: batched SaveChanges outside loop, removed new Guid() assignments
+
+Bug fixes:
+
+- AddWidgetToTab/Async
+  - Null guard for widget (return failure, not NRE)
+  - Null guard for firstLayoutRow (return failure, not NRE)
+- SaveLayout/Async
+  - Catch(Exception) narrowed to catch(DbUpdateException) in 6 blocks
+  - Removed redundant Guid.ToString()==string.Empty check
+- SaveWidgetSettings/Async: N+1 saves replaced with WHERE IN batch query + single SaveChanges
+- GetWidgetsForTab: removed null-forgiving ! on Layout navigation, replaced with explicit check
+- Dashboard.GetLayoutRow: null-safe ?. on layout navigation
+- Dashboard.ContainsOneRow: null guards for tab and layout
+- WidgetPlacement.HasSettings: Count > 0 replaced with .Any()
+- ServiceCollectionExtensions: removed unnecessary ! on Assembly.GetCallingAssembly() (2 sites)
+- TuxDbContextExtensions: removed commented-out dead code
+
+- Enforced stricter nullability and invariants for dashboard, tab, and layout relationships; APIs now return nullable types or throw on invariant violations.
+- Updated all DTOs, entities, and view models to use non-null default initializers for collections and strings.
+- Refactored DashboardService and TuxDbContextExtensions to use nullable returns and batch DB changes; enforced "at least one row" per layout.
+- Improved EF Core configuration classes with nullable seed actions and better XML docs.
+- Added a complete, idempotent SQL Server setup script and prompt for Tuxboard schema.
+- Upgraded to .NET 10.0.7, enabled nullable reference types, and updated dependencies.
+- Expanded test coverage for new invariants and error handling.
+- Performed minor code cleanups and improved documentation throughout.
+
+- Added AI prompts for architecture
+- Added AI Prompt for generating a Tuxboard database
+

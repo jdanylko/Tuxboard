@@ -128,7 +128,10 @@ public class DashboardService<T> : IDashboardService<T> where T: struct
         var currentTab = dashboard.GetCurrentTab();
         var tabId = currentTab.TabId;
 
-        currentTab.Layouts = Layout.CreateDefaultLayouts(tabId, template);
+        var layouts = Layout.CreateDefaultLayouts(tabId, template);
+        _context.Layouts.AddRange(layouts);
+        currentTab.Layouts = layouts;
+
         _context.SaveChanges();
 
         return dashboard;
@@ -191,9 +194,11 @@ public class DashboardService<T> : IDashboardService<T> where T: struct
         if (newList.Count == 0) return false;
 
         var success = true;
-
-        // Add - batch all new rows then save once
-        foreach (var item in newList.Where(e => e.LayoutRowId == Guid.Empty))
+        
+        // Add
+        foreach (var item in newList.Where(
+                     e => e.LayoutRowId.ToString() == string.Empty
+                          || e.LayoutRowId.Equals(Guid.Empty)))
         {
             _context.LayoutRows.Add(new LayoutRow
             {
@@ -202,15 +207,15 @@ public class DashboardService<T> : IDashboardService<T> where T: struct
                 LayoutTypeId = item.TypeId,
                 RowIndex     = item.Index
             });
-        }
-        try
-        {
-            _context.SaveChanges();
-        }
-        catch (DbUpdateException ex)
-        {
-            _logger.LogError(ex, "An error occurred saving layout changes.");
-            return false;
+            try
+            {
+                _context.SaveChanges();
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError(ex, "An error occurred saving layout changes.");
+                success = false;
+            }
         }
 
         // Delete - stage all removals then save once
@@ -223,22 +228,35 @@ public class DashboardService<T> : IDashboardService<T> where T: struct
             {
                 _context.LayoutRows.Remove(loadedRow);
             }
-        }
-        try
-        {
-            _context.SaveChanges();
-        }
-        catch (DbUpdateException ex)
-        {
-            _logger.LogError(ex, "An error occurred saving layout changes.");
-            return false;
+            try
+            {
+                _context.SaveChanges();
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError(ex, "An error occurred saving layout changes.");
+                success = false;
+            }
         }
 
         // Update - stage all index/type changes then save once
         foreach (var item in newList)
         {
             var row = _context.LayoutRows.FirstOrDefault(y => y.LayoutRowId == item.LayoutRowId);
-            if (row is null) continue;
+            if (row != null)
+            {
+                row.RowIndex = item.Index;
+                row.LayoutTypeId = item.TypeId;
+                try
+                {
+                    _context.SaveChanges();
+                }
+                catch (Exception ex)
+                {
+                    _logger.LogError(ex, "An error occurred saving layout changes.");
+                    success = false;
+                }
+            }
 
             row.RowIndex = item.Index;
             row.LayoutTypeId = item.TypeId;
@@ -515,11 +533,13 @@ public class DashboardService<T> : IDashboardService<T> where T: struct
         var currentTab = dashboard.GetCurrentTab();
         var tabId = currentTab.TabId;
 
-        currentTab.Layouts = Layout.CreateDefaultLayouts(tabId, template);
+        var layouts = Layout.CreateDefaultLayouts(tabId, template);
+        await _context.Layouts.AddRangeAsync(layouts, token);
+        currentTab.Layouts = layouts;
+
         await _context.SaveChangesAsync(token);
 
         return dashboard;
-
     }
 
     /// <inheritdoc />
@@ -629,8 +649,10 @@ public class DashboardService<T> : IDashboardService<T> where T: struct
 
         var success = true;
 
-        // Add - batch all new rows then save once
-        foreach (var item in newList.Where(e => e.LayoutRowId == Guid.Empty))
+        // Add
+        foreach (var item in newList.Where(
+                     e => e.LayoutRowId.ToString() == string.Empty
+                          || e.LayoutRowId.Equals(Guid.Empty)))
         {
             _context.LayoutRows.Add(new LayoutRow
             {
@@ -639,15 +661,15 @@ public class DashboardService<T> : IDashboardService<T> where T: struct
                 LayoutTypeId = item.TypeId,
                 RowIndex     = item.Index
             });
-        }
-        try
-        {
-            await _context.SaveChangesAsync(token);
-        }
-        catch (DbUpdateException ex)
-        {
-            _logger.LogError(ex, "An error occurred saving layout changes.");
-            return false;
+            try
+            {
+                await _context.SaveChangesAsync(token);
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError(ex, "An error occurred saving layout changes.");
+                success = false;
+            }
         }
 
         // Delete - stage all removals then save once
@@ -660,15 +682,15 @@ public class DashboardService<T> : IDashboardService<T> where T: struct
             {
                 _context.LayoutRows.Remove(loadedRow);
             }
-        }
-        try
-        {
-            await _context.SaveChangesAsync(token);
-        }
-        catch (DbUpdateException ex)
-        {
-            _logger.LogError(ex, "An error occurred saving layout changes.");
-            return false;
+            try
+            {
+                await _context.SaveChangesAsync(token);
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError(ex, "An error occurred saving layout changes.");
+                success = false;
+            }
         }
 
         // Update - stage all index/type changes then save once
@@ -680,15 +702,15 @@ public class DashboardService<T> : IDashboardService<T> where T: struct
 
             row.RowIndex = item.Index;
             row.LayoutTypeId = item.TypeId;
-        }
-        try
-        {
-            await _context.SaveChangesAsync(token);
-        }
-        catch (DbUpdateException ex)
-        {
-            _logger.LogError(ex, "An error occurred saving layout changes.");
-            return false;
+            try
+            {
+                await _context.SaveChangesAsync(token);
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError(ex, "An error occurred saving layout changes.");
+                success = false;
+            }
         }
 
         return success;

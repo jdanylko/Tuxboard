@@ -260,9 +260,9 @@ public class DashboardServiceTests : IDisposable
         Assert.True(result);
 
         await using var verifyCtx = CreateContext();
-        Assert.Null(await verifyCtx.WidgetPlacements.FindAsync([placementId], TestContext.Current.CancellationToken));
-        Assert.Null(await verifyCtx.WidgetSettings.FindAsync([settingId1], TestContext.Current.CancellationToken));
-        Assert.Null(await verifyCtx.WidgetSettings.FindAsync([settingId2], TestContext.Current.CancellationToken));
+        Assert.Null(await verifyCtx.WidgetPlacements.FindAsync(new object[] { placementId }, CancellationToken.None));
+        Assert.Null(await verifyCtx.WidgetSettings.FindAsync(new object[] { settingId1 }, CancellationToken.None));
+        Assert.Null(await verifyCtx.WidgetSettings.FindAsync(new object[] { settingId2 }, CancellationToken.None));
     }
 
     [Fact]
@@ -279,7 +279,7 @@ public class DashboardServiceTests : IDisposable
         Assert.True(result);
 
         await using var verifyCtx = CreateContext();
-        Assert.Null(await verifyCtx.WidgetPlacements.FindAsync([placementId], TestContext.Current.CancellationToken));
+        Assert.Null(await verifyCtx.WidgetPlacements.FindAsync(new object[] { placementId }, CancellationToken.None));
     }
 
     /// <summary>
@@ -726,5 +726,68 @@ public class DashboardServiceTests : IDisposable
         await service.AddLayoutRowAsync(layout, 8, CancellationToken.None);
 
         Assert.Equal(1, context.SaveChangesAsyncCallCount);
+    }
+
+    // -------------------------------------------------------------------------
+    // CreateFromTemplate / CreateFromTemplateAsync
+    // -------------------------------------------------------------------------
+
+    [Fact]
+    public void CreateFromTemplate_WhenTemplateNull_CreatesDashboardAndDefaultLayoutAndCallsSaveChanges()
+    {
+        using var seedCtx = CreateContext();
+        seedCtx.LayoutTypes.Add(new LayoutType { LayoutTypeId = 1, Title = "Default", Layout = "col-12" });
+        seedCtx.SaveChanges();
+
+        using var context = CreateContext();
+        var service = CreateService(context);
+        var userId = 123;
+
+        var dashboard = service.CreateFromTemplate(null, userId);
+
+        Assert.NotNull(dashboard);
+
+        using var verifyCtx = CreateContext();
+        Assert.Equal(1, verifyCtx.Dashboards.Count());
+        var stored = verifyCtx.Dashboards.First();
+        Assert.Equal(userId, stored.UserId);
+
+        Assert.Equal(1, verifyCtx.Layouts.Count());
+        Assert.Equal(1, verifyCtx.LayoutRows.Count());
+        var row = verifyCtx.LayoutRows.First();
+        Assert.Equal(1, row.LayoutTypeId);
+
+        Assert.Equal(2, context.SaveChangesCallCount);
+    }
+
+    [Fact]
+    public async Task CreateFromTemplateAsync_WhenTemplateNull_CreatesDashboardAndDefaultLayoutAndPassesToken()
+    {
+        await using var seedCtx = CreateContext();
+        seedCtx.LayoutTypes.Add(new LayoutType { LayoutTypeId = 1, Title = "Default", Layout = "col-12" });
+        await seedCtx.SaveChangesAsync(CancellationToken.None);
+
+        await using var context = CreateContext();
+        var service = CreateService(context);
+        var userId = 456;
+        using var cts = new CancellationTokenSource();
+        var token = cts.Token;
+
+        var dashboard = await service.CreateFromTemplateAsync(null, userId, token);
+
+        Assert.NotNull(dashboard);
+
+        await using var verifyCtx = CreateContext();
+        Assert.Equal(1, verifyCtx.Dashboards.Count());
+        var stored = verifyCtx.Dashboards.First();
+        Assert.Equal(userId, stored.UserId);
+
+        Assert.Equal(1, verifyCtx.Layouts.Count());
+        Assert.Equal(1, verifyCtx.LayoutRows.Count());
+        var row = verifyCtx.LayoutRows.First();
+        Assert.Equal(1, row.LayoutTypeId);
+
+        Assert.Equal(2, context.SaveChangesAsyncCallCount);
+        Assert.All(context.CapturedAsyncTokens, t => Assert.Equal(token, t));
     }
 }
