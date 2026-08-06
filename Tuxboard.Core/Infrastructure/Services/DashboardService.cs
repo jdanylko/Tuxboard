@@ -202,9 +202,10 @@ public class DashboardService<T> : IDashboardService<T> where T: struct
         {
             _context.LayoutRows.Add(new LayoutRow
             {
-                LayoutId = oldLayout.LayoutId,
+                LayoutRowId  = Guid.NewGuid(),
+                LayoutId     = oldLayout.LayoutId,
                 LayoutTypeId = item.TypeId,
-                RowIndex = item.Index
+                RowIndex     = item.Index
             });
             try
             {
@@ -217,13 +218,13 @@ public class DashboardService<T> : IDashboardService<T> where T: struct
             }
         }
 
-        // Delete
+        // Delete - stage all removals then save once
         foreach (var layoutRow in oldLayout.LayoutRows.Where(e => newList.All(y => y.LayoutRowId != e.LayoutRowId)))
         {
             var loadedRow = _context.LayoutRows
                 .Include(r => r.WidgetPlacements)
                 .FirstOrDefault(e => e.LayoutRowId == layoutRow.LayoutRowId);
-            if (loadedRow != null && !loadedRow.RowContainsWidgets())
+            if (loadedRow is not null && !loadedRow.RowContainsWidgets())
             {
                 _context.LayoutRows.Remove(loadedRow);
             }
@@ -238,7 +239,7 @@ public class DashboardService<T> : IDashboardService<T> where T: struct
             }
         }
 
-        // Update
+        // Update - stage all index/type changes then save once
         foreach (var item in newList)
         {
             var row = _context.LayoutRows.FirstOrDefault(y => y.LayoutRowId == item.LayoutRowId);
@@ -257,8 +258,17 @@ public class DashboardService<T> : IDashboardService<T> where T: struct
                 }
             }
 
-            if (!success)
-                break;
+            row.RowIndex = item.Index;
+            row.LayoutTypeId = item.TypeId;
+        }
+        try
+        {
+            _context.SaveChanges();
+        }
+        catch (DbUpdateException ex)
+        {
+            _logger.LogError(ex, "An error occurred saving layout changes.");
+            return false;
         }
 
         return success;
@@ -646,9 +656,10 @@ public class DashboardService<T> : IDashboardService<T> where T: struct
         {
             _context.LayoutRows.Add(new LayoutRow
             {
-                LayoutId = oldLayout.LayoutId,
+                LayoutRowId  = Guid.NewGuid(),
+                LayoutId     = oldLayout.LayoutId,
                 LayoutTypeId = item.TypeId,
-                RowIndex = item.Index
+                RowIndex     = item.Index
             });
             try
             {
@@ -661,13 +672,13 @@ public class DashboardService<T> : IDashboardService<T> where T: struct
             }
         }
 
-        // Delete
+        // Delete - stage all removals then save once
         foreach (var layoutRow in oldLayout.LayoutRows.Where(e => newList.All(y => y.LayoutRowId != e.LayoutRowId)))
         {
-            var loadedRow = _context.LayoutRows
+            var loadedRow = await _context.LayoutRows
                 .Include(r => r.WidgetPlacements)
-                .FirstOrDefault(e => e.LayoutRowId == layoutRow.LayoutRowId);
-            if (loadedRow != null && !loadedRow.RowContainsWidgets())
+                .FirstOrDefaultAsync(e => e.LayoutRowId == layoutRow.LayoutRowId, cancellationToken: token);
+            if (loadedRow is not null && !loadedRow.RowContainsWidgets())
             {
                 _context.LayoutRows.Remove(loadedRow);
             }
@@ -682,11 +693,11 @@ public class DashboardService<T> : IDashboardService<T> where T: struct
             }
         }
 
-        // Update
+        // Update - stage all index/type changes then save once
         foreach (var item in newList)
         {
             var row = await _context.LayoutRows.FirstOrDefaultAsync(y => y.LayoutRowId == item.LayoutRowId, cancellationToken: token);
-            if (row == null || row.RowIndex == item.Index)
+            if (row is null || row.RowIndex == item.Index)
                 continue;
 
             row.RowIndex = item.Index;
