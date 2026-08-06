@@ -11,7 +11,7 @@
 		<copyright>2019-2026</copyright>
 		<tags>CSharp C# Dashboard OpenSource</tags>
 		<repository type="C#" url="https://github.com/jdanylko/Tuxboard" />
-    <readme>README.md</readme>
+    <readme>docs\README.md</readme>
     <releaseNotes>See docs/ReleaseNotes.txt included in package under /docs for full release notes.</releaseNotes>
     <dependencies>
 			<group targetFramework="net10.0">
@@ -28,7 +28,7 @@
 	</metadata>
 	<files>
 		<file src="bin\Release\net10.0\Tuxboard.Core.dll" target="lib\net10.0\Tuxboard.Core.dll" />
-		<file src="README.md" target="docs\README.md" />
-		<file src="ReleaseNotes.txt" target="docs\ReleaseNotes.txt" />
+		<file src="README.md" target="" />
+		<file src="Tuxboard.Core\docs\ReleaseNotes.txt" target="docs\ReleaseNotes.txt" />
 	</files>
 </package>
