@@ -727,4 +727,59 @@ public class DashboardServiceTests : IDisposable
 
         Assert.Equal(1, context.SaveChangesAsyncCallCount);
     }
+
+    // -------------------------------------------------------------------------
+    // CreateFromTemplate / CreateFromTemplateAsync
+    // -------------------------------------------------------------------------
+
+    [Fact]
+    public void CreateFromTemplate_WhenTemplateNull_CreatesDashboardAndDefaultLayoutAndCallsSaveChangesTwice()
+    {
+        using var context = CreateContext();
+        var service = CreateService(context);
+        var userId = 123;
+
+        var dashboard = service.CreateFromTemplate(null, userId);
+
+        Assert.NotNull(dashboard);
+
+        using var verifyCtx = CreateContext();
+        Assert.Equal(1, verifyCtx.Dashboards.Count());
+        var stored = verifyCtx.Dashboards.First();
+        Assert.Equal(userId, stored.UserId);
+
+        Assert.Equal(1, verifyCtx.Layouts.Count());
+        Assert.Equal(1, verifyCtx.LayoutRows.Count());
+        var row = verifyCtx.LayoutRows.First();
+        Assert.Equal(1, row.LayoutTypeId);
+
+        Assert.Equal(2, context.SaveChangesCallCount);
+    }
+
+    [Fact]
+    public async Task CreateFromTemplateAsync_WhenTemplateNull_CreatesDashboardAndDefaultLayoutAndPassesToken()
+    {
+        await using var context = CreateContext();
+        var service = CreateService(context);
+        var userId = 456;
+        using var cts = new CancellationTokenSource();
+        var token = cts.Token;
+
+        var dashboard = await service.CreateFromTemplateAsync(null, userId, token);
+
+        Assert.NotNull(dashboard);
+
+        await using var verifyCtx = CreateContext();
+        Assert.Equal(1, verifyCtx.Dashboards.Count());
+        var stored = verifyCtx.Dashboards.First();
+        Assert.Equal(userId, stored.UserId);
+
+        Assert.Equal(1, verifyCtx.Layouts.Count());
+        Assert.Equal(1, verifyCtx.LayoutRows.Count());
+        var row = verifyCtx.LayoutRows.First();
+        Assert.Equal(1, row.LayoutTypeId);
+
+        Assert.Equal(2, context.SaveChangesAsyncCallCount);
+        Assert.All(context.CapturedAsyncTokens, t => Assert.Equal(token, t));
+    }
 }
