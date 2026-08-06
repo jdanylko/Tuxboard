@@ -28,7 +28,7 @@
 	</metadata>
 	<files>
 		<file src="bin\Release\net10.0\Tuxboard.Core.dll" target="lib\net10.0\Tuxboard.Core.dll" />
-		<file src="Tuxboard.Core\docs\README.md" target="docs\README.md" />
-		<file src="Tuxboard.Core\docs\ReleaseNotes.txt" target="docs\ReleaseNotes.txt" />
+		<file src="docs\README.md" target="docs\README.md" />
+		<file src="docs\ReleaseNotes.txt" target="docs\ReleaseNotes.txt" />
 	</files>
 </package>
