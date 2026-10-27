@@ -9,7 +9,7 @@
 
   <PropertyGroup Label="Package metadata">
     <PackageId>Tuxboard.Core</PackageId>
-    <Version>10.0.10</Version>
+    <Version>10.0.14</Version>
     <Authors>Jonathan "JD" Danylko</Authors>
     <Owners>Jonathan "JD" Danylko</Owners>
     <Product>Tuxboard</Product>
@@ -47,8 +47,8 @@
   </ItemGroup>
 
   <ItemGroup>
-    <PackageReference Include="Microsoft.EntityFrameworkCore" Version="10.0.10" />
-    <PackageReference Include="Microsoft.EntityFrameworkCore.SqlServer" Version="10.0.10" />
+    <PackageReference Include="Microsoft.EntityFrameworkCore" Version="10.0.14" />
+    <PackageReference Include="Microsoft.EntityFrameworkCore.SqlServer" Version="10.0.14" />
     <!-- Override vulnerable transitive version pulled in by Microsoft.Data.SqlClient -->
     <PackageReference Include="System.Security.Cryptography.Pkcs" Version="10.0.14" />
   </ItemGroup>
