@@ -2,7 +2,7 @@
 
 > **Draft.** This roadmap was inferred from the code, not from maintainer plans. Treat every item as a proposal until it is confirmed or dropped.
 
-Current release: **v10.0.14** (.NET 10, EF Core, nullable reference types enabled).
+Current release: **v10.0.14.1** (.NET 10, EF Core, nullable reference types enabled).
 
 ## Recently completed
 
