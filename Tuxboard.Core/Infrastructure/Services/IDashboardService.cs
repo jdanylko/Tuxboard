@@ -71,6 +71,10 @@ public interface IDashboardService<TUserId> where TUserId: struct
     /// Retrieve a static <see cref="Dashboard{T}"/> synchronously
     /// If a dashboard doesn't exist, it'll create one based on an existing default dashboard.
     /// </summary>
+    /// <remarks>
+    /// Returns the first dashboard in the data store regardless of user. Intended for
+    /// single-dashboard or anonymous scenarios only; in multi-user apps use the overload that takes a user ID.
+    /// </remarks>
     /// <param name="config"><see cref="ITuxboardConfig"/></param>
     /// <returns><see cref="Dashboard{T}"/></returns>
     Dashboard<TUserId>? GetDashboard(ITuxboardConfig config);
@@ -78,6 +82,10 @@ public interface IDashboardService<TUserId> where TUserId: struct
     /// Retrieve a static <see cref="Dashboard{T}"/> asynchronously
     /// If a dashboard doesn't exist, it'll create one based on an existing default dashboard.
     /// </summary>
+    /// <remarks>
+    /// Returns the first dashboard in the data store regardless of user. Intended for
+    /// single-dashboard or anonymous scenarios only; in multi-user apps use the overload that takes a user ID.
+    /// </remarks>
     /// <param name="config"><see cref="ITuxboardConfig"/></param>
     /// <param name="token"><see cref="CancellationToken"/> (optional)</param>
     /// <returns><see cref="Dashboard{T}"/></returns>
@@ -250,6 +258,10 @@ public interface IDashboardService<TUserId> where TUserId: struct
     /// Adds a <see cref="Widget"/> to a tab synchronously using the <see cref="DashboardTab"/> ID.
     /// By default, the widget is added to the first <see cref="LayoutRow"/> at the bottom of the first column.
     /// </summary>
+    /// <remarks>
+    /// Does not check plan entitlements or tab ownership. Hosts should restrict <paramref name="widgetId"/>
+    /// to the widgets returned by <c>GetWidgetsFor(planId)</c> and verify the user owns the tab.
+    /// </remarks>
     /// <param name="tabId"><see cref="DashboardTab"/> ID</param>
     /// <param name="widgetId"><see cref="Widget"/> ID</param>
     /// <returns><see cref="AddWidgetResponse"/></returns>
@@ -258,6 +270,10 @@ public interface IDashboardService<TUserId> where TUserId: struct
     /// Adds a <see cref="Widget"/> to a tab asynchronously using the <see cref="DashboardTab"/> ID.
     /// By default, the widget is added to the first <see cref="LayoutRow"/> at the bottom of the first column.
     /// </summary>
+    /// <remarks>
+    /// Does not check plan entitlements or tab ownership. Hosts should restrict <paramref name="widgetId"/>
+    /// to the widgets returned by <c>GetWidgetsForAsync(planId)</c> and verify the user owns the tab.
+    /// </remarks>
     /// <param name="tabId"><see cref="DashboardTab"/> ID</param>
     /// <param name="widgetId"><see cref="Widget"/> ID</param>
     /// <param name="token"><see cref="CancellationToken"/> (optional)</param>
