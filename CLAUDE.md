@@ -57,7 +57,7 @@ Domain entities live in `Domain/Entities/`. Partial classes in `Domain/Partials/
 
 Call `AddTuxboardDashboard<T>()` in `Program.cs`. Two overloads: one binds from `IConfiguration` (reads `TuxboardConfig` section), one accepts an `Action<TuxboardConfig>` lambda. Both register `TuxDbContext<T>`, `IDashboardService<T>`, and `ITuxboardConfig` as a singleton.
 
-`TuxboardConfig` carries `ConnectionString`, `Schema`, and feature flags (`UseAnalytics`, `DefaultTab`, `DashboardIndex`).
+`TuxboardConfig` (implements `ITuxboardConfig`) carries `ConnectionString`, `Schema` (default `dbo`), and `CreateSeedData` (default `false`). Client-facing behavior flags (`Moveable`, `DeleteWidgets`, `UseSettings`, `Personalized`) live separately on `TuxboardConfigDto`, exposed via `DashboardDto.Settings`.
 
 ### Tests
 

@@ -1,7 +1,8 @@
-# ASP.NET Core (.NET Framework)
-# Build and test ASP.NET Core projects targeting the full .NET Framework.
-# Add steps that publish symbols, save build artifacts, and more:
-# https://docs.microsoft.com/azure/devops/pipelines/languages/dotnet-core
+# Build, test and pack the Tuxboard.Core NuGet package.
+#
+# Publishing to NuGet.org is opt-in: create a NuGet service connection in Azure DevOps and set the
+# pipeline variable `nugetServiceConnection` to its name. Until then the pipeline only builds, tests,
+# packs and publishes the .nupkg/.snupkg as a build artifact.
 
 trigger:
   branches:
@@ -9,57 +10,73 @@ trigger:
       - main
       - master
 
-pr: none
+# Validate pull requests (build + test + pack, no publishing).
+pr:
+  branches:
+    include:
+      - main
+      - master
 
 pool:
   vmImage: 'windows-latest'
 
 variables:
-  solution: '**/*.sln'
-  buildPlatform: 'Any CPU'
   buildConfiguration: 'Release'
+  # Name of a NuGet service connection. Leave empty to skip publishing.
+  nugetServiceConnection: ''
 
 steps:
-- task: NuGetToolInstaller@1
-  displayName: 'Use latest NuGet'
+- task: UseDotNet@2
+  displayName: 'Install .NET 10 SDK'
   inputs:
-    versionSpec: 
-    checkLatest: true
-    
+    packageType: 'sdk'
+    version: '10.0.x'
+
 - task: DotNetCoreCLI@2
-  displayName: 'Restore Dependencies'
+  displayName: 'Restore'
   inputs:
     command: 'restore'
-    projects: '**/*.csproj'
+    projects: 'TuxBoard.sln'
     feedsToUse: 'select'
-    
+
+# Warnings fail the build in CI so regressions (nullable, vulnerable packages, etc.) can't merge unnoticed.
 - task: DotNetCoreCLI@2
-  displayName: 'Build Projects...'
+  displayName: 'Build'
   inputs:
     command: 'build'
-    projects: '**/*.csproj'
-    arguments: '/p:DeployOnBuild=true /p:Configuration=$(buildConfiguration) /p:WebPublishMethod=Package /p:PackageAsSingleFile=true /p:SkipInvalidConfigurations=true /p:DesktopBuildPackageLocation="$(build.artifactStagingDirectory)\WebApp.zip" /p:DeployIisAppPath="Default Web Site"'
+    projects: 'TuxBoard.sln'
+    arguments: '--configuration $(buildConfiguration) --no-restore -p:TreatWarningsAsErrors=true'
 
-
-# - task: VSBuild@1
-#   inputs:
-#     solution: '$(solution)'
-#     msbuildArgs: '/p:DeployOnBuild=true /p:WebPublishMethod=Package /p:PackageAsSingleFile=true /p:SkipInvalidConfigurations=true /p:DesktopBuildPackageLocation="$(build.artifactStagingDirectory)\WebApp.zip" /p:DeployIisAppPath="Default Web Site"'
-#     platform: '$(buildPlatform)'
-#     configuration: '$(buildConfiguration)'
-#     restoreNugetPackages: true
-
-- task: VSTest@2
+- task: DotNetCoreCLI@2
+  displayName: 'Test'
   inputs:
-    platform: '$(buildPlatform)'
-    configuration: '$(buildConfiguration)'
-- task: NuGetCommand@2
+    command: 'test'
+    projects: 'Tuxboard.Core.Tests/Tuxboard.Core.Tests.csproj'
+    arguments: '--configuration $(buildConfiguration) --no-build'
+    publishTestResults: true
+
+- task: DotNetCoreCLI@2
+  displayName: 'Pack'
   inputs:
     command: 'pack'
-    packagesToPack: '**/*.nuspec'
-    
+    packagesToPack: 'Tuxboard.Core/Tuxboard.Core.csproj'
+    configuration: '$(buildConfiguration)'
+    nobuild: true
+    versioningScheme: 'off'
+
 - task: PublishBuildArtifacts@1
+  displayName: 'Publish package artifacts'
   inputs:
     PathtoPublish: '$(Build.ArtifactStagingDirectory)'
     ArtifactName: 'drop'
     publishLocation: 'Container'
+
+# Push the .nupkg and its .snupkg symbols package (NuGet.org picks the .snupkg up automatically).
+- task: NuGetCommand@2
+  displayName: 'Publish to NuGet.org'
+  condition: and(succeeded(), ne(variables['Build.Reason'], 'PullRequest'), ne(variables['nugetServiceConnection'], ''), eq(variables['Build.SourceBranchName'], 'master'))
+  inputs:
+    command: 'push'
+    packagesToPush: '$(Build.ArtifactStagingDirectory)/**/*.nupkg'
+    nuGetFeedType: 'external'
+    publishFeedCredentials: '$(nugetServiceConnection)'

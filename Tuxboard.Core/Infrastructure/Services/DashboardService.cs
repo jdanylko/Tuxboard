@@ -158,18 +158,19 @@ public class DashboardService<T> : IDashboardService<T> where T: struct
     /// <inheritdoc />
     public bool RemoveLayoutRow(LayoutRow row)
     {
+        var item = _context.LayoutRows.FirstOrDefault(t => t.LayoutRowId == row.LayoutRowId);
+        if (item is null)
+            return false;
+
         // Enforce: a layout must always contain at least one LayoutRow.
-        if (row.LayoutId.HasValue &&
-            _context.LayoutRows.Count(r => r.LayoutId == row.LayoutId) <= 1)
+        // Use the stored LayoutId, not the caller-supplied one.
+        if (item.LayoutId.HasValue &&
+            _context.LayoutRows.Count(r => r.LayoutId == item.LayoutId) <= 1)
         {
             return false;
         }
 
-        var item = _context.LayoutRows.FirstOrDefault(t => t.LayoutRowId == row.LayoutRowId);
-        if (item is not null)
-        {
-            _context.LayoutRows.Remove(item);
-        }
+        _context.LayoutRows.Remove(item);
         return _context.SaveChanges() > 0;
     }
 
@@ -257,9 +258,6 @@ public class DashboardService<T> : IDashboardService<T> where T: struct
                     success = false;
                 }
             }
-
-            row.RowIndex = item.Index;
-            row.LayoutTypeId = item.TypeId;
         }
         try
         {
@@ -375,7 +373,7 @@ public class DashboardService<T> : IDashboardService<T> where T: struct
 
         _context.SaveChanges();
 
-        return _context.GetWidgetPlacement(param.PlacementId)!;
+        return _context.GetWidgetPlacement(param.PlacementId);
     }
 
     private void UpdatePreviousLayoutOrder(PlacementParameter param)
@@ -622,19 +620,20 @@ public class DashboardService<T> : IDashboardService<T> where T: struct
     /// <inheritdoc />
     public async Task<bool> RemoveLayoutRowAsync(LayoutRow row, CancellationToken token = default)
     {
+        var item = await _context.LayoutRows.FirstOrDefaultAsync(
+            t => t.LayoutRowId == row.LayoutRowId, cancellationToken: token);
+        if (item is null)
+            return false;
+
         // Enforce: a layout must always contain at least one LayoutRow.
-        if (row.LayoutId.HasValue &&
-            await _context.LayoutRows.CountAsync(r => r.LayoutId == row.LayoutId, token) <= 1)
+        // Use the stored LayoutId, not the caller-supplied one.
+        if (item.LayoutId.HasValue &&
+            await _context.LayoutRows.CountAsync(r => r.LayoutId == item.LayoutId, token) <= 1)
         {
             return false;
         }
 
-        var item = await _context.LayoutRows.FirstOrDefaultAsync(
-            t => t.LayoutRowId == row.LayoutRowId, cancellationToken: token);
-        if (item is not null)
-        {
-            _context.LayoutRows.Remove(item);
-        }
+        _context.LayoutRows.Remove(item);
         return await _context.SaveChangesAsync(token) > 0;
     }
 
@@ -697,7 +696,7 @@ public class DashboardService<T> : IDashboardService<T> where T: struct
         foreach (var item in newList)
         {
             var row = await _context.LayoutRows.FirstOrDefaultAsync(y => y.LayoutRowId == item.LayoutRowId, cancellationToken: token);
-            if (row is null || row.RowIndex == item.Index)
+            if (row is null)
                 continue;
 
             row.RowIndex = item.Index;
