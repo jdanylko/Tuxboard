@@ -1,63 +1,56 @@
 <Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
-    <TargetFrameworks>net10.0</TargetFrameworks>
-    <GeneratePackageOnBuild>False</GeneratePackageOnBuild>
-    <Description>Tuxboard, an open-source dashboard library for ASP.NET Core</Description>
+    <TargetFramework>net10.0</TargetFramework>
+    <Nullable>enable</Nullable>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <GenerateDocumentationFile>true</GenerateDocumentationFile>
+  </PropertyGroup>
+
+  <PropertyGroup Label="Package metadata">
     <PackageId>Tuxboard.Core</PackageId>
     <Version>10.0.10</Version>
     <Authors>Jonathan "JD" Danylko</Authors>
+    <Owners>Jonathan "JD" Danylko</Owners>
     <Product>Tuxboard</Product>
     <Copyright>2019-2026</Copyright>
-    <RunPostBuildEvent>OnOutputUpdated</RunPostBuildEvent>
+    <Description>Tuxboard, an open-source dashboard library for ASP.NET Core</Description>
+    <PackageTags>CSharp Dashboard Library Widgets Layouts Bootstrap FontAwesome OpenSource</PackageTags>
     <PackageProjectUrl>https://github.com/jdanylko/Tuxboard</PackageProjectUrl>
     <RepositoryUrl>https://github.com/jdanylko/Tuxboard</RepositoryUrl>
-    <RepositoryType>C#</RepositoryType>
-    <PackageTags>CSharp C# Dashboard Library Widgets Layouts Bootstrap FontAwesome</PackageTags>
-    <GenerateDocumentationFile>true</GenerateDocumentationFile>
-    <Nullable>enable</Nullable>
-    <ImplicitUsings>enable</ImplicitUsings>
-    <PackageReadmeFile>docs\README.md</PackageReadmeFile>
+    <RepositoryType>git</RepositoryType>
+    <PackageLicenseExpression>MIT</PackageLicenseExpression>
+    <PackageReadmeFile>docs/README.md</PackageReadmeFile>
+    <PackageReleaseNotes>See docs/ReleaseNotes.txt included in the package for full release notes.</PackageReleaseNotes>
+  </PropertyGroup>
+
+  <PropertyGroup Label="Symbols and reproducibility">
+    <IncludeSymbols>true</IncludeSymbols>
+    <SymbolPackageFormat>snupkg</SymbolPackageFormat>
+    <PublishRepositoryUrl>true</PublishRepositoryUrl>
+    <EmbedUntrackedSources>true</EmbedUntrackedSources>
+    <Deterministic>true</Deterministic>
+  </PropertyGroup>
+
+  <!-- Normalizes source paths in CI so packages built there are reproducible. -->
+  <PropertyGroup Condition=" '$(TF_BUILD)' == 'true' Or '$(GITHUB_ACTIONS)' == 'true' ">
+    <ContinuousIntegrationBuild>true</ContinuousIntegrationBuild>
   </PropertyGroup>
 
   <ItemGroup>
-    <Compile Remove="Infrastructure\Interfaces\**" />
-    <Compile Remove="Properties\**" />
-    <EmbeddedResource Remove="Infrastructure\Interfaces\**" />
-    <EmbeddedResource Remove="Properties\**" />
-    <None Remove="Infrastructure\Interfaces\**" />
-    <None Remove="Properties\**" />
+    <None Include="docs\README.md" Pack="true" PackagePath="docs\" />
+    <None Include="docs\ReleaseNotes.txt" Pack="true" PackagePath="docs\" />
   </ItemGroup>
 
   <ItemGroup>
-    <Content Include="docs\ReleaseNotes.txt">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
-    <Content Include="docs\README.md">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
+    <FrameworkReference Include="Microsoft.AspNetCore.App" />
   </ItemGroup>
 
-<ItemGroup>
-<FrameworkReference Include="Microsoft.AspNetCore.App" />
-</ItemGroup>
-
-  <ItemGroup Condition=" '$(TargetFramework)' == 'net10.0' ">
+  <ItemGroup>
     <PackageReference Include="Microsoft.EntityFrameworkCore" Version="10.0.10" />
     <PackageReference Include="Microsoft.EntityFrameworkCore.SqlServer" Version="10.0.10" />
     <!-- Override vulnerable transitive version pulled in by Microsoft.Data.SqlClient -->
     <PackageReference Include="System.Security.Cryptography.Pkcs" Version="10.0.14" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <Page Include="docs\README.md">
-      <Pack>True</Pack>
-      <PackagePath>\</PackagePath>
-    </Page>
-  </ItemGroup>
-
-  <ItemGroup>
-    <Service Include="{508349b6-6b84-4df5-91f0-309beebad82d}" />
   </ItemGroup>
 
 </Project>
