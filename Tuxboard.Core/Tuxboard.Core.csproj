@@ -9,7 +9,7 @@
 
   <PropertyGroup Label="Package metadata">
     <PackageId>Tuxboard.Core</PackageId>
-    <Version>10.0.14</Version>
+    <Version>10.0.14.1</Version>
     <Authors>Jonathan "JD" Danylko</Authors>
     <Owners>Jonathan "JD" Danylko</Owners>
     <Product>Tuxboard</Product>
